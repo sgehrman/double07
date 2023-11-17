@@ -22,7 +22,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 6),
+      duration: const Duration(seconds: 12),
     );
 
     _animation = TweenSequence<double>(
