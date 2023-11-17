@@ -11,35 +11,36 @@ class DeckrAnimation extends StatefulWidget {
 
 class _DeckrAnimationState extends State<DeckrAnimation>
     with SingleTickerProviderStateMixin {
-  late AnimationController controller;
-  late Animation<double> animation;
-  late Animation<double> textAnimation;
+  late AnimationController _controller;
+  late Animation<double> _animation;
+  late Animation<double> _textAnimation;
   final AnimationState _animationState = AnimationState();
 
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(
+    _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 6),
     );
-    animation = Tween<double>(begin: 0, end: 1).animate(
-      controller,
+
+    _animation = Tween<double>(begin: 0, end: 1).animate(
+      _controller,
     );
 
-    animation.addStatusListener((status) {
+    _animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         _animationState.reset();
-        controller.reset();
-        controller.forward();
+        _controller.reset();
+        _controller.forward();
       } else if (status == AnimationStatus.dismissed) {
-        controller.forward();
+        _controller.forward();
       }
     });
 
-    textAnimation = Tween<double>(begin: 0, end: 1).animate(
+    _textAnimation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
-        parent: controller,
+        parent: _controller,
         curve: const Interval(
           0.5,
           1,
@@ -48,7 +49,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
       ),
     );
 
-    controller.forward();
+    _controller.forward();
   }
 
   @override
@@ -56,9 +57,9 @@ class _DeckrAnimationState extends State<DeckrAnimation>
     return Scaffold(
       body: SizedBox.expand(
         child: AnimatedBuilder(
-          animation: controller,
+          animation: _controller,
           builder: (context, child) {
-            _animationState.update(animation.value, textAnimation.value);
+            _animationState.update(_animation.value, _textAnimation.value);
 
             return ColoredBox(
               color: Colors.black87,
