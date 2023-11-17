@@ -30,15 +30,10 @@ class AnimationState {
 
   int lastV = -1;
 
-  // state bools
-  bool textDone = false;
-  bool ballDone = false;
-
   // =================================================
 
   void reset() {
-    textDone = false;
-    ballDone = false;
+    // xxx
   }
 
   // =================================================
