@@ -19,14 +19,24 @@ class _DeckrAnimationState extends State<DeckrAnimation>
   @override
   void initState() {
     super.initState();
+
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 6),
     );
 
-    _animation = Tween<double>(begin: 0, end: 1).animate(
-      _controller,
-    );
+    _animation = TweenSequence<double>(
+      <TweenSequenceItem<double>>[
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 0, end: 1),
+          weight: 50,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 0, end: 1),
+          weight: 50,
+        ),
+      ],
+    ).animate(_controller);
 
     _animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
