@@ -11,6 +11,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
   late Animation<double> animation;
+  late Animation<double> textAnimation;
   final AnimationState _animationState = AnimationState();
 
   @override
@@ -31,6 +32,17 @@ class _DeckrAnimationState extends State<DeckrAnimation>
       }
     });
 
+    textAnimation = Tween<double>(begin: 0.5, end: 3).animate(
+      CurvedAnimation(
+        parent: controller,
+        curve: const Interval(
+          0.5,
+          1,
+          curve: Curves.ease,
+        ),
+      ),
+    );
+
     controller.forward();
   }
 
@@ -39,9 +51,9 @@ class _DeckrAnimationState extends State<DeckrAnimation>
     return Scaffold(
       body: SizedBox.expand(
         child: AnimatedBuilder(
-          animation: animation,
+          animation: controller,
           builder: (context, child) {
-            _animationState.update(animation.value);
+            _animationState.update(animation.value, textAnimation.value);
 
             return ColoredBox(
               color: Colors.black87,
@@ -137,10 +149,10 @@ class AnimationState {
     const TextStyle style = TextStyle(
       color: Colors.white54,
       // fontWeight: FontWeight.bold,
-      fontSize: 64.0,
+      fontSize: 64,
     );
 
-    TextSpan span12 = TextSpan(style: style, text: 'Deckr'.toUpperCase());
+    final TextSpan span12 = TextSpan(style: style, text: 'Deckr'.toUpperCase());
     textPainter = TextPainter(
       text: span12,
       textAlign: TextAlign.center,
@@ -161,8 +173,10 @@ class AnimationState {
 
   int lastV = -1;
 
-  void update(double value) {
+  void update(double value, double textValue) {
     animationValue = value;
+
+    print('$value, $textValue');
 
     final int v = (value * 100).round();
 
@@ -179,7 +193,7 @@ class AnimationState {
     }
 
     if (fadeBallPosition != -1) {
-      fadeBallOpacity -= .015;
+      fadeBallOpacity -= 0.015;
 
       if (fadeBallOpacity < 0) {
         fadeBallPosition = -1;
@@ -187,7 +201,7 @@ class AnimationState {
     }
 
     if (fadeBallPosition2 != -1) {
-      fadeBallOpacity2 -= .015;
+      fadeBallOpacity2 -= 0.015;
 
       if (fadeBallOpacity2 < 0) {
         fadeBallPosition2 = -1;
