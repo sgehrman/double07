@@ -44,7 +44,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
             _animationState.update(animation.value);
 
             return ColoredBox(
-              color: Colors.black,
+              color: Colors.black87,
               child: FittedBox(
                 child: CustomPaint(
                   size: const Size(2048, 1024),
@@ -69,9 +69,12 @@ class DeckrAnimationPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     const double ballRadius = 100;
-    // final rect = Offset.zero & size;
+    final rect = Offset.zero & size;
     const ballColor = Colors.white;
     final ballPaint = Paint()..color = ballColor;
+    final backPaint = Paint()..color = Colors.black;
+
+    canvas.drawRect(rect, backPaint);
 
     canvas.drawCircle(
       Offset(
@@ -112,9 +115,13 @@ class DeckrAnimationPainter extends CustomPainter {
     }
 
     animationState.textPainter.paint(
-        canvas,
-        size.topCenter(-animationState.textPainter.size
-            .topCenter(-animationState.paddingY)));
+      canvas,
+      size.topCenter(
+        -animationState.textPainter.size.topCenter(
+          -const Offset(0, 12),
+        ),
+      ),
+    );
   }
 
   @override
@@ -133,8 +140,6 @@ class AnimationState {
       fontSize: 64.0,
     );
 
-    paddingY = const Offset(0, 111);
-
     TextSpan span12 = TextSpan(style: style, text: 'Deckr'.toUpperCase());
     textPainter = TextPainter(
       text: span12,
@@ -145,7 +150,6 @@ class AnimationState {
   }
 
   late TextPainter textPainter;
-  late Offset paddingY;
 
   double animationValue = 0;
 
