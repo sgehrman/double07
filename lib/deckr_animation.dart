@@ -21,7 +21,9 @@ class _DeckrAnimationState extends State<DeckrAnimation>
       vsync: this,
       duration: const Duration(seconds: 6),
     );
-    animation = Tween<double>(begin: 0, end: 1).animate(controller);
+    animation = Tween<double>(begin: 0, end: 1).animate(
+      controller,
+    );
 
     animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
@@ -32,7 +34,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
       }
     });
 
-    textAnimation = Tween<double>(begin: 0.5, end: 3).animate(
+    textAnimation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: controller,
         curve: const Interval(
@@ -126,14 +128,21 @@ class DeckrAnimationPainter extends CustomPainter {
       );
     }
 
-    animationState.textPainter.paint(
-      canvas,
-      size.topCenter(
-        -animationState.textPainter.size.topCenter(
-          -const Offset(0, 12),
+    if (animationState.textAnimValue > 0) {
+      canvas.translate(0, -size.height * animationState.textAnimValue);
+
+      animationState.textPainter.paint(
+        canvas,
+        size.topCenter(
+          -animationState.textPainter.size.topCenter(
+            -Offset(
+              0,
+              size.height,
+            ),
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   @override
@@ -164,6 +173,7 @@ class AnimationState {
   late TextPainter textPainter;
 
   double animationValue = 0;
+  double textAnimValue = 0;
 
   double fadeBallPosition = -1;
   double fadeBallOpacity = 0;
@@ -175,8 +185,7 @@ class AnimationState {
 
   void update(double value, double textValue) {
     animationValue = value;
-
-    print('$value, $textValue');
+    textAnimValue = textValue;
 
     final int v = (value * 100).round();
 
