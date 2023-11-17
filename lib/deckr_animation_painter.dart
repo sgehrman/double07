@@ -8,17 +8,25 @@ class DeckrAnimationPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    const double ballRadius = 100;
     final rect = Offset.zero & size;
-    const ballColor = Colors.white;
-    final ballPaint = Paint()..color = ballColor;
     final backPaint = Paint()..color = Colors.black;
 
     canvas.drawRect(rect, backPaint);
 
+    paintBall(canvas, size);
+    paintText(canvas, size);
+  }
+
+  // =================================================
+
+  void paintBall(Canvas canvas, Size size) {
+    const double ballRadius = 100;
+    const ballColor = Colors.white;
+    final ballPaint = Paint()..color = ballColor;
+
     canvas.drawCircle(
       Offset(
-        size.width * animationState.animationValue,
+        size.width * animationState.ballValue,
         size.height / 2,
       ),
       ballRadius,
@@ -53,7 +61,11 @@ class DeckrAnimationPainter extends CustomPainter {
         ballFadePaint,
       );
     }
+  }
 
+  // =================================================
+
+  void paintText(Canvas canvas, Size size) {
     if (animationState.textAnimValue > 0) {
       canvas.translate(0, -size.height * animationState.textAnimValue);
 
