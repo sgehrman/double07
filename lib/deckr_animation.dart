@@ -35,6 +35,15 @@ class _DeckrAnimationState extends State<DeckrAnimation>
       }
     });
 
+    _buildBallAnimation();
+    _buildTextAnimation();
+
+    _controller.forward();
+  }
+
+  // =================================================
+
+  void _buildBallAnimation() {
     _ballAnimation = TweenSequence<double>(
       <TweenSequenceItem<double>>[
         TweenSequenceItem<double>(
@@ -47,7 +56,11 @@ class _DeckrAnimationState extends State<DeckrAnimation>
         ),
       ],
     ).animate(_controller);
+  }
 
+  // =================================================
+
+  void _buildTextAnimation() {
     _textAnimation = TweenSequence<double>(
       <TweenSequenceItem<double>>[
         TweenSequenceItem<double>(
@@ -69,9 +82,9 @@ class _DeckrAnimationState extends State<DeckrAnimation>
         ),
       ),
     );
-
-    _controller.forward();
   }
+
+  // =================================================
 
   @override
   Widget build(BuildContext context) {

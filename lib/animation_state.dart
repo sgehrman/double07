@@ -34,10 +34,14 @@ class AnimationState {
   bool textDone = false;
   bool ballDone = false;
 
+  // =================================================
+
   void reset() {
     textDone = false;
     ballDone = false;
   }
+
+  // =================================================
 
   void update(double value, double textValue) {
     ballValue = value;
