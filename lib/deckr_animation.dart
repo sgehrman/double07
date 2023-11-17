@@ -12,7 +12,7 @@ class DeckrAnimation extends StatefulWidget {
 class _DeckrAnimationState extends State<DeckrAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<double> _animation;
+  late Animation<double> _ballAnimation;
   late Animation<double> _textAnimation;
   final AnimationState _animationState = AnimationState();
 
@@ -25,7 +25,17 @@ class _DeckrAnimationState extends State<DeckrAnimation>
       duration: const Duration(seconds: 12),
     );
 
-    _animation = TweenSequence<double>(
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _animationState.reset();
+        _controller.reset();
+        _controller.forward();
+      } else if (status == AnimationStatus.dismissed) {
+        _controller.forward();
+      }
+    });
+
+    _ballAnimation = TweenSequence<double>(
       <TweenSequenceItem<double>>[
         TweenSequenceItem<double>(
           tween: Tween<double>(begin: 0, end: 1),
@@ -38,17 +48,18 @@ class _DeckrAnimationState extends State<DeckrAnimation>
       ],
     ).animate(_controller);
 
-    _animation.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _animationState.reset();
-        _controller.reset();
-        _controller.forward();
-      } else if (status == AnimationStatus.dismissed) {
-        _controller.forward();
-      }
-    });
-
-    _textAnimation = Tween<double>(begin: 0, end: 1).animate(
+    _textAnimation = TweenSequence<double>(
+      <TweenSequenceItem<double>>[
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 0, end: 1),
+          weight: 50,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 1, end: 0.5),
+          weight: 50,
+        ),
+      ],
+    ).animate(
       CurvedAnimation(
         parent: _controller,
         curve: const Interval(
@@ -69,7 +80,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
         child: AnimatedBuilder(
           animation: _controller,
           builder: (context, child) {
-            _animationState.update(_animation.value, _textAnimation.value);
+            _animationState.update(_ballAnimation.value, _textAnimation.value);
 
             return ColoredBox(
               color: Colors.black87,
