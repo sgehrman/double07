@@ -5,22 +5,12 @@ import 'package:flutter/material.dart';
 
 class AnimationState {
   AnimationState() {
-    const TextStyle style = TextStyle(
-      color: Colors.white,
-      fontSize: 64,
-    );
-
-    final TextSpan span12 = TextSpan(style: style, text: 'Deckr'.toUpperCase());
-    textPainter = TextPainter(
-      text: span12,
-      textAlign: TextAlign.center,
-      textDirection: TextDirection.ltr,
-    );
-
-    textPainter.layout();
+    _createTextPainters();
   }
 
-  late TextPainter textPainter;
+  List<TextPainter> textPainters = [];
+  List<ui.Image> textImages = [];
+  bool isInitialized = false;
 
   double ballValue = 0;
   double textAnimValue = 0;
@@ -32,8 +22,6 @@ class AnimationState {
   double fadeBallOpacity2 = 0;
 
   int lastV = -1;
-  ui.Image? textImg;
-  bool isInitialized = false;
 
   // =================================================
 
@@ -42,12 +30,46 @@ class AnimationState {
   }
 
   Future<void> initialize() async {
-    await _createTextImage();
+    await _createTextImages();
 
     isInitialized = true;
   }
 
-  Future<void> _createTextImage() async {
+  TextPainter _createTextPainter(String text) {
+    const TextStyle style = TextStyle(
+      color: Colors.white,
+      fontSize: 64,
+    );
+
+    final TextSpan span12 = TextSpan(style: style, text: text.toUpperCase());
+    final textPainter = TextPainter(
+      text: span12,
+      textAlign: TextAlign.center,
+      textDirection: TextDirection.ltr,
+    );
+
+    textPainter.layout();
+
+    return textPainter;
+  }
+
+  void _createTextPainters() {
+    const word = 'Deckr';
+
+    for (final s in word.characters) {
+      textPainters.add(_createTextPainter(s));
+    }
+  }
+
+  Future<void> _createTextImages() async {
+    _createTextPainters();
+
+    for (final painter in textPainters) {
+      textImages.add(await createTextImage(painter));
+    }
+  }
+
+  Future<ui.Image> createTextImage(TextPainter textPainter) {
     final imageSize = textPainter.size;
     final destRect = Rect.fromLTWH(
       0,
@@ -72,8 +94,7 @@ class AnimationState {
 
     final ui.Picture pict = recorder.endRecording();
 
-    textImg =
-        await pict.toImage(destRect.width.round(), destRect.height.round());
+    return pict.toImage(destRect.width.round(), destRect.height.round());
   }
 
   // =================================================

@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:double07/animation_state.dart';
 import 'package:flutter/material.dart';
 
@@ -65,9 +67,27 @@ class DeckrAnimationPainter extends CustomPainter {
 
   void paintText(Canvas canvas, Size size) {
     if (animationState.textAnimValue > 0) {
+      for (int i = 0; i < animationState.textPainters.length; i++) {
+        _paintText(
+          canvas,
+          size,
+          animationState.textPainters[i],
+          animationState.textImages[i],
+        );
+      }
+    }
+  }
+
+  void _paintText(
+    Canvas canvas,
+    Size size,
+    TextPainter textPainter,
+    ui.Image textImage,
+  ) {
+    if (animationState.textAnimValue > 0) {
       final rect = Offset.zero & size;
 
-      final tSize = animationState.textPainter.size;
+      final tSize = textPainter.size;
 
       final delta = (1 - animationState.textAnimValue) * 200;
 
@@ -81,8 +101,8 @@ class DeckrAnimationPainter extends CustomPainter {
         canvas: canvas,
         rect: destRect,
         fit: BoxFit.contain,
-        image: animationState.textImg!,
-        opacity: 0.2,
+        image: textImage,
+        opacity: 0.1,
         filterQuality: FilterQuality.high,
       );
     }
