@@ -12,7 +12,6 @@ class DeckrAnimationPainterText {
         canvas: canvas,
         size: size,
         textImage: animationState.textImages[i],
-        index: i,
         textAnima: animationState.textAnimations[i],
       );
     }
@@ -22,7 +21,6 @@ class DeckrAnimationPainterText {
     required Canvas canvas,
     required Size size,
     required TextImageInfo textImage,
-    required int index,
     required Animation<double> textAnima,
   }) {
     if (textAnima.value > 0) {
