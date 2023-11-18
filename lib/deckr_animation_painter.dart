@@ -19,7 +19,7 @@ class DeckrAnimationPainter extends CustomPainter {
     animationState.backgroundState2.paintBackground(canvas, size);
     animationState.backgroundState3.paintBackground(canvas, size);
 
-    DeckrAnimationPainterBall.paintBall(canvas, size, animationState);
+    DeckrAnimationPainterBall.paintBall(canvas, size, animationState.ballState);
     DeckrAnimationPainterText.paintText(
       canvas: canvas,
       size: size,

@@ -1,4 +1,5 @@
 import 'package:double07/animation_background_state.dart';
+import 'package:double07/animation_ball_state.dart';
 import 'package:double07/animation_text_state.dart';
 import 'package:double07/timeline.dart';
 import 'package:flutter/material.dart';
@@ -31,12 +32,7 @@ class AnimationState {
   );
 
   // ball animation
-  double ballValue = 0;
-  double fadeBallPosition = -1;
-  double fadeBallOpacity = 0;
-  double fadeBallPosition2 = -1;
-  double fadeBallOpacity2 = 0;
-  int lastV = -1;
+  final ballState = AnimationBallState();
 
   // background
   final backgroundState = AnimationBackgroundState(
@@ -76,49 +72,9 @@ class AnimationState {
       await backgroundState2.initialize(controller);
       await backgroundState3.initialize(controller);
 
+      ballState.initialize(controller);
+
       isInitialized = true;
-    }
-  }
-
-  // =================================================
-
-  void update(
-    double value,
-  ) {
-    ballValue = value;
-
-    updateBall();
-  }
-
-  void updateBall() {
-    final int v = (ballValue * 100).round();
-
-    if (v != lastV && (v % 15) == 0) {
-      lastV = v;
-
-      if (fadeBallPosition == -1) {
-        fadeBallOpacity = 1;
-        fadeBallPosition = ballValue;
-      } else if (fadeBallPosition2 == -1) {
-        fadeBallOpacity2 = 1;
-        fadeBallPosition2 = ballValue;
-      }
-    }
-
-    if (fadeBallPosition != -1) {
-      fadeBallOpacity -= 0.015;
-
-      if (fadeBallOpacity < 0) {
-        fadeBallPosition = -1;
-      }
-    }
-
-    if (fadeBallPosition2 != -1) {
-      fadeBallOpacity2 -= 0.015;
-
-      if (fadeBallOpacity2 < 0) {
-        fadeBallPosition2 = -1;
-      }
     }
   }
 }

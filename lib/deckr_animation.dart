@@ -1,6 +1,5 @@
 import 'package:double07/animation_state.dart';
 import 'package:double07/deckr_animation_painter.dart';
-import 'package:double07/timeline.dart';
 import 'package:flutter/material.dart';
 
 class DeckrAnimation extends StatefulWidget {
@@ -13,7 +12,6 @@ class DeckrAnimation extends StatefulWidget {
 class _DeckrAnimationState extends State<DeckrAnimation>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
-  late final Animation<double> _ballAnimation;
   final AnimationState _animationState = AnimationState();
 
   @override
@@ -38,8 +36,6 @@ class _DeckrAnimationState extends State<DeckrAnimation>
       }
     });
 
-    _buildBallAnimation();
-
     await _animationState.initialize(_controller);
 
     if (mounted) {
@@ -50,29 +46,6 @@ class _DeckrAnimationState extends State<DeckrAnimation>
 
   // =================================================
 
-  void _buildBallAnimation() {
-    _ballAnimation = TweenSequence<double>(
-      <TweenSequenceItem<double>>[
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0, end: 1),
-          weight: 50,
-        ),
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0, end: 1),
-          weight: 50,
-        ),
-      ],
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Interval(
-          Timeline.ballStart,
-          Timeline.ballEnd,
-        ),
-      ),
-    );
-  }
-
   // =================================================
 
   @override
@@ -81,10 +54,6 @@ class _DeckrAnimationState extends State<DeckrAnimation>
       animation: _controller,
       builder: (context, child) {
         if (_animationState.isInitialized) {
-          _animationState.update(
-            _ballAnimation.value,
-          );
-
           return ColoredBox(
             color: Colors.black87,
             child: FittedBox(

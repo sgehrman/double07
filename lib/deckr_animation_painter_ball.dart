@@ -1,19 +1,21 @@
-import 'package:double07/animation_state.dart';
+import 'package:double07/animation_ball_state.dart';
 import 'package:flutter/material.dart';
 
 class DeckrAnimationPainterBall {
   static void paintBall(
     Canvas canvas,
     Size size,
-    AnimationState animationState,
+    AnimationBallState animationState,
   ) {
     const double ballRadius = 100;
     const ballColor = Colors.white;
     final ballPaint = Paint()..color = ballColor;
 
+    animationState.update();
+
     canvas.drawCircle(
       Offset(
-        size.width * animationState.ballValue,
+        size.width * animationState.ballAnimation.value,
         size.height / 2,
       ),
       ballRadius,
