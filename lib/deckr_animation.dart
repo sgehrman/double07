@@ -16,6 +16,13 @@ class _DeckrAnimationState extends State<DeckrAnimation>
   final List<Animation<double>> _textAnimations = [];
   final AnimationState _animationState = AnimationState();
 
+  // timing
+  final double ballStart = 0;
+  final double ballEnd = 1;
+
+  final double textStart = 0.2;
+  final double textEnd = 0.4;
+
   @override
   void initState() {
     super.initState();
@@ -63,7 +70,15 @@ class _DeckrAnimationState extends State<DeckrAnimation>
           weight: 50,
         ),
       ],
-    ).animate(_controller);
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Interval(
+          ballStart,
+          ballEnd,
+        ),
+      ),
+    );
   }
 
   // =================================================
@@ -72,6 +87,9 @@ class _DeckrAnimationState extends State<DeckrAnimation>
     final len = _animationState.textString.length;
 
     for (int i = 0; i < len; i++) {
+      final start = textStart + (((i + 1) / len) * textStart);
+      final end = textStart + (((i + 1) / len) * textEnd);
+
       _textAnimations.add(
         Tween<double>(
           begin: 0,
@@ -80,8 +98,8 @@ class _DeckrAnimationState extends State<DeckrAnimation>
           CurvedAnimation(
             parent: _controller,
             curve: Interval(
-              0,
-              0.5 + ((i / len) * 0.5),
+              start,
+              end,
               curve: Curves.elasticInOut,
             ),
           ),

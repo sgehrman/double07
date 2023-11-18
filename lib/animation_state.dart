@@ -32,9 +32,6 @@ class AnimationState {
 
   Future<void> initialize() async {
     if (!isInitialized) {
-      // must set this first before async createTextImages
-      isInitialized = true;
-
       final ByteData byteData =
           await rootBundle.load('assets/images/henderson.png');
 
@@ -42,6 +39,8 @@ class AnimationState {
           await ImageProcessor.bytesToImage(byteData.buffer.asUint8List());
 
       await _createTextImages();
+
+      isInitialized = true;
     }
   }
 
