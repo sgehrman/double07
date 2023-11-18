@@ -37,6 +37,15 @@ class AnimationState {
   final backgroundState = AnimationBackgroundState(
     imageAsset: 'assets/images/henderson.png',
     alignment: const Alignment(-0.25, -0.3),
+    timeStart: 0.1,
+    timeEnd: 0.5,
+  );
+
+  final backgroundState2 = AnimationBackgroundState(
+    imageAsset: 'assets/images/domino.jpg',
+    alignment: const Alignment(-0.25, -0.2),
+    timeStart: 0.5,
+    timeEnd: 0.95,
   );
 
   // =================================================
@@ -64,6 +73,7 @@ class AnimationState {
       );
 
       await backgroundState.initialize(controller);
+      await backgroundState2.initialize(controller);
 
       isInitialized = true;
     }

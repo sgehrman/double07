@@ -8,10 +8,14 @@ class AnimationBackgroundState {
   AnimationBackgroundState({
     required this.imageAsset,
     required this.alignment,
+    required this.timeStart,
+    required this.timeEnd,
   });
 
   final String imageAsset;
   final Alignment alignment;
+  final double timeStart;
+  final double timeEnd;
 
   late final Animation<double> backgroundAnimation;
   late final ui.Image image;
@@ -19,8 +23,7 @@ class AnimationBackgroundState {
   // =================================================
 
   Future<void> initialize(AnimationController controller) async {
-    final ByteData byteData =
-        await rootBundle.load('assets/images/henderson.png');
+    final ByteData byteData = await rootBundle.load(imageAsset);
 
     image = await ImageProcessor.bytesToImage(byteData.buffer.asUint8List());
 
@@ -42,9 +45,9 @@ class AnimationBackgroundState {
     ).animate(
       CurvedAnimation(
         parent: controller,
-        curve: const Interval(
-          0.12,
-          0.9,
+        curve: Interval(
+          timeStart,
+          timeEnd,
         ),
       ),
     );
