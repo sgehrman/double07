@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:double07/animation_state.dart';
 import 'package:flutter/material.dart';
 
@@ -107,11 +105,11 @@ class DeckrAnimationPainter extends CustomPainter {
   }) {
     if (animationState.textAnimValue > 0) {
       final rect = Offset.zero & size;
-      final multiplier = math.max(1, (1 - animationState.textAnimValue) * 122);
+      // const multiplier = math.max(1, (1 - animationState.textAnimValue) * 122);
 
       final tSize = textImage.painter.size;
 
-      const startAlignment = Alignment(-5, -5);
+      const startAlignment = Alignment(-0.5, -5);
       const endAlignment = Alignment(-0.5, -0.5);
 
       final alignment = Alignment.lerp(
@@ -123,31 +121,18 @@ class DeckrAnimationPainter extends CustomPainter {
 
       Rect destRect = alignment.inscribe(
         Size(
-          tSize.width * multiplier,
-          tSize.height * multiplier,
+          tSize.width,
+          tSize.height,
         ),
         rect,
       );
 
       destRect = destRect.translate(index * destRect.width, 0);
 
-      destRect = destRect.translate(
-        -textImage.offset.dx * multiplier,
-        textImage.offset.dy * multiplier,
-      );
-
-      // final scaledX = textImage.painter.size.width * multiplier;
-
-      // destRect = destRect.inflate(multiplier.toDouble());
-      // destRect = destRect.translate(-scaledX / 2, 0);
-
-      // canvas.drawRect(destRect, Paint()..color = Colors.blue.withOpacity(0.1));
-
       paintImage(
         canvas: canvas,
         rect: destRect,
         fit: BoxFit.fill,
-        // repeat: ImageRepeat.noRepeat,
         image: textImage.image,
         opacity: 0.1,
         isAntiAlias: true,
