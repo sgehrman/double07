@@ -97,12 +97,7 @@ class DeckrAnimationPainter extends CustomPainter {
         height: tSize.height * delta,
       );
 
-      destRect = Rect.fromLTWH(
-        destRect.left + index * destRect.width,
-        destRect.top,
-        destRect.width,
-        destRect.height,
-      );
+      destRect = destRect.translate(index * destRect.width, 0);
 
       // canvas.drawRect(destRect, Paint()..color = Colors.blue.withOpacity(0.1));
 
