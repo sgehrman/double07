@@ -20,6 +20,10 @@ class _DeckrAnimationState extends State<DeckrAnimation>
   void initState() {
     super.initState();
 
+    _setup();
+  }
+
+  Future<void> _setup() async {
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 12),
@@ -38,7 +42,12 @@ class _DeckrAnimationState extends State<DeckrAnimation>
     _buildBallAnimation();
     _buildTextAnimation();
 
-    _controller.forward();
+    await _animationState.initialize();
+
+    if (mounted) {
+      setState(() {});
+    }
+    await _controller.forward();
   }
 
   // =================================================
@@ -65,19 +74,28 @@ class _DeckrAnimationState extends State<DeckrAnimation>
       <TweenSequenceItem<double>>[
         TweenSequenceItem<double>(
           tween: Tween<double>(begin: 0, end: 1),
-          weight: 50,
+          weight: 25,
         ),
         TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 1, end: 0.5),
-          weight: 50,
+          tween: Tween<double>(begin: 1, end: 0),
+          weight: 25,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 0, end: 1),
+          weight: 25,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 1, end: 0),
+          weight: 25,
         ),
       ],
     ).animate(
       CurvedAnimation(
         parent: _controller,
         curve: const Interval(
-          0.5,
-          1,
+          // 0.5,
+          // 1,
+          0, 1,
           curve: Curves.ease,
         ),
       ),
@@ -93,16 +111,27 @@ class _DeckrAnimationState extends State<DeckrAnimation>
         child: AnimatedBuilder(
           animation: _controller,
           builder: (context, child) {
+            if (_animationState.isInitialized) {
+              _animationState.update(
+                _ballAnimation.value,
+                _textAnimation.value,
+              );
+
+              return ColoredBox(
+                color: Colors.black87,
+                child: FittedBox(
+                  child: CustomPaint(
+                    size: const Size(2048, 1024),
+                    painter: DeckrAnimationPainter(_animationState),
+                  ),
+                ),
+              );
+            }
+
             _animationState.update(_ballAnimation.value, _textAnimation.value);
 
-            return ColoredBox(
+            return const ColoredBox(
               color: Colors.black87,
-              child: FittedBox(
-                child: CustomPaint(
-                  size: const Size(2048, 1024),
-                  painter: DeckrAnimationPainter(_animationState),
-                ),
-              ),
             );
           },
         ),

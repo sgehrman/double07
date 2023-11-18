@@ -1,9 +1,12 @@
+import 'dart:ui' as ui;
+
+import 'package:double07/animation_utils.dart';
 import 'package:flutter/material.dart';
 
 class AnimationState {
   AnimationState() {
     const TextStyle style = TextStyle(
-      color: Colors.white54,
+      color: Colors.white,
       fontSize: 64,
     );
 
@@ -29,11 +32,48 @@ class AnimationState {
   double fadeBallOpacity2 = 0;
 
   int lastV = -1;
+  ui.Image? textImg;
+  bool isInitialized = false;
 
   // =================================================
 
   void reset() {
     // xxx
+  }
+
+  Future<void> initialize() async {
+    await _createTextImage();
+
+    isInitialized = true;
+  }
+
+  Future<void> _createTextImage() async {
+    final imageSize = textPainter.size;
+    final destRect = Rect.fromLTWH(
+      0,
+      0,
+      imageSize.width * 10,
+      imageSize.height * 10,
+    );
+
+    final matrix = AnimaUtils.sizeToRect(imageSize, destRect);
+
+    final recorder = ui.PictureRecorder();
+    final ui.Canvas canvas = ui.Canvas(recorder);
+
+    canvas.drawRect(destRect, Paint()..color = Colors.transparent);
+
+    canvas.transform(matrix.storage);
+
+    textPainter.paint(
+      canvas,
+      Offset.zero,
+    );
+
+    final ui.Picture pict = recorder.endRecording();
+
+    textImg =
+        await pict.toImage(destRect.width.round(), destRect.height.round());
   }
 
   // =================================================
