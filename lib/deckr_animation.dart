@@ -26,7 +26,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
   Future<void> _setup() async {
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 4),
+      duration: const Duration(seconds: 12),
     );
 
     _controller.addStatusListener((status) {
@@ -82,7 +82,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
             parent: _controller,
             curve: Interval(
               0,
-              i / len,
+              0.5 + ((i / len) * 0.5),
               curve: Curves.easeInOut,
             ),
           ),
