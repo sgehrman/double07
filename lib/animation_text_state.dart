@@ -6,12 +6,18 @@ import 'package:double07/animation_utils.dart';
 import 'package:flutter/material.dart';
 
 class AnimationTextState {
-  AnimationTextState(this.text);
+  AnimationTextState({
+    required this.text,
+    required this.startAlignment,
+    required this.endAlignment,
+  });
 
-  // Deckr animation
   List<AnimatedTextInfo> textImages = [];
   List<Animation<double>> textAnimations = [];
+
   final String text;
+  final Alignment startAlignment;
+  final Alignment endAlignment;
 
   // =================================================
 

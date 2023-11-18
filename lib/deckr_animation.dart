@@ -11,9 +11,10 @@ class DeckrAnimation extends StatefulWidget {
 
 class _DeckrAnimationState extends State<DeckrAnimation>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _ballAnimation;
-  final List<Animation<double>> _textAnimations = [];
+  late final AnimationController _controller;
+  late final Animation<double> _ballAnimation;
+  late final List<Animation<double>> _textAnimations;
+  late final List<Animation<double>> _textAnimations2;
   final AnimationState _animationState = AnimationState();
 
   // timing
@@ -22,6 +23,9 @@ class _DeckrAnimationState extends State<DeckrAnimation>
 
   final double textStart = 0.2;
   final double textEnd = 0.9;
+
+  final double textStart2 = 0.4;
+  final double textEnd2 = 1;
 
   @override
   void initState() {
@@ -46,7 +50,20 @@ class _DeckrAnimationState extends State<DeckrAnimation>
     });
 
     _buildBallAnimation();
-    _buildTextAnimations();
+
+    _textAnimations = _buildTextAnimations(
+      controller: _controller,
+      text: _animationState.t1.text,
+      tStart: textStart,
+      tEnd: textEnd,
+    );
+
+    _textAnimations2 = _buildTextAnimations(
+      controller: _controller,
+      text: _animationState.t2.text,
+      tStart: textStart2,
+      tEnd: textEnd2,
+    );
 
     await _animationState.initialize();
 
@@ -83,10 +100,17 @@ class _DeckrAnimationState extends State<DeckrAnimation>
 
   // =================================================
 
-  void _buildTextAnimations() {
-    final len = _animationState.t1.text.length;
+  static List<Animation<double>> _buildTextAnimations({
+    required AnimationController controller,
+    required String text,
+    required double tStart,
+    required double tEnd,
+  }) {
+    final List<Animation<double>> result = [];
 
-    final time = textEnd - textStart;
+    final len = text.length;
+
+    final time = tEnd - tStart;
     double duration = time / len;
     const compress = 0.05;
 
@@ -94,16 +118,16 @@ class _DeckrAnimationState extends State<DeckrAnimation>
     duration = duration + (duration - spacer);
 
     for (int i = 0; i < len; i++) {
-      final start = textStart + (i * spacer);
+      final start = tStart + (i * spacer);
       final end = start + duration;
 
-      _textAnimations.add(
+      result.add(
         Tween<double>(
           begin: 0,
           end: 1,
         ).animate(
           CurvedAnimation(
-            parent: _controller,
+            parent: controller,
             curve: Interval(
               start,
               end,
@@ -113,6 +137,8 @@ class _DeckrAnimationState extends State<DeckrAnimation>
         ),
       );
     }
+
+    return result;
   }
 
   // =================================================
@@ -128,6 +154,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
               _animationState.update(
                 _ballAnimation.value,
                 _textAnimations,
+                _textAnimations2,
               );
 
               return ColoredBox(

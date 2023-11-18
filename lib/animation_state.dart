@@ -11,7 +11,18 @@ class AnimationState {
   bool isInitialized = false;
 
   // Deckr animation
-  final t1 = AnimationTextState('Deckr');
+  final t1 = AnimationTextState(
+    text: 'Deckr',
+    startAlignment: const Alignment(-0.5, -5),
+    endAlignment: const Alignment(-0.5, -0.5),
+  );
+
+  // Coder animation
+  final t2 = AnimationTextState(
+    text: 'Code: Mr. Henderson',
+    startAlignment: const Alignment(0.5, 5),
+    endAlignment: const Alignment(0.5, 0.5),
+  );
 
   // ball animation
   double ballValue = 0;
@@ -35,6 +46,7 @@ class AnimationState {
           await ImageProcessor.bytesToImage(byteData.buffer.asUint8List());
 
       await t1.initialize();
+      await t2.initialize();
 
       isInitialized = true;
     }
@@ -42,9 +54,14 @@ class AnimationState {
 
   // =================================================
 
-  void update(double value, List<Animation<double>> textAnims) {
+  void update(
+    double value,
+    List<Animation<double>> textAnims,
+    List<Animation<double>> textAnims2,
+  ) {
     ballValue = value;
     t1.textAnimations = textAnims;
+    t2.textAnimations = textAnims2;
 
     updateBall();
   }

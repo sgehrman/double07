@@ -3,17 +3,19 @@ import 'package:double07/animation_text_state.dart';
 import 'package:flutter/material.dart';
 
 class DeckrAnimationPainterText {
-  static void paintText(
-    Canvas canvas,
-    Size size,
-    AnimationTextState textState,
-  ) {
+  static void paintText({
+    required Canvas canvas,
+    required Size size,
+    required AnimationTextState textState,
+  }) {
     for (int i = 0; i < textState.textImages.length; i++) {
       _paintText(
         canvas: canvas,
         size: size,
         textImage: textState.textImages[i],
         textAnima: textState.textAnimations[i],
+        startAlignment: textState.startAlignment,
+        endAlignment: textState.endAlignment,
       );
     }
   }
@@ -23,15 +25,14 @@ class DeckrAnimationPainterText {
     required Size size,
     required AnimatedTextInfo textImage,
     required Animation<double> textAnima,
+    required Alignment startAlignment,
+    required Alignment endAlignment,
   }) {
     if (textAnima.value > 0) {
       final rect = Offset.zero & size;
       // const multiplier = math.max(1, (1 - animationState.textAnimValue) * 122);
 
       final tSize = textImage.painter.size;
-
-      const startAlignment = Alignment(-0.5, -5);
-      const endAlignment = Alignment(-0.5, -0.5);
 
       final alignment = Alignment.lerp(
             startAlignment,
