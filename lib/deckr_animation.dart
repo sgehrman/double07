@@ -13,7 +13,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _ballAnimation;
-  late Animation<double> _textAnimation;
+  final List<Animation<double>> _textAnimations = [];
   final AnimationState _animationState = AnimationState();
 
   @override
@@ -40,7 +40,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
     });
 
     _buildBallAnimation();
-    _buildTextAnimation();
+    _buildTextAnimations();
 
     await _animationState.initialize();
 
@@ -69,36 +69,26 @@ class _DeckrAnimationState extends State<DeckrAnimation>
 
   // =================================================
 
-  void _buildTextAnimation() {
-    _textAnimation = TweenSequence<double>(
-      <TweenSequenceItem<double>>[
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0, end: 1),
-          weight: 100,
+  void _buildTextAnimations() {
+    final len = _animationState.textString.length;
+
+    for (int i = 0; i < len; i++) {
+      _textAnimations.add(
+        Tween<double>(
+          begin: 0,
+          end: 1,
+        ).animate(
+          CurvedAnimation(
+            parent: _controller,
+            curve: Interval(
+              0,
+              i / len,
+              curve: Curves.easeInOut,
+            ),
+          ),
         ),
-        // TweenSequenceItem<double>(
-        //   tween: Tween<double>(begin: 1, end: 0),
-        //   weight: 25,
-        // ),
-        // TweenSequenceItem<double>(
-        //   tween: Tween<double>(begin: 0, end: 1),
-        //   weight: 25,
-        // ),
-        // TweenSequenceItem<double>(
-        //   tween: Tween<double>(begin: 1, end: 0),
-        //   weight: 25,
-        // ),
-      ],
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(
-          0,
-          0.4,
-          // curve: Curves.linear,
-        ),
-      ),
-    );
+      );
+    }
   }
 
   // =================================================
@@ -113,7 +103,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
             if (_animationState.isInitialized) {
               _animationState.update(
                 _ballAnimation.value,
-                _textAnimation.value,
+                _textAnimations,
               );
 
               return ColoredBox(
@@ -126,8 +116,6 @@ class _DeckrAnimationState extends State<DeckrAnimation>
                 ),
               );
             }
-
-            _animationState.update(_ballAnimation.value, _textAnimation.value);
 
             return const ColoredBox(
               color: Colors.black87,

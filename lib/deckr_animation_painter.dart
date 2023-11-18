@@ -85,15 +85,14 @@ class DeckrAnimationPainter extends CustomPainter {
   }
 
   void paintText(Canvas canvas, Size size) {
-    if (animationState.textAnimValue > 0) {
-      for (int i = 0; i < animationState.textImages.length; i++) {
-        _paintText(
-          canvas: canvas,
-          size: size,
-          textImage: animationState.textImages[i],
-          index: i,
-        );
-      }
+    for (int i = 0; i < animationState.textImages.length; i++) {
+      _paintText(
+        canvas: canvas,
+        size: size,
+        textImage: animationState.textImages[i],
+        index: i,
+        textAnima: animationState.textAnimations[i],
+      );
     }
   }
 
@@ -102,8 +101,9 @@ class DeckrAnimationPainter extends CustomPainter {
     required Size size,
     required TextImageInfo textImage,
     required int index,
+    required Animation<double> textAnima,
   }) {
-    if (animationState.textAnimValue > 0) {
+    if (textAnima.value > 0) {
       final rect = Offset.zero & size;
       // const multiplier = math.max(1, (1 - animationState.textAnimValue) * 122);
 
@@ -115,7 +115,7 @@ class DeckrAnimationPainter extends CustomPainter {
       final alignment = Alignment.lerp(
             startAlignment,
             endAlignment,
-            animationState.textAnimValue,
+            textAnima.value,
           ) ??
           Alignment.center;
 

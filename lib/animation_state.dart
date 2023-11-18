@@ -10,10 +10,12 @@ class AnimationState {
   AnimationState();
 
   List<TextImageInfo> textImages = [];
+  List<Animation<double>> textAnimations = [];
+  final textString = 'Deckr';
+
   bool isInitialized = false;
 
   double ballValue = 0;
-  double textAnimValue = 0;
 
   double fadeBallPosition = -1;
   double fadeBallOpacity = 0;
@@ -65,10 +67,9 @@ class AnimationState {
   }
 
   List<TextPainter> _createTextPainters() {
-    const word = 'Deckr';
     final List<TextPainter> result = [];
 
-    for (final s in word.characters) {
+    for (final s in textString.characters) {
       result.add(_createTextPainter(s));
     }
 
@@ -139,9 +140,9 @@ class AnimationState {
 
   // =================================================
 
-  void update(double value, double textValue) {
+  void update(double value, List<Animation<double>> textAnims) {
     ballValue = value;
-    textAnimValue = textValue;
+    textAnimations = textAnims;
 
     updateBall();
   }
