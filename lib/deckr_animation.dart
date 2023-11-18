@@ -83,7 +83,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
             curve: Interval(
               0,
               0.5 + ((i / len) * 0.5),
-              curve: Curves.easeInOut,
+              curve: Curves.elasticInOut,
             ),
           ),
         ),
