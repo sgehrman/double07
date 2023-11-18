@@ -121,8 +121,8 @@ class DeckrAnimationPainter extends CustomPainter {
 
       Rect destRect = alignment.inscribe(
         Size(
-          textImage.size.width,
-          textImage.size.height,
+          textImage.wordSize.width,
+          textImage.wordSize.height,
         ),
         rect,
       );

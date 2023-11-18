@@ -102,7 +102,7 @@ class AnimationState {
         TextImageInfo(
           image: await createTextImage(painter),
           painter: painter,
-          size: Size(width, height),
+          wordSize: Size(width, height),
           alignment: Alignment(left, 0),
         ),
       );
@@ -186,12 +186,12 @@ class TextImageInfo {
     required this.painter,
     required this.image,
     // size of string, not this image
-    required this.size,
+    required this.wordSize,
     required this.alignment,
   });
 
   final TextPainter painter;
-  final Size size;
+  final Size wordSize;
   final ui.Image image;
   final Alignment alignment;
 }
