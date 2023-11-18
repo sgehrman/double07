@@ -52,9 +52,11 @@ class AnimationState {
       height: 1,
     );
 
-    final TextSpan span12 = TextSpan(style: style, text: text.toUpperCase());
     final textPainter = TextPainter(
-      text: span12,
+      text: TextSpan(
+        style: style,
+        text: text.toUpperCase(),
+      ),
       textDirection: TextDirection.ltr,
     );
 
@@ -77,14 +79,15 @@ class AnimationState {
     final textPainters = _createTextPainters();
 
     const double space = 10;
-    double width = 0;
-    double height = 0;
+    double wordWidth = 0;
+    double wordHeight = 0;
+
     for (final painter in textPainters) {
-      width += painter.size.width + space;
-      height = math.max(height, painter.size.height);
+      wordWidth += painter.size.width + space;
+      wordHeight = math.max(wordHeight, painter.size.height);
     }
 
-    final mid = width / 2;
+    final mid = wordWidth / 2;
     double w = 0;
 
     for (final painter in textPainters) {
@@ -100,7 +103,7 @@ class AnimationState {
         AnimatedTextInfo(
           image: await createTextImage(painter),
           painter: painter,
-          wordSize: Size(width, height),
+          wordSize: Size(wordWidth, wordHeight),
           alignment: Alignment(left, 0),
         ),
       );
