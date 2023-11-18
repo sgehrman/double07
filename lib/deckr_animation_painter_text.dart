@@ -1,19 +1,19 @@
 import 'package:double07/animated_text_info.dart';
-import 'package:double07/animation_state.dart';
+import 'package:double07/animation_text_state.dart';
 import 'package:flutter/material.dart';
 
 class DeckrAnimationPainterText {
   static void paintText(
     Canvas canvas,
     Size size,
-    AnimationState animationState,
+    AnimationTextState textState,
   ) {
-    for (int i = 0; i < animationState.t1.textImages.length; i++) {
+    for (int i = 0; i < textState.textImages.length; i++) {
       _paintText(
         canvas: canvas,
         size: size,
-        textImage: animationState.t1.textImages[i],
-        textAnima: animationState.t1.textAnimations[i],
+        textImage: textState.textImages[i],
+        textAnima: textState.textAnimations[i],
       );
     }
   }
