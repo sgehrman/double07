@@ -71,4 +71,53 @@ class AnimationBallState {
       }
     }
   }
+
+  void paintBall(
+    Canvas canvas,
+    Size size,
+  ) {
+    const double ballRadius = 100;
+    const ballColor = Colors.white;
+    final ballPaint = Paint()..color = ballColor;
+
+    update();
+
+    canvas.drawCircle(
+      Offset(
+        size.width * ballAnimation.value,
+        size.height / 2,
+      ),
+      ballRadius,
+      ballPaint,
+    );
+
+    // fade ball
+    if (fadeBallPosition != -1) {
+      final ballFadePaint = Paint()
+        ..color = ballColor.withOpacity(fadeBallOpacity);
+
+      canvas.drawCircle(
+        Offset(
+          size.width * fadeBallPosition,
+          size.height / 2,
+        ),
+        ballRadius,
+        ballFadePaint,
+      );
+    }
+
+    if (fadeBallPosition2 != -1) {
+      final ballFadePaint = Paint()
+        ..color = ballColor.withOpacity(fadeBallOpacity2);
+
+      canvas.drawCircle(
+        Offset(
+          size.width * fadeBallPosition2,
+          size.height / 2,
+        ),
+        ballRadius,
+        ballFadePaint,
+      );
+    }
+  }
 }
