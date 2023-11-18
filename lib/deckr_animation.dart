@@ -84,7 +84,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
   // =================================================
 
   void _buildTextAnimations() {
-    final len = _animationState.textString.length;
+    final len = _animationState.t1.text.length;
 
     final time = textEnd - textStart;
     double duration = time / len;

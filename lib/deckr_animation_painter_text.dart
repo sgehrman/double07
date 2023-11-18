@@ -8,12 +8,12 @@ class DeckrAnimationPainterText {
     Size size,
     AnimationState animationState,
   ) {
-    for (int i = 0; i < animationState.textImages.length; i++) {
+    for (int i = 0; i < animationState.t1.textImages.length; i++) {
       _paintText(
         canvas: canvas,
         size: size,
-        textImage: animationState.textImages[i],
-        textAnima: animationState.textAnimations[i],
+        textImage: animationState.t1.textImages[i],
+        textAnima: animationState.t1.textAnimations[i],
       );
     }
   }
