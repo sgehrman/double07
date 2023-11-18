@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:dfc_flutter/dfc_flutter_web.dart';
+import 'package:double07/animated_text_info.dart';
 import 'package:double07/animation_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,28 +10,25 @@ import 'package:flutter/services.dart';
 class AnimationState {
   AnimationState();
 
-  List<TextImageInfo> textImages = [];
+  bool isInitialized = false;
+
+  // Deckr animation
+  List<AnimatedTextInfo> textImages = [];
   List<Animation<double>> textAnimations = [];
   final textString = 'Deckr';
 
-  bool isInitialized = false;
-
+  // ball animation
   double ballValue = 0;
-
   double fadeBallPosition = -1;
   double fadeBallOpacity = 0;
-
   double fadeBallPosition2 = -1;
   double fadeBallOpacity2 = 0;
-
   int lastV = -1;
+
+  // background
   late ui.Image hendersonImage;
 
   // =================================================
-
-  void reset() {
-    // xxx
-  }
 
   Future<void> initialize() async {
     if (!isInitialized) {
@@ -57,7 +55,6 @@ class AnimationState {
     final TextSpan span12 = TextSpan(style: style, text: text.toUpperCase());
     final textPainter = TextPainter(
       text: span12,
-      // textAlign: TextAlign.center,
       textDirection: TextDirection.ltr,
     );
 
@@ -100,7 +97,7 @@ class AnimationState {
       w += painter.size.width + space;
 
       textImages.add(
-        TextImageInfo(
+        AnimatedTextInfo(
           image: await createTextImage(painter),
           painter: painter,
           wordSize: Size(width, height),
@@ -178,21 +175,4 @@ class AnimationState {
       }
     }
   }
-}
-
-// =================================================
-
-class TextImageInfo {
-  TextImageInfo({
-    required this.painter,
-    required this.image,
-    // size of string, not this image
-    required this.wordSize,
-    required this.alignment,
-  });
-
-  final TextPainter painter;
-  final Size wordSize;
-  final ui.Image image;
-  final Alignment alignment;
 }

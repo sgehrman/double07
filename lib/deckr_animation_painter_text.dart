@@ -1,3 +1,4 @@
+import 'package:double07/animated_text_info.dart';
 import 'package:double07/animation_state.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class DeckrAnimationPainterText {
   static void _paintText({
     required Canvas canvas,
     required Size size,
-    required TextImageInfo textImage,
+    required AnimatedTextInfo textImage,
     required Animation<double> textAnima,
   }) {
     if (textAnima.value > 0) {

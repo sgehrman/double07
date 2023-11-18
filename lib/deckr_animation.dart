@@ -31,7 +31,6 @@ class _DeckrAnimationState extends State<DeckrAnimation>
 
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        _animationState.reset();
         _controller.reset();
         _controller.forward();
       } else if (status == AnimationStatus.dismissed) {
