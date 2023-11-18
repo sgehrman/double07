@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 class AnimationState {
   AnimationState();
 
-  List<TextPainter> textPainters = [];
-  List<ui.Image> textImages = [];
+  List<TextImageInfo> textImages = [];
   bool isInitialized = false;
 
   double ballValue = 0;
@@ -55,19 +54,28 @@ class AnimationState {
     return textPainter;
   }
 
-  void _createTextPainters() {
+  List<TextPainter> _createTextPainters() {
     const word = 'Deckr';
+    final List<TextPainter> result = [];
 
     for (final s in word.characters) {
-      textPainters.add(_createTextPainter(s));
+      result.add(_createTextPainter(s));
     }
+
+    return result;
   }
 
   Future<void> _createTextImages() async {
-    _createTextPainters();
+    final textPainters = _createTextPainters();
 
     for (final painter in textPainters) {
-      textImages.add(await createTextImage(painter));
+      textImages.add(
+        TextImageInfo(
+          image: await createTextImage(painter),
+          painter: painter,
+          offsetFromCenter: Offset.zero,
+        ),
+      );
     }
   }
 
@@ -76,7 +84,7 @@ class AnimationState {
     final destRect = Rect.fromLTWH(
       0,
       0,
-      imageSize.width * 10,
+      imageSize.width * 10, // larger to avoid pixelation
       imageSize.height * 10,
     );
 
@@ -139,4 +147,18 @@ class AnimationState {
       }
     }
   }
+}
+
+// =================================================
+
+class TextImageInfo {
+  TextImageInfo({
+    required this.painter,
+    required this.image,
+    required this.offsetFromCenter,
+  });
+
+  final TextPainter painter;
+  final Offset offsetFromCenter;
+  final ui.Image image;
 }

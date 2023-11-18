@@ -1,5 +1,4 @@
 import 'dart:math' as math;
-import 'dart:ui' as ui;
 
 import 'package:double07/animation_state.dart';
 import 'package:flutter/material.dart';
@@ -68,11 +67,10 @@ class DeckrAnimationPainter extends CustomPainter {
 
   void paintText(Canvas canvas, Size size) {
     if (animationState.textAnimValue > 0) {
-      for (int i = 0; i < animationState.textPainters.length; i++) {
+      for (int i = 0; i < animationState.textImages.length; i++) {
         _paintText(
           canvas: canvas,
           size: size,
-          textPainter: animationState.textPainters[i],
           textImage: animationState.textImages[i],
           index: i,
         );
@@ -83,14 +81,13 @@ class DeckrAnimationPainter extends CustomPainter {
   void _paintText({
     required Canvas canvas,
     required Size size,
-    required TextPainter textPainter,
-    required ui.Image textImage,
+    required TextImageInfo textImage,
     required int index,
   }) {
     if (animationState.textAnimValue > 0) {
       final rect = Offset.zero & size;
 
-      final tSize = textPainter.size;
+      final tSize = textImage.painter.size;
 
       final delta = math.max(1, (1 - animationState.textAnimValue) * 200);
 
@@ -114,7 +111,7 @@ class DeckrAnimationPainter extends CustomPainter {
         rect: destRect,
         fit: BoxFit.fill,
         // repeat: ImageRepeat.noRepeat,
-        image: textImage,
+        image: textImage.image,
         opacity: 0.1,
         isAntiAlias: true,
         filterQuality: FilterQuality.high,
