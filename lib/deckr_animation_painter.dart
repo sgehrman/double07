@@ -10,6 +10,11 @@ class DeckrAnimationPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    final rect = Offset.zero & size;
+
+    final backPaint = Paint()..color = Colors.black;
+    canvas.drawRect(rect, backPaint);
+
     animationState.backgroundState.paintBackground(canvas, size);
     animationState.backgroundState2.paintBackground(canvas, size);
 

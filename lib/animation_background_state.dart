@@ -55,23 +55,24 @@ class AnimationBackgroundState {
 
   void paintBackground(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
-    final backPaint = Paint()..color = Colors.black;
+
+    final opacity = backgroundAnimation.value;
+    final double gradientOpacity = backgroundAnimation.value > 0 ? 1 : 0;
+
     final gradientPaint = Paint()
       ..isAntiAlias = true
       ..style = PaintingStyle.fill
       ..shader = RadialGradient(
-        colors: const [Colors.transparent, Colors.black],
+        colors: [Colors.transparent, Colors.black.withOpacity(gradientOpacity)],
         center: alignment,
       ).createShader(rect);
-
-    canvas.drawRect(rect, backPaint);
 
     paintImage(
       canvas: canvas,
       rect: rect,
       fit: BoxFit.cover,
       image: image,
-      opacity: backgroundAnimation.value,
+      opacity: opacity,
     );
     canvas.drawRect(rect, gradientPaint);
   }

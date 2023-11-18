@@ -43,7 +43,7 @@ class AnimationState {
 
   final backgroundState2 = AnimationBackgroundState(
     imageAsset: 'assets/images/domino.jpg',
-    alignment: const Alignment(-0.25, -0.2),
+    alignment: const Alignment(-0.1, -0.2),
     timeStart: 0.5,
     timeEnd: 0.95,
   );
