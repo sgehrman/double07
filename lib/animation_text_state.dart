@@ -8,27 +8,84 @@ import 'package:flutter/material.dart';
 class AnimationTextState {
   AnimationTextState({
     required this.text,
+    required this.fontSize,
+    required this.color,
     required this.startAlignment,
     required this.endAlignment,
   });
 
-  List<AnimatedTextInfo> textImages = [];
-  List<Animation<double>> textAnimations = [];
+  final List<AnimatedTextInfo> textImages = [];
+  late final List<Animation<double>> textAnimations;
 
   final String text;
+  final double fontSize;
+  final Color color;
   final Alignment startAlignment;
   final Alignment endAlignment;
 
   // =================================================
 
-  Future<void> initialize() async {
+  Future<void> initialize({
+    required AnimationController controller,
+    required String text,
+    required double tStart,
+    required double tEnd,
+  }) async {
     await _createTextImages();
+
+    textAnimations = _buildTextAnimations(
+      controller: controller,
+      text: text,
+      tStart: tStart,
+      tEnd: tEnd,
+    );
+  }
+
+  static List<Animation<double>> _buildTextAnimations({
+    required AnimationController controller,
+    required String text,
+    required double tStart,
+    required double tEnd,
+  }) {
+    final List<Animation<double>> result = [];
+
+    final len = text.length;
+
+    final time = tEnd - tStart;
+    double duration = time / len;
+    const compress = 0.05;
+
+    final spacer = duration * compress;
+    duration = duration + (duration - spacer);
+
+    for (int i = 0; i < len; i++) {
+      final start = tStart + (i * spacer);
+      final end = start + duration;
+
+      result.add(
+        Tween<double>(
+          begin: 0,
+          end: 1,
+        ).animate(
+          CurvedAnimation(
+            parent: controller,
+            curve: Interval(
+              start,
+              end,
+              curve: Curves.elasticInOut,
+            ),
+          ),
+        ),
+      );
+    }
+
+    return result;
   }
 
   TextPainter _createTextPainter(String text) {
-    const TextStyle style = TextStyle(
-      color: Colors.white,
-      fontSize: 64,
+    final TextStyle style = TextStyle(
+      color: color,
+      fontSize: fontSize,
       height: 1,
     );
 
@@ -95,8 +152,8 @@ class AnimationTextState {
     final destRect = Rect.fromLTWH(
       0,
       0,
-      imageSize.width * 10, // larger to avoid pixelation
-      imageSize.height * 10,
+      imageSize.width * 3, // larger to avoid pixelation
+      imageSize.height * 3,
     );
 
     final matrix = AnimaUtils.sizeToRect(imageSize, destRect);

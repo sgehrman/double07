@@ -13,19 +13,11 @@ class _DeckrAnimationState extends State<DeckrAnimation>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _ballAnimation;
-  late final List<Animation<double>> _textAnimations;
-  late final List<Animation<double>> _textAnimations2;
   final AnimationState _animationState = AnimationState();
 
   // timing
   final double ballStart = 0;
   final double ballEnd = 1;
-
-  final double textStart = 0.2;
-  final double textEnd = 0.9;
-
-  final double textStart2 = 0.4;
-  final double textEnd2 = 1;
 
   @override
   void initState() {
@@ -51,21 +43,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
 
     _buildBallAnimation();
 
-    _textAnimations = _buildTextAnimations(
-      controller: _controller,
-      text: _animationState.t1.text,
-      tStart: textStart,
-      tEnd: textEnd,
-    );
-
-    _textAnimations2 = _buildTextAnimations(
-      controller: _controller,
-      text: _animationState.t2.text,
-      tStart: textStart2,
-      tEnd: textEnd2,
-    );
-
-    await _animationState.initialize();
+    await _animationState.initialize(_controller);
 
     if (mounted) {
       setState(() {});
@@ -100,49 +78,6 @@ class _DeckrAnimationState extends State<DeckrAnimation>
 
   // =================================================
 
-  static List<Animation<double>> _buildTextAnimations({
-    required AnimationController controller,
-    required String text,
-    required double tStart,
-    required double tEnd,
-  }) {
-    final List<Animation<double>> result = [];
-
-    final len = text.length;
-
-    final time = tEnd - tStart;
-    double duration = time / len;
-    const compress = 0.05;
-
-    final spacer = duration * compress;
-    duration = duration + (duration - spacer);
-
-    for (int i = 0; i < len; i++) {
-      final start = tStart + (i * spacer);
-      final end = start + duration;
-
-      result.add(
-        Tween<double>(
-          begin: 0,
-          end: 1,
-        ).animate(
-          CurvedAnimation(
-            parent: controller,
-            curve: Interval(
-              start,
-              end,
-              curve: Curves.elasticInOut,
-            ),
-          ),
-        ),
-      );
-    }
-
-    return result;
-  }
-
-  // =================================================
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -153,8 +88,6 @@ class _DeckrAnimationState extends State<DeckrAnimation>
             if (_animationState.isInitialized) {
               _animationState.update(
                 _ballAnimation.value,
-                _textAnimations,
-                _textAnimations2,
               );
 
               return ColoredBox(

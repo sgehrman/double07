@@ -30,7 +30,6 @@ class DeckrAnimationPainterText {
   }) {
     if (textAnima.value > 0) {
       final rect = Offset.zero & size;
-      // const multiplier = math.max(1, (1 - animationState.textAnimValue) * 122);
 
       final tSize = textImage.painter.size;
 
@@ -62,7 +61,7 @@ class DeckrAnimationPainterText {
         rect: destRect,
         fit: BoxFit.fill,
         image: textImage.image,
-        opacity: 0.1,
+        opacity: 0.3,
         isAntiAlias: true,
         filterQuality: FilterQuality.high,
       );

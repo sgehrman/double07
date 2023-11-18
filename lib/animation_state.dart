@@ -13,15 +13,19 @@ class AnimationState {
   // Deckr animation
   final t1 = AnimationTextState(
     text: 'Deckr'.toUpperCase(),
-    startAlignment: const Alignment(-0.5, -5),
-    endAlignment: const Alignment(-0.5, -0.5),
+    fontSize: 64,
+    color: Colors.white,
+    startAlignment: const Alignment(-0.8, -5),
+    endAlignment: const Alignment(-0.8, -0.8),
   );
 
   // Coder animation
   final t2 = AnimationTextState(
     text: 'Code: Mr. Henderson',
-    startAlignment: const Alignment(0.5, 5),
-    endAlignment: const Alignment(0.5, 0.5),
+    fontSize: 44,
+    color: Colors.cyan,
+    startAlignment: const Alignment(0.8, 5),
+    endAlignment: const Alignment(0.8, 0.8),
   );
 
   // ball animation
@@ -37,7 +41,7 @@ class AnimationState {
 
   // =================================================
 
-  Future<void> initialize() async {
+  Future<void> initialize(AnimationController controller) async {
     if (!isInitialized) {
       final ByteData byteData =
           await rootBundle.load('assets/images/henderson.png');
@@ -45,8 +49,25 @@ class AnimationState {
       hendersonImage =
           await ImageProcessor.bytesToImage(byteData.buffer.asUint8List());
 
-      await t1.initialize();
-      await t2.initialize();
+      const double textStart = 0.2;
+      const double textEnd = 0.9;
+
+      const double textStart2 = 0.4;
+      const double textEnd2 = 1;
+
+      await t1.initialize(
+        controller: controller,
+        text: t1.text,
+        tStart: textStart,
+        tEnd: textEnd,
+      );
+
+      await t2.initialize(
+        controller: controller,
+        text: t2.text,
+        tStart: textStart2,
+        tEnd: textEnd2,
+      );
 
       isInitialized = true;
     }
@@ -56,12 +77,8 @@ class AnimationState {
 
   void update(
     double value,
-    List<Animation<double>> textAnims,
-    List<Animation<double>> textAnims2,
   ) {
     ballValue = value;
-    t1.textAnimations = textAnims;
-    t2.textAnimations = textAnims2;
 
     updateBall();
   }
