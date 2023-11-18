@@ -1,4 +1,6 @@
 import 'package:double07/animation_state.dart';
+import 'package:double07/deckr_animation_painter_ball.dart';
+import 'package:double07/deckr_animation_painter_text.dart';
 import 'package:flutter/material.dart';
 
 class DeckrAnimationPainter extends CustomPainter {
@@ -9,8 +11,8 @@ class DeckrAnimationPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     paintBackground(canvas, size);
-    paintBall(canvas, size);
-    paintText(canvas, size);
+    DeckrAnimationPainterBall.paintBall(canvas, size, animationState);
+    DeckrAnimationPainterText.paintText(canvas, size, animationState);
   }
 
   // =================================================
@@ -36,115 +38,6 @@ class DeckrAnimationPainter extends CustomPainter {
       opacity: 0.35,
     );
     canvas.drawRect(rect, gradientPaint);
-  }
-
-  // =================================================
-
-  void paintBall(Canvas canvas, Size size) {
-    const double ballRadius = 100;
-    const ballColor = Colors.white;
-    final ballPaint = Paint()..color = ballColor;
-
-    canvas.drawCircle(
-      Offset(
-        size.width * animationState.ballValue,
-        size.height / 2,
-      ),
-      ballRadius,
-      ballPaint,
-    );
-
-    // fade ball
-    if (animationState.fadeBallPosition != -1) {
-      final ballFadePaint = Paint()
-        ..color = ballColor.withOpacity(animationState.fadeBallOpacity);
-
-      canvas.drawCircle(
-        Offset(
-          size.width * animationState.fadeBallPosition,
-          size.height / 2,
-        ),
-        ballRadius,
-        ballFadePaint,
-      );
-    }
-
-    if (animationState.fadeBallPosition2 != -1) {
-      final ballFadePaint = Paint()
-        ..color = ballColor.withOpacity(animationState.fadeBallOpacity2);
-
-      canvas.drawCircle(
-        Offset(
-          size.width * animationState.fadeBallPosition2,
-          size.height / 2,
-        ),
-        ballRadius,
-        ballFadePaint,
-      );
-    }
-  }
-
-  void paintText(Canvas canvas, Size size) {
-    for (int i = 0; i < animationState.textImages.length; i++) {
-      _paintText(
-        canvas: canvas,
-        size: size,
-        textImage: animationState.textImages[i],
-        index: i,
-        textAnima: animationState.textAnimations[i],
-      );
-    }
-  }
-
-  void _paintText({
-    required Canvas canvas,
-    required Size size,
-    required TextImageInfo textImage,
-    required int index,
-    required Animation<double> textAnima,
-  }) {
-    if (textAnima.value > 0) {
-      final rect = Offset.zero & size;
-      // const multiplier = math.max(1, (1 - animationState.textAnimValue) * 122);
-
-      final tSize = textImage.painter.size;
-
-      const startAlignment = Alignment(-0.5, -5);
-      const endAlignment = Alignment(-0.5, -0.5);
-
-      final alignment = Alignment.lerp(
-            startAlignment,
-            endAlignment,
-            textAnima.value,
-          ) ??
-          Alignment.center;
-
-      Rect destRect = alignment.inscribe(
-        Size(
-          textImage.wordSize.width,
-          textImage.wordSize.height,
-        ),
-        rect,
-      );
-
-      destRect = textImage.alignment.inscribe(
-        Size(
-          tSize.width,
-          tSize.height,
-        ),
-        destRect,
-      );
-
-      paintImage(
-        canvas: canvas,
-        rect: destRect,
-        fit: BoxFit.fill,
-        image: textImage.image,
-        opacity: 0.1,
-        isAntiAlias: true,
-        filterQuality: FilterQuality.high,
-      );
-    }
   }
 
   @override
