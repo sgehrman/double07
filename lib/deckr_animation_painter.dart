@@ -11,6 +11,7 @@ class DeckrAnimationPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     paintBackground(canvas, size);
+
     DeckrAnimationPainterBall.paintBall(canvas, size, animationState);
     DeckrAnimationPainterText.paintText(
       canvas: canvas,
@@ -44,7 +45,7 @@ class DeckrAnimationPainter extends CustomPainter {
       rect: rect,
       fit: BoxFit.cover,
       image: animationState.hendersonImage,
-      opacity: 0.35,
+      opacity: animationState.backgroundAnimation.value,
     );
     canvas.drawRect(rect, gradientPaint);
   }

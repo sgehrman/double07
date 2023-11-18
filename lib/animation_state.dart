@@ -38,6 +38,7 @@ class AnimationState {
 
   // background
   late ui.Image hendersonImage;
+  late final Animation<double> backgroundAnimation;
 
   // =================================================
 
@@ -67,6 +68,31 @@ class AnimationState {
         text: t2.text,
         tStart: textStart2,
         tEnd: textEnd2,
+      );
+
+      backgroundAnimation = TweenSequence<double>(
+        <TweenSequenceItem<double>>[
+          TweenSequenceItem<double>(
+            tween: Tween<double>(begin: 0, end: 0.35),
+            weight: 33,
+          ),
+          TweenSequenceItem<double>(
+            tween: ConstantTween<double>(0.35),
+            weight: 33,
+          ),
+          TweenSequenceItem<double>(
+            tween: Tween<double>(begin: 0.35, end: 0),
+            weight: 33,
+          ),
+        ],
+      ).animate(
+        CurvedAnimation(
+          parent: controller,
+          curve: const Interval(
+            0.12,
+            0.9,
+          ),
+        ),
       );
 
       isInitialized = true;

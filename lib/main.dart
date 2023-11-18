@@ -18,7 +18,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const DeckrAnimation(),
+      home: const Scaffold(
+        body: SizedBox.expand(
+          child: DeckrAnimation(),
+        ),
+      ),
     );
   }
 }

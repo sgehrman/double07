@@ -80,33 +80,29 @@ class _DeckrAnimationState extends State<DeckrAnimation>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SizedBox.expand(
-        child: AnimatedBuilder(
-          animation: _controller,
-          builder: (context, child) {
-            if (_animationState.isInitialized) {
-              _animationState.update(
-                _ballAnimation.value,
-              );
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        if (_animationState.isInitialized) {
+          _animationState.update(
+            _ballAnimation.value,
+          );
 
-              return ColoredBox(
-                color: Colors.black87,
-                child: FittedBox(
-                  child: CustomPaint(
-                    size: const Size(2048, 1024),
-                    painter: DeckrAnimationPainter(_animationState),
-                  ),
-                ),
-              );
-            }
+          return ColoredBox(
+            color: Colors.black87,
+            child: FittedBox(
+              child: CustomPaint(
+                size: const Size(2048, 1024),
+                painter: DeckrAnimationPainter(_animationState),
+              ),
+            ),
+          );
+        }
 
-            return const ColoredBox(
-              color: Colors.black87,
-            );
-          },
-        ),
-      ),
+        return const ColoredBox(
+          color: Colors.black87,
+        );
+      },
     );
   }
 }
