@@ -1,9 +1,6 @@
-import 'dart:ui' as ui;
-
-import 'package:dfc_flutter/dfc_flutter_web.dart';
+import 'package:double07/animation_background_state.dart';
 import 'package:double07/animation_text_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class AnimationState {
   AnimationState();
@@ -37,19 +34,15 @@ class AnimationState {
   int lastV = -1;
 
   // background
-  late ui.Image hendersonImage;
-  late final Animation<double> backgroundAnimation;
+  final backgroundState = AnimationBackgroundState(
+    imageAsset: 'assets/images/henderson.png',
+    alignment: const Alignment(-0.25, -0.3),
+  );
 
   // =================================================
 
   Future<void> initialize(AnimationController controller) async {
     if (!isInitialized) {
-      final ByteData byteData =
-          await rootBundle.load('assets/images/henderson.png');
-
-      hendersonImage =
-          await ImageProcessor.bytesToImage(byteData.buffer.asUint8List());
-
       const double textStart = 0.2;
       const double textEnd = 0.9;
 
@@ -70,30 +63,7 @@ class AnimationState {
         tEnd: textEnd2,
       );
 
-      backgroundAnimation = TweenSequence<double>(
-        <TweenSequenceItem<double>>[
-          TweenSequenceItem<double>(
-            tween: Tween<double>(begin: 0, end: 0.35),
-            weight: 33,
-          ),
-          TweenSequenceItem<double>(
-            tween: ConstantTween<double>(0.35),
-            weight: 33,
-          ),
-          TweenSequenceItem<double>(
-            tween: Tween<double>(begin: 0.35, end: 0),
-            weight: 33,
-          ),
-        ],
-      ).animate(
-        CurvedAnimation(
-          parent: controller,
-          curve: const Interval(
-            0.12,
-            0.9,
-          ),
-        ),
-      );
+      await backgroundState.initialize(controller);
 
       isInitialized = true;
     }

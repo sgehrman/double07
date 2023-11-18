@@ -10,7 +10,7 @@ class DeckrAnimationPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    paintBackground(canvas, size);
+    animationState.backgroundState.paintBackground(canvas, size);
 
     DeckrAnimationPainterBall.paintBall(canvas, size, animationState);
     DeckrAnimationPainterText.paintText(
@@ -26,29 +26,6 @@ class DeckrAnimationPainter extends CustomPainter {
   }
 
   // =================================================
-
-  void paintBackground(Canvas canvas, Size size) {
-    final rect = Offset.zero & size;
-    final backPaint = Paint()..color = Colors.black;
-    final gradientPaint = Paint()
-      ..isAntiAlias = true
-      ..style = PaintingStyle.fill
-      ..shader = const RadialGradient(
-        colors: [Colors.transparent, Colors.black],
-        center: Alignment(-0.25, -0.3),
-      ).createShader(rect);
-
-    canvas.drawRect(rect, backPaint);
-
-    paintImage(
-      canvas: canvas,
-      rect: rect,
-      fit: BoxFit.cover,
-      image: animationState.hendersonImage,
-      opacity: animationState.backgroundAnimation.value,
-    );
-    canvas.drawRect(rect, gradientPaint);
-  }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
