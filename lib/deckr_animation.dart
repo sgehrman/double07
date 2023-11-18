@@ -21,7 +21,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
   final double ballEnd = 1;
 
   final double textStart = 0.2;
-  final double textEnd = 0.4;
+  final double textEnd = 0.9;
 
   @override
   void initState() {
@@ -86,9 +86,16 @@ class _DeckrAnimationState extends State<DeckrAnimation>
   void _buildTextAnimations() {
     final len = _animationState.textString.length;
 
+    final time = textEnd - textStart;
+    double duration = time / len;
+    const compress = 0.05;
+
+    final spacer = duration * compress;
+    duration = duration + (duration - spacer);
+
     for (int i = 0; i < len; i++) {
-      final start = textStart + (((i + 1) / len) * textStart);
-      final end = textStart + (((i + 1) / len) * textEnd);
+      final start = textStart + (i * spacer);
+      final end = start + duration;
 
       _textAnimations.add(
         Tween<double>(
