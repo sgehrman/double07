@@ -121,13 +121,19 @@ class DeckrAnimationPainter extends CustomPainter {
 
       Rect destRect = alignment.inscribe(
         Size(
-          tSize.width,
-          tSize.height,
+          textImage.size.width,
+          textImage.size.height,
         ),
         rect,
       );
 
-      destRect = destRect.translate(index * destRect.width, 0);
+      destRect = textImage.alignment.inscribe(
+        Size(
+          tSize.width,
+          tSize.height,
+        ),
+        destRect,
+      );
 
       paintImage(
         canvas: canvas,

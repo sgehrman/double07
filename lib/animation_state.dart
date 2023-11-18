@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:dfc_flutter/dfc_flutter_web.dart';
@@ -77,17 +78,32 @@ class AnimationState {
   Future<void> _createTextImages() async {
     final textPainters = _createTextPainters();
 
+    const double space = 10;
     double width = 0;
+    double height = 0;
     for (final painter in textPainters) {
-      width += painter.size.width;
+      width += painter.size.width + space;
+      height = math.max(height, painter.size.height);
     }
 
+    final mid = width / 2;
+    double w = 0;
+
     for (final painter in textPainters) {
+      double left = -1 + w / mid;
+
+      if (w > mid) {
+        left = (w - mid) / mid;
+      }
+
+      w += painter.size.width + space;
+
       textImages.add(
         TextImageInfo(
           image: await createTextImage(painter),
           painter: painter,
-          offset: Offset(width / 2, 0),
+          size: Size(width, height),
+          alignment: Alignment(left, 0),
         ),
       );
     }
@@ -169,10 +185,13 @@ class TextImageInfo {
   TextImageInfo({
     required this.painter,
     required this.image,
-    required this.offset,
+    // size of string, not this image
+    required this.size,
+    required this.alignment,
   });
 
   final TextPainter painter;
-  final Offset offset;
+  final Size size;
   final ui.Image image;
+  final Alignment alignment;
 }
