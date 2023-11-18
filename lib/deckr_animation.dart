@@ -1,5 +1,6 @@
 import 'package:double07/animation_state.dart';
 import 'package:double07/deckr_animation_painter.dart';
+import 'package:double07/timeline.dart';
 import 'package:flutter/material.dart';
 
 class DeckrAnimation extends StatefulWidget {
@@ -14,10 +15,6 @@ class _DeckrAnimationState extends State<DeckrAnimation>
   late final AnimationController _controller;
   late final Animation<double> _ballAnimation;
   final AnimationState _animationState = AnimationState();
-
-  // timing
-  final double ballStart = 0;
-  final double ballEnd = 1;
 
   @override
   void initState() {
@@ -69,8 +66,8 @@ class _DeckrAnimationState extends State<DeckrAnimation>
       CurvedAnimation(
         parent: _controller,
         curve: Interval(
-          ballStart,
-          ballEnd,
+          Timeline.ballStart,
+          Timeline.ballEnd,
         ),
       ),
     );

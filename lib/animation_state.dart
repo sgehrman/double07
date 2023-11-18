@@ -1,5 +1,6 @@
 import 'package:double07/animation_background_state.dart';
 import 'package:double07/animation_text_state.dart';
+import 'package:double07/timeline.dart';
 import 'package:flutter/material.dart';
 
 class AnimationState {
@@ -14,6 +15,8 @@ class AnimationState {
     color: Colors.white,
     startAlignment: const Alignment(-0.8, -5),
     endAlignment: const Alignment(-0.8, -0.8),
+    timeStart: Timeline.textStart,
+    timeEnd: Timeline.textEnd,
   );
 
   // Coder animation
@@ -23,6 +26,8 @@ class AnimationState {
     color: Colors.cyan,
     startAlignment: const Alignment(0.8, 5),
     endAlignment: const Alignment(0.8, 0.8),
+    timeStart: Timeline.textStart2,
+    timeEnd: Timeline.textEnd2,
   );
 
   // ball animation
@@ -37,43 +42,39 @@ class AnimationState {
   final backgroundState = AnimationBackgroundState(
     imageAsset: 'assets/images/henderson.png',
     alignment: const Alignment(-0.25, -0.3),
-    timeStart: 0.1,
-    timeEnd: 0.5,
+    timeStart: Timeline.hendersonStart,
+    timeEnd: Timeline.hendersonEnd,
   );
 
   final backgroundState2 = AnimationBackgroundState(
+    imageAsset: 'assets/images/drago.jpg',
+    alignment: const Alignment(0.7, -0.1),
+    timeStart: Timeline.dragoStart,
+    timeEnd: Timeline.dragoEnd,
+  );
+
+  final backgroundState3 = AnimationBackgroundState(
     imageAsset: 'assets/images/domino.jpg',
     alignment: const Alignment(-0.1, -0.2),
-    timeStart: 0.5,
-    timeEnd: 0.95,
+    timeStart: Timeline.dominoStart,
+    timeEnd: Timeline.dominoEnd,
   );
 
   // =================================================
 
   Future<void> initialize(AnimationController controller) async {
     if (!isInitialized) {
-      const double textStart = 0.2;
-      const double textEnd = 0.9;
-
-      const double textStart2 = 0.4;
-      const double textEnd2 = 1;
-
       await t1.initialize(
         controller: controller,
-        text: t1.text,
-        tStart: textStart,
-        tEnd: textEnd,
       );
 
       await t2.initialize(
         controller: controller,
-        text: t2.text,
-        tStart: textStart2,
-        tEnd: textEnd2,
       );
 
       await backgroundState.initialize(controller);
       await backgroundState2.initialize(controller);
+      await backgroundState3.initialize(controller);
 
       isInitialized = true;
     }

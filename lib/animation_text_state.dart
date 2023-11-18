@@ -12,6 +12,8 @@ class AnimationTextState {
     required this.color,
     required this.startAlignment,
     required this.endAlignment,
+    required this.timeStart,
+    required this.timeEnd,
   });
 
   final List<AnimatedTextInfo> textImages = [];
@@ -22,22 +24,19 @@ class AnimationTextState {
   final Color color;
   final Alignment startAlignment;
   final Alignment endAlignment;
-
-  // =================================================
+  final double timeStart;
+  final double timeEnd;
 
   Future<void> initialize({
     required AnimationController controller,
-    required String text,
-    required double tStart,
-    required double tEnd,
   }) async {
     await _createTextImages();
 
     textAnimations = _buildTextAnimations(
       controller: controller,
       text: text,
-      tStart: tStart,
-      tEnd: tEnd,
+      tStart: timeStart,
+      tEnd: timeEnd,
     );
   }
 
