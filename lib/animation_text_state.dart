@@ -35,7 +35,7 @@ class AnimationTextState {
     final textPainter = TextPainter(
       text: TextSpan(
         style: style,
-        text: text.toUpperCase(),
+        text: text,
       ),
       textDirection: TextDirection.ltr,
     );

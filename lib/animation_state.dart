@@ -12,7 +12,7 @@ class AnimationState {
 
   // Deckr animation
   final t1 = AnimationTextState(
-    text: 'Deckr',
+    text: 'Deckr'.toUpperCase(),
     startAlignment: const Alignment(-0.5, -5),
     endAlignment: const Alignment(-0.5, -0.5),
   );
