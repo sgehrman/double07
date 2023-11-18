@@ -46,8 +46,6 @@ class _DeckrAnimationState extends State<DeckrAnimation>
 
   // =================================================
 
-  // =================================================
-
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
