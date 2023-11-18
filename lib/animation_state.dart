@@ -1,7 +1,9 @@
 import 'dart:ui' as ui;
 
+import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:double07/animation_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AnimationState {
   AnimationState();
@@ -19,6 +21,7 @@ class AnimationState {
   double fadeBallOpacity2 = 0;
 
   int lastV = -1;
+  late ui.Image hendersonImage;
 
   // =================================================
 
@@ -30,6 +33,12 @@ class AnimationState {
     if (!isInitialized) {
       // must set this first before async createTextImages
       isInitialized = true;
+
+      final ByteData byteData =
+          await rootBundle.load('assets/images/henderson.png');
+
+      hendersonImage =
+          await ImageProcessor.bytesToImage(byteData.buffer.asUint8List());
 
       await _createTextImages();
     }

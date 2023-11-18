@@ -12,8 +12,26 @@ class DeckrAnimationPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
     final backPaint = Paint()..color = Colors.black;
+    final gradientPaint = Paint()
+      ..isAntiAlias = true
+      ..style = PaintingStyle.fill
+      ..shader = const RadialGradient(
+        colors: [Colors.transparent, Colors.black],
+        // radius: 1,
+        // focal: Alignment.bottomCenter,
+        center: Alignment(-0.25, -0.3),
+      ).createShader(rect);
 
     canvas.drawRect(rect, backPaint);
+
+    paintImage(
+      canvas: canvas,
+      rect: rect,
+      fit: BoxFit.cover,
+      image: animationState.hendersonImage,
+      opacity: 0.35,
+    );
+    canvas.drawRect(rect, gradientPaint);
 
     paintBall(canvas, size);
     paintText(canvas, size);
