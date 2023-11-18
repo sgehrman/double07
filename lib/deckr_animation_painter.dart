@@ -1,5 +1,4 @@
 import 'package:double07/animation_state.dart';
-import 'package:double07/deckr_animation_painter_text.dart';
 import 'package:flutter/material.dart';
 
 class DeckrAnimationPainter extends CustomPainter {
@@ -19,15 +18,14 @@ class DeckrAnimationPainter extends CustomPainter {
     animationState.backgroundState3.paintBackground(canvas, size);
 
     animationState.ballState.paintBall(canvas, size);
-    DeckrAnimationPainterText.paintText(
+    animationState.t1.paintText(
       canvas: canvas,
       size: size,
-      textState: animationState.t1,
     );
-    DeckrAnimationPainterText.paintText(
+
+    animationState.t2.paintText(
       canvas: canvas,
       size: size,
-      textState: animationState.t2,
     );
   }
 

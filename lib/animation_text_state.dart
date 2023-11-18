@@ -173,4 +173,64 @@ class AnimationTextState {
 
     return pict.toImage(destRect.width.round(), destRect.height.round());
   }
+
+  void paintText({
+    required Canvas canvas,
+    required Size size,
+  }) {
+    for (int i = 0; i < textImages.length; i++) {
+      _paintText(
+        canvas: canvas,
+        size: size,
+        textImage: textImages[i],
+        textAnima: textAnimations[i],
+      );
+    }
+  }
+
+  void _paintText({
+    required Canvas canvas,
+    required Size size,
+    required AnimatedTextInfo textImage,
+    required Animation<double> textAnima,
+  }) {
+    if (textAnima.value > 0) {
+      final rect = Offset.zero & size;
+
+      final tSize = textImage.painter.size;
+
+      final alignment = Alignment.lerp(
+            startAlignment,
+            endAlignment,
+            textAnima.value,
+          ) ??
+          Alignment.center;
+
+      Rect destRect = alignment.inscribe(
+        Size(
+          textImage.wordSize.width,
+          textImage.wordSize.height,
+        ),
+        rect,
+      );
+
+      destRect = textImage.alignment.inscribe(
+        Size(
+          tSize.width,
+          tSize.height,
+        ),
+        destRect,
+      );
+
+      paintImage(
+        canvas: canvas,
+        rect: destRect,
+        fit: BoxFit.fill,
+        image: textImage.image,
+        opacity: 0.3,
+        isAntiAlias: true,
+        filterQuality: FilterQuality.high,
+      );
+    }
+  }
 }
