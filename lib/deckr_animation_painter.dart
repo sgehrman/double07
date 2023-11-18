@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:double07/animation_state.dart';
@@ -69,40 +70,53 @@ class DeckrAnimationPainter extends CustomPainter {
     if (animationState.textAnimValue > 0) {
       for (int i = 0; i < animationState.textPainters.length; i++) {
         _paintText(
-          canvas,
-          size,
-          animationState.textPainters[i],
-          animationState.textImages[i],
+          canvas: canvas,
+          size: size,
+          textPainter: animationState.textPainters[i],
+          textImage: animationState.textImages[i],
+          index: i,
         );
       }
     }
   }
 
-  void _paintText(
-    Canvas canvas,
-    Size size,
-    TextPainter textPainter,
-    ui.Image textImage,
-  ) {
+  void _paintText({
+    required Canvas canvas,
+    required Size size,
+    required TextPainter textPainter,
+    required ui.Image textImage,
+    required int index,
+  }) {
     if (animationState.textAnimValue > 0) {
       final rect = Offset.zero & size;
 
       final tSize = textPainter.size;
 
-      final delta = (1 - animationState.textAnimValue) * 200;
+      final delta = math.max(1, (1 - animationState.textAnimValue) * 200);
 
-      final destRect = Rect.fromCenter(
+      Rect destRect = Rect.fromCenter(
         center: rect.center,
         width: tSize.width * delta,
         height: tSize.height * delta,
       );
 
+      destRect = Rect.fromLTWH(
+        destRect.left + index * destRect.width,
+        destRect.top,
+        destRect.width,
+        destRect.height,
+      );
+
+      // canvas.drawRect(destRect, Paint()..color = Colors.blue.withOpacity(0.1));
+
       paintImage(
         canvas: canvas,
         rect: destRect,
-        fit: BoxFit.contain,
+        fit: BoxFit.fill,
+        // repeat: ImageRepeat.noRepeat,
         image: textImage,
         opacity: 0.1,
+        isAntiAlias: true,
         filterQuality: FilterQuality.high,
       );
     }

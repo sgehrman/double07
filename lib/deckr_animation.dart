@@ -74,29 +74,28 @@ class _DeckrAnimationState extends State<DeckrAnimation>
       <TweenSequenceItem<double>>[
         TweenSequenceItem<double>(
           tween: Tween<double>(begin: 0, end: 1),
-          weight: 25,
+          weight: 100,
         ),
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 1, end: 0),
-          weight: 25,
-        ),
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0, end: 1),
-          weight: 25,
-        ),
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 1, end: 0),
-          weight: 25,
-        ),
+        // TweenSequenceItem<double>(
+        //   tween: Tween<double>(begin: 1, end: 0),
+        //   weight: 25,
+        // ),
+        // TweenSequenceItem<double>(
+        //   tween: Tween<double>(begin: 0, end: 1),
+        //   weight: 25,
+        // ),
+        // TweenSequenceItem<double>(
+        //   tween: Tween<double>(begin: 1, end: 0),
+        //   weight: 25,
+        // ),
       ],
     ).animate(
       CurvedAnimation(
         parent: _controller,
         curve: const Interval(
-          // 0.5,
-          // 1,
-          0, 1,
-          curve: Curves.ease,
+          0,
+          0.4,
+          // curve: Curves.linear,
         ),
       ),
     );

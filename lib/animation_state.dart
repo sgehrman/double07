@@ -4,9 +4,7 @@ import 'package:double07/animation_utils.dart';
 import 'package:flutter/material.dart';
 
 class AnimationState {
-  AnimationState() {
-    _createTextPainters();
-  }
+  AnimationState();
 
   List<TextPainter> textPainters = [];
   List<ui.Image> textImages = [];
@@ -30,21 +28,25 @@ class AnimationState {
   }
 
   Future<void> initialize() async {
-    await _createTextImages();
+    if (!isInitialized) {
+      // must set this first before async createTextImages
+      isInitialized = true;
 
-    isInitialized = true;
+      await _createTextImages();
+    }
   }
 
   TextPainter _createTextPainter(String text) {
     const TextStyle style = TextStyle(
       color: Colors.white,
       fontSize: 64,
+      height: 1,
     );
 
     final TextSpan span12 = TextSpan(style: style, text: text.toUpperCase());
     final textPainter = TextPainter(
       text: span12,
-      textAlign: TextAlign.center,
+      // textAlign: TextAlign.center,
       textDirection: TextDirection.ltr,
     );
 
