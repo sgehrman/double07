@@ -77,12 +77,17 @@ class AnimationState {
   Future<void> _createTextImages() async {
     final textPainters = _createTextPainters();
 
+    double width = 0;
+    for (final painter in textPainters) {
+      width += painter.size.width;
+    }
+
     for (final painter in textPainters) {
       textImages.add(
         TextImageInfo(
           image: await createTextImage(painter),
           painter: painter,
-          offsetFromCenter: Offset.zero,
+          offset: Offset(width / 2, 0),
         ),
       );
     }
@@ -164,10 +169,10 @@ class TextImageInfo {
   TextImageInfo({
     required this.painter,
     required this.image,
-    required this.offsetFromCenter,
+    required this.offset,
   });
 
   final TextPainter painter;
-  final Offset offsetFromCenter;
+  final Offset offset;
   final ui.Image image;
 }

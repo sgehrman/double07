@@ -26,7 +26,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
   Future<void> _setup() async {
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 12),
+      duration: const Duration(seconds: 4),
     );
 
     _controller.addStatusListener((status) {

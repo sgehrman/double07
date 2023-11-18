@@ -107,18 +107,39 @@ class DeckrAnimationPainter extends CustomPainter {
   }) {
     if (animationState.textAnimValue > 0) {
       final rect = Offset.zero & size;
+      final multiplier = math.max(1, (1 - animationState.textAnimValue) * 122);
 
       final tSize = textImage.painter.size;
 
-      final delta = math.max(1, (1 - animationState.textAnimValue) * 200);
+      const startAlignment = Alignment(-5, -5);
+      const endAlignment = Alignment(-0.5, -0.5);
 
-      Rect destRect = Rect.fromCenter(
-        center: rect.center,
-        width: tSize.width * delta,
-        height: tSize.height * delta,
+      final alignment = Alignment.lerp(
+            startAlignment,
+            endAlignment,
+            animationState.textAnimValue,
+          ) ??
+          Alignment.center;
+
+      Rect destRect = alignment.inscribe(
+        Size(
+          tSize.width * multiplier,
+          tSize.height * multiplier,
+        ),
+        rect,
       );
 
       destRect = destRect.translate(index * destRect.width, 0);
+
+      destRect = destRect.translate(
+        -textImage.offset.dx * multiplier,
+        textImage.offset.dy * multiplier,
+      );
+
+      // final scaledX = textImage.painter.size.width * multiplier;
+
+      // destRect = destRect.inflate(multiplier.toDouble());
+      // destRect = destRect.translate(-scaledX / 2, 0);
 
       // canvas.drawRect(destRect, Paint()..color = Colors.blue.withOpacity(0.1));
 
