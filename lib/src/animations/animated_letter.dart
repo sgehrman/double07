@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
+import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:double07/src/animations/animation_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -26,6 +27,8 @@ class AnimatedLetter {
     required Alignment endAlignment,
     required double opacity,
   }) {
+    final nextColor = NextColor();
+
     for (int i = 0; i < letters.length; i++) {
       letters[i].paintLetter(
         canvas: canvas,
@@ -34,6 +37,7 @@ class AnimatedLetter {
         startAlignment: startAlignment,
         endAlignment: endAlignment,
         opacity: opacity,
+        backgroundColor: nextColor.color(),
       );
     }
   }
@@ -45,6 +49,7 @@ class AnimatedLetter {
     required Alignment startAlignment,
     required Alignment endAlignment,
     required double opacity,
+    Color? backgroundColor,
   }) {
     if (textAnima.value > 0) {
       final rect = Offset.zero & size;
@@ -71,6 +76,10 @@ class AnimatedLetter {
         ),
         destRect,
       );
+
+      if (backgroundColor != null) {
+        canvas.drawRect(destRect, Paint()..color = backgroundColor);
+      }
 
       paintImage(
         canvas: canvas,
