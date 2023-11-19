@@ -15,6 +15,8 @@ class AnimationTextState {
     required this.timeStart,
     required this.timeEnd,
     this.curve = Curves.elasticInOut,
+    this.bold = false,
+    this.letterSpacing = 10,
   });
 
   final List<AnimatedTextInfo> textImages = [];
@@ -22,12 +24,14 @@ class AnimationTextState {
 
   final String text;
   final double fontSize;
+  final bool bold;
   final Color color;
   final Alignment startAlignment;
   final Alignment endAlignment;
   final double timeStart;
   final double timeEnd;
   final Curve curve;
+  final double letterSpacing;
 
   Future<void> initialize({
     required AnimationController controller,
@@ -36,6 +40,15 @@ class AnimationTextState {
 
     textAnimations = _buildTextAnimations(
       controller: controller,
+    );
+  }
+
+  TextStyle _textStyle() {
+    return TextStyle(
+      color: color,
+      fontSize: fontSize,
+      fontWeight: bold ? FontWeight.bold : FontWeight.normal,
+      height: 1,
     );
   }
 
@@ -78,15 +91,9 @@ class AnimationTextState {
   }
 
   TextPainter _createTextPainter(String text) {
-    final TextStyle style = TextStyle(
-      color: color,
-      fontSize: fontSize,
-      height: 1,
-    );
-
     final textPainter = TextPainter(
       text: TextSpan(
-        style: style,
+        style: _textStyle(),
         text: text,
       ),
       textDirection: TextDirection.ltr,
@@ -110,12 +117,11 @@ class AnimationTextState {
   Future<void> _createTextImages() async {
     final textPainters = _createTextPainters();
 
-    const double space = 10;
     double wordWidth = 0;
     double wordHeight = 0;
 
     for (final painter in textPainters) {
-      wordWidth += painter.size.width + space;
+      wordWidth += painter.size.width + letterSpacing;
       wordHeight = math.max(wordHeight, painter.size.height);
     }
 
@@ -129,7 +135,7 @@ class AnimationTextState {
         left = (w - mid) / mid;
       }
 
-      w += painter.size.width + space;
+      w += painter.size.width + letterSpacing;
 
       textImages.add(
         AnimatedTextInfo(

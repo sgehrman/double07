@@ -14,6 +14,7 @@ class AnimationState {
   final t1 = AnimationTextState(
     text: 'Deckr'.toUpperCase(),
     fontSize: 64,
+    bold: true,
     color: Colors.white,
     startAlignment: const Alignment(-0.8, -2),
     endAlignment: const Alignment(-0.8, -0.8),
