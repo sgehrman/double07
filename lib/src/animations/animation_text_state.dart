@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
-import 'package:double07/src/animations/animated_text_info.dart';
+import 'package:double07/src/animations/animated_letter.dart';
 import 'package:double07/src/animations/animation_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +19,7 @@ class AnimationTextState {
     this.letterSpacing = 10,
   });
 
-  final List<AnimatedTextInfo> _textImages = [];
+  final List<AnimatedLetter> _textLetters = [];
   late final List<Animation<double>> _textAnimations;
 
   final String text;
@@ -43,18 +43,18 @@ class AnimationTextState {
     );
   }
 
-  void paintText({
+  void paintWord({
     required Canvas canvas,
     required Size size,
   }) {
-    for (int i = 0; i < _textImages.length; i++) {
-      _paintText(
-        canvas: canvas,
-        size: size,
-        textImage: _textImages[i],
-        textAnima: _textAnimations[i],
-      );
-    }
+    AnimatedLetter.paintWord(
+      canvas: canvas,
+      size: size,
+      letters: _textLetters,
+      textAnimas: _textAnimations,
+      startAlignment: startAlignment,
+      endAlignment: endAlignment,
+    );
   }
 
   // ============================================================
@@ -155,10 +155,10 @@ class AnimationTextState {
 
       w += painter.size.width + letterSpacing;
 
-      _textImages.add(
-        AnimatedTextInfo(
+      _textLetters.add(
+        AnimatedLetter(
           image: await _createTextImage(painter),
-          size: painter.size,
+          letterSize: painter.size,
           wordSize: Size(wordWidth, wordHeight),
           alignment: Alignment(left, 0),
         ),
@@ -192,51 +192,5 @@ class AnimationTextState {
     final ui.Picture pict = recorder.endRecording();
 
     return pict.toImage(destRect.width.round(), destRect.height.round());
-  }
-
-  void _paintText({
-    required Canvas canvas,
-    required Size size,
-    required AnimatedTextInfo textImage,
-    required Animation<double> textAnima,
-  }) {
-    if (textAnima.value > 0) {
-      final rect = Offset.zero & size;
-
-      final tSize = textImage.size;
-
-      final alignment = Alignment.lerp(
-            startAlignment,
-            endAlignment,
-            textAnima.value,
-          ) ??
-          Alignment.center;
-
-      Rect destRect = alignment.inscribe(
-        Size(
-          textImage.wordSize.width,
-          textImage.wordSize.height,
-        ),
-        rect,
-      );
-
-      destRect = textImage.alignment.inscribe(
-        Size(
-          tSize.width,
-          tSize.height,
-        ),
-        destRect,
-      );
-
-      paintImage(
-        canvas: canvas,
-        rect: destRect,
-        fit: BoxFit.fill,
-        image: textImage.image,
-        opacity: 0.3,
-        isAntiAlias: true,
-        filterQuality: FilterQuality.high,
-      );
-    }
   }
 }
