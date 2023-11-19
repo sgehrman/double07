@@ -71,6 +71,9 @@ class AnimatedLetter {
         rect,
       );
 
+      // not working? white is on top
+      // canvas.drawRect(destRect, Paint()..color = Colors.white);
+
       destRect = alignment.inscribe(
         Size(
           letterSize.width,
@@ -117,20 +120,24 @@ class AnimatedLetter {
       wordHeight = math.max(wordHeight, painter.size.height);
     }
 
-    final mid = wordWidth / 2;
-    double w = 0;
+    final half = wordWidth / 2;
+    double nextX = 0;
 
     for (final painter in textPainters) {
       if (painter.isSpace) {
-        w += painter.size.width;
+        nextX += painter.size.width;
       } else {
-        double left = -1 + w / mid;
+        double left;
 
-        if (w > mid) {
-          left = (w - mid) / mid;
+        if (nextX > half) {
+          // right side of half
+          left = (nextX - half) / half;
+        } else {
+          // left side of half
+          left = -1.0 + (nextX / half);
         }
 
-        w += painter.size.width + letterSpacing;
+        nextX += painter.size.width + letterSpacing;
 
         result.add(
           AnimatedLetter(
