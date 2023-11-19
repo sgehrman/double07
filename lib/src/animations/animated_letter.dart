@@ -97,6 +97,23 @@ class AnimatedLetter {
     }
   }
 
+  static Alignment makeAlignment(double x, double y, Size size, Size boxSize) {
+    double newX = 0;
+    final double half = boxSize.width / 2.0;
+
+    final xPlus = x + size.width / 2.0;
+
+    if (x > half) {
+      // right side of half
+      newX = (xPlus - half) / half;
+    } else {
+      // left side of half
+      newX = -1.0 + (xPlus / half);
+    }
+
+    return Alignment(newX, 0);
+  }
+
   static Future<List<AnimatedLetter>> createTextImages(
     String text,
     TextStyle style,
@@ -118,22 +135,18 @@ class AnimatedLetter {
       wordHeight = math.max(wordHeight, letterPainter.size.height);
     }
 
-    final half = wordWidth / 2;
     double nextX = 0;
 
     for (final letterPainter in letterPainters) {
       if (letterPainter.isSpace) {
         nextX += letterPainter.size.width;
       } else {
-        double left;
-
-        if (nextX > half) {
-          // right side of half
-          left = (nextX - half) / half;
-        } else {
-          // left side of half
-          left = -1.0 + (nextX / half);
-        }
+        final alignment = makeAlignment(
+          nextX,
+          0,
+          letterPainter.size,
+          Size(wordWidth, wordHeight),
+        );
 
         nextX += letterPainter.size.width + letterSpacing;
 
@@ -143,7 +156,7 @@ class AnimatedLetter {
             image: await _createTextImage(letterPainter),
             letterSize: letterPainter.size,
             wordSize: Size(wordWidth, wordHeight),
-            alignment: Alignment(left, 0),
+            alignment: alignment,
           ),
         );
       }
