@@ -7,12 +7,14 @@ import 'package:flutter/material.dart';
 
 class AnimatedLetter {
   AnimatedLetter({
+    required this.letter,
     required this.image,
     required this.wordSize,
     required this.alignment,
     required this.letterSize,
   });
 
+  final String letter;
   final Size wordSize;
   final Size letterSize;
   final ui.Image image;
@@ -37,7 +39,7 @@ class AnimatedLetter {
         startAlignment: startAlignment,
         endAlignment: endAlignment,
         opacity: opacity,
-        backgroundColor: nextColor.color(),
+        backgroundColor: nextColor.darkColor(),
       );
     }
   }
@@ -114,22 +116,27 @@ class AnimatedLetter {
     double w = 0;
 
     for (final painter in textPainters) {
-      double left = -1 + w / mid;
+      if (painter.isSpace) {
+        w += painter.size.width;
+      } else {
+        double left = -1 + w / mid;
 
-      if (w > mid) {
-        left = (w - mid) / mid;
+        if (w > mid) {
+          left = (w - mid) / mid;
+        }
+
+        w += painter.size.width + letterSpacing;
+
+        result.add(
+          AnimatedLetter(
+            letter: painter.letter,
+            image: await _createTextImage(painter),
+            letterSize: painter.size,
+            wordSize: Size(wordWidth, wordHeight),
+            alignment: Alignment(left, 0),
+          ),
+        );
       }
-
-      w += painter.size.width + letterSpacing;
-
-      result.add(
-        AnimatedLetter(
-          image: await _createTextImage(painter),
-          letterSize: painter.size,
-          wordSize: Size(wordWidth, wordHeight),
-          alignment: Alignment(left, 0),
-        ),
-      );
     }
 
     return result;
@@ -138,7 +145,13 @@ class AnimatedLetter {
   // ====================================================
   // private methods
 
-  static TextPainter _createTextPainter(String char, TextStyle style) {
+  static _LetterPainter _createTextPainter(String char, TextStyle style) {
+    if (char == ' ') {
+      return _LetterPainter(
+        letter: char,
+      );
+    }
+
     final textPainter = TextPainter(
       text: TextSpan(
         style: style,
@@ -149,14 +162,17 @@ class AnimatedLetter {
 
     textPainter.layout();
 
-    return textPainter;
+    return _LetterPainter(
+      textPainter: textPainter,
+      letter: char,
+    );
   }
 
-  static List<TextPainter> _createTextPainters(
+  static List<_LetterPainter> _createTextPainters(
     String text,
     TextStyle style,
   ) {
-    final List<TextPainter> result = [];
+    final List<_LetterPainter> result = [];
 
     for (final s in text.characters) {
       result.add(_createTextPainter(s, style));
@@ -165,8 +181,8 @@ class AnimatedLetter {
     return result;
   }
 
-  static Future<ui.Image> _createTextImage(TextPainter textPainter) {
-    final imageSize = textPainter.size;
+  static Future<ui.Image> _createTextImage(_LetterPainter letterPainter) {
+    final imageSize = letterPainter.size;
 
     final destRect = Rect.fromLTWH(
       0,
@@ -184,10 +200,14 @@ class AnimatedLetter {
 
     canvas.transform(matrix.storage);
 
-    textPainter.paint(
-      canvas,
-      Offset.zero,
-    );
+    if (!letterPainter.isSpace) {
+      letterPainter.textPainter?.paint(
+        canvas,
+        Offset.zero,
+      );
+    } else {
+      print('shouldnt get here, this is a space character');
+    }
 
     final ui.Picture pict = recorder.endRecording();
 
@@ -197,5 +217,28 @@ class AnimatedLetter {
     pict.dispose();
 
     return result;
+  }
+}
+
+// =======================================================
+
+class _LetterPainter {
+  _LetterPainter({
+    required this.letter,
+    this.textPainter,
+  });
+
+  String letter;
+  TextPainter? textPainter;
+
+  bool get isSpace => textPainter == null;
+
+  Size get size {
+    if (!isSpace) {
+      return textPainter!.size;
+    }
+
+    // space
+    return const Size(20, 20);
   }
 }

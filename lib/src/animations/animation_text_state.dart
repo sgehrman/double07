@@ -41,7 +41,11 @@ class AnimationTextState {
     );
 
     _textAnimations = _buildTextAnimations(
+      count: _textLetters.length,
       controller: controller,
+      curve: curve,
+      timeEnd: timeEnd,
+      timeStart: timeStart,
     );
   }
 
@@ -64,21 +68,23 @@ class AnimationTextState {
   // private methods
   // ============================================================
 
-  List<Animation<double>> _buildTextAnimations({
+  static List<Animation<double>> _buildTextAnimations({
+    required int count,
     required AnimationController controller,
+    required double timeStart,
+    required double timeEnd,
+    required Curve curve,
   }) {
     final List<Animation<double>> result = [];
 
-    final len = text.length;
-
     final time = timeEnd - timeStart;
-    double duration = time / len;
+    double duration = time / count;
     const compress = 0.05;
 
     final spacer = duration * compress;
     duration = duration + (duration - spacer);
 
-    for (int i = 0; i < len; i++) {
+    for (int i = 0; i < count; i++) {
       final start = timeStart + (i * spacer);
       final end = start + duration;
 
