@@ -14,6 +14,7 @@ class AnimationTextState {
     required this.endAlignment,
     required this.timeStart,
     required this.timeEnd,
+    this.curve = Curves.elasticInOut,
   });
 
   final List<AnimatedTextInfo> textImages = [];
@@ -26,6 +27,7 @@ class AnimationTextState {
   final Alignment endAlignment;
   final double timeStart;
   final double timeEnd;
+  final Curve curve;
 
   Future<void> initialize({
     required AnimationController controller,
@@ -34,23 +36,17 @@ class AnimationTextState {
 
     textAnimations = _buildTextAnimations(
       controller: controller,
-      text: text,
-      tStart: timeStart,
-      tEnd: timeEnd,
     );
   }
 
-  static List<Animation<double>> _buildTextAnimations({
+  List<Animation<double>> _buildTextAnimations({
     required AnimationController controller,
-    required String text,
-    required double tStart,
-    required double tEnd,
   }) {
     final List<Animation<double>> result = [];
 
     final len = text.length;
 
-    final time = tEnd - tStart;
+    final time = timeEnd - timeStart;
     double duration = time / len;
     const compress = 0.05;
 
@@ -58,7 +54,7 @@ class AnimationTextState {
     duration = duration + (duration - spacer);
 
     for (int i = 0; i < len; i++) {
-      final start = tStart + (i * spacer);
+      final start = timeStart + (i * spacer);
       final end = start + duration;
 
       result.add(
@@ -71,7 +67,7 @@ class AnimationTextState {
             curve: Interval(
               start,
               end,
-              curve: Curves.elasticInOut,
+              curve: curve,
             ),
           ),
         ),

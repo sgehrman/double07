@@ -19,6 +19,7 @@ class AnimationState {
     endAlignment: const Alignment(-0.8, -0.8),
     timeStart: Timeline.textStart,
     timeEnd: Timeline.textEnd,
+    curve: Curves.bounceOut,
   );
 
   // Coder animation
