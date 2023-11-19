@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 
 class AnimaUtils {
+  static bool isRunning(Animation<dynamic> animation) {
+    switch (animation.status) {
+      case AnimationStatus.completed:
+      case AnimationStatus.dismissed:
+        return false;
+      case AnimationStatus.forward:
+      case AnimationStatus.reverse:
+        return true;
+    }
+  }
+
   /// Return a scaled and translated [Matrix4] that maps [src] to [dst] for given [fit]
   /// aligned by [alignment] within [dst]
   ///

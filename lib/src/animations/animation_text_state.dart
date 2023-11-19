@@ -17,7 +17,7 @@ class AnimationTextState {
   });
 
   late final List<AnimatedLetter> _textLetters;
-  late final List<Animation<double>> _textAnimations;
+  late final List<Animation<double>> _animations;
 
   final String text;
   final double fontSize;
@@ -40,7 +40,7 @@ class AnimationTextState {
       letterSpacing,
     );
 
-    _textAnimations = _buildTextAnimations(
+    _animations = _buildTextAnimations(
       count: _textLetters.length,
       controller: controller,
       curve: curve,
@@ -57,7 +57,7 @@ class AnimationTextState {
       canvas: canvas,
       size: size,
       letters: _textLetters,
-      textAnimas: _textAnimations,
+      animations: _animations,
       startAlignment: startAlignment,
       endAlignment: endAlignment,
       opacity: opacity,

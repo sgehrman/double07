@@ -114,6 +114,6 @@ class AnimationState {
       size: size,
     );
 
-    ballState.paintBall(canvas, size);
+    ballState.paint(canvas, size);
   }
 }

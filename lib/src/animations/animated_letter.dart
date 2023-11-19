@@ -23,7 +23,7 @@ class AnimatedLetter {
     required Canvas canvas,
     required Size size,
     required List<AnimatedLetter> letters,
-    required List<Animation<double>> textAnimas,
+    required List<Animation<double>> animations,
     required Alignment startAlignment,
     required Alignment endAlignment,
     required double opacity,
@@ -34,7 +34,7 @@ class AnimatedLetter {
       letters[i].paintLetter(
         canvas: canvas,
         size: size,
-        textAnima: textAnimas[i],
+        animation: animations[i],
         startAlignment: startAlignment,
         endAlignment: endAlignment,
         opacity: opacity,
@@ -46,19 +46,19 @@ class AnimatedLetter {
   void paintLetter({
     required Canvas canvas,
     required Size size,
-    required Animation<double> textAnima,
+    required Animation<double> animation,
     required Alignment startAlignment,
     required Alignment endAlignment,
     required double opacity,
     Color? backgroundColor,
   }) {
-    if (textAnima.value > 0) {
+    if (AnimaUtils.isRunning(animation)) {
       final rect = Offset.zero & size;
 
       final lerpedAlignment = Alignment.lerp(
             startAlignment,
             endAlignment,
-            textAnima.value,
+            animation.value,
           ) ??
           Alignment.center;
 

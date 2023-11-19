@@ -1,8 +1,9 @@
+import 'package:double07/src/animations/animation_utils.dart';
 import 'package:double07/src/timeline.dart';
 import 'package:flutter/material.dart';
 
 class AnimationBallState {
-  late final Animation<double> ballAnimation;
+  late final Animation<double> _animation;
 
   // ball animation
   double fadeBallPosition = -1;
@@ -15,7 +16,7 @@ class AnimationBallState {
   // =================================================
 
   void initialize(AnimationController controller) {
-    ballAnimation = TweenSequence<double>(
+    _animation = TweenSequence<double>(
       <TweenSequenceItem<double>>[
         TweenSequenceItem<double>(
           tween: Tween<double>(begin: 0, end: 1),
@@ -39,8 +40,8 @@ class AnimationBallState {
 
   // =================================================
 
-  void update() {
-    final ballValue = ballAnimation.value;
+  void _update() {
+    final ballValue = _animation.value;
 
     final int v = (ballValue * 100).round();
 
@@ -73,51 +74,53 @@ class AnimationBallState {
     }
   }
 
-  void paintBall(
+  void paint(
     Canvas canvas,
     Size size,
   ) {
-    const double ballRadius = 100;
-    final ballPaint = Paint()..color = ballColor;
+    if (AnimaUtils.isRunning(_animation)) {
+      const double ballRadius = 100;
+      final ballPaint = Paint()..color = ballColor;
 
-    update();
-
-    canvas.drawCircle(
-      Offset(
-        size.width * ballAnimation.value,
-        size.height / 2,
-      ),
-      ballRadius,
-      ballPaint,
-    );
-
-    // fade ball
-    if (fadeBallPosition != -1) {
-      final ballFadePaint = Paint()
-        ..color = ballColor.withOpacity(fadeBallOpacity);
+      _update();
 
       canvas.drawCircle(
         Offset(
-          size.width * fadeBallPosition,
+          size.width * _animation.value,
           size.height / 2,
         ),
         ballRadius,
-        ballFadePaint,
+        ballPaint,
       );
-    }
 
-    if (fadeBallPosition2 != -1) {
-      final ballFadePaint = Paint()
-        ..color = ballColor.withOpacity(fadeBallOpacity2);
+      // fade ball
+      if (fadeBallPosition != -1) {
+        final ballFadePaint = Paint()
+          ..color = ballColor.withOpacity(fadeBallOpacity);
 
-      canvas.drawCircle(
-        Offset(
-          size.width * fadeBallPosition2,
-          size.height / 2,
-        ),
-        ballRadius,
-        ballFadePaint,
-      );
+        canvas.drawCircle(
+          Offset(
+            size.width * fadeBallPosition,
+            size.height / 2,
+          ),
+          ballRadius,
+          ballFadePaint,
+        );
+      }
+
+      if (fadeBallPosition2 != -1) {
+        final ballFadePaint = Paint()
+          ..color = ballColor.withOpacity(fadeBallOpacity2);
+
+        canvas.drawCircle(
+          Offset(
+            size.width * fadeBallPosition2,
+            size.height / 2,
+          ),
+          ballRadius,
+          ballFadePaint,
+        );
+      }
     }
   }
 }
