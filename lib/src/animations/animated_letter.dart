@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
-import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:double07/src/animations/animation_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +28,7 @@ class AnimatedLetter {
     required Alignment endAlignment,
     required double opacity,
   }) {
-    final nextColor = NextColor();
+    // final nextColor = NextColor();
 
     for (int i = 0; i < letters.length; i++) {
       letters[i].paintLetter(
@@ -39,7 +38,7 @@ class AnimatedLetter {
         startAlignment: startAlignment,
         endAlignment: endAlignment,
         opacity: opacity,
-        backgroundColor: nextColor.darkColor(),
+        // backgroundColor: nextColor.darkColor(),
       );
     }
   }
@@ -97,21 +96,12 @@ class AnimatedLetter {
     }
   }
 
-  static Alignment makeAlignment(double x, double y, Size size, Size boxSize) {
-    double newX = 0;
-    final double half = boxSize.width / 2.0;
+  static Alignment makeAlignment(double x, double y, Size size, Rect rect) {
+    final double halfWidthDelta = (rect.width - size.width) / 2.0;
 
-    final xPlus = x + size.width / 2.0;
+    final newX = x / halfWidthDelta;
 
-    if (x > half) {
-      // right side of half
-      newX = (xPlus - half) / half;
-    } else {
-      // left side of half
-      newX = -1.0 + (xPlus / half);
-    }
-
-    return Alignment(newX, 0);
+    return Alignment(newX - 1, 0);
   }
 
   static Future<List<AnimatedLetter>> createTextImages(
@@ -135,6 +125,8 @@ class AnimatedLetter {
       wordHeight = math.max(wordHeight, letterPainter.size.height);
     }
 
+    final wordRect = Offset.zero & Size(wordWidth, wordHeight);
+
     double nextX = 0;
 
     for (final letterPainter in letterPainters) {
@@ -145,7 +137,7 @@ class AnimatedLetter {
           nextX,
           0,
           letterPainter.size,
-          Size(wordWidth, wordHeight),
+          wordRect,
         );
 
         nextX += letterPainter.size.width + letterSpacing;
