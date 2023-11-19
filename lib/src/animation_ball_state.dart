@@ -10,6 +10,7 @@ class AnimationBallState {
   double fadeBallPosition2 = -1;
   double fadeBallOpacity2 = 0;
   int lastV = -1;
+  Color ballColor = Colors.cyan;
 
   // =================================================
 
@@ -77,7 +78,6 @@ class AnimationBallState {
     Size size,
   ) {
     const double ballRadius = 100;
-    const ballColor = Colors.white;
     final ballPaint = Paint()..color = ballColor;
 
     update();
