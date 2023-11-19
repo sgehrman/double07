@@ -67,11 +67,13 @@ class _DeckrAnimationState extends State<DeckrAnimation>
           builder: (context, child) {
             if (_animationState.isInitialized) {
               return ColoredBox(
-                color: Colors.black87,
-                child: FittedBox(
-                  child: CustomPaint(
-                    size: const Size(2048, 1024),
-                    painter: DeckrAnimationPainter(_animationState),
+                color: Colors.black,
+                child: Center(
+                  child: FittedBox(
+                    child: CustomPaint(
+                      size: const Size(2048, 1024),
+                      painter: DeckrAnimationPainter(_animationState),
+                    ),
                   ),
                 ),
               );
