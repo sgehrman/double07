@@ -1,4 +1,5 @@
 import 'package:double07/src/animation_state.dart';
+import 'package:double07/src/audio_player/background_audio_player.dart';
 import 'package:double07/src/deckr_animation_painter.dart';
 import 'package:flutter/material.dart';
 
@@ -48,25 +49,30 @@ class _DeckrAnimationState extends State<DeckrAnimation>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        if (_animationState.isInitialized) {
-          return ColoredBox(
-            color: Colors.black87,
-            child: FittedBox(
-              child: CustomPaint(
-                size: const Size(2048, 1024),
-                painter: DeckrAnimationPainter(_animationState),
-              ),
-            ),
-          );
-        }
+    return Stack(
+      children: [
+        AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            if (_animationState.isInitialized) {
+              return ColoredBox(
+                color: Colors.black87,
+                child: FittedBox(
+                  child: CustomPaint(
+                    size: const Size(2048, 1024),
+                    painter: DeckrAnimationPainter(_animationState),
+                  ),
+                ),
+              );
+            }
 
-        return const ColoredBox(
-          color: Colors.black87,
-        );
-      },
+            return const ColoredBox(
+              color: Colors.black87,
+            );
+          },
+        ),
+        const BackgroundAudioPlayer(),
+      ],
     );
   }
 }

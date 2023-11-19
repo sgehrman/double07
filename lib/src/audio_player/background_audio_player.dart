@@ -2,14 +2,14 @@ import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:double07/src/audio_player/platform/audio_player.dart';
 import 'package:flutter/material.dart';
 
-class SimpleMP3Player extends StatefulWidget {
-  const SimpleMP3Player({super.key});
+class BackgroundAudioPlayer extends StatefulWidget {
+  const BackgroundAudioPlayer({super.key});
 
   @override
-  State<SimpleMP3Player> createState() => _SimpleMP3PlayerState();
+  State<BackgroundAudioPlayer> createState() => _BackgroundAudioPlayerState();
 }
 
-class _SimpleMP3PlayerState extends State<SimpleMP3Player>
+class _BackgroundAudioPlayerState extends State<BackgroundAudioPlayer>
     with AudioPlayerMixin {
   @override
   void initState() {
