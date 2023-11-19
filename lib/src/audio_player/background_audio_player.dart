@@ -1,5 +1,6 @@
 import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:double07/src/audio_player/platform/audio_player.dart';
+import 'package:double07/src/utils.dart';
 import 'package:flutter/material.dart';
 
 class BackgroundAudioPlayer extends StatefulWidget {
@@ -16,7 +17,7 @@ class _BackgroundAudioPlayerState extends State<BackgroundAudioPlayer>
     super.initState();
 
     // Future.delayed(const Duration(milliseconds: 222), () {
-    //   open(path: 'assets/assets/audio/morse-code-1.mp3');
+    //   open(path: '$kAssets/assets/audio/morse-code-1.mp3');
     // });
   }
 
@@ -46,7 +47,7 @@ class _BackgroundAudioPlayerState extends State<BackgroundAudioPlayer>
     return DFIconButton(
       onPressed: () {
         Future.delayed(const Duration(milliseconds: 222), () {
-          open(path: 'assets/assets/audio/morse-tune.mp3');
+          open(path: '$kAssets/assets/audio/morse-tune.mp3');
         });
       },
       icon: const Icon(Icons.music_note),

@@ -1,4 +1,4 @@
-import 'package:double07/src/deckr_animation.dart';
+import 'package:double07/double07.dart';
 import 'package:flutter/material.dart';
 
 void main() {

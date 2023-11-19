@@ -1,0 +1,26 @@
+name: double07_example
+description: 'A new Flutter project.'
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+
+dependencies:
+  cupertino_icons: ^1.0.2
+  dfc_flutter:
+    git: https://github.com/sgehrman/dfc_flutter
+  double07:
+    path: ../
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  dart_code_metrics:
+    git: https://github.com/paulkastel/dart-code-metrics
+  dfc_lints:
+    git: https://github.com/sgehrman/dfc_lints
+
+flutter:
+  uses-material-design: true

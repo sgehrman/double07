@@ -2,6 +2,7 @@ import 'package:double07/src/animation_background_state.dart';
 import 'package:double07/src/animation_ball_state.dart';
 import 'package:double07/src/animation_text_state.dart';
 import 'package:double07/src/timeline.dart';
+import 'package:double07/src/utils.dart';
 import 'package:flutter/material.dart';
 
 class AnimationState {
@@ -36,21 +37,21 @@ class AnimationState {
 
   // background
   final backgroundState = AnimationBackgroundState(
-    imageAsset: 'assets/images/henderson.png',
+    imageAsset: '$kAssets/images/henderson.png',
     alignment: const Alignment(-0.25, -0.3),
     timeStart: Timeline.hendersonStart,
     timeEnd: Timeline.hendersonEnd,
   );
 
   final backgroundState2 = AnimationBackgroundState(
-    imageAsset: 'assets/images/drago.jpg',
+    imageAsset: '$kAssets/images/drago.jpg',
     alignment: const Alignment(0.7, -0.1),
     timeStart: Timeline.dragoStart,
     timeEnd: Timeline.dragoEnd,
   );
 
   final backgroundState3 = AnimationBackgroundState(
-    imageAsset: 'assets/images/domino.jpg',
+    imageAsset: '$kAssets/images/domino.jpg',
     alignment: const Alignment(-0.1, -0.2),
     timeStart: Timeline.dominoStart,
     timeEnd: Timeline.dominoEnd,
