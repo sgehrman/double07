@@ -19,8 +19,8 @@ class AnimationTextState {
     this.letterSpacing = 10,
   });
 
-  final List<AnimatedTextInfo> textImages = [];
-  late final List<Animation<double>> textAnimations;
+  final List<AnimatedTextInfo> _textImages = [];
+  late final List<Animation<double>> _textAnimations;
 
   final String text;
   final double fontSize;
@@ -38,10 +38,28 @@ class AnimationTextState {
   }) async {
     await _createTextImages();
 
-    textAnimations = _buildTextAnimations(
+    _textAnimations = _buildTextAnimations(
       controller: controller,
     );
   }
+
+  void paintText({
+    required Canvas canvas,
+    required Size size,
+  }) {
+    for (int i = 0; i < _textImages.length; i++) {
+      _paintText(
+        canvas: canvas,
+        size: size,
+        textImage: _textImages[i],
+        textAnima: _textAnimations[i],
+      );
+    }
+  }
+
+  // ============================================================
+  // private methods
+  // ============================================================
 
   TextStyle _textStyle() {
     return TextStyle(
@@ -137,7 +155,7 @@ class AnimationTextState {
 
       w += painter.size.width + letterSpacing;
 
-      textImages.add(
+      _textImages.add(
         AnimatedTextInfo(
           image: await _createTextImage(painter),
           painter: painter,
@@ -174,20 +192,6 @@ class AnimationTextState {
     final ui.Picture pict = recorder.endRecording();
 
     return pict.toImage(destRect.width.round(), destRect.height.round());
-  }
-
-  void paintText({
-    required Canvas canvas,
-    required Size size,
-  }) {
-    for (int i = 0; i < textImages.length; i++) {
-      _paintText(
-        canvas: canvas,
-        size: size,
-        textImage: textImages[i],
-        textAnima: textAnimations[i],
-      );
-    }
   }
 
   void _paintText({
