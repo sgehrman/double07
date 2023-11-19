@@ -9,6 +9,8 @@ mixin AudioPlayerMixin {
   html.AudioElement? _audioElement;
 
   void platformDispose() {
+    platformPause();
+
     _onEndListener?.cancel();
     _onCanPlayListener?.cancel();
 
