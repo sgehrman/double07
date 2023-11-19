@@ -1,5 +1,6 @@
 import 'package:double07/src/animations/animation_background_state.dart';
 import 'package:double07/src/animations/animation_ball_state.dart';
+import 'package:double07/src/animations/animation_paragraph_state.dart';
 import 'package:double07/src/animations/animation_text_state.dart';
 import 'package:double07/src/timeline.dart';
 import 'package:double07/src/utils.dart';
@@ -34,10 +35,17 @@ class AnimationState {
     timeEnd: Timeline.textEnd2,
   );
 
-  // "This dream is for you
-  // So pay the price
-  // Make one dream come true
-  // You only live twice"
+  final p1 = AnimationParagraphState(
+    alignment: const Alignment(0.8, 0.1),
+    timeStart: 0,
+    timeEnd: 0.5,
+    lines: [
+      'This dream is for you',
+      'So pay the price',
+      'Make one dream come true',
+      'You only live twice',
+    ],
+  );
 
   // ball animation
   final ballState = AnimationBallState();
@@ -79,10 +87,32 @@ class AnimationState {
       await backgroundState.initialize(controller);
       await backgroundState2.initialize(controller);
       await backgroundState3.initialize(controller);
-
       ballState.initialize(controller);
+      await p1.initialize(controller: controller);
 
       isInitialized = true;
     }
+  }
+
+  void paint(Canvas canvas, Size size) {
+    backgroundState.paintBackground(canvas, size);
+    backgroundState2.paintBackground(canvas, size);
+    backgroundState3.paintBackground(canvas, size);
+
+    ballState.paintBall(canvas, size);
+    t1.paint(
+      canvas: canvas,
+      size: size,
+    );
+
+    t2.paint(
+      canvas: canvas,
+      size: size,
+    );
+
+    p1.paint(
+      canvas: canvas,
+      size: size,
+    );
   }
 }

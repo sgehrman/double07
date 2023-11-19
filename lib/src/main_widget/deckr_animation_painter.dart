@@ -13,20 +13,7 @@ class DeckrAnimationPainter extends CustomPainter {
     final backPaint = Paint()..color = Colors.black;
     canvas.drawRect(rect, backPaint);
 
-    animationState.backgroundState.paintBackground(canvas, size);
-    animationState.backgroundState2.paintBackground(canvas, size);
-    animationState.backgroundState3.paintBackground(canvas, size);
-
-    animationState.ballState.paintBall(canvas, size);
-    animationState.t1.paintWord(
-      canvas: canvas,
-      size: size,
-    );
-
-    animationState.t2.paintWord(
-      canvas: canvas,
-      size: size,
-    );
+    animationState.paint(canvas, size);
   }
 
   // =================================================

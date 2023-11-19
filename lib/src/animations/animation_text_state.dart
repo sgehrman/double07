@@ -45,7 +45,7 @@ class AnimationTextState {
     );
   }
 
-  void paintWord({
+  void paint({
     required Canvas canvas,
     required Size size,
   }) {
