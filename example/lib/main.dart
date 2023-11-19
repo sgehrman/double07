@@ -20,7 +20,9 @@ class MyApp extends StatelessWidget {
       ),
       home: const Scaffold(
         body: SizedBox.expand(
-          child: DeckrAnimation(),
+          child: DeckrAnimation(
+            autoplay: false,
+          ),
         ),
       ),
     );

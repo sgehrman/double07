@@ -4,7 +4,11 @@ import 'package:double07/src/deckr_animation_painter.dart';
 import 'package:flutter/material.dart';
 
 class DeckrAnimation extends StatefulWidget {
-  const DeckrAnimation({super.key});
+  const DeckrAnimation({
+    required this.autoplay,
+  });
+
+  final bool autoplay;
 
   @override
   State<DeckrAnimation> createState() => _DeckrAnimationState();
@@ -78,7 +82,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
             );
           },
         ),
-        const BackgroundAudioPlayer(),
+        BackgroundAudioPlayer(autoplay: widget.autoplay),
       ],
     );
   }

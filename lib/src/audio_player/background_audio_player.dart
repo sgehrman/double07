@@ -4,7 +4,11 @@ import 'package:double07/src/utils.dart';
 import 'package:flutter/material.dart';
 
 class BackgroundAudioPlayer extends StatefulWidget {
-  const BackgroundAudioPlayer({super.key});
+  const BackgroundAudioPlayer({
+    required this.autoplay,
+  });
+
+  final bool autoplay;
 
   @override
   State<BackgroundAudioPlayer> createState() => _BackgroundAudioPlayerState();
@@ -16,9 +20,11 @@ class _BackgroundAudioPlayerState extends State<BackgroundAudioPlayer>
   void initState() {
     super.initState();
 
-    // Future.delayed(const Duration(milliseconds: 222), () {
-    //   open(path: '$kAssets/assets/audio/morse-code-1.mp3');
-    // });
+    if (widget.autoplay) {
+      Future.delayed(const Duration(milliseconds: 10), () {
+        open(path: '$kAssets/assets/audio/morse-code-1.mp3');
+      });
+    }
   }
 
   @override
