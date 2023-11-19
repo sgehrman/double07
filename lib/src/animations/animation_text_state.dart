@@ -139,7 +139,7 @@ class AnimationTextState {
 
       textImages.add(
         AnimatedTextInfo(
-          image: await createTextImage(painter),
+          image: await _createTextImage(painter),
           painter: painter,
           wordSize: Size(wordWidth, wordHeight),
           alignment: Alignment(left, 0),
@@ -148,7 +148,7 @@ class AnimationTextState {
     }
   }
 
-  Future<ui.Image> createTextImage(TextPainter textPainter) {
+  Future<ui.Image> _createTextImage(TextPainter textPainter) {
     final imageSize = textPainter.size;
     final destRect = Rect.fromLTWH(
       0,
