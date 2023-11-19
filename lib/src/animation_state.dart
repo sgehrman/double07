@@ -36,7 +36,7 @@ class AnimationState {
   );
 
   final p1 = AnimationParagraphState(
-    alignment: const Alignment(0.8, 0.1),
+    alignment: const Alignment(0.8, -0.8),
     timeStart: 0,
     timeEnd: 0.5,
     lines: [
@@ -99,7 +99,6 @@ class AnimationState {
     backgroundState2.paintBackground(canvas, size);
     backgroundState3.paintBackground(canvas, size);
 
-    ballState.paintBall(canvas, size);
     t1.paint(
       canvas: canvas,
       size: size,
@@ -114,5 +113,7 @@ class AnimationState {
       canvas: canvas,
       size: size,
     );
+
+    ballState.paintBall(canvas, size);
   }
 }
