@@ -16,13 +16,15 @@ class BackgroundAudioPlayer extends StatefulWidget {
 
 class _BackgroundAudioPlayerState extends State<BackgroundAudioPlayer>
     with AudioPlayerMixin {
+  final _mp3Path = '$kAssets/assets/audio/morse-tune.mp3';
+
   @override
   void initState() {
     super.initState();
 
     if (widget.autoplay) {
       Future.delayed(const Duration(milliseconds: 10), () {
-        open(path: '$kAssets/assets/audio/morse-code-1.mp3');
+        open(path: _mp3Path);
       });
     }
   }
@@ -57,7 +59,7 @@ class _BackgroundAudioPlayerState extends State<BackgroundAudioPlayer>
     return DFIconButton(
       onPressed: () {
         Future.delayed(const Duration(milliseconds: 222), () {
-          open(path: '$kAssets/assets/audio/morse-tune.mp3');
+          open(path: _mp3Path);
         });
       },
       icon: const Icon(Icons.music_note),
