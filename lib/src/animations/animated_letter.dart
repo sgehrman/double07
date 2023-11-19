@@ -108,7 +108,12 @@ class AnimatedLetter {
     double wordHeight = 0;
 
     for (final painter in textPainters) {
-      wordWidth += painter.size.width + letterSpacing;
+      wordWidth += painter.size.width;
+
+      if (!painter.isSpace) {
+        wordWidth += letterSpacing;
+      }
+
       wordHeight = math.max(wordHeight, painter.size.height);
     }
 
