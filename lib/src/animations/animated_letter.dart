@@ -207,8 +207,6 @@ class AnimatedLetter {
     final recorder = ui.PictureRecorder();
     final ui.Canvas canvas = ui.Canvas(recorder);
 
-    canvas.drawRect(destRect, Paint()..color = Colors.transparent);
-
     canvas.transform(matrix.storage);
 
     if (!letterPainter.isSpace) {
