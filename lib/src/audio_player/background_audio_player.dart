@@ -50,6 +50,10 @@ class _BackgroundAudioPlayerState extends State<BackgroundAudioPlayer>
 
   @override
   Widget build(BuildContext context) {
+    if (widget.autoplay) {
+      return const SizedBox();
+    }
+
     return DFIconButton(
       onPressed: () {
         Future.delayed(const Duration(milliseconds: 222), () {
