@@ -138,11 +138,11 @@ class AnimatedLetter {
   // ====================================================
   // private methods
 
-  static TextPainter _createTextPainter(String text, TextStyle style) {
+  static TextPainter _createTextPainter(String char, TextStyle style) {
     final textPainter = TextPainter(
       text: TextSpan(
         style: style,
-        text: text,
+        text: char,
       ),
       textDirection: TextDirection.ltr,
     );

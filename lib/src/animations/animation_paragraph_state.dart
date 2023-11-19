@@ -34,6 +34,7 @@ class AnimationParagraphState {
           endAlignment: Alignment(alignment.x, alignment.y + (index * 0.1)),
           timeStart: timeStart,
           timeEnd: timeEnd,
+          opacity: 1,
         ),
       );
 
