@@ -1,1 +1,1 @@
-const kAssets = 'packages/double07/assets';
+const kAssets = 'assets/packages/double07/assets';
