@@ -1,6 +1,6 @@
-import 'package:double07/src/animation_background_state.dart';
-import 'package:double07/src/animation_ball_state.dart';
-import 'package:double07/src/animation_text_state.dart';
+import 'package:double07/src/animations/animation_background_state.dart';
+import 'package:double07/src/animations/animation_ball_state.dart';
+import 'package:double07/src/animations/animation_text_state.dart';
 import 'package:double07/src/timeline.dart';
 import 'package:double07/src/utils.dart';
 import 'package:flutter/material.dart';

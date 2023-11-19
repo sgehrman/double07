@@ -1,6 +1,6 @@
 import 'package:double07/src/animation_state.dart';
 import 'package:double07/src/audio_player/background_audio_player.dart';
-import 'package:double07/src/deckr_animation_painter.dart';
+import 'package:double07/src/main_widget/deckr_animation_painter.dart';
 import 'package:flutter/material.dart';
 
 class DeckrAnimation extends StatefulWidget {

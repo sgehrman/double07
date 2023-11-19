@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
-import 'package:double07/src/animated_text_info.dart';
-import 'package:double07/src/animation_utils.dart';
+import 'package:double07/src/animations/animated_text_info.dart';
+import 'package:double07/src/animations/animation_utils.dart';
 import 'package:flutter/material.dart';
 
 class AnimationTextState {
