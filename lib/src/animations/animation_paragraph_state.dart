@@ -16,21 +16,21 @@ class AnimationParagraphState {
   final double timeEnd;
   final Curve curve;
 
-  late final List<AnimationTextState> _textAnimations;
+  late final List<AnimationTextState> _animations;
 
   Future<void> initialize({
     required AnimationController controller,
   }) async {
-    _textAnimations = [];
+    _animations = [];
 
     int index = 0;
     for (final line in lines) {
-      _textAnimations.add(
+      _animations.add(
         AnimationTextState(
           text: line,
           fontSize: 44,
           color: Colors.white,
-          startAlignment: Alignment(-3, alignment.y + (index * 0.1)),
+          startAlignment: const Alignment(-3, -3),
           endAlignment: Alignment(alignment.x, alignment.y + (index * 0.1)),
           timeStart: timeStart,
           timeEnd: timeEnd,
@@ -40,7 +40,7 @@ class AnimationParagraphState {
       index++;
     }
 
-    for (final l in _textAnimations) {
+    for (final l in _animations) {
       await l.initialize(controller: controller);
     }
   }
@@ -49,7 +49,7 @@ class AnimationParagraphState {
     required Canvas canvas,
     required Size size,
   }) {
-    for (final l in _textAnimations) {
+    for (final l in _animations) {
       l.paint(canvas: canvas, size: size);
     }
   }
