@@ -44,10 +44,10 @@ class AnimationState {
   );
 
   final backgroundState2 = AnimationBackgroundState(
-    imageAsset: '$kAssets/images/drago.jpg',
+    imageAsset: '$kAssets/images/largo.jpg',
     alignment: const Alignment(0.7, -0.1),
-    timeStart: Timeline.dragoStart,
-    timeEnd: Timeline.dragoEnd,
+    timeStart: Timeline.largoStart,
+    timeEnd: Timeline.largoEnd,
   );
 
   final backgroundState3 = AnimationBackgroundState(

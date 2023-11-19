@@ -5,8 +5,8 @@ class Timeline {
   static double hendersonStart = 0;
   static double hendersonEnd = 0.3;
 
-  static double dragoStart = 0.3;
-  static double dragoEnd = 0.7;
+  static double largoStart = 0.3;
+  static double largoEnd = 0.7;
 
   static double dominoStart = 0.7;
   static double dominoEnd = 1;
