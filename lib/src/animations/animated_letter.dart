@@ -105,27 +105,26 @@ class AnimatedLetter {
   ) async {
     final List<AnimatedLetter> result = [];
 
-    final textPainters = _createTextPainters(text, style);
+    final letterPainters = _createTextPainters(text, style);
 
     double wordWidth = 0;
     double wordHeight = 0;
 
-    for (final painter in textPainters) {
-      wordWidth += painter.size.width;
-
-      if (!painter.isSpace) {
+    for (final letterPainter in letterPainters) {
+      wordWidth += letterPainter.size.width;
+      if (!letterPainter.isSpace) {
         wordWidth += letterSpacing;
       }
 
-      wordHeight = math.max(wordHeight, painter.size.height);
+      wordHeight = math.max(wordHeight, letterPainter.size.height);
     }
 
     final half = wordWidth / 2;
     double nextX = 0;
 
-    for (final painter in textPainters) {
-      if (painter.isSpace) {
-        nextX += painter.size.width;
+    for (final letterPainter in letterPainters) {
+      if (letterPainter.isSpace) {
+        nextX += letterPainter.size.width;
       } else {
         double left;
 
@@ -137,13 +136,13 @@ class AnimatedLetter {
           left = -1.0 + (nextX / half);
         }
 
-        nextX += painter.size.width + letterSpacing;
+        nextX += letterPainter.size.width + letterSpacing;
 
         result.add(
           AnimatedLetter(
-            letter: painter.letter,
-            image: await _createTextImage(painter),
-            letterSize: painter.size,
+            letter: letterPainter.letter,
+            image: await _createTextImage(letterPainter),
+            letterSize: letterPainter.size,
             wordSize: Size(wordWidth, wordHeight),
             alignment: Alignment(left, 0),
           ),
