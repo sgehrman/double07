@@ -16,7 +16,7 @@ class BackgroundAudioPlayer extends StatefulWidget {
 
 class _BackgroundAudioPlayerState extends State<BackgroundAudioPlayer>
     with AudioPlayerMixin {
-  final _mp3Path = '$kAssets/audio/morse-tune.mp3';
+  final _mp3Path = '$kAudioAssets/audio/morse-tune.mp3';
 
   @override
   void initState() {
