@@ -167,6 +167,7 @@ class AnimatedLetter {
 
   static Future<ui.Image> _createTextImage(TextPainter textPainter) {
     final imageSize = textPainter.size;
+
     final destRect = Rect.fromLTWH(
       0,
       0,
@@ -190,6 +191,11 @@ class AnimatedLetter {
 
     final ui.Picture pict = recorder.endRecording();
 
-    return pict.toImage(destRect.width.round(), destRect.height.round());
+    final result =
+        pict.toImage(destRect.width.round(), destRect.height.round());
+
+    pict.dispose();
+
+    return result;
   }
 }
