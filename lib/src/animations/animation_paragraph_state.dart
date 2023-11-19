@@ -30,7 +30,7 @@ class AnimationParagraphState {
           text: line,
           fontSize: 44,
           color: Colors.white,
-          startAlignment: Alignment(alignment.x, alignment.y + (index * 0.1)),
+          startAlignment: Alignment(-3, alignment.y + (index * 0.1)),
           endAlignment: Alignment(alignment.x, alignment.y + (index * 0.1)),
           timeStart: timeStart,
           timeEnd: timeEnd,
