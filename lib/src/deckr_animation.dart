@@ -19,15 +19,22 @@ class _DeckrAnimationState extends State<DeckrAnimation>
   void initState() {
     super.initState();
 
-    _setup();
-  }
-
-  Future<void> _setup() async {
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 12),
     );
 
+    _setup();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+
+    super.dispose();
+  }
+
+  Future<void> _setup() async {
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         _controller.reset();
