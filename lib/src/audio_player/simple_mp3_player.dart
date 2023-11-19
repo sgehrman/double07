@@ -1,5 +1,5 @@
 import 'package:dfc_flutter/dfc_flutter_web.dart';
-import 'package:double07/audio_player/platform/audio_player.dart';
+import 'package:double07/src/audio_player/platform/audio_player.dart';
 import 'package:flutter/material.dart';
 
 class SimpleMP3Player extends StatefulWidget {

@@ -1,4 +1,4 @@
-import 'package:double07/timeline.dart';
+import 'package:double07/src/timeline.dart';
 import 'package:flutter/material.dart';
 
 class AnimationBallState {

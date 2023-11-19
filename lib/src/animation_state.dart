@@ -1,7 +1,7 @@
-import 'package:double07/animation_background_state.dart';
-import 'package:double07/animation_ball_state.dart';
-import 'package:double07/animation_text_state.dart';
-import 'package:double07/timeline.dart';
+import 'package:double07/src/animation_background_state.dart';
+import 'package:double07/src/animation_ball_state.dart';
+import 'package:double07/src/animation_text_state.dart';
+import 'package:double07/src/timeline.dart';
 import 'package:flutter/material.dart';
 
 class AnimationState {

@@ -1,5 +1,5 @@
-import 'package:double07/audio_player/simple_mp3_player.dart';
-import 'package:double07/deckr_animation.dart';
+import 'package:double07/src/audio_player/simple_mp3_player.dart';
+import 'package:double07/src/deckr_animation.dart';
 import 'package:flutter/material.dart';
 
 void main() {

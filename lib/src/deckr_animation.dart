@@ -1,5 +1,5 @@
-import 'package:double07/animation_state.dart';
-import 'package:double07/deckr_animation_painter.dart';
+import 'package:double07/src/animation_state.dart';
+import 'package:double07/src/deckr_animation_painter.dart';
 import 'package:flutter/material.dart';
 
 class DeckrAnimation extends StatefulWidget {

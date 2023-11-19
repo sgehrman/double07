@@ -1,4 +1,4 @@
-import 'package:double07/animation_state.dart';
+import 'package:double07/src/animation_state.dart';
 import 'package:flutter/material.dart';
 
 class DeckrAnimationPainter extends CustomPainter {
