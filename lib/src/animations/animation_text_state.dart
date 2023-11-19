@@ -158,7 +158,7 @@ class AnimationTextState {
       _textImages.add(
         AnimatedTextInfo(
           image: await _createTextImage(painter),
-          painter: painter,
+          size: painter.size,
           wordSize: Size(wordWidth, wordHeight),
           alignment: Alignment(left, 0),
         ),
@@ -203,7 +203,7 @@ class AnimationTextState {
     if (textAnima.value > 0) {
       final rect = Offset.zero & size;
 
-      final tSize = textImage.painter.size;
+      final tSize = textImage.size;
 
       final alignment = Alignment.lerp(
             startAlignment,

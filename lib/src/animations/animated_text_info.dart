@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 
 class AnimatedTextInfo {
   AnimatedTextInfo({
-    required this.painter,
     required this.image,
     required this.wordSize,
     required this.alignment,
+    required this.size,
   });
 
-  final TextPainter painter;
   final Size wordSize;
+  final Size size;
   final ui.Image image;
   final Alignment alignment;
 }
