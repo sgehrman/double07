@@ -17,6 +17,7 @@ class AnimationTextState {
     this.curve = Curves.elasticInOut,
     this.bold = false,
     this.letterSpacing = 10,
+    this.opacity = 0.3,
   });
 
   final List<AnimatedLetter> _textLetters = [];
@@ -24,6 +25,7 @@ class AnimationTextState {
 
   final String text;
   final double fontSize;
+  final double opacity;
   final bool bold;
   final Color color;
   final Alignment startAlignment;
@@ -54,6 +56,7 @@ class AnimationTextState {
       textAnimas: _textAnimations,
       startAlignment: startAlignment,
       endAlignment: endAlignment,
+      opacity: opacity,
     );
   }
 

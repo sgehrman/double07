@@ -22,6 +22,7 @@ class AnimatedLetter {
     required List<Animation<double>> textAnimas,
     required Alignment startAlignment,
     required Alignment endAlignment,
+    required double opacity,
   }) {
     for (int i = 0; i < letters.length; i++) {
       letters[i].paintLetter(
@@ -30,6 +31,7 @@ class AnimatedLetter {
         textAnima: textAnimas[i],
         startAlignment: startAlignment,
         endAlignment: endAlignment,
+        opacity: opacity,
       );
     }
   }
@@ -40,6 +42,7 @@ class AnimatedLetter {
     required Animation<double> textAnima,
     required Alignment startAlignment,
     required Alignment endAlignment,
+    required double opacity,
   }) {
     if (textAnima.value > 0) {
       final rect = Offset.zero & size;
@@ -72,7 +75,7 @@ class AnimatedLetter {
         rect: destRect,
         fit: BoxFit.fill,
         image: image,
-        opacity: 0.3,
+        opacity: opacity,
         isAntiAlias: true,
         filterQuality: FilterQuality.high,
       );
