@@ -89,7 +89,6 @@ class AnimatedLetter {
       paintImage(
         canvas: canvas,
         rect: destRect,
-        fit: BoxFit.fill,
         image: image,
         opacity: opacity,
         isAntiAlias: true,
