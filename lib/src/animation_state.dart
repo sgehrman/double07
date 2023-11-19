@@ -32,6 +32,11 @@ class AnimationState {
     timeEnd: Timeline.textEnd2,
   );
 
+  // "This dream is for you
+  // So pay the price
+  // Make one dream come true
+  // You only live twice"
+
   // ball animation
   final ballState = AnimationBallState();
 
