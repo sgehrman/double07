@@ -12,8 +12,11 @@ class Timeline {
   static double dominoEnd = 1;
 
   static double textStart = 0.2;
-  static double textEnd = 0.9;
+  static double textEnd = 0.4;
 
   static double textStart2 = 0.4;
-  static double textEnd2 = 1;
+  static double textEnd2 = 0.6;
+
+  static double quoteStart = 0.3;
+  static double quoteEnd = 1;
 }

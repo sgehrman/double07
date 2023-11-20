@@ -82,15 +82,12 @@ class AnimationTextState {
     final List<LetterAnimations> result = [];
 
     final time = timeEnd - timeStart;
-    double duration = time / count;
-    const compress = 0.05;
-
-    final spacer = duration * compress;
-    duration = duration + (duration - spacer);
+    final double duration = time / count;
+    const double overlap = 4;
 
     for (int i = 0; i < count; i++) {
-      final start = timeStart + (i * spacer);
-      final end = start + duration;
+      final start = timeStart + (i * (duration / overlap));
+      final end = start + (duration * overlap);
 
       final parent = AnimaUtils.baseAnimation(controller, start, end);
 

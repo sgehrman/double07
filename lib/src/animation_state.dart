@@ -21,7 +21,6 @@ class AnimationState {
     endAlignment: const Alignment(-0.8, -0.8),
     timeStart: Timeline.textStart,
     timeEnd: Timeline.textEnd,
-    curve: Curves.bounceOut,
   );
 
   // Coder animation
@@ -37,8 +36,8 @@ class AnimationState {
 
   final p1 = AnimationParagraphState(
     alignment: const Alignment(0.8, -0.8),
-    timeStart: 0.5,
-    timeEnd: 1,
+    timeStart: Timeline.quoteStart,
+    timeEnd: Timeline.quoteEnd,
     lines: [
       'This dream is for you',
       'So pay the price',
