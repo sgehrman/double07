@@ -123,7 +123,10 @@ class AnimaUtils {
     return Matrix4Transform()
         .scale(
           scale,
-          origin: Offset(srcRect.width / 2, srcRect.height / 2),
+          origin: Offset(
+            srcRect.left + srcRect.width / 2,
+            srcRect.top + srcRect.height / 2,
+          ),
         )
         .matrix4;
   }
