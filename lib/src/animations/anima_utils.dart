@@ -138,9 +138,11 @@ class AnimaUtils {
   }) {
     final origin = srcRect.center;
 
+    //  rotateY(math.pi / 2 * (1 - animationController.value)),
+
     return Matrix4.identity()
-      ..translate(origin.dx, origin.dy)
       ..setEntry(3, 2, 0.001)
+      ..translate(origin.dx, origin.dy)
       ..rotateY(degreesY.inRadians)
       ..rotateX(degreesX.inRadians)
       ..translate(-origin.dx, -origin.dy);
