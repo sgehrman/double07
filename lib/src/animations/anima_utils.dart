@@ -17,8 +17,9 @@ class AnimaUtils {
     final double halfWidthDelta = (rect.width - size.width) / 2.0;
     final double halfHeightDelta = (rect.height - size.height) / 2.0;
 
-    final newX = x / halfWidthDelta;
-    final newY = y / halfHeightDelta;
+    // avoid divide by zero
+    final newX = halfWidthDelta != 0 ? x / halfWidthDelta : 0;
+    final newY = halfHeightDelta != 0 ? y / halfHeightDelta : 0;
 
     return Alignment(newX - 1, newY - 1);
   }
