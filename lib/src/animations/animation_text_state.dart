@@ -122,7 +122,7 @@ class AnimationTextState {
         CurvedAnimation(
           parent: parent,
           curve: Interval(
-            0,
+            0.8,
             1,
             curve: curve,
           ),
