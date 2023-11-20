@@ -141,7 +141,8 @@ class AnimaUtils {
     //  rotateY(math.pi / 2 * (1 - animationController.value)),
 
     return Matrix4.identity()
-      ..setEntry(3, 2, 0.001)
+      // ..setEntry(3, 2, 0.001)
+      ..setEntry(3, 2, 0.0005)
       ..translate(origin.dx, origin.dy)
       ..rotateY(degreesY.inRadians)
       ..rotateX(degreesX.inRadians)
