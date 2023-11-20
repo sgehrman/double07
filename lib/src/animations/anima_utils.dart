@@ -121,9 +121,8 @@ class AnimaUtils {
 
   static Matrix4 scaledRect(Rect srcRect, double scale) {
     return Matrix4Transform()
-        .scaleBy(
-          x: scale,
-          y: scale,
+        .scale(
+          scale,
           origin: Offset(srcRect.width / 2, srcRect.height / 2),
         )
         .matrix4;
