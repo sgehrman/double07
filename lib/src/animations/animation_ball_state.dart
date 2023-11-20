@@ -1,4 +1,4 @@
-import 'package:double07/src/animations/animation_utils.dart';
+import 'package:double07/src/animations/anima_utils.dart';
 import 'package:double07/src/timeline.dart';
 import 'package:flutter/material.dart';
 

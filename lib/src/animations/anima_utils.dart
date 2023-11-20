@@ -12,6 +12,17 @@ class AnimaUtils {
     }
   }
 
+  // for use with Animation.inscribe when drawing
+  static Alignment makeAlignment(double x, double y, Size size, Rect rect) {
+    final double halfWidthDelta = (rect.width - size.width) / 2.0;
+    final double halfHeightDelta = (rect.height - size.height) / 2.0;
+
+    final newX = x / halfWidthDelta;
+    final newY = y / halfHeightDelta;
+
+    return Alignment(newX - 1, newY - 1);
+  }
+
   /// Return a scaled and translated [Matrix4] that maps [src] to [dst] for given [fit]
   /// aligned by [alignment] within [dst]
   ///

@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
-import 'package:double07/src/animations/animation_utils.dart';
+import 'package:double07/src/animations/anima_utils.dart';
 import 'package:flutter/material.dart';
 
 class AnimatedLetter {
@@ -96,14 +96,6 @@ class AnimatedLetter {
     }
   }
 
-  static Alignment makeAlignment(double x, double y, Size size, Rect rect) {
-    final double halfWidthDelta = (rect.width - size.width) / 2.0;
-
-    final newX = x / halfWidthDelta;
-
-    return Alignment(newX - 1, 0);
-  }
-
   static Future<List<AnimatedLetter>> createTextImages(
     String text,
     TextStyle style,
@@ -133,7 +125,7 @@ class AnimatedLetter {
       if (letterPainter.isSpace) {
         nextX += letterPainter.size.width;
       } else {
-        final alignment = makeAlignment(
+        final alignment = AnimaUtils.makeAlignment(
           nextX,
           0,
           letterPainter.size,

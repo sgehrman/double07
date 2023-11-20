@@ -1,7 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:dfc_flutter/dfc_flutter_web.dart';
-import 'package:double07/src/animations/animation_utils.dart';
+import 'package:double07/src/animations/anima_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
