@@ -1,5 +1,6 @@
 import 'package:double07/src/animations/animation_background_state.dart';
 import 'package:double07/src/animations/animation_ball_state.dart';
+import 'package:double07/src/animations/animation_blocks_state.dart';
 import 'package:double07/src/animations/animation_paragraph_state.dart';
 import 'package:double07/src/animations/animation_text_state.dart';
 import 'package:double07/src/timeline.dart';
@@ -49,6 +50,12 @@ class AnimationState {
   // ball animation
   final ballState = AnimationBallState();
 
+  final blockState = AnimationBlocksState(
+    alignment: const Alignment(0.8, -0.8),
+    timeStart: Timeline.quoteStart,
+    timeEnd: Timeline.quoteEnd,
+  );
+
   // background
   final backgroundState = AnimationBackgroundState(
     imageAsset: '$kAssets/images/henderson.png',
@@ -89,6 +96,8 @@ class AnimationState {
       ballState.initialize(controller);
       await p1.initialize(controller: controller);
 
+      blockState.initialize(controller);
+
       isInitialized = true;
     }
   }
@@ -113,6 +122,7 @@ class AnimationState {
       size: size,
     );
 
+    blockState.paint(canvas, size);
     ballState.paint(canvas, size);
   }
 }
