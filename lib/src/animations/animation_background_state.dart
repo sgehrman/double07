@@ -54,7 +54,7 @@ class AnimationBackgroundState {
     );
   }
 
-  void paintBackground(Canvas canvas, Size size) {
+  void paint(Canvas canvas, Size size) {
     if (AnimaUtils.isRunning(_animation)) {
       final rect = Offset.zero & size;
 

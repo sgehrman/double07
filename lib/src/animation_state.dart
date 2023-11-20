@@ -95,9 +95,9 @@ class AnimationState {
   }
 
   void paint(Canvas canvas, Size size) {
-    backgroundState.paintBackground(canvas, size);
-    backgroundState2.paintBackground(canvas, size);
-    backgroundState3.paintBackground(canvas, size);
+    backgroundState.paint(canvas, size);
+    backgroundState2.paint(canvas, size);
+    backgroundState3.paint(canvas, size);
 
     t1.paint(
       canvas: canvas,

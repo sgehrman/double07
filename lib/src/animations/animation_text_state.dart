@@ -53,7 +53,7 @@ class AnimationTextState {
     required Canvas canvas,
     required Size size,
   }) {
-    AnimatedLetter.paintWord(
+    AnimatedLetter.paintLetters(
       canvas: canvas,
       size: size,
       letters: _textLetters,

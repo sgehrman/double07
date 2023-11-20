@@ -19,7 +19,7 @@ class AnimatedLetter {
   final ui.Image image;
   final Alignment alignment;
 
-  static void paintWord({
+  static void paintLetters({
     required Canvas canvas,
     required Size size,
     required List<AnimatedLetter> letters,
@@ -31,7 +31,7 @@ class AnimatedLetter {
     // final nextColor = NextColor();
 
     for (int i = 0; i < letters.length; i++) {
-      letters[i].paintLetter(
+      letters[i].paint(
         canvas: canvas,
         size: size,
         animation: animations[i],
@@ -43,7 +43,7 @@ class AnimatedLetter {
     }
   }
 
-  void paintLetter({
+  void paint({
     required Canvas canvas,
     required Size size,
     required Animation<double> animation,
