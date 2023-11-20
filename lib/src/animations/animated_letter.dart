@@ -24,9 +24,6 @@ class AnimatedLetter {
     required Size size,
     required List<AnimatedLetter> letters,
     required List<LetterAnimations> letterAnimations,
-    required Alignment startAlignment,
-    required Alignment endAlignment,
-    required double opacity,
   }) {
     // final nextColor = NextColor();
 
@@ -35,9 +32,6 @@ class AnimatedLetter {
         canvas: canvas,
         size: size,
         letterAnimations: letterAnimations[i],
-        startAlignment: startAlignment,
-        endAlignment: endAlignment,
-        opacity: opacity,
         // backgroundColor: nextColor.darkColor(),
       );
     }
@@ -47,21 +41,11 @@ class AnimatedLetter {
     required Canvas canvas,
     required Size size,
     required LetterAnimations letterAnimations,
-    required Alignment startAlignment,
-    required Alignment endAlignment,
-    required double opacity,
     Color? backgroundColor,
   }) {
     final rect = Offset.zero & size;
 
-    final lerpedAlignment = Alignment.lerp(
-          startAlignment,
-          endAlignment,
-          letterAnimations.alignment.value,
-        ) ??
-        Alignment.center;
-
-    Rect destRect = lerpedAlignment.inscribe(
+    Rect destRect = letterAnimations.alignment.value.inscribe(
       Size(
         wordSize.width,
         wordSize.height,
@@ -256,7 +240,7 @@ class LetterAnimations {
     required this.scale,
   });
 
-  Animation<double> alignment;
+  Animation<Alignment> alignment;
   Animation<double> opacity;
   Animation<double> scale;
 }
