@@ -1,3 +1,4 @@
+import 'package:double07/src/animations/anima_utils.dart';
 import 'package:flutter/material.dart';
 
 class AnimationBlocksState {
@@ -55,6 +56,27 @@ class AnimationBlocksState {
         tween: Tween<double>(begin: 0, end: 1),
         weight: 10,
       ),
+      TweenSequenceItem<double>(
+        tween: ConstantTween<double>(1),
+        weight: 20,
+      ),
+    ],
+  );
+
+  final _flipSequence = TweenSequence<double>(
+    <TweenSequenceItem<double>>[
+      TweenSequenceItem<double>(
+        tween: ConstantTween<double>(0),
+        weight: 44,
+      ),
+      TweenSequenceItem<double>(
+        tween: Tween<double>(begin: 0, end: 0.4),
+        weight: 10,
+      ),
+      TweenSequenceItem<double>(
+        tween: Tween<double>(begin: 0.4, end: 0),
+        weight: 10,
+      ),
     ],
   );
 
@@ -62,6 +84,17 @@ class AnimationBlocksState {
 
   void initialize(AnimationController controller) {
     final blocks = _blocksSequence.animate(
+      CurvedAnimation(
+        parent: controller,
+        curve: Interval(
+          timeStart,
+          timeEnd,
+          curve: Curves.easeInOut,
+        ),
+      ),
+    );
+
+    final flip = _flipSequence.animate(
       CurvedAnimation(
         parent: controller,
         curve: Interval(
@@ -82,7 +115,11 @@ class AnimationBlocksState {
       ),
     );
 
-    _animation = BlockAnimations(opacity: opacity, blocks: blocks);
+    _animation = BlockAnimations(
+      opacity: opacity,
+      blocks: blocks,
+      flip: flip,
+    );
   }
 
   // =====================================================
@@ -141,14 +178,26 @@ class AnimationBlocksState {
     for (int i = 0; i < n; i++) {
       final index = _reverse ? (numBlocks - 1) - i : i;
 
+      final destRect = rectForIndex(
+        index: index,
+        width: width,
+        size: size,
+      );
+
+      canvas.save();
+      final t = AnimaUtils.rotateRect(
+        srcRect: destRect,
+        degreesY: (_animation.flip.value * 360).round(),
+        degreesX: 0,
+      );
+
+      canvas.transform(t.storage);
       canvas.drawRect(
-        rectForIndex(
-          index: index,
-          width: width,
-          size: size,
-        ),
+        destRect,
         blockPaint,
       );
+
+      canvas.restore();
     }
   }
 }
@@ -159,8 +208,10 @@ class BlockAnimations {
   BlockAnimations({
     required this.opacity,
     required this.blocks,
+    required this.flip,
   });
 
   Animation<double> opacity;
   Animation<double> blocks;
+  Animation<double> flip;
 }

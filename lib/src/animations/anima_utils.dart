@@ -1,3 +1,4 @@
+import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:flutter/material.dart';
 import 'package:matrix4_transform/matrix4_transform.dart';
 
@@ -123,11 +124,25 @@ class AnimaUtils {
     return Matrix4Transform()
         .scale(
           scale,
-          origin: Offset(
-            srcRect.left + srcRect.width / 2,
-            srcRect.top + srcRect.height / 2,
-          ),
+          origin: srcRect.center,
         )
         .matrix4;
+  }
+
+  // ====================================================
+
+  static Matrix4 rotateRect({
+    required Rect srcRect,
+    required int degreesX,
+    required int degreesY,
+  }) {
+    final origin = srcRect.center;
+
+    return Matrix4.identity()
+      ..translate(origin.dx, origin.dy)
+      ..setEntry(3, 2, 0.001)
+      ..rotateY(degreesY.inRadians)
+      ..rotateX(degreesX.inRadians)
+      ..translate(-origin.dx, -origin.dy);
   }
 }
