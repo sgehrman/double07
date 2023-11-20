@@ -28,7 +28,7 @@ class AnimationState {
     text: 'Code: Mr. Henderson',
     fontSize: 44,
     color: Colors.cyan,
-    startAlignment: const Alignment(0.8, 2),
+    startAlignment: const Alignment(0.8, 0.8),
     endAlignment: const Alignment(0.8, 0.8),
     timeStart: Timeline.textStart2,
     timeEnd: Timeline.textEnd2,
