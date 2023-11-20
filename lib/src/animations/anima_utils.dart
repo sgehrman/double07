@@ -61,16 +61,17 @@ class AnimaUtils {
   ///
   ///  and your image will be drawn inside a rect Rect.fromLTRB(70, 0, 230, 200)
   static Matrix4 sizeToRect(
-    Size src,
-    Rect dst, {
+    Size srcSize,
+    Rect destRect, {
     BoxFit fit = BoxFit.contain,
     Alignment alignment = Alignment.center,
   }) {
-    final FittedSizes fs = applyBoxFit(fit, src, dst.size);
+    final FittedSizes fs = applyBoxFit(fit, srcSize, destRect.size);
     final double scaleX = fs.destination.width / fs.source.width;
     final double scaleY = fs.destination.height / fs.source.height;
-    final Size fittedSrc = Size(src.width * scaleX, src.height * scaleY);
-    final Rect out = alignment.inscribe(fittedSrc, dst);
+    final Size fittedSrc =
+        Size(srcSize.width * scaleX, srcSize.height * scaleY);
+    final Rect out = alignment.inscribe(fittedSrc, destRect);
 
     return Matrix4.identity()
       ..translate(out.left, out.top)
@@ -94,24 +95,24 @@ class AnimaUtils {
 
   /// Like [sizeToRect] but accepting a [Rect] as [src]
   static Matrix4 rectToRect(
-    Rect src,
-    Rect dst, {
+    Rect srcRect,
+    Rect destRect, {
     BoxFit fit = BoxFit.contain,
     Alignment alignment = Alignment.center,
   }) {
-    return sizeToRect(src.size, dst, fit: fit, alignment: alignment)
-      ..translate(-src.left, -src.top);
+    return sizeToRect(srcRect.size, destRect, fit: fit, alignment: alignment)
+      ..translate(-srcRect.left, -srcRect.top);
   }
 
   // ====================================================
 
-  static Matrix4 rectToRect2(Rect src, Rect dst) {
-    final scaleX = dst.width / src.width;
-    final scaleY = dst.height / src.height;
+  static Matrix4 rectToRect2(Rect srcRect, Rect destRect) {
+    final scaleX = destRect.width / srcRect.width;
+    final scaleY = destRect.height / srcRect.height;
 
     return Matrix4.identity()
-      ..translate(dst.left, dst.top)
+      ..translate(destRect.left, destRect.top)
       ..scale(scaleX, scaleY)
-      ..translate(-src.left, -src.top);
+      ..translate(-srcRect.left, -srcRect.top);
   }
 }
