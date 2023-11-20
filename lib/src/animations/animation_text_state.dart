@@ -49,6 +49,7 @@ class AnimationTextState {
       timeStart: timeStart,
       startAlignment: startAlignment,
       endAlignment: endAlignment,
+      opacity: opacity,
     );
   }
 
@@ -76,6 +77,7 @@ class AnimationTextState {
     required Curve curve,
     required Alignment startAlignment,
     required Alignment endAlignment,
+    required double opacity,
   }) {
     final List<LetterAnimations> result = [];
 
@@ -92,23 +94,19 @@ class AnimationTextState {
 
       final parent = AnimaUtils.baseAnimation(controller, start, end);
 
-      final alignment = AlignmentTween(
+      final alignmentAnima = AlignmentTween(
         begin: startAlignment,
         end: endAlignment,
       ).animate(
         CurvedAnimation(
           parent: parent,
-          curve: Interval(
-            0,
-            1,
-            curve: curve,
-          ),
+          curve: curve,
         ),
       );
 
-      final opacity = Tween<double>(
+      final opacityAnima = Tween<double>(
         begin: 0.1,
-        end: 1,
+        end: opacity,
       ).animate(
         CurvedAnimation(
           parent: parent,
@@ -120,7 +118,7 @@ class AnimationTextState {
         ),
       );
 
-      final scale = Tween<double>(
+      final scaleAnima = Tween<double>(
         begin: 5,
         end: 1,
       ).animate(
@@ -136,9 +134,9 @@ class AnimationTextState {
 
       result.add(
         LetterAnimations(
-          alignment: alignment,
-          opacity: opacity,
-          scale: scale,
+          alignment: alignmentAnima,
+          opacity: opacityAnima,
+          scale: scaleAnima,
         ),
       );
     }
