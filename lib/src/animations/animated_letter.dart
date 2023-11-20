@@ -23,7 +23,7 @@ class AnimatedLetter {
     required Canvas canvas,
     required Size size,
     required List<AnimatedLetter> letters,
-    required List<LetterAnimations> animations,
+    required List<LetterAnimations> letterAnimations,
     required Alignment startAlignment,
     required Alignment endAlignment,
     required double opacity,
@@ -34,7 +34,7 @@ class AnimatedLetter {
       letters[i].paint(
         canvas: canvas,
         size: size,
-        animation: animations[i],
+        letterAnimations: letterAnimations[i],
         startAlignment: startAlignment,
         endAlignment: endAlignment,
         opacity: opacity,
