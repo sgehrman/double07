@@ -52,8 +52,8 @@ class AnimationState {
 
   final blockState = AnimationBlocksState(
     alignment: const Alignment(0.8, -0.8),
-    timeStart: Timeline.quoteStart,
-    timeEnd: Timeline.quoteEnd,
+    timeStart: Timeline.blocksStart,
+    timeEnd: Timeline.blocksEnd,
   );
 
   // background

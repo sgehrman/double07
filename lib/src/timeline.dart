@@ -19,4 +19,7 @@ class Timeline {
 
   static double quoteStart = 0.1;
   static double quoteEnd = 1;
+
+  static double blocksStart = 0;
+  static double blocksEnd = 0.6;
 }
