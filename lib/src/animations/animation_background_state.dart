@@ -20,6 +20,24 @@ class AnimationBackgroundState {
   late final Animation<double> _animation;
   late final ui.Image _image;
 
+  // expensive to alloc, create once
+  final _sequence = TweenSequence<double>(
+    <TweenSequenceItem<double>>[
+      TweenSequenceItem<double>(
+        tween: Tween<double>(begin: 0, end: 0.35),
+        weight: 33,
+      ),
+      TweenSequenceItem<double>(
+        tween: ConstantTween<double>(0.35),
+        weight: 33,
+      ),
+      TweenSequenceItem<double>(
+        tween: Tween<double>(begin: 0.35, end: 0),
+        weight: 33,
+      ),
+    ],
+  );
+
   // =================================================
 
   Future<void> initialize(AnimationController controller) async {
@@ -27,22 +45,7 @@ class AnimationBackgroundState {
 
     _image = await ImageProcessor.bytesToImage(byteData.buffer.asUint8List());
 
-    _animation = TweenSequence<double>(
-      <TweenSequenceItem<double>>[
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0, end: 0.35),
-          weight: 33,
-        ),
-        TweenSequenceItem<double>(
-          tween: ConstantTween<double>(0.35),
-          weight: 33,
-        ),
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0.35, end: 0),
-          weight: 33,
-        ),
-      ],
-    ).animate(
+    _animation = _sequence.animate(
       CurvedAnimation(
         parent: controller,
         curve: Interval(

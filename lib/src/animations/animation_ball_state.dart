@@ -12,21 +12,24 @@ class AnimationBallState {
   int lastV = -1;
   Color ballColor = Colors.cyan;
 
+  // expensive to allocate, do once
+  final _sequence = TweenSequence<double>(
+    <TweenSequenceItem<double>>[
+      TweenSequenceItem<double>(
+        tween: Tween<double>(begin: 0, end: 1),
+        weight: 50,
+      ),
+      TweenSequenceItem<double>(
+        tween: Tween<double>(begin: 0, end: 1),
+        weight: 50,
+      ),
+    ],
+  );
+
   // =================================================
 
   void initialize(AnimationController controller) {
-    _animation = TweenSequence<double>(
-      <TweenSequenceItem<double>>[
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0, end: 1),
-          weight: 50,
-        ),
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0, end: 1),
-          weight: 50,
-        ),
-      ],
-    ).animate(
+    _animation = _sequence.animate(
       CurvedAnimation(
         parent: controller,
         curve: Interval(
