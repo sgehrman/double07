@@ -23,7 +23,7 @@ class AnimatedLetter {
     required Canvas canvas,
     required Size size,
     required List<AnimatedLetter> letters,
-    required List<Animation<double>> animations,
+    required List<LetterAnimations> animations,
     required Alignment startAlignment,
     required Alignment endAlignment,
     required double opacity,
@@ -46,54 +46,53 @@ class AnimatedLetter {
   void paint({
     required Canvas canvas,
     required Size size,
-    required Animation<double> animation,
+    required LetterAnimations letterAnimations,
     required Alignment startAlignment,
     required Alignment endAlignment,
     required double opacity,
     Color? backgroundColor,
   }) {
-    if (AnimaUtils.isRunning(animation)) {
-      final rect = Offset.zero & size;
+    final rect = Offset.zero & size;
 
-      final lerpedAlignment = Alignment.lerp(
-            startAlignment,
-            endAlignment,
-            animation.value,
-          ) ??
-          Alignment.center;
+    final lerpedAlignment = Alignment.lerp(
+          startAlignment,
+          endAlignment,
+          letterAnimations.alignment.value,
+        ) ??
+        Alignment.center;
 
-      Rect destRect = lerpedAlignment.inscribe(
-        Size(
-          wordSize.width,
-          wordSize.height,
-        ),
-        rect,
-      );
+    Rect destRect = lerpedAlignment.inscribe(
+      Size(
+        wordSize.width,
+        wordSize.height,
+      ),
+      rect,
+    );
 
-      // not working? white is on top
-      // canvas.drawRect(destRect, Paint()..color = Colors.white);
+    // not working? white is on top
+    // canvas.drawRect(destRect, Paint()..color = Colors.white);
 
-      destRect = alignment.inscribe(
-        Size(
-          letterSize.width,
-          letterSize.height,
-        ),
-        destRect,
-      );
+    destRect = alignment.inscribe(
+      Size(
+        letterSize.width,
+        letterSize.height,
+      ),
+      destRect,
+    );
 
-      if (backgroundColor != null) {
-        canvas.drawRect(destRect, Paint()..color = backgroundColor);
-      }
-
-      paintImage(
-        canvas: canvas,
-        rect: destRect,
-        image: image,
-        opacity: opacity,
-        isAntiAlias: true,
-        filterQuality: FilterQuality.high,
-      );
+    if (backgroundColor != null) {
+      canvas.drawRect(destRect, Paint()..color = backgroundColor);
     }
+
+    paintImage(
+      canvas: canvas,
+      rect: destRect,
+      image: image,
+      fit: BoxFit.fill,
+      opacity: letterAnimations.opacity.value,
+      isAntiAlias: true,
+      filterQuality: FilterQuality.high,
+    );
   }
 
   static Future<List<AnimatedLetter>> createTextImages(
@@ -246,4 +245,18 @@ class _LetterPainter {
     // space
     return const Size(20, 20);
   }
+}
+
+// =====================================================
+
+class LetterAnimations {
+  LetterAnimations({
+    required this.alignment,
+    required this.opacity,
+    required this.scale,
+  });
+
+  Animation<double> alignment;
+  Animation<double> opacity;
+  Animation<double> scale;
 }

@@ -1,7 +1,6 @@
 import 'dart:ui' as ui;
 
 import 'package:dfc_flutter/dfc_flutter_web.dart';
-import 'package:double07/src/animations/anima_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -55,33 +54,31 @@ class AnimationBackgroundState {
   }
 
   void paint(Canvas canvas, Size size) {
-    if (AnimaUtils.isRunning(_animation)) {
-      final rect = Offset.zero & size;
+    final rect = Offset.zero & size;
 
-      final opacity = _animation.value;
-      final double gradientOpacity = _animation.value > 0 ? 1 : 0;
+    final opacity = _animation.value;
+    final double gradientOpacity = _animation.value > 0 ? 1 : 0;
 
-      final gradientPaint = Paint()
-        ..isAntiAlias = true
-        ..style = PaintingStyle.fill
-        ..shader = RadialGradient(
-          colors: [
-            Colors.transparent,
-            Colors.black.withOpacity(
-              gradientOpacity,
-            ),
-          ],
-          center: alignment,
-        ).createShader(rect);
+    final gradientPaint = Paint()
+      ..isAntiAlias = true
+      ..style = PaintingStyle.fill
+      ..shader = RadialGradient(
+        colors: [
+          Colors.transparent,
+          Colors.black.withOpacity(
+            gradientOpacity,
+          ),
+        ],
+        center: alignment,
+      ).createShader(rect);
 
-      paintImage(
-        canvas: canvas,
-        rect: rect,
-        fit: BoxFit.cover,
-        image: _image,
-        opacity: opacity,
-      );
-      canvas.drawRect(rect, gradientPaint);
-    }
+    paintImage(
+      canvas: canvas,
+      rect: rect,
+      fit: BoxFit.cover,
+      image: _image,
+      opacity: opacity,
+    );
+    canvas.drawRect(rect, gradientPaint);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:double07/src/animations/anima_utils.dart';
 import 'package:double07/src/animations/animated_letter.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class AnimationTextState {
   });
 
   late final List<AnimatedLetter> _textLetters;
-  late final List<Animation<double>> _animations;
+  late final List<LetterAnimations> _animations;
 
   final String text;
   final double fontSize;
@@ -68,14 +69,14 @@ class AnimationTextState {
   // private methods
   // ============================================================
 
-  static List<Animation<double>> _buildTextAnimations({
+  static List<LetterAnimations> _buildTextAnimations({
     required int count,
     required AnimationController controller,
     required double timeStart,
     required double timeEnd,
     required Curve curve,
   }) {
-    final List<Animation<double>> result = [];
+    final List<LetterAnimations> result = [];
 
     final time = timeEnd - timeStart;
     double duration = time / count;
@@ -88,19 +89,45 @@ class AnimationTextState {
       final start = timeStart + (i * spacer);
       final end = start + duration;
 
-      result.add(
-        Tween<double>(
-          begin: 0,
-          end: 1,
-        ).animate(
-          CurvedAnimation(
-            parent: controller,
-            curve: Interval(
-              start,
-              end,
-              curve: curve,
-            ),
+      final parent = AnimaUtils.baseAnimation(controller, start, end);
+
+      final alignment = parent.drive(
+        CurveTween(curve: curve),
+      );
+
+      final opacity = Tween<double>(
+        begin: 0.1,
+        end: 1,
+      ).animate(
+        CurvedAnimation(
+          parent: parent,
+          curve: Interval(
+            0.9,
+            1,
+            curve: curve,
           ),
+        ),
+      );
+
+      final scale = Tween<double>(
+        begin: 5,
+        end: 1,
+      ).animate(
+        CurvedAnimation(
+          parent: parent,
+          curve: Interval(
+            0,
+            0.8,
+            curve: curve,
+          ),
+        ),
+      );
+
+      result.add(
+        LetterAnimations(
+          alignment: alignment,
+          opacity: opacity,
+          scale: scale,
         ),
       );
     }

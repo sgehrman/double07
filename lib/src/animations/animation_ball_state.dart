@@ -1,4 +1,3 @@
-import 'package:double07/src/animations/anima_utils.dart';
 import 'package:double07/src/timeline.dart';
 import 'package:flutter/material.dart';
 
@@ -78,49 +77,47 @@ class AnimationBallState {
     Canvas canvas,
     Size size,
   ) {
-    if (AnimaUtils.isRunning(_animation)) {
-      const double ballRadius = 100;
-      final ballPaint = Paint()..color = ballColor;
+    const double ballRadius = 100;
+    final ballPaint = Paint()..color = ballColor;
 
-      _update();
+    _update();
+
+    canvas.drawCircle(
+      Offset(
+        size.width * _animation.value,
+        size.height / 2,
+      ),
+      ballRadius,
+      ballPaint,
+    );
+
+    // fade ball
+    if (fadeBallPosition != -1) {
+      final ballFadePaint = Paint()
+        ..color = ballColor.withOpacity(fadeBallOpacity);
 
       canvas.drawCircle(
         Offset(
-          size.width * _animation.value,
+          size.width * fadeBallPosition,
           size.height / 2,
         ),
         ballRadius,
-        ballPaint,
+        ballFadePaint,
       );
+    }
 
-      // fade ball
-      if (fadeBallPosition != -1) {
-        final ballFadePaint = Paint()
-          ..color = ballColor.withOpacity(fadeBallOpacity);
+    if (fadeBallPosition2 != -1) {
+      final ballFadePaint = Paint()
+        ..color = ballColor.withOpacity(fadeBallOpacity2);
 
-        canvas.drawCircle(
-          Offset(
-            size.width * fadeBallPosition,
-            size.height / 2,
-          ),
-          ballRadius,
-          ballFadePaint,
-        );
-      }
-
-      if (fadeBallPosition2 != -1) {
-        final ballFadePaint = Paint()
-          ..color = ballColor.withOpacity(fadeBallOpacity2);
-
-        canvas.drawCircle(
-          Offset(
-            size.width * fadeBallPosition2,
-            size.height / 2,
-          ),
-          ballRadius,
-          ballFadePaint,
-        );
-      }
+      canvas.drawCircle(
+        Offset(
+          size.width * fadeBallPosition2,
+          size.height / 2,
+        ),
+        ballRadius,
+        ballFadePaint,
+      );
     }
   }
 }

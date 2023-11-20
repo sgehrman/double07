@@ -30,7 +30,7 @@ class AnimationParagraphState {
           text: line,
           fontSize: 44,
           color: Colors.white,
-          startAlignment: const Alignment(-3, -3),
+          startAlignment: Alignment(alignment.x, -3),
           endAlignment: Alignment(alignment.x, alignment.y + (index * 0.1)),
           timeStart: timeStart,
           timeEnd: timeEnd,
@@ -49,8 +49,8 @@ class AnimationParagraphState {
     required Canvas canvas,
     required Size size,
   }) {
-    for (final l in _animations) {
-      l.paint(canvas: canvas, size: size);
+    for (final animation in _animations) {
+      animation.paint(canvas: canvas, size: size);
     }
   }
 }

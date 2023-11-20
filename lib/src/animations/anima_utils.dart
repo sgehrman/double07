@@ -1,6 +1,27 @@
 import 'package:flutter/material.dart';
 
 class AnimaUtils {
+  // base animation which child animations are based on
+  // so begin and end affect children
+  static Animation<double> baseAnimation(
+    AnimationController controller,
+    double start,
+    double end,
+  ) {
+    return Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(
+      CurvedAnimation(
+        parent: controller,
+        curve: Interval(
+          start,
+          end,
+        ),
+      ),
+    );
+  }
+
   static bool isRunning(Animation<dynamic> animation) {
     switch (animation.status) {
       case AnimationStatus.completed:
