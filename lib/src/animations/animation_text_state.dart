@@ -117,13 +117,13 @@ class AnimationTextState {
 
       final scaleAnima = Tween<double>(
         begin: 5,
-        end: 1,
+        end: 2,
       ).animate(
         CurvedAnimation(
           parent: parent,
           curve: Interval(
             0,
-            0.8,
+            1,
             curve: curve,
           ),
         ),

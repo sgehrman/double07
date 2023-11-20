@@ -68,6 +68,15 @@ class AnimatedLetter {
       canvas.drawRect(destRect, Paint()..color = backgroundColor);
     }
 
+    canvas.save();
+
+    final matrix = AnimaUtils.scaledRect(
+      destRect,
+      letterAnimations.scale.value,
+    );
+
+    canvas.transform(matrix.storage);
+
     paintImage(
       canvas: canvas,
       rect: destRect,
@@ -77,6 +86,8 @@ class AnimatedLetter {
       isAntiAlias: true,
       filterQuality: FilterQuality.high,
     );
+
+    canvas.restore();
   }
 
   static Future<List<AnimatedLetter>> createTextImages(

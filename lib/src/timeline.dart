@@ -15,8 +15,8 @@ class Timeline {
   static double textEnd = 0.4;
 
   static double textStart2 = 0.4;
-  static double textEnd2 = 0.6;
+  static double textEnd2 = 0.9;
 
-  static double quoteStart = 0.3;
+  static double quoteStart = 0.1;
   static double quoteEnd = 1;
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:matrix4_transform/matrix4_transform.dart';
 
 class AnimaUtils {
   // base animation which child animations are based on
@@ -114,5 +115,17 @@ class AnimaUtils {
       ..translate(destRect.left, destRect.top)
       ..scale(scaleX, scaleY)
       ..translate(-srcRect.left, -srcRect.top);
+  }
+
+  // ====================================================
+
+  static Matrix4 scaledRect(Rect srcRect, double scale) {
+    return Matrix4Transform()
+        .scaleBy(
+          x: scale,
+          y: scale,
+          origin: Offset(srcRect.width / 2, srcRect.height / 2),
+        )
+        .matrix4;
   }
 }

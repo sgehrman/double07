@@ -13,6 +13,7 @@ dependencies:
     git: https://github.com/sgehrman/dfc_flutter
   flutter:
     sdk: flutter
+  matrix4_transform: ^3.0.0
 
 dev_dependencies:
   dart_code_metrics:
