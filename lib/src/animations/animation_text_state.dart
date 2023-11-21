@@ -2,6 +2,12 @@ import 'package:double07/src/animations/animated_letter.dart';
 import 'package:double07/src/animations/animation_spec.dart';
 import 'package:flutter/material.dart';
 
+enum TextAnimationType {
+  alignment,
+  scale,
+  opacity,
+}
+
 class AnimationTextState {
   AnimationTextState({
     required this.text,
@@ -15,6 +21,11 @@ class AnimationTextState {
     this.bold = false,
     this.letterSpacing = 10,
     this.opacity = 0.3,
+    this.animationTypes = const {
+      TextAnimationType.alignment,
+      TextAnimationType.scale,
+      TextAnimationType.opacity,
+    },
   });
 
   late final List<AnimatedLetter> _textLetters;
@@ -31,6 +42,7 @@ class AnimationTextState {
   final double timeEnd;
   final Curve curve;
   final double letterSpacing;
+  final Set<TextAnimationType> animationTypes;
 
   late final TweenSequence<double> _scaleSequence;
   late final TweenSequence<double> _opacitySequence;
@@ -126,39 +138,47 @@ class AnimationTextState {
 
       final parent = AnimationSpec.parentAnimation(masterParent, start, 1);
 
-      final alignmentAnima = AlignmentTween(
-        begin: startAlignment,
-        end: endAlignment,
-      ).animate(
-        CurvedAnimation(
-          parent: parent,
-          curve: Interval(
-            start,
-            end,
-            curve: curve,
-          ),
-        ),
-      );
+      final alignmentAnima =
+          animationTypes.contains(TextAnimationType.alignment)
+              ? AlignmentTween(
+                  begin: startAlignment,
+                  end: endAlignment,
+                ).animate(
+                  CurvedAnimation(
+                    parent: parent,
+                    curve: Interval(
+                      start,
+                      end,
+                      curve: curve,
+                    ),
+                  ),
+                )
+              : AlignmentTween(begin: endAlignment, end: endAlignment)
+                  .animate(parent);
 
-      final opacityAnima = _opacitySequence.animate(
-        CurvedAnimation(
-          parent: parent,
-          curve: Interval(
-            start,
-            1,
-          ),
-        ),
-      );
+      final opacityAnima = animationTypes.contains(TextAnimationType.opacity)
+          ? _opacitySequence.animate(
+              CurvedAnimation(
+                parent: parent,
+                curve: Interval(
+                  start,
+                  1,
+                ),
+              ),
+            )
+          : ConstantTween<double>(opacity).animate(parent);
 
-      final scaleAnima = _scaleSequence.animate(
-        CurvedAnimation(
-          parent: parent,
-          curve: Interval(
-            start,
-            end,
-          ),
-        ),
-      );
+      final scaleAnima = animationTypes.contains(TextAnimationType.scale)
+          ? _scaleSequence.animate(
+              CurvedAnimation(
+                parent: parent,
+                curve: Interval(
+                  start,
+                  end,
+                ),
+              ),
+            )
+          : ConstantTween<double>(1).animate(parent);
 
       result.add(
         LetterAnimations(

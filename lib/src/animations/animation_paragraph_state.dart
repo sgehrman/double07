@@ -40,6 +40,11 @@ class AnimationParagraphState {
           timeStart: start,
           timeEnd: start + (timePerLine * overlap),
           curve: Curves.easeInOut,
+          // animationTypes: const {
+          //   TextAnimationType.alignment,
+          //   // TextAnimationType.scale,
+          //   // TextAnimationType.opacity,
+          // },
         ),
       );
 
