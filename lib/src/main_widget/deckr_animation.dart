@@ -1,6 +1,7 @@
 import 'package:double07/src/animation_state.dart';
 import 'package:double07/src/audio_player/background_audio_player.dart';
 import 'package:double07/src/main_widget/deckr_animation_painter.dart';
+import 'package:double07/src/timeline.dart';
 import 'package:flutter/material.dart';
 
 class DeckrAnimation extends StatefulWidget {
@@ -25,7 +26,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 12),
+      duration: Timeline.runDuration,
     );
 
     _setup();

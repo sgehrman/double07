@@ -1,4 +1,6 @@
 class Timeline {
+  static Duration runDuration = const Duration(seconds: 22);
+
   static double ballStart = 0;
   static double ballEnd = 1;
 
