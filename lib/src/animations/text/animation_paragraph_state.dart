@@ -1,3 +1,4 @@
+import 'package:double07/src/animation_state.dart';
 import 'package:double07/src/animations/text/anima_text.dart';
 import 'package:double07/src/animations/text/anima_text_state.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ enum ParagraphAnimaType {
   titleSequence,
 }
 
-class AnimationParagraphState {
+class AnimationParagraphState implements RunableAnimation {
   AnimationParagraphState({
     required this.lines,
     required this.alignment,
@@ -28,6 +29,7 @@ class AnimationParagraphState {
 
   late final List<AnimaText> _animations;
 
+  @override
   Future<void> initialize(AnimationController controller) async {
     _animations = [];
 
@@ -90,12 +92,13 @@ class AnimationParagraphState {
     }
   }
 
-  void paint({
-    required Canvas canvas,
-    required Size size,
-  }) {
+  @override
+  void paint(
+    Canvas canvas,
+    Size size,
+  ) {
     for (final animation in _animations) {
-      animation.paint(canvas: canvas, size: size);
+      animation.paint(canvas, size);
     }
   }
 }

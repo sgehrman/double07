@@ -1,7 +1,8 @@
+import 'package:double07/src/animation_state.dart';
 import 'package:double07/src/timeline.dart';
 import 'package:flutter/material.dart';
 
-class AnimationBallState {
+class AnimationBallState implements RunableAnimation {
   late final Animation<double> _animation;
 
   // ball animation
@@ -28,7 +29,8 @@ class AnimationBallState {
 
   // =================================================
 
-  void initialize(AnimationController controller) {
+  @override
+  Future<void> initialize(AnimationController controller) {
     _animation = _sequence.animate(
       CurvedAnimation(
         parent: controller,
@@ -38,6 +40,8 @@ class AnimationBallState {
         ),
       ),
     );
+
+    return Future.value();
   }
 
   // =================================================
@@ -76,6 +80,7 @@ class AnimationBallState {
     }
   }
 
+  @override
   void paint(
     Canvas canvas,
     Size size,

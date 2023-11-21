@@ -1,10 +1,11 @@
 import 'dart:ui' as ui;
 
 import 'package:dfc_flutter/dfc_flutter_web.dart';
+import 'package:double07/src/animation_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class AnimationBackgroundState {
+class AnimationBackgroundState implements RunableAnimation {
   AnimationBackgroundState({
     required this.imageAsset,
     required this.alignment,
@@ -40,6 +41,7 @@ class AnimationBackgroundState {
 
   // =================================================
 
+  @override
   Future<void> initialize(AnimationController controller) async {
     final ByteData byteData = await rootBundle.load(imageAsset);
 
@@ -56,6 +58,7 @@ class AnimationBackgroundState {
     );
   }
 
+  @override
   void paint(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
 

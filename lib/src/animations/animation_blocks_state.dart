@@ -1,9 +1,10 @@
+import 'package:double07/src/animation_state.dart';
 import 'package:double07/src/animations/anima_utils.dart';
 import 'package:double07/src/animations/animation_specs/animation_spec.dart';
 import 'package:double07/src/animations/animation_specs/block_animations.dart';
 import 'package:flutter/material.dart';
 
-class AnimationBlocksState {
+class AnimationBlocksState implements RunableAnimation {
   AnimationBlocksState({
     required this.timeStart,
     required this.timeEnd,
@@ -83,7 +84,8 @@ class AnimationBlocksState {
 
   // =================================================
 
-  void initialize(AnimationController controller) {
+  @override
+  Future<void> initialize(AnimationController controller) {
     final parent =
         AnimationSpec.parentAnimation(controller, timeStart, timeEnd);
 
@@ -126,6 +128,8 @@ class AnimationBlocksState {
       blocks: blocks,
       flip: flip,
     );
+
+    return Future.value();
   }
 
   // =====================================================
@@ -160,6 +164,7 @@ class AnimationBlocksState {
 
   // =====================================================
 
+  @override
   void paint(Canvas canvas, Size size) {
     if (!_animation.isRunning) {
       // print('NOT RUNNING block');
