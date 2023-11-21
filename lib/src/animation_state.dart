@@ -75,7 +75,6 @@ class AnimationState {
   final ballState = AnimationBallState();
 
   final blockState = AnimationBlocksState(
-    alignment: const Alignment(0.8, -0.8),
     timeStart: Timeline.blocksStart,
     timeEnd: Timeline.blocksEnd,
   );

@@ -5,12 +5,10 @@ import 'package:flutter/material.dart';
 
 class AnimationBlocksState {
   AnimationBlocksState({
-    required this.alignment,
     required this.timeStart,
     required this.timeEnd,
   });
 
-  final Alignment alignment;
   final double timeStart;
   final double timeEnd;
 
