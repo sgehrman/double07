@@ -16,6 +16,7 @@ class AnimaTextState {
     required this.timeStart,
     required this.timeEnd,
     this.curve = Curves.elasticInOut,
+    this.opacityCurve = Curves.easeOut,
     this.bold = false,
     this.letterSpacing = 10,
     this.opacity = 0.3,
@@ -35,6 +36,7 @@ class AnimaTextState {
   final double timeStart;
   final double timeEnd;
   final Curve curve;
+  final Curve opacityCurve;
   final double letterSpacing;
   final Set<TextAnimationType> animationTypes;
 }

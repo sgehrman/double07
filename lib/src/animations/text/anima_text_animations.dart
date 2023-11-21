@@ -49,7 +49,7 @@ class AnimaTextAnimations {
         TweenSequenceItem<double>(
           tween: Tween<double>(begin: 0.04, end: state.opacity).chain(
             CurveTween(
-              curve: state.curve,
+              curve: state.opacityCurve,
             ),
           ),
           weight: kStartWeight,
@@ -61,7 +61,7 @@ class AnimaTextAnimations {
         TweenSequenceItem<double>(
           tween: Tween<double>(begin: state.opacity, end: 0).chain(
             CurveTween(
-              curve: state.curve,
+              curve: state.opacityCurve,
             ),
           ),
           weight: kEndWeight,
@@ -172,7 +172,7 @@ class AnimaTextAnimations {
           curve: Interval(
             start,
             1, // 1 is end of parent animation
-            // curve: state.curve,
+            curve: state.opacityCurve,
           ),
         ),
       );
@@ -183,7 +183,7 @@ class AnimaTextAnimations {
           curve: Interval(
             start,
             1, // 1 is end of parent animation
-            curve: state.curve,
+            curve: state.opacityCurve,
           ),
         ),
       );
