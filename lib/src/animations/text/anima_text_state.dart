@@ -4,6 +4,7 @@ enum TextAnimationType {
   alignment,
   scale,
   opacity,
+  fadeInOut,
 }
 
 class AnimaTextState {

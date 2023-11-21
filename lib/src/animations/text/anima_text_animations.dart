@@ -114,17 +114,29 @@ class AnimaTextAnimations {
     double end,
     Animation<double> parent,
   ) {
-    return state.animationTypes.contains(TextAnimationType.opacity)
-        ? _opacitySequence.animate(
-            CurvedAnimation(
-              parent: parent,
-              curve: Interval(
-                start,
-                1,
-              ),
-            ),
-          )
-        : ConstantTween<double>(state.opacity).animate(parent);
+    if (state.animationTypes.contains(TextAnimationType.opacity)) {
+      return _opacitySequence.animate(
+        CurvedAnimation(
+          parent: parent,
+          curve: Interval(
+            start,
+            1,
+          ),
+        ),
+      );
+    } else if (state.animationTypes.contains(TextAnimationType.fadeInOut)) {
+      return _opacitySequence.animate(
+        CurvedAnimation(
+          parent: parent,
+          curve: Interval(
+            start,
+            1,
+          ),
+        ),
+      );
+    }
+
+    return ConstantTween<double>(state.opacity).animate(parent);
   }
 
   Animation<double> _scaleAnima(
