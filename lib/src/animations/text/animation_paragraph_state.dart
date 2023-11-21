@@ -1,5 +1,5 @@
-import 'package:double07/src/animations/animated_text.dart';
-import 'package:double07/src/animations/animation_text_state.dart';
+import 'package:double07/src/animations/text/animated_text.dart';
+import 'package:double07/src/animations/text/animation_text_state.dart';
 import 'package:flutter/material.dart';
 
 class AnimationParagraphState {

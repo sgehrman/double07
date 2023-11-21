@@ -1,5 +1,5 @@
-import 'package:double07/src/animations/animated_letter.dart';
 import 'package:double07/src/animations/animation_spec.dart';
+import 'package:double07/src/animations/text/animated_letter.dart';
 import 'package:flutter/material.dart';
 
 enum TextAnimationType {

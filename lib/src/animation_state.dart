@@ -1,9 +1,9 @@
-import 'package:double07/src/animations/animated_text.dart';
 import 'package:double07/src/animations/animation_background_state.dart';
 import 'package:double07/src/animations/animation_ball_state.dart';
 import 'package:double07/src/animations/animation_blocks_state.dart';
-import 'package:double07/src/animations/animation_paragraph_state.dart';
-import 'package:double07/src/animations/animation_text_state.dart';
+import 'package:double07/src/animations/text/animated_text.dart';
+import 'package:double07/src/animations/text/animation_paragraph_state.dart';
+import 'package:double07/src/animations/text/animation_text_state.dart';
 import 'package:double07/src/timeline.dart';
 import 'package:double07/src/utils.dart';
 import 'package:flutter/material.dart';
