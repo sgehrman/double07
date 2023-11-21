@@ -10,7 +10,8 @@ class AnimationSpec {
 
   final Animation<double> parent;
 
-  bool get isRunning => parent.value > 0;
+  // not running if zero or one
+  bool get isRunning => parent.value != 0 && parent.value != 1;
 
   static Animation<double> parentAnimation(
     AnimationController controller,

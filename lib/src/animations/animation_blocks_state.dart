@@ -156,9 +156,11 @@ class AnimationBlocksState {
 
   void paint(Canvas canvas, Size size) {
     if (!_animation.isRunning) {
-      // print('not running block');
+      // print('NOT RUNNING block');
 
       return;
+    } else {
+      // print('RUNNING block');
     }
 
     // final rect = Offset.zero & size;
