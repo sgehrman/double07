@@ -2,7 +2,7 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:double07/src/animations/anima_utils.dart';
-import 'package:double07/src/animations/animation_spec.dart';
+import 'package:double07/src/animations/animation_specs/letter_animations.dart';
 import 'package:flutter/material.dart';
 
 class AnimatedLetter {
@@ -247,23 +247,4 @@ class _LetterPainter {
     // space
     return const Size(20, 20);
   }
-}
-
-// =====================================================
-
-class LetterAnimations extends AnimationSpec {
-  LetterAnimations({
-    required Animation<double> master,
-    required Animation<double> parent,
-    required this.alignment,
-    required this.opacity,
-    required this.scale,
-  }) : super(
-          master: master,
-          parent: parent,
-        );
-
-  Animation<Alignment> alignment;
-  Animation<double> opacity;
-  Animation<double> scale;
 }

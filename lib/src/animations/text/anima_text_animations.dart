@@ -1,4 +1,5 @@
-import 'package:double07/src/animations/animation_spec.dart';
+import 'package:double07/src/animations/animation_specs/animation_spec.dart';
+import 'package:double07/src/animations/animation_specs/letter_animations.dart';
 import 'package:double07/src/animations/text/anima_text_state.dart';
 import 'package:double07/src/animations/text/animated_letter.dart';
 import 'package:flutter/material.dart';
