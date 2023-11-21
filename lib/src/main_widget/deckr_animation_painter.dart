@@ -10,10 +10,14 @@ class DeckrAnimationPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
 
+    canvas.save();
+    canvas.clipRect(rect);
+
     final backPaint = Paint()..color = Colors.black;
     canvas.drawRect(rect, backPaint);
 
     animationState.paint(canvas, size);
+    canvas.restore();
   }
 
   // =================================================

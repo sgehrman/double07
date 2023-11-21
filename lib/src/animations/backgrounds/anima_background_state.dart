@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 
+enum AnimaBackgroundMode {
+  spotlight,
+  colorShift,
+  zoomIn,
+}
+
 class AnimaBackgroundState {
   AnimaBackgroundState({
     required this.imageAsset,
-    required this.alignment,
+    required this.gradientAlignment,
     required this.timeStart,
     required this.timeEnd,
+    this.mode = AnimaBackgroundMode.spotlight,
   });
 
   final String imageAsset;
-  final Alignment alignment;
+  final Alignment gradientAlignment;
+  final AnimaBackgroundMode mode;
   final double timeStart;
   final double timeEnd;
 }
