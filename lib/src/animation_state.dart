@@ -1,7 +1,7 @@
 import 'package:double07/src/animations/animation_background_state.dart';
 import 'package:double07/src/animations/animation_ball_state.dart';
 import 'package:double07/src/animations/animation_blocks_state.dart';
-import 'package:double07/src/animations/text/animated_text.dart';
+import 'package:double07/src/animations/text/anima_text.dart';
 import 'package:double07/src/animations/text/animation_paragraph_state.dart';
 import 'package:double07/src/animations/text/animation_text_state.dart';
 import 'package:double07/src/timeline.dart';
@@ -14,7 +14,7 @@ class AnimationState {
   bool isInitialized = false;
 
   // Deckr animation
-  final t1 = AnimatedText(
+  final t1 = AnimaText(
     AnimationTextState(
       text: 'Deckr'.toUpperCase(),
       fontSize: 64,
@@ -28,7 +28,7 @@ class AnimationState {
   );
 
   // Coder animation
-  final t2 = AnimatedText(
+  final t2 = AnimaText(
     AnimationTextState(
       text: 'Code: Mr. Henderson',
       fontSize: 44,

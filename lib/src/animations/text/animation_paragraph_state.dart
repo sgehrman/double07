@@ -1,4 +1,4 @@
-import 'package:double07/src/animations/text/animated_text.dart';
+import 'package:double07/src/animations/text/anima_text.dart';
 import 'package:double07/src/animations/text/animation_text_state.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +17,7 @@ class AnimationParagraphState {
   final double timeEnd;
   final Curve curve;
 
-  late final List<AnimatedText> _animations;
+  late final List<AnimaText> _animations;
 
   Future<void> initialize({
     required AnimationController controller,
@@ -32,7 +32,7 @@ class AnimationParagraphState {
       final start = timeStart + (index * (timePerLine / overlap));
 
       _animations.add(
-        AnimatedText(
+        AnimaText(
           AnimationTextState(
             text: line,
             fontSize: 44,

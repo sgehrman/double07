@@ -1,5 +1,5 @@
 class Timeline {
-  static Duration runDuration = const Duration(seconds: 22);
+  static Duration runDuration = const Duration(seconds: 8);
 
   static double ballStart = 0;
   static double ballEnd = 1;
