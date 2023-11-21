@@ -1,4 +1,5 @@
 import 'package:double07/src/animations/anima_utils.dart';
+import 'package:double07/src/animations/animation_spec.dart';
 import 'package:flutter/material.dart';
 
 class AnimationBlocksState {
@@ -116,6 +117,9 @@ class AnimationBlocksState {
     );
 
     _animation = BlockAnimations(
+      controller: controller,
+      start: timeStart,
+      end: timeEnd,
       opacity: opacity,
       blocks: blocks,
       flip: flip,
@@ -150,6 +154,12 @@ class AnimationBlocksState {
   // =====================================================
 
   void paint(Canvas canvas, Size size) {
+    if (!_animation.isRunning) {
+      // print('not running block');
+
+      return;
+    }
+
     // final rect = Offset.zero & size;
 
     final blockPaint = Paint()
@@ -204,12 +214,15 @@ class AnimationBlocksState {
 
 // =====================================================
 
-class BlockAnimations {
+class BlockAnimations extends AnimationSpec {
   BlockAnimations({
+    required AnimationController controller,
+    required double start,
+    required double end,
     required this.opacity,
     required this.blocks,
     required this.flip,
-  });
+  }) : super(controller: controller, start: start, end: end);
 
   Animation<double> opacity;
   Animation<double> blocks;

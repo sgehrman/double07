@@ -147,6 +147,9 @@ class AnimationTextState {
 
       result.add(
         LetterAnimations(
+          controller: controller,
+          start: start,
+          end: end,
           alignment: alignmentAnima,
           opacity: opacityAnima,
           scale: scaleAnima,

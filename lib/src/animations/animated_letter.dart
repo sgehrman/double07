@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:double07/src/animations/anima_utils.dart';
+import 'package:double07/src/animations/animation_spec.dart';
 import 'package:flutter/material.dart';
 
 class AnimatedLetter {
@@ -43,6 +44,12 @@ class AnimatedLetter {
     required LetterAnimations letterAnimations,
     Color? backgroundColor,
   }) {
+    if (!letterAnimations.isRunning) {
+      // print('not running letter');
+
+      return;
+    }
+
     final rect = Offset.zero & size;
 
     Rect destRect = letterAnimations.alignment.value.inscribe(
@@ -244,12 +251,15 @@ class _LetterPainter {
 
 // =====================================================
 
-class LetterAnimations {
+class LetterAnimations extends AnimationSpec {
   LetterAnimations({
+    required AnimationController controller,
+    required double start,
+    required double end,
     required this.alignment,
     required this.opacity,
     required this.scale,
-  });
+  }) : super(controller: controller, start: start, end: end);
 
   Animation<Alignment> alignment;
   Animation<double> opacity;
