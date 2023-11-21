@@ -13,6 +13,7 @@ class AnimationParagraphState {
     required this.alignment,
     required this.timeStart,
     required this.timeEnd,
+    required this.fontSize,
     this.curve = Curves.elasticInOut,
     this.type = ParagraphAnimaType.flyIn,
   });
@@ -20,15 +21,14 @@ class AnimationParagraphState {
   final List<String> lines;
   final Alignment alignment;
   final double timeStart;
+  final double fontSize;
   final double timeEnd;
   final Curve curve;
   final ParagraphAnimaType type;
 
   late final List<AnimaText> _animations;
 
-  Future<void> initialize({
-    required AnimationController controller,
-  }) async {
+  Future<void> initialize(AnimationController controller) async {
     _animations = [];
 
     final timePerLine = (timeEnd - timeStart) / lines.length;
@@ -44,7 +44,7 @@ class AnimationParagraphState {
 
         state = AnimaTextState(
           text: line,
-          fontSize: 44,
+          fontSize: fontSize,
           color: Colors.white,
           startAlignment: Alignment(alignment.x, alignment.y),
           endAlignment: Alignment(alignment.x, alignment.y),
@@ -63,7 +63,7 @@ class AnimationParagraphState {
 
         state = AnimaTextState(
           text: line,
-          fontSize: 44,
+          fontSize: fontSize,
           color: Colors.white,
           startAlignment: Alignment(alignment.x, -2),
           endAlignment: Alignment(alignment.x, alignment.y + (index * 0.1)),
@@ -81,7 +81,7 @@ class AnimationParagraphState {
     }
 
     for (final l in _animations) {
-      await l.initialize(controller: controller);
+      await l.initialize(controller);
     }
   }
 

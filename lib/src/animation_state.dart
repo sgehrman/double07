@@ -42,8 +42,22 @@ class AnimationState {
 
   final p1 = AnimationParagraphState(
     alignment: const Alignment(0.8, -0.8),
+    fontSize: 44,
     timeStart: Timeline.quoteStart,
     timeEnd: Timeline.quoteEnd,
+    lines: [
+      'This dream is for you',
+      'So pay the price',
+      'Make one dream come true',
+      'You only live twice',
+    ],
+  );
+
+  final mainTitles = AnimationParagraphState(
+    alignment: const Alignment(0, -0.1),
+    fontSize: 114,
+    timeStart: Timeline.mainTitlesStart,
+    timeEnd: Timeline.mainTitlesEnd,
     type: ParagraphAnimaType.titleSequence,
     lines: [
       'This dream is for you',
@@ -88,21 +102,18 @@ class AnimationState {
 
   Future<void> initialize(AnimationController controller) async {
     if (!isInitialized) {
-      await t1.initialize(
-        controller: controller,
-      );
+      await t1.initialize(controller);
 
-      await t2.initialize(
-        controller: controller,
-      );
+      await t2.initialize(controller);
 
       await backgroundState.initialize(controller);
       await backgroundState2.initialize(controller);
       await backgroundState3.initialize(controller);
       ballState.initialize(controller);
-      await p1.initialize(controller: controller);
+      await p1.initialize(controller);
 
       blockState.initialize(controller);
+      await mainTitles.initialize(controller);
 
       isInitialized = true;
     }
@@ -113,20 +124,10 @@ class AnimationState {
     backgroundState2.paint(canvas, size);
     backgroundState3.paint(canvas, size);
 
-    t1.paint(
-      canvas: canvas,
-      size: size,
-    );
-
-    t2.paint(
-      canvas: canvas,
-      size: size,
-    );
-
-    p1.paint(
-      canvas: canvas,
-      size: size,
-    );
+    t1.paint(canvas: canvas, size: size);
+    t2.paint(canvas: canvas, size: size);
+    p1.paint(canvas: canvas, size: size);
+    mainTitles.paint(canvas: canvas, size: size);
 
     blockState.paint(canvas, size);
     ballState.paint(canvas, size);

@@ -8,9 +8,7 @@ class AnimaText {
   final AnimaTextState state;
   late final AnimaTextAnimations _animations;
 
-  Future<void> initialize({
-    required AnimationController controller,
-  }) async {
+  Future<void> initialize(AnimationController controller) async {
     _animations = AnimaTextAnimations(state);
 
     await _animations.initialize(controller: controller);
