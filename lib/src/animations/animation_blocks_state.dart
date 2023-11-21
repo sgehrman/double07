@@ -171,15 +171,6 @@ class AnimationBlocksState {
         _animation.opacity.value,
       );
 
-    // final rev = ReverseAnimation(_animation);
-
-    // final gridPaint = Paint()
-    //   ..color = Colors.cyan.withOpacity(
-    //     rev.value,
-    //   );
-
-    // canvas.drawRect(rect, gridPaint);
-
     final width = size.height / 6; // shortest side is height
 
     final cols = size.width ~/ width;
