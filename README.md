@@ -2,4 +2,5 @@
 
 Flutter animation experiments
 
-https://github.com/marcglasberg/matrix4_transform/issues/13
+1. typewriter sounds
+2. how sync sound with animations?
