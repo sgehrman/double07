@@ -14,7 +14,7 @@ class AnimationParagraphState {
     required this.timeStart,
     required this.timeEnd,
     this.curve = Curves.elasticInOut,
-    this.type = ParagraphAnimaType.titleSequence,
+    this.type = ParagraphAnimaType.flyIn,
   });
 
   final List<String> lines;
@@ -39,7 +39,7 @@ class AnimationParagraphState {
       AnimaTextState state;
 
       if (type == ParagraphAnimaType.titleSequence) {
-        final start = timeStart;
+        final start = timeStart + (index * timePerLine);
         final end = start + timePerLine;
 
         state = AnimaTextState(

@@ -44,6 +44,7 @@ class AnimationState {
     alignment: const Alignment(0.8, -0.8),
     timeStart: Timeline.quoteStart,
     timeEnd: Timeline.quoteEnd,
+    type: ParagraphAnimaType.titleSequence,
     lines: [
       'This dream is for you',
       'So pay the price',
