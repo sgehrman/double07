@@ -35,7 +35,7 @@ class AnimaTextAnimations {
         weight: 1,
       ),
       TweenSequenceItem<double>(
-        tween: Tween<double>(begin: 15, end: 1).chain(
+        tween: Tween<double>(begin: 4, end: 1).chain(
           CurveTween(
             curve: state.curve,
           ),
@@ -172,6 +172,7 @@ class AnimaTextAnimations {
           curve: Interval(
             start,
             1, // 1 is end of parent animation
+            // curve: state.curve,
           ),
         ),
       );

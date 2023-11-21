@@ -29,18 +29,45 @@ class AnimationState {
     ),
   );
 
-  // Coder animation
-  final t2 = AnimaText(
+  final hendersonAnima = AnimaText(
     AnimaTextState(
-      text: 'Code: Mr. Henderson',
+      text: 'Mr. Henderson',
       fontSize: 44,
       color: Colors.cyan,
       alignments: [
-        const Alignment(0.8, 0.8),
-        const Alignment(0.8, 0.8),
+        const Alignment(-0.2, 0.6),
+        const Alignment(-0.2, 0.6),
       ],
-      timeStart: Timeline.textStart2,
-      timeEnd: Timeline.textEnd2,
+      timeStart: Timeline.hendersonTextStart,
+      timeEnd: Timeline.hendersonTextEnd,
+    ),
+  );
+
+  final largoAnima = AnimaText(
+    AnimaTextState(
+      text: 'Largo',
+      fontSize: 44,
+      color: Colors.cyan,
+      alignments: [
+        const Alignment(0.6, 0.9),
+        const Alignment(0.6, 0.9),
+      ],
+      timeStart: Timeline.largoTextStart,
+      timeEnd: Timeline.largoTextEnd,
+    ),
+  );
+
+  final dominoAnima = AnimaText(
+    AnimaTextState(
+      text: 'Domino',
+      fontSize: 44,
+      color: Colors.cyan,
+      alignments: [
+        const Alignment(-0.12, 0.8),
+        const Alignment(-0.12, 0.8),
+      ],
+      timeStart: Timeline.dominoTextStart,
+      timeEnd: Timeline.dominoTextEnd,
     ),
   );
 
@@ -107,7 +134,9 @@ class AnimationState {
     if (!isInitialized) {
       await t1.initialize(controller);
 
-      await t2.initialize(controller);
+      await hendersonAnima.initialize(controller);
+      await dominoAnima.initialize(controller);
+      await largoAnima.initialize(controller);
 
       await backgroundState.initialize(controller);
       await backgroundState2.initialize(controller);
@@ -128,7 +157,9 @@ class AnimationState {
     backgroundState3.paint(canvas, size);
 
     t1.paint(canvas: canvas, size: size);
-    t2.paint(canvas: canvas, size: size);
+    hendersonAnima.paint(canvas: canvas, size: size);
+    dominoAnima.paint(canvas: canvas, size: size);
+    largoAnima.paint(canvas: canvas, size: size);
     p1.paint(canvas: canvas, size: size);
     mainTitles.paint(canvas: canvas, size: size);
 
