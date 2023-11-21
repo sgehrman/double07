@@ -112,7 +112,7 @@ class AnimationTextState {
       final start = i * (duration / overlap);
       final end = start + (duration * overlap);
 
-      final parent = AnimationSpec.parentAnimation(masterParent, start, end);
+      final parent = AnimationSpec.parentAnimation(masterParent, start, 1);
 
       final alignmentAnima = AlignmentTween(
         begin: startAlignment,
@@ -120,7 +120,11 @@ class AnimationTextState {
       ).animate(
         CurvedAnimation(
           parent: parent,
-          curve: curve,
+          curve: Interval(
+            start,
+            end,
+            curve: curve,
+          ),
         ),
       );
 
@@ -131,8 +135,8 @@ class AnimationTextState {
         CurvedAnimation(
           parent: parent,
           curve: Interval(
-            0.9,
-            1,
+            start,
+            end,
             curve: curve,
           ),
         ),
@@ -141,9 +145,9 @@ class AnimationTextState {
       final scaleAnima = scaleSequence.animate(
         CurvedAnimation(
           parent: parent,
-          curve: const Interval(
-            0,
-            1,
+          curve: Interval(
+            start,
+            end,
           ),
         ),
       );
