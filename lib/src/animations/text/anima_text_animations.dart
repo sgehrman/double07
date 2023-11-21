@@ -92,22 +92,40 @@ class AnimaTextAnimations {
     double end,
     Animation<double> parent,
   ) {
-    return state.animationTypes.contains(TextAnimationType.alignment)
-        ? AlignmentTween(
-            begin: state.startAlignment,
-            end: state.endAlignment,
-          ).animate(
-            CurvedAnimation(
-              parent: parent,
-              curve: Interval(
-                start,
-                end,
-                curve: state.curve,
-              ),
-            ),
-          )
-        : AlignmentTween(begin: state.endAlignment, end: state.endAlignment)
-            .animate(parent);
+    if (state.animationTypes.contains(TextAnimationType.alignment)) {
+      return AlignmentTween(
+        begin: state.alignments.first,
+        end: state.alignments[1],
+      ).animate(
+        CurvedAnimation(
+          parent: parent,
+          curve: Interval(
+            start,
+            end,
+            curve: state.curve,
+          ),
+        ),
+      );
+    } else if (state.animationTypes.contains(TextAnimationType.alignment)) {
+      return AlignmentTween(
+        begin: state.alignments.first,
+        end: state.alignments[1],
+      ).animate(
+        CurvedAnimation(
+          parent: parent,
+          curve: Interval(
+            start,
+            end,
+            curve: state.curve,
+          ),
+        ),
+      );
+    }
+
+    return AlignmentTween(
+      begin: state.alignments.last,
+      end: state.alignments.last,
+    ).animate(parent);
   }
 
   Animation<double> _opacityAnima(

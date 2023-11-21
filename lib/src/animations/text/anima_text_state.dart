@@ -12,8 +12,7 @@ class AnimaTextState {
     required this.text,
     required this.fontSize,
     required this.color,
-    required this.startAlignment,
-    required this.endAlignment,
+    required this.alignments,
     required this.timeStart,
     required this.timeEnd,
     this.curve = Curves.elasticInOut,
@@ -32,8 +31,7 @@ class AnimaTextState {
   final double opacity;
   final bool bold;
   final Color color;
-  final Alignment startAlignment;
-  final Alignment endAlignment;
+  final List<Alignment> alignments;
   final double timeStart;
   final double timeEnd;
   final Curve curve;
