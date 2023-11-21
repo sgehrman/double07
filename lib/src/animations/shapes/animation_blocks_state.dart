@@ -19,7 +19,7 @@ class AnimationBlocksState implements RunableAnimation {
   final bool downward;
   final int numColumns;
 
-  late final BlockAnimations _animation;
+  late final BlockAnimations _animations;
   final Map<int, Rect> _rectCache = {};
 
   // expensive to alloc, create once
@@ -125,7 +125,7 @@ class AnimationBlocksState implements RunableAnimation {
       ),
     );
 
-    _animation = BlockAnimations(
+    _animations = BlockAnimations(
       master: parent,
       parent: parent,
       opacity: opacity,
@@ -170,7 +170,7 @@ class AnimationBlocksState implements RunableAnimation {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (!_animation.isRunning) {
+    if (!_animations.isRunning) {
       // print('NOT RUNNING block');
 
       return;
@@ -182,7 +182,7 @@ class AnimationBlocksState implements RunableAnimation {
 
     final blockPaint = Paint()
       ..color = Colors.cyan.withOpacity(
-        _animation.opacity.value,
+        _animations.opacity.value,
       );
 
     final width = size.height / numColumns; // shortest side is height
@@ -192,7 +192,7 @@ class AnimationBlocksState implements RunableAnimation {
 
     final numBlocks = cols * rows;
 
-    final n = (_animation.blocks.value * numBlocks).ceil();
+    final n = (_animations.blocks.value * numBlocks).ceil();
 
     for (int i = 0; i < n; i++) {
       final index = reverse ? (numBlocks - 1) - i : i;
@@ -206,7 +206,7 @@ class AnimationBlocksState implements RunableAnimation {
       canvas.save();
       final t = AnimaUtils.rotateRect(
         srcRect: destRect,
-        degreesY: (_animation.flip.value * 360).round(),
+        degreesY: (_animations.flip.value * 360).round(),
         degreesX: 0,
       );
 
