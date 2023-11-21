@@ -93,33 +93,64 @@ class AnimaTextAnimations {
     Animation<double> parent,
   ) {
     if (state.animationTypes.contains(TextAnimationType.alignment)) {
-      return AlignmentTween(
-        begin: state.alignments.first,
-        end: state.alignments[1],
-      ).animate(
-        CurvedAnimation(
-          parent: parent,
-          curve: Interval(
-            start,
-            end,
-            curve: state.curve,
+      if (state.alignments.length > 2) {
+        // hard coding for 3 now, fix later
+        final items = [
+          TweenSequenceItem<Alignment>(
+            tween: AlignmentTween(
+              begin: state.alignments.first,
+              end: state.alignments[1],
+            ).chain(
+              CurveTween(
+                curve: state.curve,
+              ),
+            ),
+            weight: 1,
           ),
-        ),
-      );
-    } else if (state.animationTypes.contains(TextAnimationType.alignment)) {
-      return AlignmentTween(
-        begin: state.alignments.first,
-        end: state.alignments[1],
-      ).animate(
-        CurvedAnimation(
-          parent: parent,
-          curve: Interval(
-            start,
-            end,
-            curve: state.curve,
+          TweenSequenceItem<Alignment>(
+            tween: ConstantTween<Alignment>(state.alignments[1]),
+            weight: 4,
           ),
-        ),
-      );
+          TweenSequenceItem<Alignment>(
+            tween: AlignmentTween(
+              begin: state.alignments[1],
+              end: state.alignments[2],
+            ).chain(
+              CurveTween(
+                curve: state.curve,
+              ),
+            ),
+            weight: 1,
+          ),
+        ];
+
+        final alignmentSequence = TweenSequence<Alignment>(items);
+
+        return alignmentSequence.animate(
+          CurvedAnimation(
+            parent: parent,
+            curve: Interval(
+              start,
+              end,
+              curve: state.curve,
+            ),
+          ),
+        );
+      } else {
+        return AlignmentTween(
+          begin: state.alignments.first,
+          end: state.alignments[1],
+        ).animate(
+          CurvedAnimation(
+            parent: parent,
+            curve: Interval(
+              start,
+              end,
+              curve: state.curve,
+            ),
+          ),
+        );
+      }
     }
 
     return AlignmentTween(
