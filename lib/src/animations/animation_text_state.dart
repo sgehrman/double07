@@ -33,6 +33,7 @@ class AnimationTextState {
   final double letterSpacing;
 
   late final TweenSequence<double> _scaleSequence;
+  late final TweenSequence<double> _opacitySequence;
 
   Future<void> initialize({
     required AnimationController controller,
@@ -59,6 +60,31 @@ class AnimationTextState {
       ),
     ]);
 
+    _opacitySequence = TweenSequence<double>(
+      [
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 0, end: opacity).chain(
+            CurveTween(
+              curve: curve,
+            ),
+          ),
+          weight: 1,
+        ),
+        TweenSequenceItem<double>(
+          tween: ConstantTween<double>(opacity),
+          weight: 4,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: opacity, end: 0).chain(
+            CurveTween(
+              curve: curve,
+            ),
+          ),
+          weight: 3,
+        ),
+      ],
+    );
+
     _letterAnimations = _buildAnimations(
       count: _textLetters.length,
       controller: controller,
@@ -69,6 +95,7 @@ class AnimationTextState {
       endAlignment: endAlignment,
       opacity: opacity,
       scaleSequence: _scaleSequence,
+      opacitySequence: _opacitySequence,
     );
   }
 
@@ -98,6 +125,7 @@ class AnimationTextState {
     required Alignment endAlignment,
     required double opacity,
     required TweenSequence<double> scaleSequence,
+    required TweenSequence<double> opacitySequence,
   }) {
     final List<LetterAnimations> result = [];
 
@@ -128,30 +156,7 @@ class AnimationTextState {
         ),
       );
 
-      final opacityAnima = TweenSequence<double>(
-        [
-          TweenSequenceItem<double>(
-            tween: Tween<double>(begin: 0, end: opacity).chain(
-              CurveTween(
-                curve: curve,
-              ),
-            ),
-            weight: 1,
-          ),
-          TweenSequenceItem<double>(
-            tween: ConstantTween<double>(opacity),
-            weight: 4,
-          ),
-          TweenSequenceItem<double>(
-            tween: Tween<double>(begin: opacity, end: 0).chain(
-              CurveTween(
-                curve: curve,
-              ),
-            ),
-            weight: 2,
-          ),
-        ],
-      ).animate(
+      final opacityAnima = opacitySequence.animate(
         CurvedAnimation(
           parent: parent,
           curve: Interval(
