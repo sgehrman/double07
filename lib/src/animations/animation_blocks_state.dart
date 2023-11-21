@@ -120,6 +120,7 @@ class AnimationBlocksState {
     );
 
     _animation = BlockAnimations(
+      master: parent,
       parent: parent,
       opacity: opacity,
       blocks: blocks,
@@ -219,11 +220,12 @@ class AnimationBlocksState {
 
 class BlockAnimations extends AnimationSpec {
   BlockAnimations({
+    required Animation<double> master,
     required Animation<double> parent,
     required this.opacity,
     required this.blocks,
     required this.flip,
-  }) : super(parent: parent);
+  }) : super(master: master, parent: parent);
 
   Animation<double> opacity;
   Animation<double> blocks;

@@ -5,13 +5,20 @@ import 'package:flutter/material.dart';
 
 class AnimationSpec {
   AnimationSpec({
+    required this.master,
     required this.parent,
   });
 
+  final Animation<double> master;
   final Animation<double> parent;
 
   // not running if zero or one
-  bool get isRunning => parent.value != 0 && parent.value != 1;
+  bool get isRunning {
+    return master.value != 0 &&
+        master.value != 1 &&
+        parent.value != 0 &&
+        parent.value != 1;
+  }
 
   static Animation<double> parentAnimation(
     Animation<double> parent,

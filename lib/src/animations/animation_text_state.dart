@@ -109,7 +109,7 @@ class AnimationTextState {
         AnimationSpec.parentAnimation(controller, timeStart, timeEnd);
 
     for (int i = 0; i < count; i++) {
-      final start = timeStart + (i * (duration / overlap));
+      final start = i * (duration / overlap);
       final end = start + (duration * overlap);
 
       final parent = AnimationSpec.parentAnimation(masterParent, start, end);
@@ -150,7 +150,8 @@ class AnimationTextState {
 
       result.add(
         LetterAnimations(
-          parent: masterParent,
+          master: masterParent,
+          parent: parent,
           alignment: alignmentAnima,
           opacity: opacityAnima,
           scale: scaleAnima,
