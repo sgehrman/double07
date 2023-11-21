@@ -5,20 +5,14 @@ import 'package:flutter/material.dart';
 
 class AnimationSpec {
   AnimationSpec({
-    required this.controller,
-    required this.start,
-    required this.end,
-  }) : base = _base(controller, start, end);
+    required this.parent,
+  });
 
-  AnimationController controller;
+  final Animation<double> parent;
 
-  final Animation<double> base;
-  final double start;
-  final double end;
+  bool get isRunning => parent.value > 0;
 
-  bool get isRunning => base.value > 0;
-
-  static Animation<double> _base(
+  static Animation<double> parentAnimation(
     AnimationController controller,
     double start,
     double end,

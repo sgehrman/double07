@@ -253,13 +253,11 @@ class _LetterPainter {
 
 class LetterAnimations extends AnimationSpec {
   LetterAnimations({
-    required AnimationController controller,
-    required double start,
-    required double end,
+    required Animation<double> parent,
     required this.alignment,
     required this.opacity,
     required this.scale,
-  }) : super(controller: controller, start: start, end: end);
+  }) : super(parent: parent);
 
   Animation<Alignment> alignment;
   Animation<double> opacity;

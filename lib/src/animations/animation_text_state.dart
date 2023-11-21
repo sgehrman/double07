@@ -1,5 +1,5 @@
-import 'package:double07/src/animations/anima_utils.dart';
 import 'package:double07/src/animations/animated_letter.dart';
+import 'package:double07/src/animations/animation_spec.dart';
 import 'package:flutter/material.dart';
 
 class AnimationTextState {
@@ -109,7 +109,7 @@ class AnimationTextState {
       final start = timeStart + (i * (duration / overlap));
       final end = start + (duration * overlap);
 
-      final parent = AnimaUtils.baseAnimation(controller, start, end);
+      final parent = AnimationSpec.parentAnimation(controller, start, end);
 
       final alignmentAnima = AlignmentTween(
         begin: startAlignment,
@@ -147,9 +147,7 @@ class AnimationTextState {
 
       result.add(
         LetterAnimations(
-          controller: controller,
-          start: start,
-          end: end,
+          parent: parent,
           alignment: alignmentAnima,
           opacity: opacityAnima,
           scale: scaleAnima,

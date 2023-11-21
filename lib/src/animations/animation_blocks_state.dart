@@ -84,12 +84,15 @@ class AnimationBlocksState {
   // =================================================
 
   void initialize(AnimationController controller) {
+    final parent =
+        AnimationSpec.parentAnimation(controller, timeStart, timeEnd);
+
     final blocks = _blocksSequence.animate(
       CurvedAnimation(
-        parent: controller,
-        curve: Interval(
-          timeStart,
-          timeEnd,
+        parent: parent,
+        curve: const Interval(
+          0,
+          1,
           curve: Curves.easeInOut,
         ),
       ),
@@ -97,10 +100,10 @@ class AnimationBlocksState {
 
     final flip = _flipSequence.animate(
       CurvedAnimation(
-        parent: controller,
-        curve: Interval(
-          timeStart,
-          timeEnd,
+        parent: parent,
+        curve: const Interval(
+          0,
+          1,
           curve: Curves.easeInOut,
         ),
       ),
@@ -108,18 +111,16 @@ class AnimationBlocksState {
 
     final opacity = _opacitySequence.animate(
       CurvedAnimation(
-        parent: controller,
-        curve: Interval(
-          timeStart,
-          timeEnd,
+        parent: parent,
+        curve: const Interval(
+          0,
+          1,
         ),
       ),
     );
 
     _animation = BlockAnimations(
-      controller: controller,
-      start: timeStart,
-      end: timeEnd,
+      parent: parent,
       opacity: opacity,
       blocks: blocks,
       flip: flip,
@@ -216,13 +217,11 @@ class AnimationBlocksState {
 
 class BlockAnimations extends AnimationSpec {
   BlockAnimations({
-    required AnimationController controller,
-    required double start,
-    required double end,
+    required Animation<double> parent,
     required this.opacity,
     required this.blocks,
     required this.flip,
-  }) : super(controller: controller, start: start, end: end);
+  }) : super(parent: parent);
 
   Animation<double> opacity;
   Animation<double> blocks;
