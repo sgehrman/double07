@@ -25,42 +25,42 @@ class AnimationState {
 
   final List<RunableAnimation> _runables = [
     // background
+    // AnimaBackground(
+    //   AnimaBackgroundState(
+    //     imageAsset: '$kAssets/images/henderson.png',
+    //     gradientAlignment: const Alignment(-0.25, -0.3),
+    //     timeStart: 0,
+    //     timeEnd: 1,
+    //     mode: AnimaBackgroundMode.zoomIn,
+    //   ),
+    // ),
+
     AnimaBackground(
       AnimaBackgroundState(
         imageAsset: '$kAssets/images/henderson.png',
         gradientAlignment: const Alignment(-0.25, -0.3),
-        timeStart: 0,
-        timeEnd: 1,
-        mode: AnimaBackgroundMode.zoomIn,
+        timeStart: Timeline.hendersonStart,
+        timeEnd: Timeline.hendersonEnd,
       ),
     ),
 
-    //  AnimaBackground(
-    //   AnimaBackgroundState(
-    //     imageAsset: '$kAssets/images/henderson.png',
-    //     gradientAlignment: const Alignment(-0.25, -0.3),
-    //     timeStart: Timeline.hendersonStart,
-    //     timeEnd: Timeline.hendersonEnd,
-    //   ),
-    // ),
+    AnimaBackground(
+      AnimaBackgroundState(
+        imageAsset: '$kAssets/images/largo.jpg',
+        gradientAlignment: const Alignment(0.7, -0.1),
+        timeStart: Timeline.largoStart,
+        timeEnd: Timeline.largoEnd,
+      ),
+    ),
 
-    // AnimaBackground(
-    //   AnimaBackgroundState(
-    //     imageAsset: '$kAssets/images/largo.jpg',
-    //     gradientAlignment: const Alignment(0.7, -0.1),
-    //     timeStart: Timeline.largoStart,
-    //     timeEnd: Timeline.largoEnd,
-    //   ),
-    // ),
-
-    // AnimaBackground(
-    //   AnimaBackgroundState(
-    //     imageAsset: '$kAssets/images/domino.jpg',
-    //     gradientAlignment: const Alignment(-0.1, -0.2),
-    //     timeStart: Timeline.dominoStart,
-    //     timeEnd: Timeline.dominoEnd,
-    //   ),
-    // ),
+    AnimaBackground(
+      AnimaBackgroundState(
+        imageAsset: '$kAssets/images/domino.jpg',
+        gradientAlignment: const Alignment(-0.1, -0.2),
+        timeStart: Timeline.dominoStart,
+        timeEnd: Timeline.dominoEnd,
+      ),
+    ),
 
     // Deckr animation
     AnimaText(
