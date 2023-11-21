@@ -6,8 +6,8 @@ enum TextAnimationType {
   opacity,
 }
 
-class AnimationTextState {
-  AnimationTextState({
+class AnimaTextState {
+  AnimaTextState({
     required this.text,
     required this.fontSize,
     required this.color,

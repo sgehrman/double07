@@ -2,8 +2,8 @@ import 'package:double07/src/animations/animation_background_state.dart';
 import 'package:double07/src/animations/animation_ball_state.dart';
 import 'package:double07/src/animations/animation_blocks_state.dart';
 import 'package:double07/src/animations/text/anima_text.dart';
+import 'package:double07/src/animations/text/anima_text_state.dart';
 import 'package:double07/src/animations/text/animation_paragraph_state.dart';
-import 'package:double07/src/animations/text/animation_text_state.dart';
 import 'package:double07/src/timeline.dart';
 import 'package:double07/src/utils.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ class AnimationState {
 
   // Deckr animation
   final t1 = AnimaText(
-    AnimationTextState(
+    AnimaTextState(
       text: 'Deckr'.toUpperCase(),
       fontSize: 64,
       bold: true,
@@ -29,7 +29,7 @@ class AnimationState {
 
   // Coder animation
   final t2 = AnimaText(
-    AnimationTextState(
+    AnimaTextState(
       text: 'Code: Mr. Henderson',
       fontSize: 44,
       color: Colors.cyan,

@@ -1,6 +1,6 @@
 import 'package:double07/src/animations/animation_spec.dart';
+import 'package:double07/src/animations/text/anima_text_state.dart';
 import 'package:double07/src/animations/text/animated_letter.dart';
-import 'package:double07/src/animations/text/animation_text_state.dart';
 import 'package:flutter/material.dart';
 
 class AnimaTextAnimations {
@@ -9,7 +9,7 @@ class AnimaTextAnimations {
   late final List<AnimatedLetter> _textLetters;
   late final List<LetterAnimations> _letterAnimations;
 
-  final AnimationTextState state;
+  final AnimaTextState state;
 
   late final TweenSequence<double> _scaleSequence;
   late final TweenSequence<double> _opacitySequence;
