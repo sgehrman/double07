@@ -1,5 +1,6 @@
-import 'package:double07/src/animations/animation_background_state.dart';
 import 'package:double07/src/animations/animation_ball_state.dart';
+import 'package:double07/src/animations/backgrounds/anima_background.dart';
+import 'package:double07/src/animations/backgrounds/anima_background_state.dart';
 import 'package:double07/src/animations/shapes/anima_blocks.dart';
 import 'package:double07/src/animations/shapes/anima_blocks_state.dart';
 import 'package:double07/src/animations/shapes/anima_blocks_utils.dart';
@@ -24,26 +25,33 @@ class AnimationState {
 
   final List<RunableAnimation> _runables = [
     // background
-    AnimationBackgroundState(
-      imageAsset: '$kAssets/images/henderson.png',
-      alignment: const Alignment(-0.25, -0.3),
-      timeStart: Timeline.hendersonStart,
-      timeEnd: Timeline.hendersonEnd,
+    AnimaBackground(
+      AnimaBackgroundState(
+        imageAsset: '$kAssets/images/henderson.png',
+        alignment: const Alignment(-0.25, -0.3),
+        timeStart: Timeline.hendersonStart,
+        timeEnd: Timeline.hendersonEnd,
+      ),
     ),
 
-    AnimationBackgroundState(
-      imageAsset: '$kAssets/images/largo.jpg',
-      alignment: const Alignment(0.7, -0.1),
-      timeStart: Timeline.largoStart,
-      timeEnd: Timeline.largoEnd,
+    AnimaBackground(
+      AnimaBackgroundState(
+        imageAsset: '$kAssets/images/largo.jpg',
+        alignment: const Alignment(0.7, -0.1),
+        timeStart: Timeline.largoStart,
+        timeEnd: Timeline.largoEnd,
+      ),
     ),
 
-    AnimationBackgroundState(
-      imageAsset: '$kAssets/images/domino.jpg',
-      alignment: const Alignment(-0.1, -0.2),
-      timeStart: Timeline.dominoStart,
-      timeEnd: Timeline.dominoEnd,
+    AnimaBackground(
+      AnimaBackgroundState(
+        imageAsset: '$kAssets/images/domino.jpg',
+        alignment: const Alignment(-0.1, -0.2),
+        timeStart: Timeline.dominoStart,
+        timeEnd: Timeline.dominoEnd,
+      ),
     ),
+
     // Deckr animation
     AnimaText(
       AnimaTextState(
