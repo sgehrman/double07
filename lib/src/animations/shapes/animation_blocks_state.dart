@@ -8,14 +8,18 @@ class AnimationBlocksState implements RunableAnimation {
   AnimationBlocksState({
     required this.timeStart,
     required this.timeEnd,
+    this.reverse = false,
+    this.downward = false,
+    this.numColumns = 6,
   });
 
   final double timeStart;
   final double timeEnd;
+  final bool reverse;
+  final bool downward;
+  final int numColumns;
 
   late final BlockAnimations _animation;
-  final _reverse = false;
-  final _downward = true;
   final Map<int, Rect> _rectCache = {};
 
   // expensive to alloc, create once
@@ -143,7 +147,7 @@ class AnimationBlocksState implements RunableAnimation {
       int c;
       int r;
 
-      if (_downward) {
+      if (downward) {
         final rows = size.height ~/ width;
 
         c = index ~/ rows;
@@ -181,7 +185,7 @@ class AnimationBlocksState implements RunableAnimation {
         _animation.opacity.value,
       );
 
-    final width = size.height / 6; // shortest side is height
+    final width = size.height / numColumns; // shortest side is height
 
     final cols = size.width ~/ width;
     final rows = size.height ~/ width;
@@ -191,7 +195,7 @@ class AnimationBlocksState implements RunableAnimation {
     final n = (_animation.blocks.value * numBlocks).ceil();
 
     for (int i = 0; i < n; i++) {
-      final index = _reverse ? (numBlocks - 1) - i : i;
+      final index = reverse ? (numBlocks - 1) - i : i;
 
       final destRect = rectForIndex(
         index: index,
