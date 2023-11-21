@@ -16,8 +16,8 @@ class AnimaTextAnimations {
   late final TweenSequence<double> _opacitySequence;
 
   final double kStartWeight = 10;
-  final double kHoldWeight = 85;
-  final double kEndWeight = 5;
+  final double kHoldWeight = 80;
+  final double kEndWeight = 10;
 
   Future<void> initialize({
     required AnimationController controller,
@@ -47,7 +47,7 @@ class AnimaTextAnimations {
     _opacitySequence = TweenSequence<double>(
       [
         TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0.1, end: state.opacity).chain(
+          tween: Tween<double>(begin: 0.04, end: state.opacity).chain(
             CurveTween(
               curve: state.curve,
             ),
