@@ -7,6 +7,7 @@ class AnimaBlocksState {
     required this.timeEnd,
     this.reverse = false,
     this.downward = false,
+    this.circles = false,
     this.numColumns = 6,
     TweenSequence<double>? blocksSequence,
     TweenSequence<double>? opacitySequence,
@@ -18,6 +19,7 @@ class AnimaBlocksState {
   final double timeStart;
   final double timeEnd;
   final bool reverse;
+  final bool circles;
   final bool downward;
   final int numColumns;
   final TweenSequence<double> blocksSequence;

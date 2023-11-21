@@ -139,6 +139,7 @@ class AnimationState {
         blocksSequence: AnimaBlocksUtils.blocksSequenceFull,
         opacitySequence: AnimaBlocksUtils.opacitySequence,
         flipSequence: AnimaBlocksUtils.flipSequence,
+        circles: true,
       ),
     ),
 

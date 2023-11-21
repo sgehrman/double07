@@ -139,10 +139,19 @@ class AnimaBlocksAnimations {
       );
 
       canvas.transform(t.storage);
-      canvas.drawRect(
-        destRect,
-        blockPaint,
-      );
+
+      if (state.circles) {
+        canvas.drawCircle(
+          destRect.center,
+          destRect.width / 2,
+          blockPaint,
+        );
+      } else {
+        canvas.drawRect(
+          destRect,
+          blockPaint,
+        );
+      }
 
       canvas.restore();
     }

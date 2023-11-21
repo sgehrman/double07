@@ -16,11 +16,11 @@ class Timeline {
   // ==============================
   // blocks
 
-  static double blocksStart = 0.3;
+  static double blocksStart = 0.2;
   static double blocksEnd = 0.4;
 
   static double blocks2Start = 0.4;
-  static double blocks2End = 0.5;
+  static double blocks2End = 0.6;
 
   // ==============================
   // backgounds
