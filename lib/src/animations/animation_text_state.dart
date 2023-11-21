@@ -128,16 +128,35 @@ class AnimationTextState {
         ),
       );
 
-      final opacityAnima = Tween<double>(
-        begin: 0.1,
-        end: opacity,
+      final opacityAnima = TweenSequence<double>(
+        [
+          TweenSequenceItem<double>(
+            tween: Tween<double>(begin: 0, end: opacity).chain(
+              CurveTween(
+                curve: curve,
+              ),
+            ),
+            weight: 1,
+          ),
+          TweenSequenceItem<double>(
+            tween: ConstantTween<double>(opacity),
+            weight: 4,
+          ),
+          TweenSequenceItem<double>(
+            tween: Tween<double>(begin: opacity, end: 0).chain(
+              CurveTween(
+                curve: curve,
+              ),
+            ),
+            weight: 2,
+          ),
+        ],
       ).animate(
         CurvedAnimation(
           parent: parent,
           curve: Interval(
             start,
-            end,
-            curve: curve,
+            1,
           ),
         ),
       );
