@@ -10,7 +10,7 @@ class AnimatedLetter {
     required this.letter,
     required this.image,
     required this.wordSize,
-    required this.alignment,
+    required this.letterAlignment,
     required this.letterSize,
   });
 
@@ -18,7 +18,7 @@ class AnimatedLetter {
   final Size wordSize;
   final Size letterSize;
   final ui.Image image;
-  final Alignment alignment;
+  final Alignment letterAlignment;
 
   static void paintLetters({
     required Canvas canvas,
@@ -63,7 +63,7 @@ class AnimatedLetter {
     // not working? white is on top
     // canvas.drawRect(destRect, Paint()..color = Colors.white);
 
-    destRect = alignment.inscribe(
+    destRect = letterAlignment.inscribe(
       Size(
         letterSize.width,
         letterSize.height,
@@ -141,7 +141,7 @@ class AnimatedLetter {
             image: await _createTextImage(letterPainter),
             letterSize: letterPainter.size,
             wordSize: Size(wordWidth, wordHeight),
-            alignment: alignment,
+            letterAlignment: alignment,
           ),
         );
       }

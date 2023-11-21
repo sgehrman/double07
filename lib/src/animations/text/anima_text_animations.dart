@@ -52,7 +52,7 @@ class AnimaTextAnimations {
         ),
         TweenSequenceItem<double>(
           tween: ConstantTween<double>(state.opacity),
-          weight: 4,
+          weight: 3,
         ),
         TweenSequenceItem<double>(
           tween: Tween<double>(begin: state.opacity, end: 0).chain(
@@ -60,7 +60,7 @@ class AnimaTextAnimations {
               curve: state.curve,
             ),
           ),
-          weight: 3,
+          weight: 1,
         ),
       ],
     );
@@ -109,7 +109,7 @@ class AnimaTextAnimations {
           ),
           TweenSequenceItem<Alignment>(
             tween: ConstantTween<Alignment>(state.alignments[1]),
-            weight: 4,
+            weight: 3,
           ),
           TweenSequenceItem<Alignment>(
             tween: AlignmentTween(
@@ -124,9 +124,7 @@ class AnimaTextAnimations {
           ),
         ];
 
-        final alignmentSequence = TweenSequence<Alignment>(items);
-
-        return alignmentSequence.animate(
+        return TweenSequence<Alignment>(items).animate(
           CurvedAnimation(
             parent: parent,
             curve: Interval(
