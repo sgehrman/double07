@@ -16,6 +16,7 @@ class AnimationBlocksState {
   late final BlockAnimations _animation;
   final _reverse = false;
   final _downward = true;
+  final Map<int, Rect> _rectCache = {};
 
   // expensive to alloc, create once
   final _opacitySequence = TweenSequence<double>(
@@ -135,22 +136,27 @@ class AnimationBlocksState {
     required double width,
     required Size size,
   }) {
-    int c;
-    int r;
+    if (_rectCache[index] == null) {
+      int c;
+      int r;
 
-    if (_downward) {
-      final rows = size.height ~/ width;
+      if (_downward) {
+        final rows = size.height ~/ width;
 
-      c = index ~/ rows;
-      r = index % rows;
-    } else {
-      final cols = size.width ~/ width;
+        c = index ~/ rows;
+        r = index % rows;
+      } else {
+        final cols = size.width ~/ width;
 
-      r = index ~/ cols;
-      c = index % cols;
+        r = index ~/ cols;
+        c = index % cols;
+      }
+
+      _rectCache[index] =
+          Rect.fromLTWH(c * width, r * width, width, width).deflate(10);
     }
 
-    return Rect.fromLTWH(c * width, r * width, width, width).deflate(10);
+    return _rectCache[index]!;
   }
 
   // =====================================================
