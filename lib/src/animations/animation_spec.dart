@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // whole point of this is to know if if the animation is running
 // the base animation is based on the start and end, only used to know if > 0
 
-class AnimationSpec {
+abstract class AnimationSpec {
   AnimationSpec({
     required this.master,
     required this.parent,
