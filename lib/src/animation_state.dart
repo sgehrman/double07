@@ -148,7 +148,9 @@ class AnimationState {
         timeEnd: Timeline.blocks2End,
         reverse: true,
         downward: true,
+        numColumns: 3,
         blocksSequence: AnimaBlocksUtils.blocksSequence,
+        flipSequence: AnimaBlocksUtils.flipSequence,
       ),
     ),
   ];
