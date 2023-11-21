@@ -1,23 +1,13 @@
-import 'package:double07/src/animation_state.dart';
 import 'package:double07/src/animations/anima_utils.dart';
 import 'package:double07/src/animations/animation_specs/animation_spec.dart';
 import 'package:double07/src/animations/animation_specs/block_animations.dart';
+import 'package:double07/src/animations/shapes/anima_blocks_state.dart';
 import 'package:flutter/material.dart';
 
-class AnimationBlocksState implements RunableAnimation {
-  AnimationBlocksState({
-    required this.timeStart,
-    required this.timeEnd,
-    this.reverse = false,
-    this.downward = false,
-    this.numColumns = 6,
-  });
+class AnimaBlocksAnimations {
+  AnimaBlocksAnimations(this.state);
 
-  final double timeStart;
-  final double timeEnd;
-  final bool reverse;
-  final bool downward;
-  final int numColumns;
+  final AnimaBlocksState state;
 
   late final BlockAnimations _animations;
   final Map<int, Rect> _rectCache = {};
@@ -88,10 +78,12 @@ class AnimationBlocksState implements RunableAnimation {
 
   // =================================================
 
-  @override
   Future<void> initialize(AnimationController controller) {
-    final parent =
-        AnimationSpec.parentAnimation(controller, timeStart, timeEnd);
+    final parent = AnimationSpec.parentAnimation(
+      controller,
+      state.timeStart,
+      state.timeEnd,
+    );
 
     final blocks = _blocksSequence.animate(
       CurvedAnimation(
@@ -147,7 +139,7 @@ class AnimationBlocksState implements RunableAnimation {
       int c;
       int r;
 
-      if (downward) {
+      if (state.downward) {
         final rows = size.height ~/ width;
 
         c = index ~/ rows;
@@ -168,7 +160,6 @@ class AnimationBlocksState implements RunableAnimation {
 
   // =====================================================
 
-  @override
   void paint(Canvas canvas, Size size) {
     if (!_animations.isRunning) {
       // print('NOT RUNNING block');
@@ -185,7 +176,7 @@ class AnimationBlocksState implements RunableAnimation {
         _animations.opacity.value,
       );
 
-    final width = size.height / numColumns; // shortest side is height
+    final width = size.height / state.numColumns; // shortest side is height
 
     final cols = size.width ~/ width;
     final rows = size.height ~/ width;
@@ -195,7 +186,7 @@ class AnimationBlocksState implements RunableAnimation {
     final n = (_animations.blocks.value * numBlocks).ceil();
 
     for (int i = 0; i < n; i++) {
-      final index = reverse ? (numBlocks - 1) - i : i;
+      final index = state.reverse ? (numBlocks - 1) - i : i;
 
       final destRect = rectForIndex(
         index: index,

@@ -1,6 +1,7 @@
 import 'package:double07/src/animations/animation_background_state.dart';
 import 'package:double07/src/animations/animation_ball_state.dart';
-import 'package:double07/src/animations/shapes/animation_blocks_state.dart';
+import 'package:double07/src/animations/shapes/anima_blocks.dart';
+import 'package:double07/src/animations/shapes/anima_blocks_state.dart';
 import 'package:double07/src/animations/text/anima_text.dart';
 import 'package:double07/src/animations/text/anima_text_state.dart';
 import 'package:double07/src/animations/text/animation_paragraph_state.dart';
@@ -130,9 +131,11 @@ class AnimationState {
     // ball animation
     AnimationBallState(),
 
-    AnimationBlocksState(
-      timeStart: Timeline.blocksStart,
-      timeEnd: Timeline.blocksEnd,
+    AnimaBlocks(
+      AnimaBlocksState(
+        timeStart: Timeline.blocksStart,
+        timeEnd: Timeline.blocksEnd,
+      ),
     ),
   ];
 
