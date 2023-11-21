@@ -1,6 +1,6 @@
 import 'package:double07/src/animations/animation_background_state.dart';
 import 'package:double07/src/animations/animation_ball_state.dart';
-import 'package:double07/src/animations/animation_blocks_state.dart';
+import 'package:double07/src/animations/shapes/animation_blocks_state.dart';
 import 'package:double07/src/animations/text/anima_text.dart';
 import 'package:double07/src/animations/text/anima_text_state.dart';
 import 'package:double07/src/animations/text/animation_paragraph_state.dart';
