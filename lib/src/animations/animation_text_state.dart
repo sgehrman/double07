@@ -88,14 +88,6 @@ class AnimationTextState {
     _letterAnimations = _buildAnimations(
       count: _textLetters.length,
       controller: controller,
-      curve: curve,
-      timeEnd: timeEnd,
-      timeStart: timeStart,
-      startAlignment: startAlignment,
-      endAlignment: endAlignment,
-      opacity: opacity,
-      scaleSequence: _scaleSequence,
-      opacitySequence: _opacitySequence,
     );
   }
 
@@ -115,17 +107,9 @@ class AnimationTextState {
   // private methods
   // ============================================================
 
-  static List<LetterAnimations> _buildAnimations({
+  List<LetterAnimations> _buildAnimations({
     required int count,
     required AnimationController controller,
-    required double timeStart,
-    required double timeEnd,
-    required Curve curve,
-    required Alignment startAlignment,
-    required Alignment endAlignment,
-    required double opacity,
-    required TweenSequence<double> scaleSequence,
-    required TweenSequence<double> opacitySequence,
   }) {
     final List<LetterAnimations> result = [];
 
@@ -156,7 +140,7 @@ class AnimationTextState {
         ),
       );
 
-      final opacityAnima = opacitySequence.animate(
+      final opacityAnima = _opacitySequence.animate(
         CurvedAnimation(
           parent: parent,
           curve: Interval(
@@ -166,7 +150,7 @@ class AnimationTextState {
         ),
       );
 
-      final scaleAnima = scaleSequence.animate(
+      final scaleAnima = _scaleSequence.animate(
         CurvedAnimation(
           parent: parent,
           curve: Interval(
