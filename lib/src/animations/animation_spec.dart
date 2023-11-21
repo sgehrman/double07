@@ -14,7 +14,7 @@ class AnimationSpec {
   bool get isRunning => parent.value != 0 && parent.value != 1;
 
   static Animation<double> parentAnimation(
-    AnimationController controller,
+    Animation<double> parent,
     double start,
     double end,
   ) {
@@ -23,7 +23,7 @@ class AnimationSpec {
       end: 1,
     ).animate(
       CurvedAnimation(
-        parent: controller,
+        parent: parent,
         curve: Interval(
           start,
           end,

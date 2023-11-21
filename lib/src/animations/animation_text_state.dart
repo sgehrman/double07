@@ -32,7 +32,7 @@ class AnimationTextState {
   final Curve curve;
   final double letterSpacing;
 
-  late final TweenSequence<double> _sequence;
+  late final TweenSequence<double> _scaleSequence;
 
   Future<void> initialize({
     required AnimationController controller,
@@ -44,7 +44,7 @@ class AnimationTextState {
     );
 
     // expensve to create, do here
-    _sequence = TweenSequence<double>([
+    _scaleSequence = TweenSequence<double>([
       TweenSequenceItem<double>(
         tween: ConstantTween<double>(1),
         weight: 1,
@@ -68,7 +68,7 @@ class AnimationTextState {
       startAlignment: startAlignment,
       endAlignment: endAlignment,
       opacity: opacity,
-      sequence: _sequence,
+      scaleSequence: _scaleSequence,
     );
   }
 
@@ -97,7 +97,7 @@ class AnimationTextState {
     required Alignment startAlignment,
     required Alignment endAlignment,
     required double opacity,
-    required TweenSequence<double> sequence,
+    required TweenSequence<double> scaleSequence,
   }) {
     final List<LetterAnimations> result = [];
 
@@ -105,11 +105,14 @@ class AnimationTextState {
     final double duration = time / count;
     const double overlap = 4;
 
+    final masterParent =
+        AnimationSpec.parentAnimation(controller, timeStart, timeEnd);
+
     for (int i = 0; i < count; i++) {
       final start = timeStart + (i * (duration / overlap));
       final end = start + (duration * overlap);
 
-      final parent = AnimationSpec.parentAnimation(controller, start, end);
+      final parent = AnimationSpec.parentAnimation(masterParent, start, end);
 
       final alignmentAnima = AlignmentTween(
         begin: startAlignment,
@@ -135,7 +138,7 @@ class AnimationTextState {
         ),
       );
 
-      final scaleAnima = sequence.animate(
+      final scaleAnima = scaleSequence.animate(
         CurvedAnimation(
           parent: parent,
           curve: const Interval(
@@ -147,7 +150,7 @@ class AnimationTextState {
 
       result.add(
         LetterAnimations(
-          parent: parent,
+          parent: masterParent,
           alignment: alignmentAnima,
           opacity: opacityAnima,
           scale: scaleAnima,
