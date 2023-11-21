@@ -1,3 +1,4 @@
+import 'package:double07/src/animations/animated_text.dart';
 import 'package:double07/src/animations/animation_background_state.dart';
 import 'package:double07/src/animations/animation_ball_state.dart';
 import 'package:double07/src/animations/animation_blocks_state.dart';
@@ -13,26 +14,30 @@ class AnimationState {
   bool isInitialized = false;
 
   // Deckr animation
-  final t1 = AnimationTextState(
-    text: 'Deckr'.toUpperCase(),
-    fontSize: 64,
-    bold: true,
-    color: Colors.white,
-    startAlignment: const Alignment(-0.8, -2),
-    endAlignment: const Alignment(-0.8, -0.8),
-    timeStart: Timeline.textStart,
-    timeEnd: Timeline.textEnd,
+  final t1 = AnimatedText(
+    AnimationTextState(
+      text: 'Deckr'.toUpperCase(),
+      fontSize: 64,
+      bold: true,
+      color: Colors.white,
+      startAlignment: const Alignment(-0.8, -2),
+      endAlignment: const Alignment(-0.8, -0.8),
+      timeStart: Timeline.textStart,
+      timeEnd: Timeline.textEnd,
+    ),
   );
 
   // Coder animation
-  final t2 = AnimationTextState(
-    text: 'Code: Mr. Henderson',
-    fontSize: 44,
-    color: Colors.cyan,
-    startAlignment: const Alignment(0.8, 0.8),
-    endAlignment: const Alignment(0.8, 0.8),
-    timeStart: Timeline.textStart2,
-    timeEnd: Timeline.textEnd2,
+  final t2 = AnimatedText(
+    AnimationTextState(
+      text: 'Code: Mr. Henderson',
+      fontSize: 44,
+      color: Colors.cyan,
+      startAlignment: const Alignment(0.8, 0.8),
+      endAlignment: const Alignment(0.8, 0.8),
+      timeStart: Timeline.textStart2,
+      timeEnd: Timeline.textEnd2,
+    ),
   );
 
   final p1 = AnimationParagraphState(

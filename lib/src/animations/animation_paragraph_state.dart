@@ -1,3 +1,4 @@
+import 'package:double07/src/animations/animated_text.dart';
 import 'package:double07/src/animations/animation_text_state.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class AnimationParagraphState {
   final double timeEnd;
   final Curve curve;
 
-  late final List<AnimationTextState> _animations;
+  late final List<AnimatedText> _animations;
 
   Future<void> initialize({
     required AnimationController controller,
@@ -31,20 +32,22 @@ class AnimationParagraphState {
       final start = timeStart + (index * (timePerLine / overlap));
 
       _animations.add(
-        AnimationTextState(
-          text: line,
-          fontSize: 44,
-          color: Colors.white,
-          startAlignment: Alignment(alignment.x, -2),
-          endAlignment: Alignment(alignment.x, alignment.y + (index * 0.1)),
-          timeStart: start,
-          timeEnd: start + (timePerLine * overlap),
-          curve: Curves.easeInOut,
-          // animationTypes: const {
-          //   TextAnimationType.alignment,
-          //   // TextAnimationType.scale,
-          //   // TextAnimationType.opacity,
-          // },
+        AnimatedText(
+          AnimationTextState(
+            text: line,
+            fontSize: 44,
+            color: Colors.white,
+            startAlignment: Alignment(alignment.x, -2),
+            endAlignment: Alignment(alignment.x, alignment.y + (index * 0.1)),
+            timeStart: start,
+            timeEnd: start + (timePerLine * overlap),
+            curve: Curves.easeInOut,
+            // animationTypes: const {
+            //   TextAnimationType.alignment,
+            //   // TextAnimationType.scale,
+            //   // TextAnimationType.opacity,
+            // },
+          ),
         ),
       );
 
