@@ -49,7 +49,7 @@ class AnimationParagraphState {
           alignments: [
             Alignment(alignment.x, alignment.y),
             Alignment(alignment.x, alignment.y),
-            Alignment(alignment.x, alignment.y - 0.1),
+            Alignment(alignment.x, alignment.y - 0.2),
           ],
           timeStart: start,
           timeEnd: end,

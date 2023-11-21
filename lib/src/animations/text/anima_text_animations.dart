@@ -15,6 +15,10 @@ class AnimaTextAnimations {
   late final TweenSequence<double> _scaleSequence;
   late final TweenSequence<double> _opacitySequence;
 
+  final double kStartWeight = 10;
+  final double kHoldWeight = 85;
+  final double kEndWeight = 5;
+
   Future<void> initialize({
     required AnimationController controller,
   }) async {
@@ -43,16 +47,16 @@ class AnimaTextAnimations {
     _opacitySequence = TweenSequence<double>(
       [
         TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0, end: state.opacity).chain(
+          tween: Tween<double>(begin: 0.1, end: state.opacity).chain(
             CurveTween(
               curve: state.curve,
             ),
           ),
-          weight: 1,
+          weight: kStartWeight,
         ),
         TweenSequenceItem<double>(
           tween: ConstantTween<double>(state.opacity),
-          weight: 3,
+          weight: kHoldWeight,
         ),
         TweenSequenceItem<double>(
           tween: Tween<double>(begin: state.opacity, end: 0).chain(
@@ -60,7 +64,7 @@ class AnimaTextAnimations {
               curve: state.curve,
             ),
           ),
-          weight: 1,
+          weight: kEndWeight,
         ),
       ],
     );
@@ -105,11 +109,11 @@ class AnimaTextAnimations {
                 curve: state.curve,
               ),
             ),
-            weight: 1,
+            weight: kStartWeight,
           ),
           TweenSequenceItem<Alignment>(
             tween: ConstantTween<Alignment>(state.alignments[1]),
-            weight: 3,
+            weight: kHoldWeight,
           ),
           TweenSequenceItem<Alignment>(
             tween: AlignmentTween(
@@ -120,7 +124,7 @@ class AnimaTextAnimations {
                 curve: state.curve,
               ),
             ),
-            weight: 1,
+            weight: kEndWeight,
           ),
         ];
 
@@ -129,7 +133,7 @@ class AnimaTextAnimations {
             parent: parent,
             curve: Interval(
               start,
-              1, // run til end of parent so it can do the third movement
+              1, // 1 is end of parent animation
               curve: state.curve,
             ),
           ),
@@ -167,7 +171,7 @@ class AnimaTextAnimations {
           parent: parent,
           curve: Interval(
             start,
-            1,
+            1, // 1 is end of parent animation
           ),
         ),
       );
@@ -177,7 +181,7 @@ class AnimaTextAnimations {
           parent: parent,
           curve: Interval(
             start,
-            0.9,
+            1, // 1 is end of parent animation
             curve: state.curve,
           ),
         ),
