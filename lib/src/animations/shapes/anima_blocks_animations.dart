@@ -2,6 +2,7 @@ import 'package:double07/src/animations/anima_utils.dart';
 import 'package:double07/src/animations/animation_specs/animation_spec.dart';
 import 'package:double07/src/animations/animation_specs/block_animations.dart';
 import 'package:double07/src/animations/shapes/anima_blocks_state.dart';
+import 'package:double07/src/animations/shapes/anima_blocks_utils.dart';
 import 'package:flutter/material.dart';
 
 class AnimaBlocksAnimations {
@@ -12,70 +13,6 @@ class AnimaBlocksAnimations {
   late final BlockAnimations _animations;
   final Map<int, Rect> _rectCache = {};
 
-  // expensive to alloc, create once
-  final _opacitySequence = TweenSequence<double>(
-    <TweenSequenceItem<double>>[
-      TweenSequenceItem<double>(
-        tween: Tween<double>(begin: 0, end: 0.35),
-        weight: 33,
-      ),
-      TweenSequenceItem<double>(
-        tween: ConstantTween<double>(0.35),
-        weight: 33,
-      ),
-      TweenSequenceItem<double>(
-        tween: Tween<double>(begin: 0.35, end: 0),
-        weight: 33,
-      ),
-    ],
-  );
-
-  final _blocksSequence = TweenSequence<double>(
-    <TweenSequenceItem<double>>[
-      TweenSequenceItem<double>(
-        tween: Tween<double>(begin: 0, end: 0.35),
-        weight: 10,
-      ),
-      TweenSequenceItem<double>(
-        tween: Tween<double>(begin: 0.35, end: 0.1),
-        weight: 10,
-      ),
-      TweenSequenceItem<double>(
-        tween: Tween<double>(begin: 0.1, end: 0.8),
-        weight: 4,
-      ),
-      TweenSequenceItem<double>(
-        tween: Tween<double>(begin: 0.8, end: 0),
-        weight: 10,
-      ),
-      TweenSequenceItem<double>(
-        tween: Tween<double>(begin: 0, end: 1),
-        weight: 10,
-      ),
-      TweenSequenceItem<double>(
-        tween: ConstantTween<double>(1),
-        weight: 20,
-      ),
-    ],
-  );
-
-  final _flipSequence = TweenSequence<double>(
-    <TweenSequenceItem<double>>[
-      TweenSequenceItem<double>(
-        tween: ConstantTween<double>(0),
-        weight: 44,
-      ),
-      TweenSequenceItem<double>(
-        tween: Tween<double>(begin: 0, end: 0.4),
-        weight: 10,
-      ),
-      TweenSequenceItem<double>(
-        tween: Tween<double>(begin: 0.4, end: 0),
-        weight: 10,
-      ),
-    ],
-  );
-
   // =================================================
 
   Future<void> initialize(AnimationController controller) {
@@ -85,7 +22,7 @@ class AnimaBlocksAnimations {
       state.timeEnd,
     );
 
-    final blocks = _blocksSequence.animate(
+    final blocks = AnimaBlocksUtils.blocksSequence.animate(
       CurvedAnimation(
         parent: parent,
         curve: const Interval(
@@ -96,7 +33,7 @@ class AnimaBlocksAnimations {
       ),
     );
 
-    final flip = _flipSequence.animate(
+    final flip = AnimaBlocksUtils.flipSequence.animate(
       CurvedAnimation(
         parent: parent,
         curve: const Interval(
@@ -107,7 +44,7 @@ class AnimaBlocksAnimations {
       ),
     );
 
-    final opacity = _opacitySequence.animate(
+    final opacity = AnimaBlocksUtils.opacitySequence.animate(
       CurvedAnimation(
         parent: parent,
         curve: const Interval(
