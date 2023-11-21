@@ -2,7 +2,6 @@ import 'package:double07/src/animations/anima_utils.dart';
 import 'package:double07/src/animations/animation_specs/animation_spec.dart';
 import 'package:double07/src/animations/animation_specs/block_animations.dart';
 import 'package:double07/src/animations/shapes/anima_blocks_state.dart';
-import 'package:double07/src/animations/shapes/anima_blocks_utils.dart';
 import 'package:flutter/material.dart';
 
 class AnimaBlocksAnimations {
@@ -22,7 +21,7 @@ class AnimaBlocksAnimations {
       state.timeEnd,
     );
 
-    final blocks = AnimaBlocksUtils.blocksSequence.animate(
+    final blocks = state.blocksSequence.animate(
       CurvedAnimation(
         parent: parent,
         curve: const Interval(
@@ -33,7 +32,7 @@ class AnimaBlocksAnimations {
       ),
     );
 
-    final flip = AnimaBlocksUtils.flipSequence.animate(
+    final flip = state.flipSequence.animate(
       CurvedAnimation(
         parent: parent,
         curve: const Interval(
@@ -44,7 +43,17 @@ class AnimaBlocksAnimations {
       ),
     );
 
-    final opacity = AnimaBlocksUtils.opacitySequence.animate(
+    final opacity = state.opacitySequence.animate(
+      CurvedAnimation(
+        parent: parent,
+        curve: const Interval(
+          0,
+          1,
+        ),
+      ),
+    );
+
+    final color = state.colorSequence.animate(
       CurvedAnimation(
         parent: parent,
         curve: const Interval(
@@ -60,6 +69,7 @@ class AnimaBlocksAnimations {
       opacity: opacity,
       blocks: blocks,
       flip: flip,
+      color: color,
     );
 
     return Future.value();
@@ -108,8 +118,17 @@ class AnimaBlocksAnimations {
 
     // final rect = Offset.zero & size;
 
+    final animaColor = _animations.color.value;
+
+    Color color = Colors.cyan;
+    if (animaColor != null) {
+      if (animaColor.opacity != 0) {
+        color = animaColor;
+      }
+    }
+
     final blockPaint = Paint()
-      ..color = Colors.cyan.withOpacity(
+      ..color = color.withOpacity(
         _animations.opacity.value,
       );
 

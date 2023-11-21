@@ -13,8 +13,10 @@ class AnimaBlocksState {
     TweenSequence<double>? blocksSequence,
     TweenSequence<double>? opacitySequence,
     TweenSequence<double>? flipSequence,
+    TweenSequence<Color?>? colorSequence,
   })  : blocksSequence = blocksSequence ?? AnimaBlocksUtils.zeroSequence,
         flipSequence = flipSequence ?? AnimaBlocksUtils.zeroSequence,
+        colorSequence = colorSequence ?? AnimaBlocksUtils.transparentSequence,
         opacitySequence = opacitySequence ?? AnimaBlocksUtils.oneSequence;
 
   final double timeStart;
@@ -27,4 +29,5 @@ class AnimaBlocksState {
   final TweenSequence<double> blocksSequence;
   final TweenSequence<double> opacitySequence;
   final TweenSequence<double> flipSequence;
+  final TweenSequence<Color?> colorSequence;
 }

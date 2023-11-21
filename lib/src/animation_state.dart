@@ -140,6 +140,7 @@ class AnimationState {
         opacitySequence: AnimaBlocksUtils.opacitySequence,
         flipSequence: AnimaBlocksUtils.flipSequence,
         circles: true,
+        colorSequence: AnimaBlocksUtils.colorSequence(Colors.cyan, Colors.pink),
         margin: 0,
       ),
     ),

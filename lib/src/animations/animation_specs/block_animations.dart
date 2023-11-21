@@ -8,9 +8,11 @@ class BlockAnimations extends AnimationSpec {
     required this.opacity,
     required this.blocks,
     required this.flip,
+    required this.color,
   }) : super(master: master, parent: parent);
 
   Animation<double> opacity;
   Animation<double> blocks;
   Animation<double> flip;
+  Animation<Color?> color;
 }

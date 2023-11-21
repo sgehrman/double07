@@ -15,6 +15,13 @@ class AnimaBlocksUtils {
     ),
   ]);
 
+  static final transparentSequence = TweenSequence<Color?>([
+    TweenSequenceItem<Color?>(
+      tween: ConstantTween<Color>(Colors.transparent),
+      weight: 1,
+    ),
+  ]);
+
   static final opacitySequence = TweenSequence<double>(
     <TweenSequenceItem<double>>[
       TweenSequenceItem<double>(
@@ -86,4 +93,33 @@ class AnimaBlocksUtils {
       ),
     ],
   );
+
+  static TweenSequence<Color?> colorSequence(
+    Color colorOne,
+    Color colorTwo,
+  ) {
+    return TweenSequence<Color?>([
+      TweenSequenceItem(
+        tween: ColorTween(
+          begin: colorOne,
+          end: colorTwo,
+        ),
+        weight: 10,
+      ),
+      TweenSequenceItem(
+        tween: ColorTween(
+          begin: colorTwo,
+          end: colorOne,
+        ),
+        weight: 10,
+      ),
+      TweenSequenceItem(
+        tween: ColorTween(
+          begin: colorOne,
+          end: colorTwo,
+        ),
+        weight: 10,
+      ),
+    ]);
+  }
 }
