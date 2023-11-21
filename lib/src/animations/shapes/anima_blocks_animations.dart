@@ -88,8 +88,8 @@ class AnimaBlocksAnimations {
         c = index % cols;
       }
 
-      _rectCache[index] =
-          Rect.fromLTWH(c * width, r * width, width, width).deflate(10);
+      _rectCache[index] = Rect.fromLTWH(c * width, r * width, width, width)
+          .deflate(state.margin);
     }
 
     return _rectCache[index]!;

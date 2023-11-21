@@ -140,6 +140,7 @@ class AnimationState {
         opacitySequence: AnimaBlocksUtils.opacitySequence,
         flipSequence: AnimaBlocksUtils.flipSequence,
         circles: true,
+        margin: 0,
       ),
     ),
 
@@ -150,6 +151,7 @@ class AnimationState {
         reverse: true,
         downward: true,
         numColumns: 3,
+        margin: 22,
         blocksSequence: AnimaBlocksUtils.blocksSequence,
         flipSequence: AnimaBlocksUtils.flipSequence,
       ),
