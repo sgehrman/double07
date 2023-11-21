@@ -49,11 +49,11 @@ class AnimationParagraphState {
           alignments: [
             Alignment(alignment.x, alignment.y),
             Alignment(alignment.x, alignment.y),
-            Alignment(alignment.x, alignment.y + 0.8),
+            Alignment(alignment.x, alignment.y - 0.1),
           ],
           timeStart: start,
           timeEnd: end,
-          curve: Curves.easeInOut,
+          curve: Curves.easeIn,
           animationTypes: const {
             TextAnimationType.alignment,
             TextAnimationType.fadeInOut,

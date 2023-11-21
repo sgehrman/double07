@@ -129,7 +129,7 @@ class AnimaTextAnimations {
             parent: parent,
             curve: Interval(
               start,
-              end,
+              1, // run til end of parent so it can do the third movement
               curve: state.curve,
             ),
           ),
@@ -151,9 +151,8 @@ class AnimaTextAnimations {
       }
     }
 
-    return AlignmentTween(
-      begin: state.alignments.last,
-      end: state.alignments.last,
+    return ConstantTween<Alignment>(
+      state.alignments.first,
     ).animate(parent);
   }
 
@@ -178,7 +177,8 @@ class AnimaTextAnimations {
           parent: parent,
           curve: Interval(
             start,
-            1,
+            0.9,
+            curve: state.curve,
           ),
         ),
       );
@@ -210,10 +210,7 @@ class AnimaTextAnimations {
     required AnimationController controller,
   }) {
     final List<LetterAnimations> result = [];
-
-    final time = state.timeEnd - state.timeStart;
-    final double duration = time / count;
-    const double overlap = 4;
+    final totalTime = state.timeEnd - state.timeStart;
 
     final masterParent = AnimationSpec.parentAnimation(
       controller,
@@ -221,9 +218,12 @@ class AnimaTextAnimations {
       state.timeEnd,
     );
 
+    final double letterDuration = totalTime / count;
+    const double overlap = 4;
+
     for (int i = 0; i < count; i++) {
-      final start = i * (duration / overlap);
-      final end = start + (duration * overlap);
+      final start = i * (letterDuration / overlap);
+      final end = start + (letterDuration * overlap);
 
       final parent = AnimationSpec.parentAnimation(masterParent, start, 1);
 
