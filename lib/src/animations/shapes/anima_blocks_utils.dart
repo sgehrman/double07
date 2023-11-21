@@ -61,6 +61,15 @@ class AnimaBlocksUtils {
     ],
   );
 
+  static final blocksSequenceFull = TweenSequence<double>(
+    <TweenSequenceItem<double>>[
+      TweenSequenceItem<double>(
+        tween: Tween<double>(begin: 0, end: 1),
+        weight: 10,
+      ),
+    ],
+  );
+
   static final flipSequence = TweenSequence<double>(
     <TweenSequenceItem<double>>[
       TweenSequenceItem<double>(

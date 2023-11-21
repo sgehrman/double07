@@ -13,8 +13,14 @@ class Timeline {
   static double quoteStart = 0.1;
   static double quoteEnd = 1;
 
+  // ==============================
+  // blocks
+
   static double blocksStart = 0.3;
-  static double blocksEnd = 0.6;
+  static double blocksEnd = 0.4;
+
+  static double blocks2Start = 0.4;
+  static double blocks2End = 0.5;
 
   // ==============================
   // backgounds

@@ -136,6 +136,18 @@ class AnimationState {
       AnimaBlocksState(
         timeStart: Timeline.blocksStart,
         timeEnd: Timeline.blocksEnd,
+        blocksSequence: AnimaBlocksUtils.blocksSequenceFull,
+        opacitySequence: AnimaBlocksUtils.opacitySequence,
+        flipSequence: AnimaBlocksUtils.flipSequence,
+      ),
+    ),
+
+    AnimaBlocks(
+      AnimaBlocksState(
+        timeStart: Timeline.blocks2Start,
+        timeEnd: Timeline.blocks2End,
+        reverse: true,
+        downward: true,
         blocksSequence: AnimaBlocksUtils.blocksSequence,
       ),
     ),
