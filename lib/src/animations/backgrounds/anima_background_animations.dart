@@ -22,10 +22,12 @@ class AnimaBackgroundAnimations {
 
     _image = await ImageProcessor.bytesToImage(byteData.buffer.asUint8List());
 
-    _animation = CommonAnimations.opacityAnima(
+    _animation = CommonAnimations.inOutAnima(
       parent: controller,
-      opacity: 0.35,
-      curve: Curves.easeOut,
+      beginValue: 0,
+      endValue: 0.35,
+      inCurve: Curves.easeOut,
+      outCurve: Curves.easeIn,
       start: state.timeStart,
       end: state.timeEnd,
     );

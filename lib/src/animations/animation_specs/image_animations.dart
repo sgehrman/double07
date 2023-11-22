@@ -7,8 +7,10 @@ class ImageAnimations extends AnimationSpec {
     required Animation<double> parent,
     required this.opacity,
     required this.alignment,
+    required this.scale,
   }) : super(master: master, parent: parent);
 
   Animation<Alignment> alignment;
   Animation<double> opacity;
+  Animation<double> scale;
 }

@@ -2,6 +2,7 @@ import 'dart:ui' as ui;
 
 import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:double07/src/animations/anima_image/anima_image_state.dart';
+import 'package:double07/src/animations/anima_utils.dart';
 import 'package:double07/src/animations/animation_specs/animation_spec.dart';
 import 'package:double07/src/animations/animation_specs/image_animations.dart';
 import 'package:double07/src/animations/common_animations.dart';
@@ -34,12 +35,24 @@ class AnimaImageAnimations {
     _animations = ImageAnimations(
       master: controller,
       parent: parent,
-      opacity: CommonAnimations.opacityAnima(
+      opacity: CommonAnimations.inOutAnima(
         start: 0,
         end: 1,
-        opacity: state.opacity,
+        beginValue: 0,
+        endValue: state.opacity,
         parent: parent,
-        curve: state.opacityCurve,
+        inCurve: state.opacityCurve,
+        outCurve: state.opacityCurve,
+        weights: const SequenceWeights.frontEnd(),
+      ),
+      scale: CommonAnimations.inOutAnima(
+        start: 0,
+        end: 1,
+        beginValue: 1,
+        endValue: 3,
+        parent: parent,
+        inCurve: state.inCurve,
+        outCurve: state.outCurve,
         weights: const SequenceWeights.frontEnd(),
       ),
       alignment: CommonAnimations.alignmentAnima(
@@ -60,6 +73,17 @@ class AnimaImageAnimations {
 
       final destRect = _animations.alignment.value.inscribe(state.size, rect);
 
+      canvas.save();
+
+      final scale = _animations.scale.value;
+
+      final matrix = AnimaUtils.scaledRect(
+        destRect,
+        scale,
+      );
+
+      canvas.transform(matrix.storage);
+
       paintImage(
         canvas: canvas,
         rect: destRect,
@@ -67,6 +91,8 @@ class AnimaImageAnimations {
         image: _image,
         opacity: _animations.opacity.value,
       );
+
+      canvas.restore();
     }
   }
 }

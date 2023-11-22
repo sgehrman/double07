@@ -73,26 +73,32 @@ class CommonAnimations {
     }
   }
 
-  static Animation<double> opacityAnima({
+  static Animation<double> inOutAnima({
     required double start,
     required double end,
-    required double opacity,
+    required double beginValue,
+    required double endValue,
     required Animation<double> parent,
-    required Curve curve,
+    required Curve inCurve,
+    required Curve outCurve,
     SequenceWeights weights = const SequenceWeights(),
   }) {
     final sequence = TweenSequence<double>(
       <TweenSequenceItem<double>>[
         TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0, end: opacity),
+          tween: Tween<double>(begin: beginValue, end: endValue).chain(
+            CurveTween(curve: inCurve),
+          ),
           weight: weights.start,
         ),
         TweenSequenceItem<double>(
-          tween: ConstantTween<double>(opacity),
+          tween: ConstantTween<double>(endValue),
           weight: weights.hold,
         ),
         TweenSequenceItem<double>(
-          tween: Tween<double>(begin: opacity, end: 0),
+          tween: Tween<double>(begin: endValue, end: beginValue).chain(
+            CurveTween(curve: outCurve),
+          ),
           weight: weights.end,
         ),
       ],
@@ -104,7 +110,6 @@ class CommonAnimations {
         curve: Interval(
           start,
           end,
-          curve: curve,
         ),
       ),
     );
