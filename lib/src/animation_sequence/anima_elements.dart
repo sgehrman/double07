@@ -243,13 +243,12 @@ class AnimaElements {
       AnimaImageState(
         imageAsset: '$kAssets/images/egg.png',
         size: const Size(400, 400),
-        timeStart: 0,
-        timeEnd: 0.3,
-        curve: Curves.elasticInOut,
+        timeStart: 0.1,
+        timeEnd: 0.4,
         alignments: [
-          const Alignment(0, -2.5),
-          const Alignment(0, -0.1),
-          const Alignment(0, -2.5),
+          Alignment.topCenter,
+          Alignment.center,
+          Alignment.topCenter,
         ],
       ),
     );

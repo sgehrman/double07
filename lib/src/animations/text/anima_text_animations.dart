@@ -13,8 +13,6 @@ class AnimaTextAnimations {
 
   final AnimaTextState state;
 
-  late final TweenSequence<double> _scaleSequence;
-
   Future<void> initialize({
     required AnimationController controller,
   }) async {
@@ -23,22 +21,6 @@ class AnimaTextAnimations {
       _textStyle(),
       state.letterSpacing,
     );
-
-    // expensve to create, do here
-    _scaleSequence = TweenSequence<double>([
-      TweenSequenceItem<double>(
-        tween: ConstantTween<double>(1),
-        weight: 1,
-      ),
-      TweenSequenceItem<double>(
-        tween: Tween<double>(begin: 4, end: 1).chain(
-          CurveTween(
-            curve: state.curve,
-          ),
-        ),
-        weight: 1,
-      ),
-    ]);
 
     _letterAnimations = _buildAnimations(
       count: _textLetters.length,
@@ -113,17 +95,20 @@ class AnimaTextAnimations {
     double end,
     Animation<double> parent,
   ) {
-    return state.animationTypes.contains(TextAnimationType.scale)
-        ? _scaleSequence.animate(
-            CurvedAnimation(
-              parent: parent,
-              curve: Interval(
-                start,
-                end,
-              ),
-            ),
-          )
-        : ConstantTween<double>(1).animate(parent);
+    if (state.animationTypes.contains(TextAnimationType.scale)) {
+      return Tween<double>(begin: 3, end: 1).animate(
+        CurvedAnimation(
+          parent: parent,
+          curve: Interval(
+            start,
+            end,
+            curve: state.curve,
+          ),
+        ),
+      );
+    }
+
+    return ConstantTween<double>(1).animate(parent);
   }
 
   List<LetterAnimations> _buildAnimations({

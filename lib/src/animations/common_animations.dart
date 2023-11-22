@@ -89,12 +89,6 @@ class CommonAnimations {
       ],
     );
 
-    // tween: Tween<double>(begin: 0.04, end: state.opacity).chain(
-    //         CurveTween(
-    //           curve: state.opacityCurve,
-    //         ),
-    //       ),
-
     return sequence.animate(
       CurvedAnimation(
         parent: parent,

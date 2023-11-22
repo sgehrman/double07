@@ -8,8 +8,8 @@ class AnimaImageState {
     required this.timeStart,
     required this.timeEnd,
     this.opacity = 1,
-    this.curve = Curves.easeInOut,
-    this.opacityCurve = Curves.easeIn,
+    this.curve = Curves.elasticOut,
+    this.opacityCurve = Curves.linear,
   });
 
   final String imageAsset;
