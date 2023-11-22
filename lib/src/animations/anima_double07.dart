@@ -4,7 +4,7 @@ import 'package:double07/src/animations/animation_specs/double07_annimations.dar
 import 'package:double07/src/timeline.dart';
 import 'package:flutter/material.dart';
 
-class AnimationBallState implements RunableAnimation {
+class AnimaDouble07 implements RunableAnimation {
   late final DoubleO7Animations _animations;
 
   // ball animation
