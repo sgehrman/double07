@@ -20,6 +20,7 @@ class AnimaTextState {
   final double timeStart;
   final double timeEnd;
 
+  // foreward to line
   String get text => line.text;
   double get fontSize => line.fontSize;
   double get opacity => line.opacity;
@@ -41,7 +42,7 @@ class AnimaTextLine {
     this.curve = Curves.elasticInOut,
     this.opacityCurve = Curves.easeOut,
     this.bold = false,
-    this.letterSpacing = 10,
+    this.letterSpacing = 6,
     this.opacity = 0.3,
     this.animationTypes = const {
       TextAnimationType.alignment,

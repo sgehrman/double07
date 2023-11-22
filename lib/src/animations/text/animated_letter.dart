@@ -155,8 +155,8 @@ class AnimatedLetter {
 
   static _LetterPainter _createTextPainter(String char, TextStyle style) {
     if (char == ' ') {
-      return _LetterPainter(
-        letter: char,
+      return _LetterPainter.space(
+        fontSize: style.fontSize ?? 20,
       );
     }
 
@@ -231,11 +231,16 @@ class AnimatedLetter {
 class _LetterPainter {
   _LetterPainter({
     required this.letter,
-    this.textPainter,
+    required this.textPainter,
   });
 
-  String letter;
+  _LetterPainter.space({
+    required this.fontSize,
+  }) : letter = '';
+
+  final String letter;
   TextPainter? textPainter;
+  double fontSize = 0;
 
   bool get isSpace => textPainter == null;
 
@@ -244,7 +249,7 @@ class _LetterPainter {
       return textPainter!.size;
     }
 
-    // space
-    return const Size(20, 20);
+    // space based on fontSize
+    return Size(fontSize / 3, fontSize / 3);
   }
 }

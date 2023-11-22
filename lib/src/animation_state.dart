@@ -7,6 +7,7 @@ import 'package:double07/src/animations/shapes/anima_blocks_utils.dart';
 import 'package:double07/src/animations/text/anima_text.dart';
 import 'package:double07/src/animations/text/anima_text_state.dart';
 import 'package:double07/src/animations/text/animation_paragraph_state.dart';
+import 'package:double07/src/elements/anima_elements.dart';
 import 'package:double07/src/timeline.dart';
 import 'package:double07/src/utils.dart';
 import 'package:flutter/material.dart';
@@ -80,50 +81,9 @@ class AnimationState {
       ),
     ),
 
-    AnimaText(
-      AnimaTextState(
-        line: AnimaTextLine(
-          text: 'Mr. Henderson',
-          fontSize: 44,
-          color: Colors.cyan,
-        ),
-        alignments: [
-          const Alignment(-0.2, 0.6),
-          const Alignment(-0.2, 0.6),
-        ],
-        timeStart: Timeline.hendersonTextStart,
-        timeEnd: Timeline.hendersonTextEnd,
-      ),
-    ),
-
-    AnimaText(
-      AnimaTextState(
-        line: AnimaTextLine(
-          text: 'Largo',
-          fontSize: 44,
-          color: Colors.cyan,
-        ),
-        alignments: [
-          const Alignment(0.6, 0.9),
-          const Alignment(0.6, 0.9),
-        ],
-        timeStart: Timeline.largoTextStart,
-        timeEnd: Timeline.largoTextEnd,
-      ),
-    ),
-
-    AnimationParagraphState(
-      alignment: const Alignment(-0.12, 0.8),
-      fontSize: 44,
-      timeStart: Timeline.dominoTextStart,
-      timeEnd: Timeline.dominoTextEnd,
-      lines: [
-        'My darlings,',
-        'Deckr is cooler',
-        'than diving in the Bahamas!',
-        '- Domino',
-      ],
-    ),
+    AnimaElements.hendersonQuote(),
+    AnimaElements.largoQuote(),
+    AnimaElements.dominoQuote(),
 
     AnimationParagraphState(
       alignment: const Alignment(0.8, -0.8),
