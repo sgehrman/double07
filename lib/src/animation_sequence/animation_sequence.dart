@@ -1,5 +1,8 @@
 import 'package:double07/src/animation_sequence/anima_elements.dart';
+import 'package:double07/src/animations/anima_image/anima_image.dart';
+import 'package:double07/src/animations/anima_image/anima_image_state.dart';
 import 'package:double07/src/animations/animation_ball_state.dart';
+import 'package:double07/src/utils.dart';
 import 'package:flutter/material.dart';
 
 abstract class RunableAnimation {
@@ -24,6 +27,16 @@ class AnimationSequence {
     AnimaElements.introTitles(),
     ...AnimaElements.blocks(),
     AnimationBallState(),
+    AnimaImage(
+      AnimaImageState(
+        imageAsset: '$kAssets/images/egg.png',
+        opacity: 0.9,
+        size: const Size(200, 200),
+        timeEnd: 0.3,
+        timeStart: 0,
+        alignments: [const Alignment(0, -0.1)],
+      ),
+    ),
   ];
 
   // =================================================
