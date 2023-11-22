@@ -6,7 +6,6 @@ import 'package:double07/src/animations/shapes/anima_blocks_state.dart';
 import 'package:double07/src/animations/shapes/anima_blocks_utils.dart';
 import 'package:double07/src/animations/text/anima_text.dart';
 import 'package:double07/src/animations/text/anima_text_state.dart';
-import 'package:double07/src/animations/text/animation_paragraph_state.dart';
 import 'package:double07/src/elements/anima_elements.dart';
 import 'package:double07/src/timeline.dart';
 import 'package:double07/src/utils.dart';
@@ -84,33 +83,8 @@ class AnimationState {
     AnimaElements.hendersonQuote(),
     AnimaElements.largoQuote(),
     AnimaElements.dominoQuote(),
-
-    AnimationParagraphState(
-      alignment: const Alignment(0.8, -0.8),
-      fontSize: 44,
-      timeStart: Timeline.quoteStart,
-      timeEnd: Timeline.quoteEnd,
-      lines: [
-        'This dream is for you',
-        'So pay the price',
-        'Make one dream come true',
-        'You only live twice',
-      ],
-    ),
-
-    AnimationParagraphState(
-      alignment: const Alignment(0, -0.1),
-      fontSize: 114,
-      timeStart: Timeline.mainTitlesStart,
-      timeEnd: Timeline.mainTitlesEnd,
-      type: ParagraphAnimaType.titleSequence,
-      lines: [
-        'This dream is for you',
-        'So pay the price',
-        'Make one dream come true',
-        'You only live twice',
-      ],
-    ),
+    AnimaElements.randomQuote(),
+    AnimaElements.introTitles(),
 
     // ball animation
     AnimationBallState(),

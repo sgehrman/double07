@@ -87,4 +87,68 @@ class AnimaElements {
       ],
     );
   }
+
+  static RunableAnimation randomQuote() {
+    return AnimaParagraph(
+      alignment: const Alignment(0.8, -0.8),
+      timeStart: Timeline.quoteStart,
+      timeEnd: Timeline.quoteEnd,
+      animateFrom: 0,
+      lines: [
+        AnimaTextLine(
+          text: 'This dream is for you',
+          fontSize: 32,
+          color: Colors.white,
+        ),
+        AnimaTextLine(
+          text: 'So pay the price',
+          fontSize: 32,
+          color: Colors.white,
+        ),
+        AnimaTextLine(
+          text: 'Make one dream come true',
+          fontSize: 44,
+          color: Colors.white,
+        ),
+        AnimaTextLine(
+          text: 'You only live twice',
+          fontSize: 44,
+          color: Colors.white,
+        ),
+      ],
+    );
+  }
+
+  static RunableAnimation introTitles() {
+    const double fontSize = 114;
+
+    return AnimaParagraph(
+      alignment: const Alignment(0, -0.1),
+      timeStart: Timeline.mainTitlesStart,
+      timeEnd: Timeline.mainTitlesEnd,
+      type: ParagraphAnimaType.titleSequence,
+      lines: [
+        AnimaTextLine(
+          text: 'This dream is for you',
+          fontSize: fontSize,
+          color: Colors.white,
+        ),
+        AnimaTextLine(
+          text: 'So pay the price',
+          fontSize: fontSize,
+          color: Colors.white,
+        ),
+        AnimaTextLine(
+          text: 'Make one dream come true',
+          fontSize: fontSize,
+          color: Colors.white,
+        ),
+        AnimaTextLine(
+          text: 'You only live twice',
+          fontSize: fontSize,
+          color: Colors.white,
+        ),
+      ],
+    );
+  }
 }

@@ -1,8 +1,12 @@
 import 'package:double07/src/animation_state.dart';
 import 'package:double07/src/animations/text/anima_text.dart';
 import 'package:double07/src/animations/text/anima_text_state.dart';
-import 'package:double07/src/animations/text/animation_paragraph_state.dart';
 import 'package:flutter/material.dart';
+
+enum ParagraphAnimaType {
+  flyIn,
+  titleSequence,
+}
 
 class AnimaParagraph implements RunableAnimation {
   AnimaParagraph({
