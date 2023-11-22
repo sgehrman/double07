@@ -49,7 +49,7 @@ class AnimaImageAnimations {
         start: 0,
         end: 1,
         beginValue: 1,
-        endValue: 3,
+        endValue: 1.4,
         parent: parent,
         inCurve: state.inCurve,
         outCurve: state.outCurve,
