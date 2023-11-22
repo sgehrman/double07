@@ -1,10 +1,10 @@
-import 'package:double07/src/animation_state.dart';
+import 'package:double07/src/animation_sequence/animation_sequence.dart';
 import 'package:flutter/material.dart';
 
 class DeckrAnimationPainter extends CustomPainter {
   DeckrAnimationPainter(this.animationState);
 
-  final AnimationState animationState;
+  final AnimationSequence animationState;
 
   @override
   void paint(Canvas canvas, Size size) {

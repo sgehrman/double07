@@ -1,4 +1,4 @@
-import 'package:double07/src/animation_state.dart';
+import 'package:double07/src/animation_sequence/animation_sequence.dart';
 import 'package:double07/src/animations/text/anima_text_animations.dart';
 import 'package:double07/src/animations/text/anima_text_state.dart';
 import 'package:flutter/material.dart';

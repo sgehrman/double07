@@ -1,5 +1,5 @@
+import 'package:double07/src/animation_sequence/anima_elements.dart';
 import 'package:double07/src/animations/animation_ball_state.dart';
-import 'package:double07/src/elements/anima_elements.dart';
 import 'package:flutter/material.dart';
 
 abstract class RunableAnimation {
@@ -9,8 +9,8 @@ abstract class RunableAnimation {
 
 // ========================================================
 
-class AnimationState {
-  AnimationState();
+class AnimationSequence {
+  AnimationSequence();
 
   bool isInitialized = false;
 

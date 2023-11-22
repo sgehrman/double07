@@ -1,5 +1,5 @@
 import 'package:dfc_flutter/dfc_flutter_web.dart';
-import 'package:double07/src/animation_state.dart';
+import 'package:double07/src/animation_sequence/animation_sequence.dart';
 import 'package:double07/src/audio_player/background_audio_player.dart';
 import 'package:double07/src/main_widget/deckr_animation_painter.dart';
 import 'package:double07/src/timeline.dart';
@@ -19,7 +19,7 @@ class DeckrAnimation extends StatefulWidget {
 class _DeckrAnimationState extends State<DeckrAnimation>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
-  final AnimationState _animationState = AnimationState();
+  final AnimationSequence _animationState = AnimationSequence();
 
   @override
   void initState() {
