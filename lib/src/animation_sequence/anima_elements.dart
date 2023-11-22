@@ -1,6 +1,7 @@
 import 'package:double07/src/animation_sequence/animation_sequence.dart';
 import 'package:double07/src/animations/anima_image/anima_image.dart';
 import 'package:double07/src/animations/anima_image/anima_image_state.dart';
+import 'package:double07/src/animations/animation_ball_state.dart';
 import 'package:double07/src/animations/backgrounds/anima_background.dart';
 import 'package:double07/src/animations/backgrounds/anima_background_state.dart';
 import 'package:double07/src/animations/shapes/anima_blocks.dart';
@@ -252,5 +253,9 @@ class AnimaElements {
         ],
       ),
     );
+  }
+
+  static RunableAnimation double07Ball() {
+    return AnimationBallState();
   }
 }

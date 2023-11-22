@@ -1,5 +1,4 @@
 import 'package:double07/src/animation_sequence/anima_elements.dart';
-import 'package:double07/src/animations/animation_ball_state.dart';
 import 'package:flutter/material.dart';
 
 abstract class RunableAnimation {
@@ -23,8 +22,8 @@ class AnimationSequence {
     AnimaElements.randomQuote(),
     AnimaElements.introTitles(),
     AnimaElements.easterEgg(),
+    AnimaElements.double07Ball(),
     ...AnimaElements.blocks(),
-    AnimationBallState(),
   ];
 
   // =================================================
