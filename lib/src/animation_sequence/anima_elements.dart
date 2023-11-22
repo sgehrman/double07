@@ -14,29 +14,33 @@ import 'package:double07/src/utils.dart';
 import 'package:flutter/material.dart';
 
 class AnimaElements {
+  static const double kTitleFontSize = 116;
+  static const double kSmallFontSize = 30;
+  static const double kLargeFontSize = 42;
+
   static RunableAnimation dominoQuote() {
     return AnimaParagraph(
-      alignment: const Alignment(-0.12, 0.7),
+      alignment: const Alignment(-0.12, 0.65),
       timeStart: Timeline.dominoTextStart,
       timeEnd: Timeline.dominoTextEnd,
       animateFrom: 0,
       lines: [
         AnimaTextLine(
           text: 'My darlings,',
-          fontSize: 32,
+          fontSize: kSmallFontSize,
         ),
         AnimaTextLine(
           text: 'I adore using Deckr after',
-          fontSize: 32,
+          fontSize: kSmallFontSize,
         ),
         AnimaTextLine(
           text: 'diving in the Bahamas.',
-          fontSize: 32,
+          fontSize: kSmallFontSize,
         ),
         AnimaTextLine.blank(),
         AnimaTextLine(
           text: '- Domino',
-          fontSize: 44,
+          fontSize: kLargeFontSize,
           color: Colors.cyan,
         ),
       ],
@@ -45,23 +49,23 @@ class AnimaElements {
 
   static RunableAnimation largoQuote() {
     return AnimaParagraph(
-      alignment: const Alignment(0.6, 0.8),
+      alignment: const Alignment(0.7, 0.75),
       timeStart: Timeline.largoTextStart,
       timeEnd: Timeline.largoTextEnd,
       animateFrom: 0,
       lines: [
         AnimaTextLine(
           text: 'All members of SPECTER',
-          fontSize: 32,
+          fontSize: kSmallFontSize,
         ),
         AnimaTextLine(
-          text: 'Are required to use Deckr.',
-          fontSize: 32,
+          text: 'are required to use Deckr.',
+          fontSize: kSmallFontSize,
         ),
         AnimaTextLine.blank(),
         AnimaTextLine(
           text: '- Emilio Largo',
-          fontSize: 44,
+          fontSize: kLargeFontSize,
           color: Colors.cyan,
         ),
       ],
@@ -70,23 +74,23 @@ class AnimaElements {
 
   static RunableAnimation hendersonQuote() {
     return AnimaParagraph(
-      alignment: const Alignment(-0.2, 0.6),
+      alignment: const Alignment(-0.3, 0.6),
       timeStart: Timeline.hendersonTextStart,
       timeEnd: Timeline.hendersonTextEnd,
       animateFrom: 0,
       lines: [
         AnimaTextLine(
           text: 'A friend of mine at the Russian Embassy',
-          fontSize: 32,
+          fontSize: kSmallFontSize,
         ),
         AnimaTextLine(
           text: 'Recommended I use Deckr among other things.',
-          fontSize: 32,
+          fontSize: kSmallFontSize,
         ),
         AnimaTextLine.blank(),
         AnimaTextLine(
           text: '- Mr. Henderson',
-          fontSize: 44,
+          fontSize: kLargeFontSize,
           color: Colors.cyan,
         ),
       ],
@@ -102,27 +106,25 @@ class AnimaElements {
       lines: [
         AnimaTextLine(
           text: 'This dream is for you',
-          fontSize: 32,
+          fontSize: kSmallFontSize,
         ),
         AnimaTextLine(
           text: 'So pay the price',
-          fontSize: 32,
+          fontSize: kSmallFontSize,
         ),
         AnimaTextLine(
           text: 'Make one dream come true',
-          fontSize: 44,
+          fontSize: kLargeFontSize,
         ),
         AnimaTextLine(
           text: 'You only live twice',
-          fontSize: 44,
+          fontSize: kLargeFontSize,
         ),
       ],
     );
   }
 
   static RunableAnimation introTitles() {
-    const double fontSize = 114;
-
     return AnimaParagraph(
       alignment: const Alignment(0, -0.1),
       timeStart: Timeline.mainTitlesStart,
@@ -131,19 +133,19 @@ class AnimaElements {
       lines: [
         AnimaTextLine(
           text: 'This dream is for you',
-          fontSize: fontSize,
+          fontSize: kTitleFontSize,
         ),
         AnimaTextLine(
           text: 'So pay the price',
-          fontSize: fontSize,
+          fontSize: kTitleFontSize,
         ),
         AnimaTextLine(
           text: 'Make one dream come true',
-          fontSize: fontSize,
+          fontSize: kTitleFontSize,
         ),
         AnimaTextLine(
           text: 'You only live twice',
-          fontSize: fontSize,
+          fontSize: kTitleFontSize,
         ),
       ],
     );
