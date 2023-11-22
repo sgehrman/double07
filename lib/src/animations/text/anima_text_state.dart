@@ -38,7 +38,7 @@ class AnimaTextLine {
   AnimaTextLine({
     required this.text,
     required this.fontSize,
-    required this.color,
+    this.color = Colors.white,
     this.curve = Curves.elasticInOut,
     this.opacityCurve = Curves.easeOut,
     this.bold = false,
@@ -50,6 +50,17 @@ class AnimaTextLine {
       TextAnimationType.opacity,
     },
   });
+
+  AnimaTextLine.blank()
+      : text = '',
+        fontSize = 12,
+        bold = false,
+        letterSpacing = 6,
+        opacity = 0.3,
+        color = Colors.white,
+        opacityCurve = Curves.ease,
+        curve = Curves.ease,
+        animationTypes = {};
 
   final String text;
   final double fontSize;

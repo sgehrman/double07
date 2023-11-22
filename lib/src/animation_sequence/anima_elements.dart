@@ -22,18 +22,16 @@ class AnimaElements {
         AnimaTextLine(
           text: 'My darlings,',
           fontSize: 32,
-          color: Colors.white,
         ),
         AnimaTextLine(
           text: 'I adore using Deckr after',
           fontSize: 32,
-          color: Colors.white,
         ),
         AnimaTextLine(
           text: 'diving in the Bahamas.',
           fontSize: 32,
-          color: Colors.white,
         ),
+        AnimaTextLine.blank(),
         AnimaTextLine(
           text: '- Domino',
           fontSize: 44,
@@ -53,13 +51,12 @@ class AnimaElements {
         AnimaTextLine(
           text: 'All members of SPECTER',
           fontSize: 32,
-          color: Colors.white,
         ),
         AnimaTextLine(
           text: 'Are required to use Deckr.',
           fontSize: 32,
-          color: Colors.white,
         ),
+        AnimaTextLine.blank(),
         AnimaTextLine(
           text: '- Emilio Largo',
           fontSize: 44,
@@ -79,13 +76,12 @@ class AnimaElements {
         AnimaTextLine(
           text: 'A friend of mine at the Russian Embassy',
           fontSize: 32,
-          color: Colors.white,
         ),
         AnimaTextLine(
           text: 'Recommended I use Deckr among other things.',
           fontSize: 32,
-          color: Colors.white,
         ),
+        AnimaTextLine.blank(),
         AnimaTextLine(
           text: '- Mr. Henderson',
           fontSize: 44,
@@ -105,22 +101,18 @@ class AnimaElements {
         AnimaTextLine(
           text: 'This dream is for you',
           fontSize: 32,
-          color: Colors.white,
         ),
         AnimaTextLine(
           text: 'So pay the price',
           fontSize: 32,
-          color: Colors.white,
         ),
         AnimaTextLine(
           text: 'Make one dream come true',
           fontSize: 44,
-          color: Colors.white,
         ),
         AnimaTextLine(
           text: 'You only live twice',
           fontSize: 44,
-          color: Colors.white,
         ),
       ],
     );
@@ -138,22 +130,18 @@ class AnimaElements {
         AnimaTextLine(
           text: 'This dream is for you',
           fontSize: fontSize,
-          color: Colors.white,
         ),
         AnimaTextLine(
           text: 'So pay the price',
           fontSize: fontSize,
-          color: Colors.white,
         ),
         AnimaTextLine(
           text: 'Make one dream come true',
           fontSize: fontSize,
-          color: Colors.white,
         ),
         AnimaTextLine(
           text: 'You only live twice',
           fontSize: fontSize,
-          color: Colors.white,
         ),
       ],
     );
@@ -235,7 +223,6 @@ class AnimaElements {
           text: 'Deckr'.toUpperCase(),
           fontSize: 64,
           bold: true,
-          color: Colors.white,
         ),
         alignments: [
           const Alignment(-0.8, -2),
