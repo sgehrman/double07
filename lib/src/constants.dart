@@ -29,6 +29,11 @@ class SequenceWeights {
         hold = 1,
         end = 1;
 
+  const SequenceWeights.noHold()
+      : start = 48,
+        hold = 2,
+        end = 48;
+
   final double start;
   final double hold;
   final double end;

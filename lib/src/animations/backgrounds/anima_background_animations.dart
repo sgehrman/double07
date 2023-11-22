@@ -2,8 +2,11 @@ import 'dart:ui' as ui;
 
 import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:double07/src/animations/anima_utils.dart';
+import 'package:double07/src/animations/animation_specs/animation_spec.dart';
+import 'package:double07/src/animations/animation_specs/background_animations.dart';
 import 'package:double07/src/animations/backgrounds/anima_background_state.dart';
 import 'package:double07/src/animations/common_animations.dart';
+import 'package:double07/src/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,7 +15,7 @@ class AnimaBackgroundAnimations {
 
   final AnimaBackgroundState state;
 
-  late final Animation<double> _animation;
+  late final BackgroundAnimations _animations;
   late final ui.Image _image;
 
   // =================================================
@@ -22,85 +25,89 @@ class AnimaBackgroundAnimations {
 
     _image = await ImageProcessor.bytesToImage(byteData.buffer.asUint8List());
 
-    _animation = CommonAnimations.inOutAnima(
-      parent: controller,
-      beginValue: 0,
-      endValue: 0.35,
-      inCurve: Curves.easeOut,
-      outCurve: Curves.easeIn,
-      start: state.timeStart,
-      end: state.timeEnd,
+    final parent = AnimationSpec.parentAnimation(
+      controller,
+      state.timeStart,
+      state.timeEnd,
+    );
+
+    _animations = BackgroundAnimations(
+      master: controller,
+      parent: parent,
+      opacity: CommonAnimations.inOutAnima(
+        parent: parent,
+        beginValue: 0,
+        endValue: state.mode == AnimaBackgroundMode.zoomIn ? 0.8 : 0.35,
+        inCurve: Curves.easeOut,
+        outCurve: Curves.easeIn,
+        start: 0,
+        end: 1,
+      ),
+      scale: CommonAnimations.inOutAnima(
+        parent: parent,
+        beginValue: 1,
+        endValue: state.mode == AnimaBackgroundMode.zoomIn ? 1.2 : 1,
+        inCurve: Curves.easeOut,
+        outCurve: Curves.easeIn,
+        start: 0,
+        end: 1,
+        weights: const SequenceWeights.noHold(),
+      ),
     );
   }
 
   void paint(Canvas canvas, Size size) {
-    final rect = Offset.zero & size;
+    if (_animations.isRunning) {
+      final rect = Offset.zero & size;
 
-    final opacity = _animation.value;
+      final opacity = _animations.opacity.value;
 
-    if (state.mode == AnimaBackgroundMode.spotlight) {
-      final double gradientOpacity = _animation.value > 0 ? 1 : 0;
+      if (state.mode == AnimaBackgroundMode.spotlight) {
+        final double gradientOpacity = opacity > 0 ? 1 : 0;
 
-      final gradientPaint = Paint()
-        ..isAntiAlias = true
-        ..style = PaintingStyle.fill
-        ..shader = RadialGradient(
-          colors: [
-            Colors.transparent,
-            Colors.black.withOpacity(
-              gradientOpacity,
-            ),
-          ],
-          center: state.gradientAlignment,
-        ).createShader(rect);
+        final gradientPaint = Paint()
+          ..isAntiAlias = true
+          ..style = PaintingStyle.fill
+          ..shader = RadialGradient(
+            colors: [
+              Colors.transparent,
+              Colors.black.withOpacity(
+                gradientOpacity,
+              ),
+            ],
+            center: state.gradientAlignment,
+          ).createShader(rect);
 
-      paintImage(
-        canvas: canvas,
-        rect: rect,
-        fit: BoxFit.cover,
-        image: _image,
-        opacity: opacity,
-      );
+        paintImage(
+          canvas: canvas,
+          rect: rect,
+          fit: BoxFit.cover,
+          image: _image,
+          opacity: opacity,
+        );
 
-      canvas.drawRect(rect, gradientPaint);
-    } else if (state.mode == AnimaBackgroundMode.colorShift) {
-      final len = BlendMode.values.length;
+        canvas.drawRect(rect, gradientPaint);
+      } else if (state.mode == AnimaBackgroundMode.zoomIn) {
+        final matrix = AnimaUtils.scaledRect(
+          rect,
+          _animations.scale.value,
+        );
 
-      final index = (_animation.value * (len - 1)).floor();
+        canvas.save();
 
-      final blendMode = BlendMode.values[index];
+        canvas.transform(matrix.storage);
+        paintImage(
+          canvas: canvas,
+          rect: rect,
+          fit: BoxFit.cover,
+          image: _image,
+          opacity: opacity,
+        );
 
-      paintImage(
-        canvas: canvas,
-        rect: rect,
-        fit: BoxFit.cover,
-        invertColors: true,
-        filterQuality: FilterQuality.high,
-        blendMode: blendMode,
-        colorFilter: const ColorFilter.linearToSrgbGamma(),
-        image: _image,
-        // opacity: 1,
-      );
-    } else if (state.mode == AnimaBackgroundMode.zoomIn) {
-      final matrix = AnimaUtils.scaledRect(
-        rect,
-        1 + (_animation.value * 1.2),
-      );
+        canvas.restore();
 
-      canvas.save();
-
-      canvas.transform(matrix.storage);
-      paintImage(
-        canvas: canvas,
-        rect: rect,
-        fit: BoxFit.cover,
-        image: _image,
-        // opacity: 1,
-      );
-
-      canvas.restore();
-
-      canvas.drawRect(rect, Paint()..color = Colors.black26);
+        canvas.drawRect(rect, Paint()..color = Colors.black87);
+      }
     }
   }
 }

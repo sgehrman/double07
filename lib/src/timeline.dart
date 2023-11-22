@@ -51,6 +51,9 @@ class Timeline {
   // ------------------------------------
   // blocks
 
+  static double scaledImageStart = dominoEnd;
+  static double scaledImageEnd = scaledImageStart + durSecs(10);
+
   static double blocksStart = dominoEnd;
   static double blocksEnd = blocksStart + durSecs(5);
 

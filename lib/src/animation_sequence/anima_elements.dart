@@ -207,16 +207,15 @@ class AnimaElements {
 
   static List<RunableAnimation> backgrounds() {
     return [
-      // AnimaBackground(
-      //   AnimaBackgroundState(
-      //     imageAsset: '$kAssets/images/henderson.png',
-      //     gradientAlignment: const Alignment(-0.25, -0.3),
-      //     timeStart: 0,
-      //     timeEnd: 1,
-      //     mode: AnimaBackgroundMode.zoomIn,
-      //   ),
-      // ),
-
+      AnimaBackground(
+        AnimaBackgroundState(
+          imageAsset: '$kAssets/images/henderson.png',
+          gradientAlignment: Alignment.center,
+          timeStart: Timeline.scaledImageStart,
+          timeEnd: Timeline.scaledImageEnd,
+          mode: AnimaBackgroundMode.zoomIn,
+        ),
+      ),
       AnimaBackground(
         AnimaBackgroundState(
           imageAsset: '$kAssets/images/henderson.png',
