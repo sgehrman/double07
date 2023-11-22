@@ -15,7 +15,7 @@ class AnimationSequence {
 
   final List<RunableAnimation> _runables = [
     ...AnimaElements.backgrounds(),
-    AnimaElements.easterEgg(),
+    ...AnimaElements.easterEggs(),
     // AnimaElements.deckrLogo(),
     AnimaElements.hendersonQuote(),
     AnimaElements.largoQuote(),

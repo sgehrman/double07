@@ -262,14 +262,37 @@ class AnimaElements {
     );
   }
 
-  static RunableAnimation easterEgg() {
+  static List<RunableAnimation> easterEggs() {
+    const int millis = 80;
+    final result = [
+      AnimaElements.easterEgg(
+        0.9,
+        Timeline.easterEggStart,
+        Timeline.easterEggEnd,
+      ),
+    ];
+
+    for (int i = 0; i < 10; i++) {
+      result.add(
+        AnimaElements.easterEgg(
+          0.5,
+          Timeline.easterEggStart + Timeline.durMillis(millis * i),
+          Timeline.easterEggEnd,
+        ),
+      );
+    }
+
+    return result;
+  }
+
+  static RunableAnimation easterEgg(double opacity, double start, double end) {
     return AnimaImage(
       AnimaImageState(
         imageAsset: '$kAssets/images/egg.png',
         size: const Size(300, 300),
-        timeStart: Timeline.easterEggStart,
-        opacity: 0.5,
-        timeEnd: Timeline.easterEggEnd,
+        timeStart: start,
+        opacity: opacity,
+        timeEnd: end,
         alignments: [
           Alignment.topCenter,
           const Alignment(0, 0.7),
