@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:double07/src/animations/anima_image/anima_image_state.dart';
 import 'package:double07/src/animations/animation_specs/animation_spec.dart';
+import 'package:double07/src/animations/animation_specs/image_animations.dart';
 import 'package:double07/src/animations/common_animations.dart';
 import 'package:double07/src/constants.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +14,7 @@ class AnimaImageAnimations {
 
   final AnimaImageState state;
 
-  late final Animation<double> _opacityAnimation;
-  late final Animation<Alignment> _alignmentAnimation;
+  late final ImageAnimations _animations;
 
   late final ui.Image _image;
 
@@ -31,37 +31,42 @@ class AnimaImageAnimations {
       state.timeEnd,
     );
 
-    _alignmentAnimation = CommonAnimations.alignmentAnima(
-      start: 0,
-      end: 1,
-      alignments: state.alignments,
+    _animations = ImageAnimations(
+      master: controller,
       parent: parent,
-      inCurve: state.inCurve,
-      outCurve: state.outCurve,
-      weights: const SequenceWeights.front(),
-    );
-
-    _opacityAnimation = CommonAnimations.opacityAnima(
-      start: 0,
-      end: 1,
-      opacity: state.opacity,
-      parent: parent,
-      curve: state.opacityCurve,
-      weights: const SequenceWeights.front(),
+      opacity: CommonAnimations.opacityAnima(
+        start: 0,
+        end: 1,
+        opacity: state.opacity,
+        parent: parent,
+        curve: state.opacityCurve,
+        weights: const SequenceWeights.front(),
+      ),
+      alignment: CommonAnimations.alignmentAnima(
+        start: 0,
+        end: 1,
+        alignments: state.alignments,
+        parent: parent,
+        inCurve: state.inCurve,
+        outCurve: state.outCurve,
+        weights: const SequenceWeights.front(),
+      ),
     );
   }
 
   void paint(Canvas canvas, Size size) {
-    final rect = Offset.zero & size;
+    if (_animations.isRunning) {
+      final rect = Offset.zero & size;
 
-    final destRect = _alignmentAnimation.value.inscribe(state.size, rect);
+      final destRect = _animations.alignment.value.inscribe(state.size, rect);
 
-    paintImage(
-      canvas: canvas,
-      rect: destRect,
-      fit: BoxFit.scaleDown,
-      image: _image,
-      opacity: _opacityAnimation.value,
-    );
+      paintImage(
+        canvas: canvas,
+        rect: destRect,
+        fit: BoxFit.scaleDown,
+        image: _image,
+        opacity: _animations.opacity.value,
+      );
+    }
   }
 }
