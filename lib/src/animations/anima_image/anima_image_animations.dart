@@ -2,6 +2,8 @@ import 'dart:ui' as ui;
 
 import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:double07/src/animations/anima_image/anima_image_state.dart';
+import 'package:double07/src/animations/animation_specs/animation_spec.dart';
+import 'package:double07/src/animations/common_animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,7 +12,9 @@ class AnimaImageAnimations {
 
   final AnimaImageState state;
 
-  late final Animation<double> _animation;
+  late final Animation<double> _opacityAnimation;
+  late final Animation<Alignment> _alignmentAnimation;
+
   late final ui.Image _image;
 
   // =================================================
@@ -33,16 +37,30 @@ class AnimaImageAnimations {
       ],
     );
 
+    final parent = AnimationSpec.parentAnimation(
+      controller,
+      state.timeStart,
+      state.timeEnd,
+    );
+
+    _alignmentAnimation = CommonAnimations.alignmentAnima(
+      start: 0,
+      end: 1,
+      alignments: state.alignments,
+      parent: parent,
+      curve: state.curve,
+    );
+
     final ByteData byteData = await rootBundle.load(state.imageAsset);
 
     _image = await ImageProcessor.bytesToImage(byteData.buffer.asUint8List());
 
-    _animation = sequence.animate(
+    _opacityAnimation = sequence.animate(
       CurvedAnimation(
-        parent: controller,
-        curve: Interval(
-          state.timeStart,
-          state.timeEnd,
+        parent: parent,
+        curve: const Interval(
+          0,
+          1,
         ),
       ),
     );
@@ -51,14 +69,14 @@ class AnimaImageAnimations {
   void paint(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
 
-    final destRect = state.alignments.last.inscribe(state.size, rect);
+    final destRect = _alignmentAnimation.value.inscribe(state.size, rect);
 
     paintImage(
       canvas: canvas,
       rect: destRect,
       fit: BoxFit.scaleDown,
       image: _image,
-      opacity: _animation.value,
+      opacity: _opacityAnimation.value,
     );
   }
 }

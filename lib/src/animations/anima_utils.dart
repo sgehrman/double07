@@ -2,28 +2,11 @@ import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:flutter/material.dart';
 import 'package:matrix4_transform/matrix4_transform.dart';
 
-class AnimaUtils {
-  // base animation which child animations are based on
-  // so begin and end affect children
-  static Animation<double> baseAnimation(
-    AnimationController controller,
-    double start,
-    double end,
-  ) {
-    return Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(
-      CurvedAnimation(
-        parent: controller,
-        curve: Interval(
-          start,
-          end,
-        ),
-      ),
-    );
-  }
+const double kStartWeight = 10;
+const double kHoldWeight = 80;
+const double kEndWeight = 10;
 
+class AnimaUtils {
   static bool isRunning(Animation<dynamic> animation) {
     switch (animation.status) {
       case AnimationStatus.completed:
@@ -35,6 +18,8 @@ class AnimaUtils {
     }
   }
 
+  // ====================================================
+
   static bool isControllerPaused(AnimationController controller) {
     if (isRunning(controller)) {
       return !controller.isAnimating;
@@ -42,6 +27,8 @@ class AnimaUtils {
 
     return false;
   }
+
+  // ====================================================
 
   // for use with Animation.inscribe when drawing
   static Alignment makeAlignment(double x, double y, Size size, Rect rect) {
@@ -54,6 +41,8 @@ class AnimaUtils {
 
     return Alignment(newX - 1, newY - 1);
   }
+
+  // ====================================================
 
   /// Return a scaled and translated [Matrix4] that maps [src] to [dst] for given [fit]
   /// aligned by [alignment] within [dst]

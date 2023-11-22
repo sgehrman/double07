@@ -99,13 +99,16 @@ class _DeckrAnimationState extends State<DeckrAnimation>
         ),
         BackgroundAudioPlayer(autoplay: widget.autoplay),
         Positioned.fill(
-          child: Visibility(
-            visible: AnimaUtils.isControllerPaused(_controller),
-            child: const Center(
-              child: Icon(
-                Icons.play_arrow,
-                color: Colors.cyan,
-                size: 200,
+          child: IgnorePointer(
+            child: Visibility(
+              visible: AnimaUtils.isControllerPaused(_controller),
+              child: Container(
+                color: Colors.black54,
+                child: const Icon(
+                  Icons.play_arrow,
+                  color: Colors.cyan,
+                  size: 200,
+                ),
               ),
             ),
           ),

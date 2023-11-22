@@ -1,5 +1,7 @@
+import 'package:double07/src/animations/anima_utils.dart';
 import 'package:double07/src/animations/animation_specs/animation_spec.dart';
 import 'package:double07/src/animations/animation_specs/letter_animations.dart';
+import 'package:double07/src/animations/common_animations.dart';
 import 'package:double07/src/animations/text/anima_text_state.dart';
 import 'package:double07/src/animations/text/animated_letter.dart';
 import 'package:flutter/material.dart';
@@ -14,10 +16,6 @@ class AnimaTextAnimations {
 
   late final TweenSequence<double> _scaleSequence;
   late final TweenSequence<double> _opacitySequence;
-
-  final double kStartWeight = 10;
-  final double kHoldWeight = 80;
-  final double kEndWeight = 10;
 
   Future<void> initialize({
     required AnimationController controller,
@@ -97,62 +95,13 @@ class AnimaTextAnimations {
     Animation<double> parent,
   ) {
     if (state.animationTypes.contains(TextAnimationType.alignment)) {
-      if (state.alignments.length > 2) {
-        // hard coding for 3 now, fix later
-        final items = [
-          TweenSequenceItem<Alignment>(
-            tween: AlignmentTween(
-              begin: state.alignments.first,
-              end: state.alignments[1],
-            ).chain(
-              CurveTween(
-                curve: state.curve,
-              ),
-            ),
-            weight: kStartWeight,
-          ),
-          TweenSequenceItem<Alignment>(
-            tween: ConstantTween<Alignment>(state.alignments[1]),
-            weight: kHoldWeight,
-          ),
-          TweenSequenceItem<Alignment>(
-            tween: AlignmentTween(
-              begin: state.alignments[1],
-              end: state.alignments[2],
-            ).chain(
-              CurveTween(
-                curve: state.curve,
-              ),
-            ),
-            weight: kEndWeight,
-          ),
-        ];
-
-        return TweenSequence<Alignment>(items).animate(
-          CurvedAnimation(
-            parent: parent,
-            curve: Interval(
-              start,
-              1, // 1 is end of parent animation
-              curve: state.curve,
-            ),
-          ),
-        );
-      } else {
-        return AlignmentTween(
-          begin: state.alignments.first,
-          end: state.alignments[1],
-        ).animate(
-          CurvedAnimation(
-            parent: parent,
-            curve: Interval(
-              start,
-              end,
-              curve: state.curve,
-            ),
-          ),
-        );
-      }
+      return CommonAnimations.alignmentAnima(
+        start: start,
+        end: end,
+        alignments: state.alignments,
+        parent: parent,
+        curve: state.curve,
+      );
     }
 
     return ConstantTween<Alignment>(
