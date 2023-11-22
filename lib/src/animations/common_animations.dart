@@ -64,4 +64,46 @@ class CommonAnimations {
       );
     }
   }
+
+  static Animation<double> opacityAnima({
+    required double start,
+    required double end,
+    required double opacity,
+    required Animation<double> parent,
+    required Curve curve,
+  }) {
+    final sequence = TweenSequence<double>(
+      <TweenSequenceItem<double>>[
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 0.04, end: opacity),
+          weight: kStartWeight,
+        ),
+        TweenSequenceItem<double>(
+          tween: ConstantTween<double>(opacity),
+          weight: kHoldWeight,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: opacity, end: 0),
+          weight: kEndWeight,
+        ),
+      ],
+    );
+
+    // tween: Tween<double>(begin: 0.04, end: state.opacity).chain(
+    //         CurveTween(
+    //           curve: state.opacityCurve,
+    //         ),
+    //       ),
+
+    return sequence.animate(
+      CurvedAnimation(
+        parent: parent,
+        curve: Interval(
+          start,
+          end,
+          curve: curve,
+        ),
+      ),
+    );
+  }
 }

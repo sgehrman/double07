@@ -20,23 +20,6 @@ class AnimaImageAnimations {
   // =================================================
 
   Future<void> initialize(AnimationController controller) async {
-    final sequence = TweenSequence<double>(
-      <TweenSequenceItem<double>>[
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0, end: state.opacity),
-          weight: 33,
-        ),
-        TweenSequenceItem<double>(
-          tween: ConstantTween<double>(state.opacity),
-          weight: 33,
-        ),
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: state.opacity, end: 0),
-          weight: 33,
-        ),
-      ],
-    );
-
     final parent = AnimationSpec.parentAnimation(
       controller,
       state.timeStart,
@@ -55,14 +38,12 @@ class AnimaImageAnimations {
 
     _image = await ImageProcessor.bytesToImage(byteData.buffer.asUint8List());
 
-    _opacityAnimation = sequence.animate(
-      CurvedAnimation(
-        parent: parent,
-        curve: const Interval(
-          0,
-          1,
-        ),
-      ),
+    _opacityAnimation = CommonAnimations.opacityAnima(
+      start: 0,
+      end: 1,
+      opacity: state.opacity,
+      parent: parent,
+      curve: state.opacityCurve,
     );
   }
 

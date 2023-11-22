@@ -1,4 +1,3 @@
-import 'package:double07/src/animations/anima_utils.dart';
 import 'package:double07/src/animations/animation_specs/animation_spec.dart';
 import 'package:double07/src/animations/animation_specs/letter_animations.dart';
 import 'package:double07/src/animations/common_animations.dart';
@@ -15,7 +14,6 @@ class AnimaTextAnimations {
   final AnimaTextState state;
 
   late final TweenSequence<double> _scaleSequence;
-  late final TweenSequence<double> _opacitySequence;
 
   Future<void> initialize({
     required AnimationController controller,
@@ -41,31 +39,6 @@ class AnimaTextAnimations {
         weight: 1,
       ),
     ]);
-
-    _opacitySequence = TweenSequence<double>(
-      [
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0.04, end: state.opacity).chain(
-            CurveTween(
-              curve: state.opacityCurve,
-            ),
-          ),
-          weight: kStartWeight,
-        ),
-        TweenSequenceItem<double>(
-          tween: ConstantTween<double>(state.opacity),
-          weight: kHoldWeight,
-        ),
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: state.opacity, end: 0).chain(
-            CurveTween(
-              curve: state.opacityCurve,
-            ),
-          ),
-          weight: kEndWeight,
-        ),
-      ],
-    );
 
     _letterAnimations = _buildAnimations(
       count: _textLetters.length,
@@ -115,26 +88,20 @@ class AnimaTextAnimations {
     Animation<double> parent,
   ) {
     if (state.animationTypes.contains(TextAnimationType.opacity)) {
-      return _opacitySequence.animate(
-        CurvedAnimation(
-          parent: parent,
-          curve: Interval(
-            start,
-            1, // 1 is end of parent animation
-            curve: state.opacityCurve,
-          ),
-        ),
+      return CommonAnimations.opacityAnima(
+        start: start,
+        end: 1, // 1 is end of parent animation
+        opacity: state.opacity,
+        parent: parent,
+        curve: state.opacityCurve,
       );
     } else if (state.animationTypes.contains(TextAnimationType.fadeInOut)) {
-      return _opacitySequence.animate(
-        CurvedAnimation(
-          parent: parent,
-          curve: Interval(
-            start,
-            1, // 1 is end of parent animation
-            curve: state.opacityCurve,
-          ),
-        ),
+      return CommonAnimations.opacityAnima(
+        start: start,
+        end: 1, // 1 is end of parent animation
+        opacity: state.opacity,
+        parent: parent,
+        curve: state.opacityCurve,
       );
     }
 

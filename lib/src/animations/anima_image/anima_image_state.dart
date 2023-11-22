@@ -9,6 +9,7 @@ class AnimaImageState {
     required this.timeEnd,
     this.opacity = 1,
     this.curve = Curves.easeInOut,
+    this.opacityCurve = Curves.easeIn,
   });
 
   final String imageAsset;
@@ -16,6 +17,7 @@ class AnimaImageState {
   final double opacity;
   final Size size;
   final Curve curve;
+  final Curve opacityCurve;
   final double timeStart;
   final double timeEnd;
 }
