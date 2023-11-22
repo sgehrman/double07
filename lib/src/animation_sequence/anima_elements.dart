@@ -133,7 +133,7 @@ class AnimaElements {
       type: ParagraphAnimaType.titleSequence,
       lines: [
         AnimaTextLine(
-          text: 'Deckr Easter Egg!',
+          text: 'DECKR Easter Egg!',
           fontSize: kTitleFontSize,
         ),
         AnimaTextLine(
