@@ -48,11 +48,11 @@ class AnimaParagraph implements RunableAnimation {
           line: AnimaTextLine(
             text: line.text,
             fontSize: line.fontSize,
-            inCurve: Curves.easeIn,
+            inCurve: line.inCurve,
+            outCurve: line.outCurve,
             animationTypes: const {
               TextAnimationType.alignment,
               TextAnimationType.fadeInOut,
-              // TextAnimationType.opacity,
             },
             color: line.color,
           ),
@@ -73,7 +73,8 @@ class AnimaParagraph implements RunableAnimation {
           line: AnimaTextLine(
             text: line.text,
             fontSize: line.fontSize,
-            inCurve: Curves.easeInOut,
+            inCurve: line.inCurve,
+            outCurve: line.outCurve,
             color: line.color,
           ),
           alignments: [

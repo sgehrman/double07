@@ -2,23 +2,28 @@ class Timeline {
   static int seconds = 50;
   static Duration runDuration = Duration(seconds: seconds);
 
-  static double durSeconds(int secs) {
+  static double durSecs(int secs) {
     return secs / seconds;
   }
 
-  // ------------------------------------
-  // main titles
-  static double mainTitlesStart = 0;
-  static double mainTitlesEnd = durSeconds(12);
-
-  static double easterEggStart = durSeconds(2);
-  static double easterEggEnd = mainTitlesEnd;
+  static double durMillis(int milliseconds) {
+    return milliseconds / (seconds * 1000);
+  }
 
   // ------------------------------------
   // double07 ball
 
-  static double ballStart = mainTitlesEnd;
-  static double ballEnd = ballStart + durSeconds(4);
+  static double ballStart = 0;
+  static double ballEnd = durSecs(10);
+
+  // ------------------------------------
+  // main titles
+
+  static double mainTitlesStart = durSecs(2);
+  static double mainTitlesEnd = mainTitlesStart + durSecs(12);
+
+  static double easterEggStart = durSecs(4);
+  static double easterEggEnd = mainTitlesEnd;
 
   // ------------------------------------
   // reviews

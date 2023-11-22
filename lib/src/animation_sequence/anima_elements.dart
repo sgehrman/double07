@@ -127,7 +127,7 @@ class AnimaElements {
 
   static RunableAnimation introTitles() {
     return AnimaParagraph(
-      alignment: const Alignment(0, -0.1),
+      alignment: const Alignment(0, -0.6),
       timeStart: Timeline.mainTitlesStart,
       timeEnd: Timeline.mainTitlesEnd,
       type: ParagraphAnimaType.titleSequence,
