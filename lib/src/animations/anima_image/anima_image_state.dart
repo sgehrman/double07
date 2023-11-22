@@ -8,7 +8,8 @@ class AnimaImageState {
     required this.timeStart,
     required this.timeEnd,
     this.opacity = 1,
-    this.curve = Curves.elasticOut,
+    this.inCurve = Curves.elasticOut,
+    this.outCurve = Curves.linear,
     this.opacityCurve = Curves.linear,
   });
 
@@ -16,7 +17,8 @@ class AnimaImageState {
   final List<Alignment> alignments;
   final double opacity;
   final Size size;
-  final Curve curve;
+  final Curve inCurve;
+  final Curve outCurve;
   final Curve opacityCurve;
   final double timeStart;
   final double timeEnd;

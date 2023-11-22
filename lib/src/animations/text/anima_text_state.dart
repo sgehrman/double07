@@ -27,7 +27,8 @@ class AnimaTextState {
   double get letterSpacing => line.letterSpacing;
   bool get bold => line.bold;
   Color get color => line.color;
-  Curve get curve => line.curve;
+  Curve get inCurve => line.inCurve;
+  Curve get outCurve => line.outCurve;
   Curve get opacityCurve => line.opacityCurve;
   Set<TextAnimationType> get animationTypes => line.animationTypes;
 }
@@ -39,7 +40,8 @@ class AnimaTextLine {
     required this.text,
     required this.fontSize,
     this.color = Colors.white,
-    this.curve = Curves.elasticInOut,
+    this.inCurve = Curves.elasticInOut,
+    this.outCurve = Curves.linear,
     this.opacityCurve = Curves.easeOut,
     this.bold = false,
     this.letterSpacing = 6,
@@ -58,8 +60,9 @@ class AnimaTextLine {
         letterSpacing = 6,
         opacity = 0.3,
         color = Colors.white,
-        opacityCurve = Curves.ease,
-        curve = Curves.ease,
+        opacityCurve = Curves.linear,
+        inCurve = Curves.linear,
+        outCurve = Curves.linear,
         animationTypes = {};
 
   final String text;
@@ -67,7 +70,8 @@ class AnimaTextLine {
   final double opacity;
   final bool bold;
   final Color color;
-  final Curve curve;
+  final Curve inCurve;
+  final Curve outCurve;
   final Curve opacityCurve;
   final double letterSpacing;
   final Set<TextAnimationType> animationTypes;

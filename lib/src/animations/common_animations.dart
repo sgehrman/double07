@@ -7,7 +7,8 @@ class CommonAnimations {
     required double end,
     required List<Alignment> alignments,
     required Animation<double> parent,
-    required Curve curve,
+    required Curve inCurve,
+    required Curve outCurve,
   }) {
     if (alignments.length > 2) {
       // hard coding for 3 now, fix later
@@ -18,7 +19,7 @@ class CommonAnimations {
             end: alignments[1],
           ).chain(
             CurveTween(
-              curve: curve,
+              curve: inCurve,
             ),
           ),
           weight: kStartWeight,
@@ -33,7 +34,7 @@ class CommonAnimations {
             end: alignments[2],
           ).chain(
             CurveTween(
-              curve: curve,
+              curve: outCurve,
             ),
           ),
           weight: kEndWeight,
@@ -53,15 +54,21 @@ class CommonAnimations {
       return AlignmentTween(
         begin: alignments.first,
         end: alignments[1],
-      ).animate(
-        CurvedAnimation(
-          parent: parent,
-          curve: Interval(
-            start,
-            end,
-          ),
-        ),
-      );
+      )
+          .chain(
+            CurveTween(
+              curve: inCurve,
+            ),
+          )
+          .animate(
+            CurvedAnimation(
+              parent: parent,
+              curve: Interval(
+                start,
+                end,
+              ),
+            ),
+          );
     }
   }
 

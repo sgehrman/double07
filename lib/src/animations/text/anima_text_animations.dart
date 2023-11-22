@@ -55,7 +55,8 @@ class AnimaTextAnimations {
         end: end,
         alignments: state.alignments,
         parent: parent,
-        curve: state.curve,
+        inCurve: state.inCurve,
+        outCurve: state.outCurve,
       );
     }
 
@@ -102,7 +103,7 @@ class AnimaTextAnimations {
           curve: Interval(
             start,
             end,
-            curve: state.curve,
+            curve: state.inCurve,
           ),
         ),
       );

@@ -31,7 +31,8 @@ class AnimaImageAnimations {
       end: 1,
       alignments: state.alignments,
       parent: parent,
-      curve: state.curve,
+      inCurve: state.inCurve,
+      outCurve: state.outCurve,
     );
 
     final ByteData byteData = await rootBundle.load(state.imageAsset);
