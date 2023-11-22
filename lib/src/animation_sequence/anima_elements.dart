@@ -15,7 +15,7 @@ import 'package:double07/src/timeline.dart';
 import 'package:flutter/material.dart';
 
 class AnimaElements {
-  static const double kTitleFontSize = 116;
+  static const double kTitleFontSize = 80;
   static const double kSmallFontSize = 30;
   static const double kLargeFontSize = 42;
 
@@ -133,19 +133,19 @@ class AnimaElements {
       type: ParagraphAnimaType.titleSequence,
       lines: [
         AnimaTextLine(
-          text: 'This dream is for you',
+          text: 'Deckr Easter Egg!',
           fontSize: kTitleFontSize,
         ),
         AnimaTextLine(
-          text: 'So pay the price',
+          text: 'Experimenting with Flutter animations',
           fontSize: kTitleFontSize,
         ),
         AnimaTextLine(
-          text: 'Make one dream come true',
+          text: 'To be used in future Deckr features',
           fontSize: kTitleFontSize,
         ),
         AnimaTextLine(
-          text: 'You only live twice',
+          text: 'Enjoy!',
           fontSize: kTitleFontSize,
         ),
       ],
@@ -243,12 +243,13 @@ class AnimaElements {
     return AnimaImage(
       AnimaImageState(
         imageAsset: '$kAssets/images/egg.png',
-        size: const Size(400, 400),
+        size: const Size(300, 300),
         timeStart: Timeline.easterEggStart,
+        opacity: 0.5,
         timeEnd: Timeline.easterEggEnd,
         alignments: [
           Alignment.topCenter,
-          Alignment.center,
+          const Alignment(0, 0.7),
           Alignment.topCenter,
         ],
       ),

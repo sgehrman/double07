@@ -9,6 +9,7 @@ class CommonAnimations {
     required Animation<double> parent,
     required Curve inCurve,
     required Curve outCurve,
+    SequenceWeights weights = const SequenceWeights(),
   }) {
     if (alignments.length > 2) {
       // hard coding for 3 now, fix later
@@ -22,11 +23,11 @@ class CommonAnimations {
               curve: inCurve,
             ),
           ),
-          weight: kStartWeight,
+          weight: weights.start,
         ),
         TweenSequenceItem<Alignment>(
           tween: ConstantTween<Alignment>(alignments[1]),
-          weight: kHoldWeight,
+          weight: weights.hold,
         ),
         TweenSequenceItem<Alignment>(
           tween: AlignmentTween(
@@ -37,7 +38,7 @@ class CommonAnimations {
               curve: outCurve,
             ),
           ),
-          weight: kEndWeight,
+          weight: weights.end,
         ),
       ];
 
@@ -78,20 +79,21 @@ class CommonAnimations {
     required double opacity,
     required Animation<double> parent,
     required Curve curve,
+    SequenceWeights weights = const SequenceWeights(),
   }) {
     final sequence = TweenSequence<double>(
       <TweenSequenceItem<double>>[
         TweenSequenceItem<double>(
           tween: Tween<double>(begin: 0, end: opacity),
-          weight: kStartWeight,
+          weight: weights.start,
         ),
         TweenSequenceItem<double>(
           tween: ConstantTween<double>(opacity),
-          weight: kHoldWeight,
+          weight: weights.hold,
         ),
         TweenSequenceItem<double>(
           tween: Tween<double>(begin: opacity, end: 0),
-          weight: kEndWeight,
+          weight: weights.end,
         ),
       ],
     );

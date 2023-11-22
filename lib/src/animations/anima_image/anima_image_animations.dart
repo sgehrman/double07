@@ -4,6 +4,7 @@ import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:double07/src/animations/anima_image/anima_image_state.dart';
 import 'package:double07/src/animations/animation_specs/animation_spec.dart';
 import 'package:double07/src/animations/common_animations.dart';
+import 'package:double07/src/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -20,6 +21,10 @@ class AnimaImageAnimations {
   // =================================================
 
   Future<void> initialize(AnimationController controller) async {
+    final ByteData byteData = await rootBundle.load(state.imageAsset);
+
+    _image = await ImageProcessor.bytesToImage(byteData.buffer.asUint8List());
+
     final parent = AnimationSpec.parentAnimation(
       controller,
       state.timeStart,
@@ -33,11 +38,8 @@ class AnimaImageAnimations {
       parent: parent,
       inCurve: state.inCurve,
       outCurve: state.outCurve,
+      weights: const SequenceWeights.front(),
     );
-
-    final ByteData byteData = await rootBundle.load(state.imageAsset);
-
-    _image = await ImageProcessor.bytesToImage(byteData.buffer.asUint8List());
 
     _opacityAnimation = CommonAnimations.opacityAnima(
       start: 0,
@@ -45,6 +47,7 @@ class AnimaImageAnimations {
       opacity: state.opacity,
       parent: parent,
       curve: state.opacityCurve,
+      weights: const SequenceWeights.front(),
     );
   }
 

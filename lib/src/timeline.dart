@@ -1,19 +1,24 @@
 class Timeline {
-  static Duration runDuration = const Duration(seconds: 18);
+  static int seconds = 50;
+  static Duration runDuration = Duration(seconds: seconds);
+
+  static double durSeconds(int secs) {
+    return secs / seconds;
+  }
 
   // ------------------------------------
   // main titles
   static double mainTitlesStart = 0;
-  static double mainTitlesEnd = 0.2;
+  static double mainTitlesEnd = durSeconds(12);
 
-  static double easterEggStart = 0.1;
+  static double easterEggStart = durSeconds(2);
   static double easterEggEnd = mainTitlesEnd;
 
   // ------------------------------------
   // double07 ball
 
-  static double ballStart = easterEggEnd;
-  static double ballEnd = ballStart + 0.2;
+  static double ballStart = mainTitlesEnd;
+  static double ballEnd = ballStart + durSeconds(4);
 
   // ------------------------------------
   // reviews
