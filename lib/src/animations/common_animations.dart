@@ -75,7 +75,7 @@ class CommonAnimations {
     final sequence = TweenSequence<double>(
       <TweenSequenceItem<double>>[
         TweenSequenceItem<double>(
-          tween: Tween<double>(begin: 0.04, end: opacity),
+          tween: Tween<double>(begin: 0, end: opacity),
           weight: kStartWeight,
         ),
         TweenSequenceItem<double>(
