@@ -1,6 +1,6 @@
 import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:double07/src/audio_player/platform/audio_player.dart';
-import 'package:double07/src/utils.dart';
+import 'package:double07/src/constants.dart';
 import 'package:flutter/material.dart';
 
 class BackgroundAudioPlayer extends StatefulWidget {

@@ -9,8 +9,8 @@ import 'package:double07/src/animations/shapes/anima_blocks_utils.dart';
 import 'package:double07/src/animations/text/anima_paragraph.dart';
 import 'package:double07/src/animations/text/anima_text.dart';
 import 'package:double07/src/animations/text/anima_text_state.dart';
+import 'package:double07/src/constants.dart';
 import 'package:double07/src/timeline.dart';
-import 'package:double07/src/utils.dart';
 import 'package:flutter/material.dart';
 
 class AnimaElements {

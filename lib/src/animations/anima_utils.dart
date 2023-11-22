@@ -2,10 +2,6 @@ import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:flutter/material.dart';
 import 'package:matrix4_transform/matrix4_transform.dart';
 
-const double kStartWeight = 10;
-const double kHoldWeight = 80;
-const double kEndWeight = 10;
-
 class AnimaUtils {
   static bool isRunning(Animation<dynamic> animation) {
     switch (animation.status) {
