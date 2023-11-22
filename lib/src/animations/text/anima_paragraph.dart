@@ -34,7 +34,6 @@ class AnimaParagraph implements RunableAnimation {
     _animations = [];
 
     final timePerLine = (timeEnd - timeStart) / lines.length;
-    const overlap = 2;
 
     int index = 0;
     for (final line in lines) {
@@ -66,6 +65,7 @@ class AnimaParagraph implements RunableAnimation {
           timeEnd: end,
         );
       } else {
+        const overlap = 2;
         final start = timeStart + (index * (timePerLine / overlap));
         final end = start + (timePerLine * overlap);
 
