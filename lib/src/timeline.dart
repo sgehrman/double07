@@ -23,10 +23,33 @@ class Timeline {
   static double mainTitlesEnd = mainTitlesStart + durSecs(12);
 
   static double easterEggStart = durSecs(4);
-  static double easterEggEnd = mainTitlesEnd;
+  static double easterEggEnd = mainTitlesEnd - durSecs(1);
 
   // ------------------------------------
   // reviews
+
+  static const int _reviewSecs = 10;
+
+  static double reviewsStart = mainTitlesEnd;
+  static double reviewsEnd = reviewsStart + durSecs(3);
+
+  static double hendersonStart = reviewsEnd;
+  static double hendersonEnd = hendersonStart + durSecs(_reviewSecs);
+  static double hendersonTextStart = hendersonStart + durSecs(1);
+  static double hendersonTextEnd = hendersonEnd;
+
+  static double largoStart = hendersonEnd;
+  static double largoEnd = largoStart + durSecs(_reviewSecs);
+  static double largoTextStart = largoStart + durSecs(1);
+  static double largoTextEnd = largoEnd;
+
+  static double dominoStart = largoEnd;
+  static double dominoEnd = dominoStart + durSecs(_reviewSecs);
+  static double dominoTextStart = dominoStart + durSecs(1);
+  static double dominoTextEnd = dominoEnd;
+
+  // ------------------------------------
+  // xxx
 
   static double textStart = ballEnd;
   static double textEnd = textStart + 0.2;
@@ -42,22 +65,4 @@ class Timeline {
 
   static double blocks2Start = 0.4;
   static double blocks2End = 0.6;
-
-  // ==============================
-  // backgounds
-
-  static double hendersonStart = 0;
-  static double hendersonEnd = 0.3;
-  static double hendersonTextStart = hendersonStart;
-  static double hendersonTextEnd = hendersonEnd;
-
-  static double largoStart = hendersonEnd;
-  static double largoEnd = 0.7;
-  static double largoTextStart = largoStart;
-  static double largoTextEnd = largoEnd;
-
-  static double dominoStart = largoEnd;
-  static double dominoEnd = 1;
-  static double dominoTextStart = dominoStart;
-  static double dominoTextEnd = dominoEnd;
 }

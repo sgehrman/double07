@@ -98,6 +98,29 @@ class AnimaElements {
     );
   }
 
+  static RunableAnimation reviewsTitle() {
+    return AnimaParagraph(
+      alignment: Alignment.center,
+      timeStart: Timeline.reviewsStart,
+      timeEnd: Timeline.reviewsEnd,
+      animateFrom: 0,
+      lines: [
+        AnimaTextLine(
+          text: 'Deckr Reviews',
+          fontSize: kSmallFontSize,
+        ),
+        AnimaTextLine(
+          text: 'Here\'s some words',
+          fontSize: kSmallFontSize,
+        ),
+        AnimaTextLine(
+          text: 'From our customers',
+          fontSize: kLargeFontSize,
+        ),
+      ],
+    );
+  }
+
   static RunableAnimation randomQuote() {
     return AnimaParagraph(
       alignment: const Alignment(0.8, -0.8),
