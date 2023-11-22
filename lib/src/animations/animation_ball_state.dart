@@ -1,9 +1,11 @@
 import 'package:double07/src/animation_sequence/animation_sequence.dart';
+import 'package:double07/src/animations/animation_specs/animation_spec.dart';
+import 'package:double07/src/animations/animation_specs/double07_annimations.dart';
 import 'package:double07/src/timeline.dart';
 import 'package:flutter/material.dart';
 
 class AnimationBallState implements RunableAnimation {
-  late final Animation<double> _animation;
+  late final DoubleO7Animations _animations;
 
   // ball animation
   double fadeBallPosition = -1;
@@ -13,31 +15,34 @@ class AnimationBallState implements RunableAnimation {
   int lastV = -1;
   Color ballColor = Colors.cyan;
 
-  // expensive to allocate, do once
-  final _sequence = TweenSequence<double>(
-    <TweenSequenceItem<double>>[
-      TweenSequenceItem<double>(
-        tween: Tween<double>(begin: 0, end: 1),
-        weight: 50,
-      ),
-      TweenSequenceItem<double>(
-        tween: Tween<double>(begin: 0, end: 1),
-        weight: 50,
-      ),
-    ],
-  );
-
   // =================================================
 
   @override
   Future<void> initialize(AnimationController controller) {
-    _animation = _sequence.animate(
-      CurvedAnimation(
-        parent: controller,
-        curve: Interval(
-          Timeline.ballStart,
-          Timeline.ballEnd,
+    final sequence = TweenSequence<double>(
+      <TweenSequenceItem<double>>[
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 0, end: 1),
+          weight: 50,
         ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 0, end: 1),
+          weight: 50,
+        ),
+      ],
+    );
+
+    final parent = AnimationSpec.parentAnimation(
+      controller,
+      Timeline.ballStart,
+      Timeline.ballEnd,
+    );
+
+    _animations = DoubleO7Animations(
+      master: controller,
+      parent: parent,
+      animation: sequence.animate(
+        parent,
       ),
     );
 
@@ -47,7 +52,7 @@ class AnimationBallState implements RunableAnimation {
   // =================================================
 
   void _update() {
-    final ballValue = _animation.value;
+    final ballValue = _animations.animation.value;
 
     final int v = (ballValue * 100).round();
 
@@ -85,47 +90,49 @@ class AnimationBallState implements RunableAnimation {
     Canvas canvas,
     Size size,
   ) {
-    const double ballRadius = 100;
-    final ballPaint = Paint()..color = ballColor;
+    if (_animations.isRunning) {
+      const double ballRadius = 100;
+      final ballPaint = Paint()..color = ballColor;
 
-    _update();
-
-    canvas.drawCircle(
-      Offset(
-        size.width * _animation.value,
-        size.height / 2,
-      ),
-      ballRadius,
-      ballPaint,
-    );
-
-    // fade ball
-    if (fadeBallPosition != -1) {
-      final ballFadePaint = Paint()
-        ..color = ballColor.withOpacity(fadeBallOpacity);
+      _update();
 
       canvas.drawCircle(
         Offset(
-          size.width * fadeBallPosition,
+          size.width * _animations.animation.value,
           size.height / 2,
         ),
         ballRadius,
-        ballFadePaint,
+        ballPaint,
       );
-    }
 
-    if (fadeBallPosition2 != -1) {
-      final ballFadePaint = Paint()
-        ..color = ballColor.withOpacity(fadeBallOpacity2);
+      // fade ball
+      if (fadeBallPosition != -1) {
+        final ballFadePaint = Paint()
+          ..color = ballColor.withOpacity(fadeBallOpacity);
 
-      canvas.drawCircle(
-        Offset(
-          size.width * fadeBallPosition2,
-          size.height / 2,
-        ),
-        ballRadius,
-        ballFadePaint,
-      );
+        canvas.drawCircle(
+          Offset(
+            size.width * fadeBallPosition,
+            size.height / 2,
+          ),
+          ballRadius,
+          ballFadePaint,
+        );
+      }
+
+      if (fadeBallPosition2 != -1) {
+        final ballFadePaint = Paint()
+          ..color = ballColor.withOpacity(fadeBallOpacity2);
+
+        canvas.drawCircle(
+          Offset(
+            size.width * fadeBallPosition2,
+            size.height / 2,
+          ),
+          ballRadius,
+          ballFadePaint,
+        );
+      }
     }
   }
 }

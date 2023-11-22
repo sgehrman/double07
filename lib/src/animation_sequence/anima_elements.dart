@@ -244,8 +244,8 @@ class AnimaElements {
       AnimaImageState(
         imageAsset: '$kAssets/images/egg.png',
         size: const Size(400, 400),
-        timeStart: 0.1,
-        timeEnd: 0.4,
+        timeStart: Timeline.easterEggStart,
+        timeEnd: Timeline.easterEggEnd,
         alignments: [
           Alignment.topCenter,
           Alignment.center,
