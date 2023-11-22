@@ -111,7 +111,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
             ),
           ),
           Positioned(
-            bottom: 8,
+            bottom: 0,
             left: 0,
             right: 0,
             child: _AnimationSlider(_controller),
@@ -154,8 +154,7 @@ class _AnimationSliderState extends State<_AnimationSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerRight,
+    return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 300),
         child: Slider.adaptive(
