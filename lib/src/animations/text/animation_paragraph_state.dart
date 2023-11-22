@@ -45,9 +45,17 @@ class AnimationParagraphState implements RunableAnimation {
         final end = start + timePerLine;
 
         state = AnimaTextState(
-          text: line,
-          fontSize: fontSize,
-          color: Colors.white,
+          line: AnimaTextLine(
+            text: line,
+            fontSize: fontSize,
+            curve: Curves.easeIn,
+            animationTypes: const {
+              TextAnimationType.alignment,
+              TextAnimationType.fadeInOut,
+              // TextAnimationType.opacity,
+            },
+            color: Colors.white,
+          ),
           alignments: [
             Alignment(alignment.x, alignment.y),
             Alignment(alignment.x, alignment.y),
@@ -55,28 +63,24 @@ class AnimationParagraphState implements RunableAnimation {
           ],
           timeStart: start,
           timeEnd: end,
-          curve: Curves.easeIn,
-          animationTypes: const {
-            TextAnimationType.alignment,
-            TextAnimationType.fadeInOut,
-            // TextAnimationType.opacity,
-          },
         );
       } else {
         final start = timeStart + (index * (timePerLine / overlap));
         final end = start + (timePerLine * overlap);
 
         state = AnimaTextState(
-          text: line,
-          fontSize: fontSize,
-          color: Colors.white,
+          line: AnimaTextLine(
+            text: line,
+            fontSize: fontSize,
+            curve: Curves.easeInOut,
+            color: Colors.white,
+          ),
           alignments: [
             Alignment(alignment.x, -2),
             Alignment(alignment.x, alignment.y + (index * 0.1)),
           ],
           timeStart: start,
           timeEnd: end,
-          curve: Curves.easeInOut,
         );
       }
 

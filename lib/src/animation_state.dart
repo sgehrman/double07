@@ -65,10 +65,12 @@ class AnimationState {
     // Deckr animation
     AnimaText(
       AnimaTextState(
-        text: 'Deckr'.toUpperCase(),
-        fontSize: 64,
-        bold: true,
-        color: Colors.white,
+        line: AnimaTextLine(
+          text: 'Deckr'.toUpperCase(),
+          fontSize: 64,
+          bold: true,
+          color: Colors.white,
+        ),
         alignments: [
           const Alignment(-0.8, -2),
           const Alignment(-0.8, -0.8),
@@ -80,9 +82,11 @@ class AnimationState {
 
     AnimaText(
       AnimaTextState(
-        text: 'Mr. Henderson',
-        fontSize: 44,
-        color: Colors.cyan,
+        line: AnimaTextLine(
+          text: 'Mr. Henderson',
+          fontSize: 44,
+          color: Colors.cyan,
+        ),
         alignments: [
           const Alignment(-0.2, 0.6),
           const Alignment(-0.2, 0.6),
@@ -94,9 +98,11 @@ class AnimationState {
 
     AnimaText(
       AnimaTextState(
-        text: 'Largo',
-        fontSize: 44,
-        color: Colors.cyan,
+        line: AnimaTextLine(
+          text: 'Largo',
+          fontSize: 44,
+          color: Colors.cyan,
+        ),
         alignments: [
           const Alignment(0.6, 0.9),
           const Alignment(0.6, 0.9),

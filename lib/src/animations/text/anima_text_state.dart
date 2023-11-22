@@ -9,12 +9,35 @@ enum TextAnimationType {
 
 class AnimaTextState {
   AnimaTextState({
-    required this.text,
-    required this.fontSize,
-    required this.color,
+    required this.line,
     required this.alignments,
     required this.timeStart,
     required this.timeEnd,
+  });
+
+  final AnimaTextLine line;
+  final List<Alignment> alignments;
+  final double timeStart;
+  final double timeEnd;
+
+  String get text => line.text;
+  double get fontSize => line.fontSize;
+  double get opacity => line.opacity;
+  double get letterSpacing => line.letterSpacing;
+  bool get bold => line.bold;
+  Color get color => line.color;
+  Curve get curve => line.curve;
+  Curve get opacityCurve => line.opacityCurve;
+  Set<TextAnimationType> get animationTypes => line.animationTypes;
+}
+
+// ==============================================================
+
+class AnimaTextLine {
+  AnimaTextLine({
+    required this.text,
+    required this.fontSize,
+    required this.color,
     this.curve = Curves.elasticInOut,
     this.opacityCurve = Curves.easeOut,
     this.bold = false,
@@ -32,9 +55,6 @@ class AnimaTextState {
   final double opacity;
   final bool bold;
   final Color color;
-  final List<Alignment> alignments;
-  final double timeStart;
-  final double timeEnd;
   final Curve curve;
   final Curve opacityCurve;
   final double letterSpacing;
