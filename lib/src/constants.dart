@@ -11,12 +11,12 @@ class SequenceWeights {
 
   const SequenceWeights.front()
       : start = 40,
-        hold = 50,
-        end = 10;
+        hold = 58,
+        end = 2;
 
   const SequenceWeights.end()
-      : start = 10,
-        hold = 50,
+      : start = 2,
+        hold = 58,
         end = 40;
 
   const SequenceWeights.equal()
