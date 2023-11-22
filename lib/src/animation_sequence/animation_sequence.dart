@@ -25,7 +25,7 @@ class AnimationSequence {
     AnimaElements.reviewsTitle(),
     AnimaElements.introTitles(),
     AnimaElements.double07Ball(),
-    // ...AnimaElements.blocks(),
+    ...AnimaElements.blocks(),
   ];
 
   // =================================================
