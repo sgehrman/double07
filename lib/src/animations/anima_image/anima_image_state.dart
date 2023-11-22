@@ -9,7 +9,7 @@ class AnimaImageState {
     required this.timeEnd,
     this.opacity = 1,
     this.inCurve = Curves.elasticOut,
-    this.outCurve = Curves.linear,
+    this.outCurve = Curves.elasticIn,
     this.opacityCurve = Curves.linear,
   });
 

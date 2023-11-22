@@ -40,7 +40,7 @@ class AnimaImageAnimations {
         opacity: state.opacity,
         parent: parent,
         curve: state.opacityCurve,
-        weights: const SequenceWeights.front(),
+        weights: const SequenceWeights.frontEnd(),
       ),
       alignment: CommonAnimations.alignmentAnima(
         start: 0,
@@ -49,7 +49,7 @@ class AnimaImageAnimations {
         parent: parent,
         inCurve: state.inCurve,
         outCurve: state.outCurve,
-        weights: const SequenceWeights.front(),
+        weights: const SequenceWeights.frontEnd(),
       ),
     );
   }

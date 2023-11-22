@@ -14,6 +14,11 @@ class SequenceWeights {
         hold = 58,
         end = 2;
 
+  const SequenceWeights.frontEnd()
+      : start = 40,
+        hold = 50,
+        end = 10;
+
   const SequenceWeights.end()
       : start = 2,
         hold = 58,
