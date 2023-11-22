@@ -15,7 +15,7 @@ import 'package:double07/src/timeline.dart';
 import 'package:flutter/material.dart';
 
 class AnimaElements {
-  static const double kTitleFontSize = 80;
+  static const double kTitleFontSize = 50;
   static const double kSmallFontSize = 30;
   static const double kLargeFontSize = 42;
 
