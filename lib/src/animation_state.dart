@@ -106,18 +106,17 @@ class AnimationState {
       ),
     ),
 
-    AnimaText(
-      AnimaTextState(
-        text: 'Domino',
-        fontSize: 44,
-        color: Colors.cyan,
-        alignments: [
-          const Alignment(-0.12, 0.8),
-          const Alignment(-0.12, 0.8),
-        ],
-        timeStart: Timeline.dominoTextStart,
-        timeEnd: Timeline.dominoTextEnd,
-      ),
+    AnimationParagraphState(
+      alignment: const Alignment(-0.12, 0.8),
+      fontSize: 44,
+      timeStart: Timeline.dominoTextStart,
+      timeEnd: Timeline.dominoTextEnd,
+      lines: [
+        'My darlings,',
+        'Deckr is cooler',
+        'than diving in the Bahamas!',
+        '- Domino',
+      ],
     ),
 
     AnimationParagraphState(
