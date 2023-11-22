@@ -1,5 +1,5 @@
-import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:double07/src/animation_sequence/animation_sequence.dart';
+import 'package:double07/src/animations/anima_utils.dart';
 import 'package:double07/src/audio_player/background_audio_player.dart';
 import 'package:double07/src/main_widget/deckr_animation_painter.dart';
 import 'package:double07/src/timeline.dart';
@@ -64,29 +64,52 @@ class _DeckrAnimationState extends State<DeckrAnimation>
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        AnimatedBuilder(
-          animation: _controller,
-          builder: (context, child) {
-            if (_animationState.isInitialized) {
-              return ColoredBox(
-                color: Colors.black,
-                child: Center(
-                  child: FittedBox(
-                    child: CustomPaint(
-                      size: const Size(2048, 1024),
-                      painter: DeckrAnimationPainter(_animationState),
-                    ),
-                  ),
-                ),
-              );
+        GestureDetector(
+          onTap: () {
+            if (!_controller.isAnimating) {
+              _controller.forward();
+            } else {
+              _controller.stop();
             }
 
-            return const ColoredBox(
-              color: Colors.black,
-            );
+            setState(() {});
           },
+          child: AnimatedBuilder(
+            animation: _controller,
+            builder: (context, child) {
+              if (_animationState.isInitialized) {
+                return ColoredBox(
+                  color: Colors.black,
+                  child: Center(
+                    child: FittedBox(
+                      child: CustomPaint(
+                        size: const Size(2048, 1024),
+                        painter: DeckrAnimationPainter(_animationState),
+                      ),
+                    ),
+                  ),
+                );
+              }
+
+              return const ColoredBox(
+                color: Colors.black,
+              );
+            },
+          ),
         ),
         BackgroundAudioPlayer(autoplay: widget.autoplay),
+        Positioned.fill(
+          child: Visibility(
+            visible: AnimaUtils.isControllerPaused(_controller),
+            child: const Center(
+              child: Icon(
+                Icons.play_arrow,
+                color: Colors.cyan,
+                size: 200,
+              ),
+            ),
+          ),
+        ),
         Positioned(
           bottom: 8,
           left: 0,
@@ -133,38 +156,18 @@ class _AnimationSliderState extends State<_AnimationSlider> {
     return Align(
       alignment: Alignment.centerRight,
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 400),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            DFIconButton(
-              color: Colors.cyan,
-              onPressed: () {
-                if (!widget.controller.isAnimating) {
-                  widget.controller.forward();
-                } else {
-                  widget.controller.stop();
-                }
+        constraints: const BoxConstraints(maxWidth: 300),
+        child: Slider.adaptive(
+          value: widget.controller.value,
+          onChanged: (value) {
+            final wasRunning = widget.controller.isAnimating;
 
-                setState(() {});
-              },
-              icon: Icon(
-                widget.controller.isAnimating ? Icons.stop : Icons.play_arrow,
-              ),
-            ),
-            Slider.adaptive(
-              value: widget.controller.value,
-              onChanged: (value) {
-                final wasRunning = widget.controller.isAnimating;
+            widget.controller.value = value;
 
-                widget.controller.value = value;
-
-                if (wasRunning) {
-                  widget.controller.forward();
-                }
-              },
-            ),
-          ],
+            if (wasRunning) {
+              widget.controller.forward();
+            }
+          },
         ),
       ),
     );

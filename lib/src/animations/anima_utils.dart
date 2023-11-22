@@ -35,6 +35,14 @@ class AnimaUtils {
     }
   }
 
+  static bool isControllerPaused(AnimationController controller) {
+    if (isRunning(controller)) {
+      return !controller.isAnimating;
+    }
+
+    return false;
+  }
+
   // for use with Animation.inscribe when drawing
   static Alignment makeAlignment(double x, double y, Size size, Rect rect) {
     final double halfWidthDelta = (rect.width - size.width) / 2.0;

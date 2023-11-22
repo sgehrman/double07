@@ -31,7 +31,7 @@ class AnimationSequence {
       AnimaImageState(
         imageAsset: '$kAssets/images/egg.png',
         opacity: 0.9,
-        size: const Size(200, 200),
+        size: const Size(400, 400),
         timeEnd: 0.3,
         timeStart: 0,
         alignments: [const Alignment(0, -0.1)],
