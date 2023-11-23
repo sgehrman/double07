@@ -130,11 +130,10 @@ class AnimaTextAnimations {
     );
 
     final double letterDuration = totalTime / count;
-    const double overlap = 4;
 
     for (int i = 0; i < count; i++) {
-      final start = i * (letterDuration / overlap);
-      final end = start + (letterDuration * overlap);
+      final start = i * letterDuration;
+      final end = start + letterDuration;
 
       final parent = AnimationSpec.parentAnimation(masterParent, start, 1);
 
