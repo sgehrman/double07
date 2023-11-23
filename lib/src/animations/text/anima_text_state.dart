@@ -1,3 +1,4 @@
+import 'package:double07/src/animations/common_animations.dart';
 import 'package:flutter/material.dart';
 
 enum TextAnimationType {
@@ -11,14 +12,12 @@ class AnimaTextState {
   AnimaTextState({
     required this.line,
     required this.alignments,
-    required this.timeStart,
-    required this.timeEnd,
+    required this.timing,
   });
 
   final AnimaTextLine line;
   final List<Alignment> alignments;
-  final double timeStart;
-  final double timeEnd;
+  final AnimaTiming timing;
 
   // foreward to line
   String get text => line.text;

@@ -1,4 +1,5 @@
 import 'package:double07/src/animation_sequence/animation_sequence.dart';
+import 'package:double07/src/animations/common_animations.dart';
 import 'package:double07/src/animations/text/anima_text.dart';
 import 'package:double07/src/animations/text/anima_text_state.dart';
 import 'package:flutter/material.dart';
@@ -87,8 +88,10 @@ class AnimaParagraph implements RunableAnimation {
           // fades up and out
           Alignment(alignment.x, alignment.y - newLine),
         ],
-        timeStart: start,
-        timeEnd: end,
+        timing: AnimaTiming(
+          start: start,
+          end: end,
+        ),
       );
 
       result.add(
@@ -130,8 +133,10 @@ class AnimaParagraph implements RunableAnimation {
             Alignment(alignment.x, alignment.y + (index * newLine)),
           Alignment(alignment.x, alignment.y + (index * newLine)),
         ],
-        timeStart: start,
-        timeEnd: end,
+        timing: AnimaTiming(
+          start: start,
+          end: end,
+        ),
       );
 
       result.add(
@@ -157,7 +162,6 @@ class AnimaParagraph implements RunableAnimation {
     }
 
     final timePerChar = (timeEnd - timeStart) / charCount;
-    final paragraphEnd = timeStart + (timePerChar * charCount);
     double lastEnd = timeStart;
 
     int index = 0;
@@ -184,8 +188,11 @@ class AnimaParagraph implements RunableAnimation {
             Alignment(alignment.x, alignment.y + (index * newLine)),
           Alignment(alignment.x, alignment.y + (index * newLine)),
         ],
-        timeStart: start,
-        timeEnd: paragraphEnd,
+        timing: AnimaTiming.group(
+          start: start,
+          end: end,
+          groupEnd: timeEnd,
+        ),
       );
 
       result.add(

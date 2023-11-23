@@ -9,6 +9,8 @@ class SequenceWeights {
         hold = 80,
         end = 10;
 
+  const SequenceWeights.custom(this.start, this.hold, this.end);
+
   const SequenceWeights.front()
       : start = 40,
         hold = 58,

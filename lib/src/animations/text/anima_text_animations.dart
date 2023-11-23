@@ -3,6 +3,7 @@ import 'package:double07/src/animations/animation_specs/letter_animations.dart';
 import 'package:double07/src/animations/common_animations.dart';
 import 'package:double07/src/animations/text/anima_text_state.dart';
 import 'package:double07/src/animations/text/animated_letter.dart';
+import 'package:double07/src/constants.dart';
 import 'package:flutter/material.dart';
 
 class AnimaTextAnimations {
@@ -46,17 +47,18 @@ class AnimaTextAnimations {
 
   Animation<Alignment> _alignmentAnima(
     double start,
-    double end,
     Animation<double> parent,
+    SequenceWeights weights,
   ) {
     if (state.animationTypes.contains(TextAnimationType.alignment)) {
       return CommonAnimations.alignmentAnima(
         start: start,
-        end: end,
+        end: 1, // 1 is end of parent animation
         alignments: state.alignments,
         parent: parent,
         inCurve: state.inCurve,
         outCurve: state.outCurve,
+        weights: weights,
       );
     }
 
@@ -67,8 +69,8 @@ class AnimaTextAnimations {
 
   Animation<double> _opacityAnima(
     double start,
-    double end,
     Animation<double> parent,
+    SequenceWeights weights,
   ) {
     if (state.animationTypes.contains(TextAnimationType.opacity)) {
       return CommonAnimations.inOutAnima(
@@ -79,6 +81,7 @@ class AnimaTextAnimations {
         parent: parent,
         inCurve: state.opacityCurve,
         outCurve: state.opacityCurve,
+        weights: weights,
       );
     } else if (state.animationTypes.contains(TextAnimationType.fadeInOut)) {
       return CommonAnimations.inOutAnima(
@@ -89,6 +92,7 @@ class AnimaTextAnimations {
         parent: parent,
         inCurve: state.opacityCurve,
         outCurve: state.opacityCurve,
+        weights: weights,
       );
     }
 
@@ -121,15 +125,14 @@ class AnimaTextAnimations {
     required AnimationController controller,
   }) {
     final List<LetterAnimations> result = [];
-    final totalTime = state.timeEnd - state.timeStart;
 
     final masterParent = AnimationSpec.parentAnimation(
       controller,
-      state.timeStart,
-      state.timeEnd,
+      state.timing.start,
+      state.timing.groupEnd,
     );
 
-    final double letterDuration = totalTime / count;
+    final double letterDuration = state.timing.animationTime / count;
 
     for (int i = 0; i < count; i++) {
       final start = i * letterDuration;
@@ -141,8 +144,8 @@ class AnimaTextAnimations {
         LetterAnimations(
           master: masterParent,
           parent: parent,
-          alignment: _alignmentAnima(start, end, parent),
-          opacity: _opacityAnima(start, end, parent),
+          alignment: _alignmentAnima(start, parent, state.timing.weights),
+          opacity: _opacityAnima(start, parent, state.timing.weights),
           scale: _scaleAnima(start, end, parent),
         ),
       );

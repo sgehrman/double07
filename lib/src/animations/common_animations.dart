@@ -115,3 +115,98 @@ class CommonAnimations {
     );
   }
 }
+
+// =============================================================
+
+// Used for letters when you want to animate them in separately
+// but then fade out together at the end of the animation
+class AnimaTiming {
+  AnimaTiming({
+    required this.start,
+    required this.end,
+    this.inRatio = 1 / 3,
+    this.outRatio = 1 / 3,
+  }) : groupEnd = end;
+
+  AnimaTiming.group({
+    required this.start,
+    required this.end,
+    required this.groupEnd,
+    this.inRatio = 1 / 3,
+    this.outRatio = 1 / 3,
+  });
+
+  final double start;
+  final double end;
+
+  final double groupEnd;
+
+  final double inRatio;
+  final double outRatio;
+
+  // zero on last item
+  double get extraHold {
+    return groupEnd - end;
+  }
+
+  double get animationTime {
+    return end - start;
+  }
+
+  double get totalTime {
+    return groupEnd - start;
+  }
+
+  double get inTime {
+    return animationTime * inRatio;
+  }
+
+  double get outTime {
+    return animationTime * outRatio;
+  }
+
+  double get holdTime {
+    final itemHoldTime = animationTime - (inTime + outTime);
+
+    return itemHoldTime + extraHold;
+  }
+
+  double get startWeight {
+    return inTime / totalTime;
+  }
+
+  double get holdWeight {
+    return holdTime / totalTime;
+  }
+
+  double get endWeight {
+    return outTime / totalTime;
+  }
+
+  SequenceWeights get weights => SequenceWeights.custom(
+        startWeight,
+        holdWeight,
+        endWeight,
+      );
+
+  TweenSequence<T> tween<T>(List<Tween<T>> tweens) {
+    assert(tweens.length == 3, 'tweens must have 3 elements');
+
+    return TweenSequence<T>(
+      <TweenSequenceItem<T>>[
+        TweenSequenceItem<T>(
+          tween: tweens.first,
+          weight: startWeight,
+        ),
+        TweenSequenceItem<T>(
+          tween: tweens[1],
+          weight: holdWeight,
+        ),
+        TweenSequenceItem<T>(
+          tween: tweens.last,
+          weight: endWeight,
+        ),
+      ],
+    );
+  }
+}
