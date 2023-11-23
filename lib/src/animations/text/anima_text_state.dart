@@ -76,4 +76,9 @@ class AnimaTextLine {
   final Set<TextAnimationType> animationTypes;
 
   bool get isBlank => text.isEmpty;
+
+  // don't use text.length, we don't want spaces in calculations
+  int get textLengh {
+    return text.replaceAll(' ', '').length;
+  }
 }

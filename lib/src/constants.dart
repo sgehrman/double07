@@ -39,4 +39,9 @@ class SequenceWeights {
   final double start;
   final double hold;
   final double end;
+
+  @override
+  String toString() {
+    return 'SequenceWeights - start: $start, hold: $hold, end: $end';
+  }
 }

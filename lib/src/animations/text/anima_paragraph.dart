@@ -157,46 +157,47 @@ class AnimaParagraph implements RunableAnimation {
   List<AnimaText> _buildNewSequence() {
     final List<AnimaText> result = [];
 
-    // count num characters
     int charCount = 0;
     for (final line in lines) {
-      charCount += line.text.length;
+      charCount += line.textLengh;
     }
 
-    final timePerChar = (timeEnd - timeStart) / charCount;
+    final totalTime = timeEnd - timeStart;
+    final timePerChar = totalTime / charCount;
     double end = timeStart;
 
     int index = 0;
     for (final line in lines) {
-      AnimaTextState state;
+      // ignore blank lines
+      if (!line.isBlank) {
+        final start = end;
+        end = start + (line.textLengh * timePerChar);
 
-      final start = end;
-      end = start + (line.text.length * timePerChar);
-
-      state = AnimaTextState(
-        line: AnimaTextLine(
-          text: line.text,
-          fontSize: line.fontSize,
-          inCurve: line.inCurve,
-          outCurve: line.outCurve,
-          color: line.color,
-        ),
-        alignments: [
-          if (animateFrom != 0) Alignment(alignment.x, animateFrom),
-          if (animateFrom == 0)
+        final state = AnimaTextState(
+          line: AnimaTextLine(
+            text: line.text,
+            fontSize: line.fontSize,
+            inCurve: line.inCurve,
+            outCurve: line.outCurve,
+            color: line.color,
+          ),
+          alignments: [
+            if (animateFrom != 0) Alignment(alignment.x, animateFrom),
+            if (animateFrom == 0)
+              Alignment(alignment.x, alignment.y + (index * newLine)),
             Alignment(alignment.x, alignment.y + (index * newLine)),
-          Alignment(alignment.x, alignment.y + (index * newLine)),
-        ],
-        timing: AnimaTiming.group(
-          start: start,
-          end: end,
-          groupEnd: timeEnd,
-        ),
-      );
+          ],
+          timing: AnimaTiming.group(
+            start: start,
+            end: end,
+            groupEnd: timeEnd,
+          ),
+        );
 
-      result.add(
-        AnimaText(state),
-      );
+        result.add(
+          AnimaText(state),
+        );
+      }
 
       index++;
     }
