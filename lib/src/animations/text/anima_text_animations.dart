@@ -138,12 +138,18 @@ class AnimaTextAnimations {
       final start = i * letterDuration;
       final end = start + letterDuration;
 
+      final timing = AnimaTiming.group(
+        start: state.timing.start + start,
+        end: state.timing.start + end,
+        groupEnd: state.timing.groupEnd,
+      );
+
       result.add(
         LetterAnimations(
           master: controller,
           parent: parent,
-          alignment: _alignmentAnima(start, parent, state.timing.weights),
-          opacity: _opacityAnima(start, parent, state.timing.weights),
+          alignment: _alignmentAnima(start, parent, timing.weights),
+          opacity: _opacityAnima(start, parent, timing.weights),
           scale: _scaleAnima(start, end, parent),
         ),
       );
