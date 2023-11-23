@@ -31,68 +31,10 @@ class AnimaParagraph implements RunableAnimation {
 
   @override
   Future<void> initialize(AnimationController controller) async {
-    _animations = [];
-
-    final timePerLine = (timeEnd - timeStart) / lines.length;
-
-    int index = 0;
-    for (final line in lines) {
-      AnimaTextState state;
-
-      if (type == ParagraphAnimaType.titleSequence) {
-        final start = timeStart + (index * timePerLine);
-        final end = start + timePerLine;
-
-        state = AnimaTextState(
-          line: AnimaTextLine(
-            text: line.text,
-            fontSize: line.fontSize,
-            inCurve: line.inCurve,
-            outCurve: line.outCurve,
-            animationTypes: const {
-              TextAnimationType.alignment,
-              TextAnimationType.fadeInOut,
-            },
-            color: line.color,
-          ),
-          alignments: [
-            Alignment(alignment.x, alignment.y),
-            Alignment(alignment.x, alignment.y),
-            // fades up and out
-            Alignment(alignment.x, alignment.y - newLine),
-          ],
-          timeStart: start,
-          timeEnd: end,
-        );
-      } else {
-        const overlap = 2;
-        final start = timeStart + (index * (timePerLine / overlap));
-        final end = start + (timePerLine * overlap);
-
-        state = AnimaTextState(
-          line: AnimaTextLine(
-            text: line.text,
-            fontSize: line.fontSize,
-            inCurve: line.inCurve,
-            outCurve: line.outCurve,
-            color: line.color,
-          ),
-          alignments: [
-            if (animateFrom != 0) Alignment(alignment.x, animateFrom),
-            if (animateFrom == 0)
-              Alignment(alignment.x, alignment.y + (index * newLine)),
-            Alignment(alignment.x, alignment.y + (index * newLine)),
-          ],
-          timeStart: start,
-          timeEnd: end,
-        );
-      }
-
-      _animations.add(
-        AnimaText(state),
-      );
-
-      index++;
+    if (type == ParagraphAnimaType.titleSequence) {
+      _animations = buildTitleSequence();
+    } else {
+      _animations = buildNormalSequence();
     }
 
     for (final l in _animations) {
@@ -108,5 +50,94 @@ class AnimaParagraph implements RunableAnimation {
     for (final animation in _animations) {
       animation.paint(canvas, size);
     }
+  }
+
+  // ---------------------------------------------------------
+
+  List<AnimaText> buildTitleSequence() {
+    final List<AnimaText> result = [];
+
+    final timePerLine = (timeEnd - timeStart) / lines.length;
+
+    int index = 0;
+    for (final line in lines) {
+      AnimaTextState state;
+
+      final start = timeStart + (index * timePerLine);
+      final end = start + timePerLine;
+
+      state = AnimaTextState(
+        line: AnimaTextLine(
+          text: line.text,
+          fontSize: line.fontSize,
+          inCurve: line.inCurve,
+          outCurve: line.outCurve,
+          animationTypes: const {
+            TextAnimationType.alignment,
+            TextAnimationType.fadeInOut,
+          },
+          color: line.color,
+        ),
+        alignments: [
+          Alignment(alignment.x, alignment.y),
+          Alignment(alignment.x, alignment.y),
+          // fades up and out
+          Alignment(alignment.x, alignment.y - newLine),
+        ],
+        timeStart: start,
+        timeEnd: end,
+      );
+
+      result.add(
+        AnimaText(state),
+      );
+
+      index++;
+    }
+
+    return result;
+  }
+
+  // ---------------------------------------------------------
+
+  List<AnimaText> buildNormalSequence() {
+    final List<AnimaText> result = [];
+
+    final timePerLine = (timeEnd - timeStart) / lines.length;
+
+    int index = 0;
+    for (final line in lines) {
+      AnimaTextState state;
+
+      const overlap = 2;
+      final start = timeStart + (index * (timePerLine / overlap));
+      final end = start + (timePerLine * overlap);
+
+      state = AnimaTextState(
+        line: AnimaTextLine(
+          text: line.text,
+          fontSize: line.fontSize,
+          inCurve: line.inCurve,
+          outCurve: line.outCurve,
+          color: line.color,
+        ),
+        alignments: [
+          if (animateFrom != 0) Alignment(alignment.x, animateFrom),
+          if (animateFrom == 0)
+            Alignment(alignment.x, alignment.y + (index * newLine)),
+          Alignment(alignment.x, alignment.y + (index * newLine)),
+        ],
+        timeStart: start,
+        timeEnd: end,
+      );
+
+      result.add(
+        AnimaText(state),
+      );
+
+      index++;
+    }
+
+    return result;
   }
 }
