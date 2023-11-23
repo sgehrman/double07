@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 enum ParagraphAnimaType {
   flyIn,
   titleSequence,
+  weird,
 }
 
 class AnimaParagraph implements RunableAnimation {
@@ -32,9 +33,11 @@ class AnimaParagraph implements RunableAnimation {
   @override
   Future<void> initialize(AnimationController controller) async {
     if (type == ParagraphAnimaType.titleSequence) {
-      _animations = buildTitleSequence();
-    } else {
-      _animations = buildNormalSequence();
+      _animations = _buildTitleSequence();
+    } else if (type == ParagraphAnimaType.weird) {
+      _animations = _buildNormalSequence();
+    } else if (type == ParagraphAnimaType.flyIn) {
+      _animations = _buildNewSequence();
     }
 
     for (final l in _animations) {
@@ -54,7 +57,7 @@ class AnimaParagraph implements RunableAnimation {
 
   // ---------------------------------------------------------
 
-  List<AnimaText> buildTitleSequence() {
+  List<AnimaText> _buildTitleSequence() {
     final List<AnimaText> result = [];
 
     final timePerLine = (timeEnd - timeStart) / lines.length;
@@ -100,7 +103,7 @@ class AnimaParagraph implements RunableAnimation {
 
   // ---------------------------------------------------------
 
-  List<AnimaText> buildNormalSequence() {
+  List<AnimaText> _buildNormalSequence() {
     final List<AnimaText> result = [];
 
     final timePerLine = (timeEnd - timeStart) / lines.length;
@@ -129,6 +132,60 @@ class AnimaParagraph implements RunableAnimation {
         ],
         timeStart: start,
         timeEnd: end,
+      );
+
+      result.add(
+        AnimaText(state),
+      );
+
+      index++;
+    }
+
+    return result;
+  }
+
+  // ---------------------------------------------------------
+
+  List<AnimaText> _buildNewSequence() {
+    final List<AnimaText> result = [];
+
+    // count num characters
+    int charCount = 0;
+
+    for (final line in lines) {
+      charCount += line.text.length;
+    }
+
+    final timePerChar = (timeEnd - timeStart) / charCount;
+    final paragraphEnd = timeStart + (timePerChar * charCount);
+    double lastEnd = timeStart;
+
+    int index = 0;
+    for (final line in lines) {
+      AnimaTextState state;
+
+      final lineLen = line.text.length;
+      final start = lastEnd;
+      final end = start + (lineLen * timePerChar);
+
+      lastEnd = end;
+
+      state = AnimaTextState(
+        line: AnimaTextLine(
+          text: line.text,
+          fontSize: line.fontSize,
+          inCurve: line.inCurve,
+          outCurve: line.outCurve,
+          color: line.color,
+        ),
+        alignments: [
+          if (animateFrom != 0) Alignment(alignment.x, animateFrom),
+          if (animateFrom == 0)
+            Alignment(alignment.x, alignment.y + (index * newLine)),
+          Alignment(alignment.x, alignment.y + (index * newLine)),
+        ],
+        timeStart: start,
+        timeEnd: paragraphEnd,
       );
 
       result.add(
