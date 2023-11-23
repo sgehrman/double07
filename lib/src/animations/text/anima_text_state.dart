@@ -74,4 +74,6 @@ class AnimaTextLine {
   final Curve opacityCurve;
   final double letterSpacing;
   final Set<TextAnimationType> animationTypes;
+
+  bool get isBlank => text.isEmpty;
 }

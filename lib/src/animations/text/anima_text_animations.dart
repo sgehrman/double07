@@ -126,7 +126,7 @@ class AnimaTextAnimations {
   }) {
     final List<LetterAnimations> result = [];
 
-    final masterParent = AnimationSpec.parentAnimation(
+    final parent = AnimationSpec.parentAnimation(
       controller,
       state.timing.start,
       state.timing.groupEnd,
@@ -138,11 +138,9 @@ class AnimaTextAnimations {
       final start = i * letterDuration;
       final end = start + letterDuration;
 
-      final parent = AnimationSpec.parentAnimation(masterParent, start, 1);
-
       result.add(
         LetterAnimations(
-          master: masterParent,
+          master: controller,
           parent: parent,
           alignment: _alignmentAnima(start, parent, state.timing.weights),
           opacity: _opacityAnima(start, parent, state.timing.weights),

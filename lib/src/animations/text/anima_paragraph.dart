@@ -63,11 +63,11 @@ class AnimaParagraph implements RunableAnimation {
 
     final timePerLine = (timeEnd - timeStart) / lines.length;
 
-    int index = 0;
+    double elapsedTime = 0;
     for (final line in lines) {
       AnimaTextState state;
 
-      final start = timeStart + (index * timePerLine);
+      final start = timeStart + elapsedTime;
       final end = start + timePerLine;
 
       state = AnimaTextState(
@@ -98,7 +98,10 @@ class AnimaParagraph implements RunableAnimation {
         AnimaText(state),
       );
 
-      index++;
+      // don't delay for blank liness
+      if (!line.isBlank) {
+        elapsedTime += timePerLine;
+      }
     }
 
     return result;
@@ -156,23 +159,19 @@ class AnimaParagraph implements RunableAnimation {
 
     // count num characters
     int charCount = 0;
-
     for (final line in lines) {
       charCount += line.text.length;
     }
 
     final timePerChar = (timeEnd - timeStart) / charCount;
-    double lastEnd = timeStart;
+    double end = timeStart;
 
     int index = 0;
     for (final line in lines) {
       AnimaTextState state;
 
-      final lineLen = line.text.length;
-      final start = lastEnd;
-      final end = start + (lineLen * timePerChar);
-
-      lastEnd = end;
+      final start = end;
+      end = start + (line.text.length * timePerChar);
 
       state = AnimaTextState(
         line: AnimaTextLine(
