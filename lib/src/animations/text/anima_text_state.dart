@@ -44,10 +44,11 @@ class AnimaTextLine {
     this.opacityCurve = Curves.linear,
     this.bold = false,
     this.letterSpacing = 1,
-    this.opacity = 1,
+    this.opacity = 0.5,
     this.animationTypes = const {
       TextAnimationType.alignment,
       TextAnimationType.opacity,
+      TextAnimationType.scale,
     },
   });
 

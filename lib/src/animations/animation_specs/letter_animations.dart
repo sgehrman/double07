@@ -13,8 +13,7 @@ class LetterAnimations extends AnimationSpec {
           parent: parent,
         );
 
-  Animation<double> scale;
-
   Animatable<Alignment> alignment;
   Animatable<double> opacity;
+  Animatable<double> scale;
 }

@@ -86,17 +86,15 @@ class AnimaTextAnimations {
     return ConstantTween<double>(state.opacity);
   }
 
-  Animation<double> _scaleAnima(
-    double start,
+  Animatable<double> _scaleTween(
+    double begin,
     double end,
-    Animation<double> parent,
   ) {
     if (state.animationTypes.contains(TextAnimationType.scale)) {
-      return Tween<double>(begin: 3, end: 1).animate(
-        CurvedAnimation(
-          parent: parent,
+      return Tween<double>(begin: 3, end: 1).chain(
+        CurveTween(
           curve: Interval(
-            start,
+            begin,
             end,
             curve: state.inCurve,
           ),
@@ -104,7 +102,7 @@ class AnimaTextAnimations {
       );
     }
 
-    return ConstantTween<double>(1).animate(parent);
+    return ConstantTween<double>(1);
   }
 
   List<LetterAnimations> _buildAnimations({
@@ -114,9 +112,9 @@ class AnimaTextAnimations {
     final List<LetterAnimations> result = [];
 
     final parent = AnimationSpec.parentAnimation(
-      controller,
-      state.timing.start,
-      state.timing.groupEnd,
+      controller: controller,
+      begin: state.timing.start,
+      end: state.timing.groupEnd,
     );
 
     final double letterDuration = state.timing.animationTime / count;
@@ -135,7 +133,7 @@ class AnimaTextAnimations {
         LetterAnimations(
           master: controller,
           parent: parent,
-          scale: _scaleAnima(start, end, parent),
+          scale: _scaleTween(start, end),
           alignment: _alignmentTween(start, timing.weights),
           opacity: _opacityTween(start, timing.weights),
         ),

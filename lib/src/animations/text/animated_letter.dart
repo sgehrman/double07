@@ -85,7 +85,7 @@ class AnimatedLetter {
 
     final matrix = AnimaUtils.scaledRect(
       destRect,
-      letterAnimations.scale.value,
+      letterAnimations.parent.drive(letterAnimations.scale).value,
     );
 
     canvas.transform(matrix.storage);

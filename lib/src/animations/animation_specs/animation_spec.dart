@@ -20,21 +20,16 @@ abstract class AnimationSpec {
         parent.value != 1;
   }
 
-  static Animation<double> parentAnimation(
-    Animation<double> parent,
-    double start,
-    double end,
-  ) {
-    return Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(
-      CurvedAnimation(
-        parent: parent,
-        curve: Interval(
-          start,
-          end,
-        ),
+  static Animation<double> parentAnimation({
+    required AnimationController controller,
+    required double begin,
+    required double end,
+  }) {
+    return CurvedAnimation(
+      parent: controller,
+      curve: Interval(
+        begin,
+        end,
       ),
     );
   }

@@ -33,9 +33,9 @@ class AnimaDouble07 implements RunableAnimation {
     );
 
     final parent = AnimationSpec.parentAnimation(
-      controller,
-      Timeline.ballStart,
-      Timeline.ballEnd,
+      controller: controller,
+      begin: Timeline.ballStart,
+      end: Timeline.ballEnd,
     );
 
     _animations = DoubleO7Animations(

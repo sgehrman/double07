@@ -27,9 +27,9 @@ class AnimaImageAnimations {
     _image = await ImageProcessor.bytesToImage(byteData.buffer.asUint8List());
 
     final parent = AnimationSpec.parentAnimation(
-      controller,
-      state.timeStart,
-      state.timeEnd,
+      controller: controller,
+      begin: state.timeStart,
+      end: state.timeEnd,
     );
 
     _animations = ImageAnimations(
