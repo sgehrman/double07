@@ -72,18 +72,9 @@ class AnimaTextAnimations {
     Animation<double> parent,
     SequenceWeights weights,
   ) {
-    if (state.animationTypes.contains(TextAnimationType.opacity)) {
-      return CommonAnimations.inOutAnima(
-        start: start,
-        end: 1, // 1 is end of parent animation
-        beginValue: 0,
-        endValue: state.opacity,
-        parent: parent,
-        inCurve: state.opacityCurve,
-        outCurve: state.opacityCurve,
-        weights: weights,
-      );
-    } else if (state.animationTypes.contains(TextAnimationType.fadeInOut)) {
+    if (state.animationTypes.any(
+      [TextAnimationType.opacity, TextAnimationType.fadeInOut].contains,
+    )) {
       return CommonAnimations.inOutAnima(
         start: start,
         end: 1, // 1 is end of parent animation
