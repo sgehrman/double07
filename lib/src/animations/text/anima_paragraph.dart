@@ -146,7 +146,7 @@ class AnimaParagraph implements RunableAnimation {
       charCount += line.textLengh;
     }
 
-    final totalTime = timeEnd - timeStart;
+    final totalTime = (timeEnd - timeStart) * 0.7; // delay at end
     final timePerChar = totalTime / charCount;
     double end = timeStart;
 

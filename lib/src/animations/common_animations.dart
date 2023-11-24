@@ -228,18 +228,19 @@ class AnimaTiming {
   AnimaTiming({
     required this.start,
     required this.end,
-    this.inRatio = 1 / 3,
-    this.outRatio = 1 / 3,
+    this.inRatio = defRatio,
+    this.outRatio = defRatio,
   }) : groupEnd = end;
 
   AnimaTiming.group({
     required this.start,
     required this.end,
     required this.groupEnd,
-    this.inRatio = 1 / 3,
-    this.outRatio = 1 / 3,
+    this.inRatio = defRatio,
+    this.outRatio = defRatio,
   });
 
+  static const double defRatio = 1 / 3;
   final double start;
   final double end;
 
