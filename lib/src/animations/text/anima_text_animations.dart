@@ -139,9 +139,9 @@ class AnimaTextAnimations {
       final end = start + letterDuration;
 
       final timing = AnimaTiming.group(
-        start: state.timing.start + start,
-        end: state.timing.start + end,
-        groupEnd: state.timing.groupEnd,
+        start: start,
+        end: end,
+        groupEnd: 1,
       );
 
       result.add(

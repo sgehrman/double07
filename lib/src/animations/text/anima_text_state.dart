@@ -39,15 +39,14 @@ class AnimaTextLine {
     required this.text,
     required this.fontSize,
     this.color = Colors.white,
-    this.inCurve = Curves.elasticInOut,
+    this.inCurve = Curves.linear,
     this.outCurve = Curves.linear,
-    this.opacityCurve = Curves.easeOut,
+    this.opacityCurve = Curves.linear,
     this.bold = false,
     this.letterSpacing = 1,
     this.opacity = 0.5,
     this.animationTypes = const {
       TextAnimationType.alignment,
-      TextAnimationType.scale,
       TextAnimationType.opacity,
     },
   });

@@ -47,7 +47,7 @@ class CommonAnimations {
           parent: parent,
           curve: Interval(
             start,
-            1, // 1 is end of parent animation
+            end,
           ),
         ),
       );
