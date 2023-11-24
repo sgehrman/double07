@@ -45,17 +45,15 @@ class AnimaTextAnimations {
   // private methods
   // ============================================================
 
-  Animation<Alignment> _alignmentAnima(
-    double start,
-    Animation<double> parent,
+  Animatable<Alignment> _alignmentTween(
+    double begin,
     SequenceWeights weights,
   ) {
     if (state.animationTypes.contains(TextAnimationType.alignment)) {
-      return CommonAnimations.alignmentAnima(
-        start: start,
+      return CommonAnimations.alignmentTween(
+        begin: begin,
         end: 1, // 1 is end of parent animation
         alignments: state.alignments,
-        parent: parent,
         inCurve: state.inCurve,
         outCurve: state.outCurve,
         weights: weights,
@@ -64,30 +62,28 @@ class AnimaTextAnimations {
 
     return ConstantTween<Alignment>(
       state.alignments.first,
-    ).animate(parent);
+    );
   }
 
-  Animation<double> _opacityAnima(
-    double start,
-    Animation<double> parent,
+  Animatable<double> _opacityTween(
+    double begin,
     SequenceWeights weights,
   ) {
     if (state.animationTypes.any(
       [TextAnimationType.opacity, TextAnimationType.fadeInOut].contains,
     )) {
-      return CommonAnimations.inOutAnima(
-        start: start,
+      return CommonAnimations.inOutTween(
+        begin: begin,
         end: 1, // 1 is end of parent animation
         beginValue: 0,
         endValue: state.opacity,
-        parent: parent,
         inCurve: state.opacityCurve,
         outCurve: state.opacityCurve,
         weights: weights,
       );
     }
 
-    return ConstantTween<double>(state.opacity).animate(parent);
+    return ConstantTween<double>(state.opacity);
   }
 
   Animation<double> _scaleAnima(
@@ -139,9 +135,9 @@ class AnimaTextAnimations {
         LetterAnimations(
           master: controller,
           parent: parent,
-          alignment: _alignmentAnima(start, parent, timing.weights),
-          opacity: _opacityAnima(start, parent, timing.weights),
           scale: _scaleAnima(start, end, parent),
+          alignment: _alignmentTween(start, timing.weights),
+          opacity: _opacityTween(start, timing.weights),
         ),
       );
     }

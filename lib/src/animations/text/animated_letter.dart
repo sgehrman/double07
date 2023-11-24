@@ -50,9 +50,15 @@ class AnimatedLetter {
       return;
     }
 
+    final alignment = letterAnimations.parent
+        .drive(
+          letterAnimations.alignment,
+        )
+        .value;
+
     final rect = Offset.zero & size;
 
-    Rect destRect = letterAnimations.alignment.value.inscribe(
+    Rect destRect = alignment.inscribe(
       Size(
         wordSize.width,
         wordSize.height,
@@ -89,7 +95,7 @@ class AnimatedLetter {
       rect: destRect,
       image: image,
       fit: BoxFit.fill,
-      opacity: letterAnimations.opacity.value,
+      opacity: letterAnimations.parent.drive(letterAnimations.opacity).value,
       isAntiAlias: true,
       filterQuality: FilterQuality.high,
     );
