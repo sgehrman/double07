@@ -120,25 +120,29 @@ class AnimaTextAnimations {
     // convert to 0..1
     final double ratio = 1 / state.timing.totalTime;
     double letterDuration = state.timing.animationTime / count;
-    letterDuration = letterDuration *= ratio;
+    letterDuration *= ratio;
 
     for (int i = 0; i < count; i++) {
       final start = i * letterDuration;
       final end = start + letterDuration;
 
-      final timing = AnimaTiming.group(
+      final weights = AnimaTiming.group(
         start: start,
         end: end,
         groupEnd: 1,
-      );
+      ).weights;
+
+      // const weights = SequenceWeights.equal();
+      // print('inde: $i');
+      // print(weights);
 
       result.add(
         LetterAnimations(
           master: controller,
           parent: parent,
           scale: _scaleTween(start, end),
-          alignment: _alignmentTween(start, timing.weights),
-          opacity: _opacityTween(start, timing.weights),
+          alignment: _alignmentTween(start, weights),
+          opacity: _opacityTween(start, weights),
         ),
       );
     }

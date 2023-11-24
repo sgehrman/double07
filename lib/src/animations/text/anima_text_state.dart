@@ -48,6 +48,7 @@ class AnimaTextLine {
     this.animationTypes = const {
       TextAnimationType.alignment,
       TextAnimationType.opacity,
+      TextAnimationType.scale,
     },
   });
 
