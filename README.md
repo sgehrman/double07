@@ -6,6 +6,8 @@ Flutter animation experiments
 2. how sync sound with animations?
 3. binocular view with focus?
 
+https://dev.to/heyhey1028/flutter-mastering-animation-4-the-confusing-parts-of-animations-3cp3
+
 ```
  final timing = AnimaTiming.group(
       start: 55,
