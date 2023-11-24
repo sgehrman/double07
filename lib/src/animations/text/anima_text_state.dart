@@ -44,7 +44,7 @@ class AnimaTextLine {
     this.opacityCurve = Curves.linear,
     this.bold = false,
     this.letterSpacing = 1,
-    this.opacity = 0.5,
+    this.opacity = 1,
     this.animationTypes = const {
       TextAnimationType.alignment,
       TextAnimationType.opacity,
@@ -56,7 +56,7 @@ class AnimaTextLine {
         fontSize = 12,
         bold = false,
         letterSpacing = 1,
-        opacity = 0.5,
+        opacity = 1,
         color = Colors.white,
         opacityCurve = Curves.linear,
         inCurve = Curves.linear,

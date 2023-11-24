@@ -71,17 +71,7 @@ class AnimaParagraph implements RunableAnimation {
       final end = start + timePerLine;
 
       state = AnimaTextState(
-        line: AnimaTextLine(
-          text: line.text,
-          fontSize: line.fontSize,
-          inCurve: line.inCurve,
-          outCurve: line.outCurve,
-          animationTypes: const {
-            TextAnimationType.alignment,
-            TextAnimationType.fadeInOut,
-          },
-          color: line.color,
-        ),
+        line: line,
         alignments: [
           Alignment(alignment.x, alignment.y),
           Alignment(alignment.x, alignment.y),
@@ -123,13 +113,7 @@ class AnimaParagraph implements RunableAnimation {
       final end = start + (timePerLine * overlap);
 
       state = AnimaTextState(
-        line: AnimaTextLine(
-          text: line.text,
-          fontSize: line.fontSize,
-          inCurve: line.inCurve,
-          outCurve: line.outCurve,
-          color: line.color,
-        ),
+        line: line,
         alignments: [
           if (animateFrom != 0) Alignment(alignment.x, animateFrom),
           if (animateFrom == 0)
@@ -174,13 +158,7 @@ class AnimaParagraph implements RunableAnimation {
         end = start + (line.textLengh * timePerChar);
 
         final state = AnimaTextState(
-          line: AnimaTextLine(
-            text: line.text,
-            fontSize: line.fontSize,
-            inCurve: line.inCurve,
-            outCurve: line.outCurve,
-            color: line.color,
-          ),
+          line: line,
           alignments: [
             if (animateFrom != 0) Alignment(alignment.x, animateFrom),
             if (animateFrom == 0)
