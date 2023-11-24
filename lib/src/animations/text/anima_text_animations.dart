@@ -117,7 +117,10 @@ class AnimaTextAnimations {
       end: state.timing.groupEnd,
     );
 
-    final double letterDuration = state.timing.animationTime / count;
+    // convert to 0..1
+    final double ratio = 1 / state.timing.totalTime;
+    double letterDuration = state.timing.animationTime / count;
+    letterDuration = letterDuration *= ratio;
 
     for (int i = 0; i < count; i++) {
       final start = i * letterDuration;
