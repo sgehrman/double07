@@ -297,8 +297,7 @@ class AnimaTiming {
   }
 
   double get animationTime {
-    return 1;
-    // return (1 * info.durationRatio) * (1 - info.endDelay);
+    return (1 * info.durationRatio) * (1 - info.endDelay);
   }
 
   double get itemTime {
