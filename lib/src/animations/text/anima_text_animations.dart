@@ -115,16 +115,13 @@ class AnimaTextAnimations {
 
     final parent = AnimationSpec.parentAnimation(
       controller: controller,
-      begin: state.timing.begin,
-      end: state.timing.end,
+      begin: state.timingInfo.begin,
+      end: state.timingInfo.parentEnd,
     );
 
     // convert to 0..1
     final timing = AnimaTiming(
-      begin: 0,
-      end: 1,
-      endDelay: state.timing.endDelay,
-      numItems: state.timing.numItems,
+      info: state.timingInfo,
     );
 
     for (int i = 0; i < count; i++) {

@@ -12,12 +12,12 @@ class AnimaTextState {
   AnimaTextState({
     required this.line,
     required this.alignments,
-    required this.timing,
+    required this.timingInfo,
   });
 
   final AnimaTextLine line;
   final List<Alignment> alignments;
-  final AnimaTiming timing;
+  final AnimaTimingInfo timingInfo;
 
   // foreward to line
   String get text => line.text;

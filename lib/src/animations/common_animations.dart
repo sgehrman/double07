@@ -220,32 +220,70 @@ class CommonAnimations {
   }
 }
 
-// =============================================================
+// ===============================================================
 
-// Used for letters when you want to animate them in separately
-// but then fade out together at the end of the animation
-class AnimaTiming {
-  AnimaTiming({
+class AnimaTimingInfo {
+  AnimaTimingInfo({
     required this.begin,
     required this.end,
+    required this.parentBegin,
+    required this.parentEnd,
     required this.numItems,
     required this.endDelay,
     this.inRatio = defRatio,
     this.outRatio = defRatio,
   });
 
+  AnimaTimingInfo.simple({
+    required this.begin,
+    required this.end,
+    required this.numItems,
+    required this.endDelay,
+    this.inRatio = defRatio,
+    this.outRatio = defRatio,
+  })  : parentBegin = begin,
+        parentEnd = end;
+
   static const double defRatio = 1 / 3;
   final double begin;
   final double end;
+  final double parentBegin;
+  final double parentEnd;
   final int numItems;
   final double endDelay; // 0-1
 
   final double inRatio;
   final double outRatio;
 
+  double get parentDuration {
+    return parentEnd - parentBegin;
+  }
+
+  double get duration {
+    return end - begin;
+  }
+
+  // parents begine and end could be .2-.5 or something
+  // this gets it to 0..1? may not work
+  double get durationRatio {
+    return duration / parentDuration;
+  }
+}
+
+// =============================================================
+
+// Used for letters when you want to animate them in separately
+// but then fade out together at the end of the animation
+class AnimaTiming {
+  AnimaTiming({
+    required this.info,
+  });
+
+  final AnimaTimingInfo info;
+
   SequenceWeights weightsForIndex(int index) {
-    final double startWeight = itemTime * inRatio;
-    final double endWeight = itemTime * outRatio;
+    final double startWeight = itemTime * info.inRatio;
+    final double endWeight = itemTime * info.outRatio;
     final double holdWeight = itemTime - (startWeight + endWeight);
 
     final endOfItem = endForIndex(index);
@@ -259,11 +297,11 @@ class AnimaTiming {
   }
 
   double get animationTime {
-    return 1 - endDelay;
+    return (1 * info.durationRatio) * (1 - info.endDelay);
   }
 
   double get itemTime {
-    return animationTime / numItems;
+    return animationTime / info.numItems;
   }
 
   double beginForIndex(int index) {

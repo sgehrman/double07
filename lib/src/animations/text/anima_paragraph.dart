@@ -78,11 +78,11 @@ class AnimaParagraph implements RunableAnimation {
           // fades up and out
           Alignment(alignment.x, alignment.y - newLine),
         ],
-        timing: AnimaTiming(
+        timingInfo: AnimaTimingInfo.simple(
           begin: start,
           end: end,
           numItems: line.textLengh,
-          endDelay: 0.1,
+          endDelay: 0,
         ),
       );
 
@@ -122,11 +122,11 @@ class AnimaParagraph implements RunableAnimation {
             Alignment(alignment.x, alignment.y + (index * newLine)),
           Alignment(alignment.x, alignment.y + (index * newLine)),
         ],
-        timing: AnimaTiming(
+        timingInfo: AnimaTimingInfo.simple(
           begin: start,
           end: end,
           numItems: line.textLengh,
-          endDelay: 0.1,
+          endDelay: 0,
         ),
       );
 
@@ -169,9 +169,11 @@ class AnimaParagraph implements RunableAnimation {
               Alignment(alignment.x, alignment.y + (index * newLine)),
             Alignment(alignment.x, alignment.y + (index * newLine)),
           ],
-          timing: AnimaTiming(
+          timingInfo: AnimaTimingInfo(
             begin: start,
-            end: timeEnd,
+            end: end,
+            parentBegin: timeStart,
+            parentEnd: timeEnd,
             numItems: line.textLengh,
             endDelay: 0,
           ),
