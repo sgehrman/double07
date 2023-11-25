@@ -6,64 +6,20 @@ class CommonAnimations {
     required double begin,
     required double end,
     required List<Alignment> alignments,
-    required Curve inCurve,
-    required Curve outCurve,
-    SequenceWeights weights = const SequenceWeights(),
+    required Curve curve,
   }) {
-    if (alignments.length == 3) {
-      final items = [
-        TweenSequenceItem<Alignment>(
-          tween: AlignmentTween(
-            begin: alignments.first,
-            end: alignments[1],
-          ).chain(
-            CurveTween(
-              curve: inCurve,
-            ),
-          ),
-          weight: weights.start,
+    return AlignmentTween(
+      begin: alignments.first,
+      end: alignments.last,
+    ).chain(
+      CurveTween(
+        curve: Interval(
+          begin,
+          end,
+          curve: curve,
         ),
-        TweenSequenceItem<Alignment>(
-          tween: ConstantTween<Alignment>(alignments[1]),
-          weight: weights.hold,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: AlignmentTween(
-            begin: alignments[1],
-            end: alignments[2],
-          ).chain(
-            CurveTween(
-              curve: outCurve,
-            ),
-          ),
-          weight: weights.end,
-        ),
-      ];
-
-      return TweenSequence<Alignment>(
-        items,
-      ).chain(
-        CurveTween(
-          curve: Interval(
-            begin,
-            end,
-          ),
-        ),
-      );
-    } else {
-      return AlignmentTween(
-        begin: alignments.first,
-        end: alignments[1],
-      ).chain(
-        CurveTween(
-          curve: Interval(
-            begin,
-            end,
-            curve: inCurve,
-          ),
-        ),
-      );
-    }
+      ),
+    );
   }
 
   static Animation<Alignment> alignmentAnima({
@@ -142,36 +98,15 @@ class CommonAnimations {
     required double end,
     required double beginValue,
     required double endValue,
-    required Curve inCurve,
-    required Curve outCurve,
-    SequenceWeights weights = const SequenceWeights(),
+    required Curve curve,
   }) {
-    final sequence = TweenSequence<double>(
-      <TweenSequenceItem<double>>[
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: beginValue, end: endValue).chain(
-            CurveTween(curve: inCurve),
+    return Tween<double>(begin: beginValue, end: endValue).chain(
+      CurveTween(curve: curve).chain(
+        CurveTween(
+          curve: Interval(
+            begin,
+            end,
           ),
-          weight: weights.start,
-        ),
-        TweenSequenceItem<double>(
-          tween: ConstantTween<double>(endValue),
-          weight: weights.hold,
-        ),
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: endValue, end: beginValue).chain(
-            CurveTween(curve: outCurve),
-          ),
-          weight: weights.end,
-        ),
-      ],
-    );
-
-    return sequence.chain(
-      CurveTween(
-        curve: Interval(
-          begin,
-          end,
         ),
       ),
     );
@@ -280,21 +215,6 @@ class AnimaTiming {
   });
 
   final AnimaTimingInfo info;
-
-  SequenceWeights weightsForIndex(int index) {
-    final double startWeight = itemTime * info.inRatio;
-    final double endWeight = itemTime * info.outRatio;
-    final double holdWeight = itemTime - (startWeight + endWeight);
-
-    final endOfItem = endForIndex(index);
-    final extra = 1 - endOfItem;
-
-    return SequenceWeights.custom(
-      startWeight,
-      holdWeight + extra,
-      endWeight,
-    );
-  }
 
   double get animationTime {
     return 1;

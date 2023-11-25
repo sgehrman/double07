@@ -3,16 +3,19 @@ import 'package:double07/src/animations/animation_specs/letter_animations.dart';
 import 'package:double07/src/animations/common_animations.dart';
 import 'package:double07/src/animations/text/anima_text_state.dart';
 import 'package:double07/src/animations/text/animated_letter.dart';
-import 'package:double07/src/constants.dart';
 import 'package:flutter/material.dart';
 
 class AnimaTextAnimations {
-  AnimaTextAnimations(this.state);
+  AnimaTextAnimations({
+    required this.state,
+    required this.onEvent,
+  });
 
   late final List<AnimatedLetter> _textLetters;
   late final List<LetterAnimations> _letterAnimations;
-
+  late final Animation<double> _parent;
   final AnimaTextState state;
+  final void Function(String event) onEvent;
 
   Future<void> initialize({
     required AnimationController controller,
@@ -22,6 +25,15 @@ class AnimaTextAnimations {
       _textStyle(),
       state.letterSpacing,
     );
+
+    _parent = AnimationSpec.parentAnimation(
+      controller: controller,
+      begin: state.timingInfo.begin,
+      end: state.timingInfo.parentEnd,
+    );
+
+    _parent.addListener(_listener);
+    _parent.addStatusListener(_statusListener);
 
     _letterAnimations = _buildAnimations(
       count: _textLetters.length,
@@ -41,23 +53,40 @@ class AnimaTextAnimations {
     );
   }
 
+  void dispose() {
+    _parent.removeListener(_listener);
+    _parent.removeStatusListener(_statusListener);
+  }
+
   // ============================================================
   // private methods
   // ============================================================
 
+  void _listener() {
+    onEvent('listener');
+  }
+
+  void _statusListener(status) {
+    switch (status) {
+      case AnimationStatus.dismissed:
+      case AnimationStatus.forward:
+      case AnimationStatus.reverse:
+      case AnimationStatus.completed:
+        onEvent(status.toString());
+        break;
+    }
+  }
+
   Animatable<Alignment> _alignmentTween(
     double begin,
     double end,
-    SequenceWeights weights,
   ) {
     if (state.animationTypes.contains(TextAnimationType.alignment)) {
       return CommonAnimations.alignmentTween(
         begin: begin,
         end: end,
         alignments: state.alignments,
-        inCurve: state.inCurve,
-        outCurve: state.outCurve,
-        weights: weights,
+        curve: state.inCurve,
       );
     }
 
@@ -67,9 +96,9 @@ class AnimaTextAnimations {
   }
 
   Animatable<double> _opacityTween(
+    bool inTween,
     double begin,
     double end,
-    SequenceWeights weights,
   ) {
     if (state.animationTypes.any(
       [TextAnimationType.opacity, TextAnimationType.fadeInOut].contains,
@@ -77,11 +106,9 @@ class AnimaTextAnimations {
       return CommonAnimations.inOutTween(
         begin: begin,
         end: end,
-        beginValue: 0,
-        endValue: state.opacity,
-        inCurve: state.opacityCurve,
-        outCurve: state.opacityCurve,
-        weights: weights,
+        beginValue: inTween ? 0 : state.opacity,
+        endValue: inTween ? state.opacity : 0,
+        curve: state.opacityCurve,
       );
     }
 
@@ -113,12 +140,6 @@ class AnimaTextAnimations {
   }) {
     final List<LetterAnimations> result = [];
 
-    final parent = AnimationSpec.parentAnimation(
-      controller: controller,
-      begin: state.timingInfo.begin,
-      end: state.timingInfo.parentEnd,
-    );
-
     // convert to 0..1
     final timing = AnimaTiming(
       info: state.timingInfo,
@@ -127,21 +148,15 @@ class AnimaTextAnimations {
     for (int i = 0; i < count; i++) {
       final begin = timing.beginForIndex(i);
       final end = timing.endForIndex(i);
-      final weights = timing.weightsForIndex(i);
-
-      // const weights = SequenceWeights.equal();
-      print('index: $i');
-      print('begin: $begin');
-      print('end: $end');
-      print(weights);
 
       result.add(
         LetterAnimations(
           master: controller,
-          parent: parent,
+          parent: _parent,
+          keepAlive: true,
           scale: _scaleTween(begin, end),
-          alignment: _alignmentTween(begin, 1, weights),
-          opacity: _opacityTween(begin, 1, weights),
+          alignment: _alignmentTween(begin, end),
+          opacity: _opacityTween(true, begin, end),
         ),
       );
     }

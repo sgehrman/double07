@@ -5,12 +5,14 @@ class LetterAnimations extends AnimationSpec {
   LetterAnimations({
     required Animation<double> master,
     required Animation<double> parent,
+    required bool keepAlive,
     required this.scale,
     required this.alignment,
     required this.opacity,
   }) : super(
           master: master,
           parent: parent,
+          keepAlive: keepAlive,
         );
 
   Animatable<Alignment> alignment;

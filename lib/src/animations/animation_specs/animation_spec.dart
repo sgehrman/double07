@@ -7,13 +7,19 @@ abstract class AnimationSpec {
   AnimationSpec({
     required this.master,
     required this.parent,
+    this.keepAlive = false,
   });
 
   final Animation<double> master;
   final Animation<double> parent;
+  final bool keepAlive;
 
   // not running if zero or one
   bool get isRunning {
+    if (keepAlive) {
+      return true;
+    }
+
     return master.value != 0 &&
         master.value != 1 &&
         parent.value != 0 &&

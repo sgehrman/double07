@@ -34,11 +34,11 @@ class AnimaParagraph implements RunableAnimation {
   @override
   Future<void> initialize(AnimationController controller) async {
     if (type == ParagraphAnimaType.titleSequence) {
-      _animations = _buildTitleSequence();
+      _animations = _buildSequence();
     } else if (type == ParagraphAnimaType.weird) {
-      _animations = _buildNormalSequence();
+      _animations = _buildSequence();
     } else if (type == ParagraphAnimaType.flyIn) {
-      _animations = _buildNewSequence();
+      _animations = _buildSequence();
     }
 
     for (final l in _animations) {
@@ -58,91 +58,7 @@ class AnimaParagraph implements RunableAnimation {
 
   // ---------------------------------------------------------
 
-  List<AnimaText> _buildTitleSequence() {
-    final List<AnimaText> result = [];
-
-    final timePerLine = (timeEnd - timeStart) / lines.length;
-
-    double elapsedTime = 0;
-    for (final line in lines) {
-      AnimaTextState state;
-
-      final start = timeStart + elapsedTime;
-      final end = start + timePerLine;
-
-      state = AnimaTextState(
-        line: line,
-        alignments: [
-          Alignment(alignment.x, alignment.y),
-          Alignment(alignment.x, alignment.y),
-          // fades up and out
-          Alignment(alignment.x, alignment.y - newLine),
-        ],
-        timingInfo: AnimaTimingInfo.simple(
-          begin: start,
-          end: end,
-          numItems: line.textLengh,
-          endDelay: 0,
-        ),
-      );
-
-      result.add(
-        AnimaText(state),
-      );
-
-      // don't delay for blank liness
-      if (!line.isBlank) {
-        elapsedTime += timePerLine;
-      }
-    }
-
-    return result;
-  }
-
-  // ---------------------------------------------------------
-
-  List<AnimaText> _buildNormalSequence() {
-    final List<AnimaText> result = [];
-
-    final timePerLine = (timeEnd - timeStart) / lines.length;
-
-    int index = 0;
-    for (final line in lines) {
-      AnimaTextState state;
-
-      const overlap = 2;
-      final start = timeStart + (index * (timePerLine / overlap));
-      final end = start + (timePerLine * overlap);
-
-      state = AnimaTextState(
-        line: line,
-        alignments: [
-          if (animateFrom != 0) Alignment(alignment.x, animateFrom),
-          if (animateFrom == 0)
-            Alignment(alignment.x, alignment.y + (index * newLine)),
-          Alignment(alignment.x, alignment.y + (index * newLine)),
-        ],
-        timingInfo: AnimaTimingInfo.simple(
-          begin: start,
-          end: end,
-          numItems: line.textLengh,
-          endDelay: 0,
-        ),
-      );
-
-      result.add(
-        AnimaText(state),
-      );
-
-      index++;
-    }
-
-    return result;
-  }
-
-  // ---------------------------------------------------------
-
-  List<AnimaText> _buildNewSequence() {
+  List<AnimaText> _buildSequence() {
     final List<AnimaText> result = [];
 
     int charCount = 0;

@@ -11,7 +11,12 @@ class AnimaText implements RunableAnimation {
 
   @override
   Future<void> initialize(AnimationController controller) async {
-    _animations = AnimaTextAnimations(state);
+    _animations = AnimaTextAnimations(
+      state: state,
+      onEvent: (value) {
+        print(value);
+      },
+    );
 
     await _animations.initialize(controller: controller);
   }
