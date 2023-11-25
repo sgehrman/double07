@@ -258,11 +258,11 @@ class AnimaElements {
           const Alignment(-0.8, -2),
           const Alignment(-0.8, -0.8),
         ],
-        timing: AnimaTiming(
+        timingInfo: AnimaTimingInfo.simple(
           begin: Timeline.textStart,
           end: Timeline.textEnd,
           numItems: str.length,
-          endDelay: 0.1,
+          endDelay: 0,
         ),
       ),
     );
