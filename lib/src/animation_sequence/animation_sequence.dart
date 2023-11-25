@@ -14,18 +14,7 @@ class AnimationSequence {
   bool isInitialized = false;
 
   final List<RunableAnimation> _runables = [
-    ...AnimaElements.backgrounds(),
-    ...AnimaElements.easterEggs(),
-    // AnimaElements.deckrLogo(),
-    AnimaElements.hendersonQuote(),
-    AnimaElements.largoQuote(),
     AnimaElements.dominoQuote(),
-
-    // AnimaElements.randomQuote(),
-    AnimaElements.reviewsTitle(),
-    AnimaElements.introTitles(),
-    AnimaElements.double07Ball(),
-    ...AnimaElements.blocks(),
   ];
 
   // =================================================

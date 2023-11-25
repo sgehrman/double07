@@ -13,8 +13,17 @@ class AnimaText implements RunableAnimation {
   Future<void> initialize(AnimationController controller) async {
     _animations = AnimaTextAnimations(
       state: state,
-      onEvent: (value) {
-        print(value);
+      onStatusChange: (status) {
+        switch (status) {
+          case AnimationStatus.dismissed:
+          case AnimationStatus.forward:
+          case AnimationStatus.reverse:
+            print(status);
+
+          case AnimationStatus.completed:
+            print(status);
+            break;
+        }
       },
     );
 

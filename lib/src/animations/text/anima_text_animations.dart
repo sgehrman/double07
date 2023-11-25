@@ -8,14 +8,14 @@ import 'package:flutter/material.dart';
 class AnimaTextAnimations {
   AnimaTextAnimations({
     required this.state,
-    required this.onEvent,
+    required this.onStatusChange,
   });
 
   late final List<AnimatedLetter> _textLetters;
   late final List<LetterAnimations> _letterAnimations;
   late final Animation<double> _parent;
   final AnimaTextState state;
-  final void Function(String event) onEvent;
+  final void Function(AnimationStatus event) onStatusChange;
 
   Future<void> initialize({
     required AnimationController controller,
@@ -32,12 +32,10 @@ class AnimaTextAnimations {
       end: state.timingInfo.parentEnd,
     );
 
-    _parent.addListener(_listener);
     _parent.addStatusListener(_statusListener);
 
     _letterAnimations = _buildAnimations(
       count: _textLetters.length,
-      controller: controller,
     );
   }
 
@@ -54,7 +52,6 @@ class AnimaTextAnimations {
   }
 
   void dispose() {
-    _parent.removeListener(_listener);
     _parent.removeStatusListener(_statusListener);
   }
 
@@ -62,17 +59,21 @@ class AnimaTextAnimations {
   // private methods
   // ============================================================
 
-  void _listener() {
-    onEvent('listener');
-  }
-
-  void _statusListener(status) {
+  void _statusListener(AnimationStatus status) {
     switch (status) {
       case AnimationStatus.dismissed:
       case AnimationStatus.forward:
       case AnimationStatus.reverse:
+        break;
       case AnimationStatus.completed:
-        onEvent(status.toString());
+        onStatusChange(status);
+
+        _letterAnimations.clear();
+        _letterAnimations.addAll(
+          _buildFadeOutAnimations(
+            count: _textLetters.length,
+          ),
+        );
         break;
     }
   }
@@ -136,7 +137,6 @@ class AnimaTextAnimations {
 
   List<LetterAnimations> _buildAnimations({
     required int count,
-    required AnimationController controller,
   }) {
     final List<LetterAnimations> result = [];
 
@@ -151,12 +151,41 @@ class AnimaTextAnimations {
 
       result.add(
         LetterAnimations(
-          master: controller,
+          master: _parent,
           parent: _parent,
           keepAlive: true,
           scale: _scaleTween(begin, end),
           alignment: _alignmentTween(begin, end),
           opacity: _opacityTween(true, begin, end),
+        ),
+      );
+    }
+
+    return result;
+  }
+
+  List<LetterAnimations> _buildFadeOutAnimations({
+    required int count,
+  }) {
+    final List<LetterAnimations> result = [];
+
+    // convert to 0..1
+    final timing = AnimaTiming(
+      info: state.timingInfo,
+    );
+
+    for (int i = 0; i < count; i++) {
+      final begin = timing.beginForIndex(i);
+      final end = timing.endForIndex(i);
+
+      result.add(
+        LetterAnimations(
+          master: _parent,
+          parent: _parent,
+          keepAlive: true,
+          scale: _scaleTween(begin, end),
+          alignment: _alignmentTween(begin, end),
+          opacity: _opacityTween(false, begin, end),
         ),
       );
     }

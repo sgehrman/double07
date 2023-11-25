@@ -1,5 +1,5 @@
 class Timeline {
-  static int seconds = 90;
+  static int seconds = 9;
   static Duration runDuration = Duration(seconds: seconds);
 
   static double durSecs(int secs) {
