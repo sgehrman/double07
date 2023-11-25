@@ -226,92 +226,51 @@ class CommonAnimations {
 // but then fade out together at the end of the animation
 class AnimaTiming {
   AnimaTiming({
-    required this.start,
+    required this.begin,
     required this.end,
-    this.inRatio = defRatio,
-    this.outRatio = defRatio,
-  }) : groupEnd = end;
-
-  AnimaTiming.group({
-    required this.start,
-    required this.end,
-    required this.groupEnd,
+    required this.numItems,
+    required this.endDelay,
     this.inRatio = defRatio,
     this.outRatio = defRatio,
   });
 
   static const double defRatio = 1 / 3;
-  final double start;
+  final double begin;
   final double end;
-
-  final double groupEnd;
+  final int numItems;
+  final double endDelay; // 0-1
 
   final double inRatio;
   final double outRatio;
 
-  // zero on last item
-  double get extraHold {
-    return groupEnd - end;
+  SequenceWeights weightsForIndex(int index) {
+    final double startWeight = itemTime * inRatio;
+    final double endWeight = itemTime * outRatio;
+    final double holdWeight = itemTime - (startWeight + endWeight);
+
+    final endOfItem = endForIndex(index);
+    final extra = 1 - endOfItem;
+
+    return SequenceWeights.custom(
+      startWeight,
+      holdWeight + extra,
+      endWeight,
+    );
   }
 
   double get animationTime {
-    return end - start;
+    return 1 - endDelay;
   }
 
-  double get totalTime {
-    return groupEnd - start;
+  double get itemTime {
+    return animationTime / numItems;
   }
 
-  double get inTime {
-    return animationTime * inRatio;
+  double beginForIndex(int index) {
+    return index * itemTime;
   }
 
-  double get outTime {
-    return animationTime * outRatio;
-  }
-
-  double get holdTime {
-    final itemHoldTime = animationTime - (inTime + outTime);
-
-    return itemHoldTime + extraHold;
-  }
-
-  double get startWeight {
-    return inTime / totalTime;
-  }
-
-  double get holdWeight {
-    return holdTime / totalTime;
-  }
-
-  double get endWeight {
-    return outTime / totalTime;
-  }
-
-  SequenceWeights get weights => SequenceWeights.custom(
-        startWeight,
-        holdWeight,
-        endWeight,
-      );
-
-  TweenSequence<T> tween<T>(List<Tween<T>> tweens) {
-    assert(tweens.length == 3, 'tweens must have 3 elements');
-
-    return TweenSequence<T>(
-      <TweenSequenceItem<T>>[
-        TweenSequenceItem<T>(
-          tween: tweens.first,
-          weight: startWeight,
-        ),
-        TweenSequenceItem<T>(
-          tween: tweens[1],
-          weight: holdWeight,
-        ),
-        TweenSequenceItem<T>(
-          tween: tweens.last,
-          weight: endWeight,
-        ),
-      ],
-    );
+  double endForIndex(int index) {
+    return beginForIndex(index) + itemTime;
   }
 }

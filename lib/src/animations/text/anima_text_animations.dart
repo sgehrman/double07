@@ -47,12 +47,13 @@ class AnimaTextAnimations {
 
   Animatable<Alignment> _alignmentTween(
     double begin,
+    double end,
     SequenceWeights weights,
   ) {
     if (state.animationTypes.contains(TextAnimationType.alignment)) {
       return CommonAnimations.alignmentTween(
         begin: begin,
-        end: 1, // 1 is end of parent animation
+        end: end,
         alignments: state.alignments,
         inCurve: state.inCurve,
         outCurve: state.outCurve,
@@ -67,6 +68,7 @@ class AnimaTextAnimations {
 
   Animatable<double> _opacityTween(
     double begin,
+    double end,
     SequenceWeights weights,
   ) {
     if (state.animationTypes.any(
@@ -74,7 +76,7 @@ class AnimaTextAnimations {
     )) {
       return CommonAnimations.inOutTween(
         begin: begin,
-        end: 1, // 1 is end of parent animation
+        end: end,
         beginValue: 0,
         endValue: state.opacity,
         inCurve: state.opacityCurve,
@@ -113,36 +115,36 @@ class AnimaTextAnimations {
 
     final parent = AnimationSpec.parentAnimation(
       controller: controller,
-      begin: state.timing.start,
-      end: state.timing.groupEnd,
+      begin: state.timing.begin,
+      end: state.timing.end,
     );
 
     // convert to 0..1
-    final double ratio = 1 / state.timing.totalTime;
-    double letterDuration = state.timing.animationTime / count;
-    letterDuration *= ratio;
+    final timing = AnimaTiming(
+      begin: 0,
+      end: 1,
+      endDelay: state.timing.endDelay,
+      numItems: state.timing.numItems,
+    );
 
     for (int i = 0; i < count; i++) {
-      final start = i * letterDuration;
-      final end = start + letterDuration;
-
-      final weights = AnimaTiming.group(
-        start: start,
-        end: end,
-        groupEnd: 1,
-      ).weights;
+      final begin = timing.beginForIndex(i);
+      final end = timing.endForIndex(i);
+      final weights = timing.weightsForIndex(i);
 
       // const weights = SequenceWeights.equal();
-      // print('inde: $i');
-      // print(weights);
+      print('index: $i');
+      print('begin: $begin');
+      print('end: $end');
+      print(weights);
 
       result.add(
         LetterAnimations(
           master: controller,
           parent: parent,
-          scale: _scaleTween(start, end),
-          alignment: _alignmentTween(start, weights),
-          opacity: _opacityTween(start, weights),
+          scale: _scaleTween(begin, end),
+          alignment: _alignmentTween(begin, 1, weights),
+          opacity: _opacityTween(begin, 1, weights),
         ),
       );
     }

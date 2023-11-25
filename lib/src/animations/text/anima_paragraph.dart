@@ -79,8 +79,10 @@ class AnimaParagraph implements RunableAnimation {
           Alignment(alignment.x, alignment.y - newLine),
         ],
         timing: AnimaTiming(
-          start: start,
+          begin: start,
           end: end,
+          numItems: line.textLengh,
+          endDelay: 0.1,
         ),
       );
 
@@ -121,8 +123,10 @@ class AnimaParagraph implements RunableAnimation {
           Alignment(alignment.x, alignment.y + (index * newLine)),
         ],
         timing: AnimaTiming(
-          start: start,
+          begin: start,
           end: end,
+          numItems: line.textLengh,
+          endDelay: 0.1,
         ),
       );
 
@@ -146,7 +150,7 @@ class AnimaParagraph implements RunableAnimation {
       charCount += line.textLengh;
     }
 
-    final totalTime = (timeEnd - timeStart) * 0.7; // delay at end
+    final totalTime = timeEnd - timeStart;
     final timePerChar = totalTime / charCount;
     double end = timeStart;
 
@@ -165,10 +169,11 @@ class AnimaParagraph implements RunableAnimation {
               Alignment(alignment.x, alignment.y + (index * newLine)),
             Alignment(alignment.x, alignment.y + (index * newLine)),
           ],
-          timing: AnimaTiming.group(
-            start: start,
-            end: end,
-            groupEnd: timeEnd,
+          timing: AnimaTiming(
+            begin: start,
+            end: timeEnd,
+            numItems: line.textLengh,
+            endDelay: 0,
           ),
         );
 
