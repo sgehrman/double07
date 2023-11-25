@@ -245,10 +245,12 @@ class AnimaElements {
   }
 
   static RunableAnimation deckrLogo() {
+    final str = 'Deckr'.toUpperCase();
+
     return AnimaText(
       AnimaTextState(
         line: AnimaTextLine(
-          text: 'Deckr'.toUpperCase(),
+          text: str,
           fontSize: 64,
           bold: true,
         ),
@@ -257,8 +259,10 @@ class AnimaElements {
           const Alignment(-0.8, -0.8),
         ],
         timing: AnimaTiming(
-          start: Timeline.textStart,
+          begin: Timeline.textStart,
           end: Timeline.textEnd,
+          numItems: str.length,
+          endDelay: 0.1,
         ),
       ),
     );
