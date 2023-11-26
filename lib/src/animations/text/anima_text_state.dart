@@ -39,7 +39,7 @@ class AnimaTextLine {
     required this.text,
     required this.fontSize,
     this.color = Colors.white,
-    this.inCurve = Curves.elasticOut,
+    this.inCurve = Curves.easeIn,
     this.outCurve = Curves.easeIn,
     this.opacityCurve = Curves.linear,
     this.bold = false,
