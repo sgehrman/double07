@@ -23,8 +23,10 @@ class AnimaElements {
   static RunableAnimation dominoQuote() {
     return AnimaParagraph(
       alignment: const Alignment(-0.12, 0.6),
-      timeStart: Timeline.dominoTextStart,
-      timeEnd: Timeline.dominoTextEnd,
+      timeStart: 0,
+      timeEnd: 0.6,
+      // timeStart: Timeline.dominoTextStart,
+      // timeEnd: Timeline.dominoTextEnd,
       animateFrom: 0,
       lines: [
         AnimaTextLine(
