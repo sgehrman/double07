@@ -1,5 +1,5 @@
 class Timeline {
-  static int seconds = 18;
+  static int seconds = 90;
   static Duration runDuration = Duration(seconds: seconds);
 
   static double durSecs(int secs) {
@@ -64,8 +64,8 @@ class Timeline {
   // xxx
 
   static double textStart = ballEnd;
-  static double textEnd = textStart + 0.2;
+  static double textEnd = textStart + durSecs(2);
 
   static double quoteStart = 0.1;
-  static double quoteEnd = 1;
+  static double quoteEnd = durSecs(4);
 }
