@@ -11,7 +11,7 @@ class LetterAnimations extends AnimationSpec {
   }) : super(
           master: master,
           parent: parent,
-          keeyAlive: true,
+          keepAlive: true,
         );
 
   Animatable<Alignment> alignment;
