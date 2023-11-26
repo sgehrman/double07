@@ -136,10 +136,11 @@ class AnimaTextAnimations {
     );
 
     for (int i = 0; i < count; i++) {
-      final begin = timing.beginForIndex(i);
-      final end = timing.endForIndex(i);
-
       if (state.timingInfo.outMode) {
+        // all characters draw the same time in outMode
+        final begin = timing.beginForIndex(0);
+        final end = timing.endForIndex(2);
+
         _outAnimations.add(
           LetterAnimations(
             master: controller,
@@ -156,6 +157,9 @@ class AnimaTextAnimations {
           ),
         );
       } else {
+        final begin = timing.beginForIndex(i);
+        final end = timing.endForIndex(i);
+
         _inAnimations.add(
           LetterAnimations(
             master: controller,
