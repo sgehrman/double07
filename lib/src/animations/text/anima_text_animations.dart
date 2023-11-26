@@ -17,6 +17,7 @@ class AnimaTextAnimations {
 
   Future<void> initialize({
     required AnimationController controller,
+    required Animation<double>? owner,
   }) async {
     _textLetters = await AnimatedLetter.createTextImages(
       state.text,

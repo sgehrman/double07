@@ -18,7 +18,10 @@ class AnimaDouble07 extends RunableAnimation {
   // =================================================
 
   @override
-  Future<void> initialize(AnimationController controller) {
+  Future<void> initialize(
+    AnimationController controller,
+    Animation<double>? owner,
+  ) {
     final sequence = TweenSequence<double>(
       <TweenSequenceItem<double>>[
         TweenSequenceItem<double>(

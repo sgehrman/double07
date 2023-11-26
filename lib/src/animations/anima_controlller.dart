@@ -17,14 +17,17 @@ class AnimaController extends RunableAnimation {
   final RunableAnimation runnable;
 
   @override
-  Future<void> initialize(AnimationController controller) async {
+  Future<void> initialize(
+    AnimationController controller,
+    Animation<double>? owner,
+  ) async {
     _outModeInterval = AnimationSpec.parentAnimation(
       controller: controller,
       begin: begin,
       end: end,
     );
 
-    await runnable.initialize(controller);
+    await runnable.initialize(controller, owner);
   }
 
   @override

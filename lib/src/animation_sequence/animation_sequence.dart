@@ -5,7 +5,10 @@ abstract class RunableAnimation {
   bool outMode = false;
 
   void paint(Canvas canvas, Size size);
-  Future<void> initialize(AnimationController controller);
+  Future<void> initialize(
+    AnimationController controller,
+    Animation<double>? owner,
+  );
 }
 
 // ========================================================
@@ -35,10 +38,13 @@ class AnimationSequence {
 
   bool get isInitialized => _isInitialized;
 
-  Future<void> initialize(AnimationController controller) async {
+  Future<void> initialize(
+    AnimationController controller,
+    Animation<double>? owner,
+  ) async {
     if (!_isInitialized) {
       for (final item in _runables) {
-        await item.initialize(controller);
+        await item.initialize(controller, owner);
       }
 
       _isInitialized = true;

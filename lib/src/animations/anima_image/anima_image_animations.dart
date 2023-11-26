@@ -21,7 +21,10 @@ class AnimaImageAnimations {
 
   // =================================================
 
-  Future<void> initialize(AnimationController controller) async {
+  Future<void> initialize(
+    AnimationController controller,
+    Animation<double>? owner,
+  ) async {
     final ByteData byteData = await rootBundle.load(state.imageAsset);
 
     _image = await ImageProcessor.bytesToImage(byteData.buffer.asUint8List());

@@ -10,10 +10,13 @@ class AnimaImage extends RunableAnimation {
   late final AnimaImageAnimations _animations;
 
   @override
-  Future<void> initialize(AnimationController controller) async {
+  Future<void> initialize(
+    AnimationController controller,
+    Animation<double>? owner,
+  ) async {
     _animations = AnimaImageAnimations(state);
 
-    await _animations.initialize(controller);
+    await _animations.initialize(controller, owner);
   }
 
   @override

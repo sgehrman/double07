@@ -11,10 +11,16 @@ class AnimaText extends RunableAnimation {
   late final AnimaTextAnimations _animations;
 
   @override
-  Future<void> initialize(AnimationController controller) async {
+  Future<void> initialize(
+    AnimationController controller,
+    Animation<double>? owner,
+  ) async {
     _animations = AnimaTextAnimations(state);
 
-    await _animations.initialize(controller: controller);
+    await _animations.initialize(
+      controller: controller,
+      owner: owner,
+    );
   }
 
   @override

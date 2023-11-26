@@ -1,5 +1,6 @@
 import 'package:double07/src/animation_sequence/animation_sequence.dart';
 import 'package:double07/src/animations/anima_controlller.dart';
+import 'package:double07/src/animations/animation_specs/animation_spec.dart';
 import 'package:double07/src/animations/text/anima_text.dart';
 import 'package:double07/src/animations/text/anima_text_state.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,10 @@ class AnimaParagraph extends RunableAnimation {
   late final AnimaController _controller;
 
   @override
-  Future<void> initialize(AnimationController controller) async {
+  Future<void> initialize(
+    AnimationController controller,
+    Animation<double>? owner,
+  ) async {
     final _AnimaParagraph paragraph = _AnimaParagraph(
       lines: lines,
       alignment: alignment,
@@ -40,7 +44,7 @@ class AnimaParagraph extends RunableAnimation {
       runnable: paragraph,
     );
 
-    await _controller.initialize(controller);
+    await _controller.initialize(controller, owner);
   }
 
   @override
@@ -75,7 +79,10 @@ class _AnimaParagraph extends RunableAnimation {
   late final List<AnimaText> _inAnimations;
 
   @override
-  Future<void> initialize(AnimationController controller) async {
+  Future<void> initialize(
+    AnimationController controller,
+    Animation<double>? owner,
+  ) async {
     final double half = (timeEnd - timeStart) / 2;
     double begin = timeStart;
     double end = begin + half;
@@ -88,6 +95,16 @@ class _AnimaParagraph extends RunableAnimation {
       animateFrom: animateFrom,
       newLine: newLine,
     );
+
+    final inParent = AnimationSpec.parentAnimation(
+      controller: controller,
+      begin: begin,
+      end: end,
+    );
+
+    for (final l in _inAnimations) {
+      await l.initialize(controller, inParent);
+    }
 
     begin = end;
     end = begin + half;
@@ -102,12 +119,14 @@ class _AnimaParagraph extends RunableAnimation {
       outMode: true,
     );
 
-    for (final l in _inAnimations) {
-      await l.initialize(controller);
-    }
+    final outParent = AnimationSpec.parentAnimation(
+      controller: controller,
+      begin: begin,
+      end: end,
+    );
 
     for (final l in _outAnimations) {
-      await l.initialize(controller);
+      await l.initialize(controller, outParent);
     }
   }
 
@@ -116,14 +135,11 @@ class _AnimaParagraph extends RunableAnimation {
     Canvas canvas,
     Size size,
   ) {
-    if (outMode) {
-      for (final animation in _outAnimations) {
-        animation.paint(canvas, size);
-      }
-    } else {
-      for (final animation in _inAnimations) {
-        animation.paint(canvas, size);
-      }
+    for (final animation in _outAnimations) {
+      animation.paint(canvas, size);
+    }
+    for (final animation in _inAnimations) {
+      animation.paint(canvas, size);
     }
   }
 }

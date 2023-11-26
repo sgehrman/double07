@@ -50,7 +50,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
       }
     });
 
-    await _animationState.initialize(_controller);
+    await _animationState.initialize(_controller, null);
 
     if (mounted) {
       setState(() {});

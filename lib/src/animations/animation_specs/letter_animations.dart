@@ -8,10 +8,11 @@ class LetterAnimations extends AnimationSpec {
     required this.scale,
     required this.alignment,
     required this.opacity,
+    bool keepAlive = false,
   }) : super(
           master: master,
           parent: parent,
-          keepAlive: true,
+          keepAlive: keepAlive,
         );
 
   Animatable<Alignment> alignment;

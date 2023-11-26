@@ -10,7 +10,10 @@ class AnimaBackground extends RunableAnimation {
   late final AnimaBackgroundAnimations _animations;
 
   @override
-  Future<void> initialize(AnimationController controller) async {
+  Future<void> initialize(
+    AnimationController controller,
+    Animation<double>? owner,
+  ) async {
     _animations = AnimaBackgroundAnimations(state);
 
     await _animations.initialize(controller);
