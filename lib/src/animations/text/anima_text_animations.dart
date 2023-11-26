@@ -12,7 +12,6 @@ class AnimaTextAnimations {
   late final List<AnimatedLetter> _textLetters;
   final List<LetterAnimations> _inAnimations = [];
   final List<LetterAnimations> _outAnimations = [];
-  bool _outMode = false;
 
   final AnimaTextState state;
 
@@ -25,9 +24,16 @@ class AnimaTextAnimations {
       state.letterSpacing,
     );
 
+    final parent = AnimationSpec.parentAnimation(
+      controller: controller,
+      begin: state.timingInfo.begin,
+      end: state.timingInfo.end,
+    );
+
     _buildAnimations(
       count: _textLetters.length,
       controller: controller,
+      parent: parent,
     );
   }
 
@@ -35,7 +41,7 @@ class AnimaTextAnimations {
     required Canvas canvas,
     required Size size,
   }) {
-    if (_outMode) {
+    if (state.timingInfo.outMode) {
       AnimatedLetter.paintLetters(
         canvas: canvas,
         size: size,
@@ -52,10 +58,6 @@ class AnimaTextAnimations {
     }
   }
 
-  set outMode(bool mode) {
-    _outMode = mode;
-  }
-
   // ============================================================
   // private methods
   // ============================================================
@@ -70,8 +72,8 @@ class AnimaTextAnimations {
       return CommonAnimations.alignmentTween(
         begin: begin,
         end: end,
-        alignments:
-            inMode ? state.alignments : state.alignments.reversed.toList(),
+        alignments: state.alignments,
+        // inMode ? state.alignments : state.alignments.reversed.toList(),
         inCurve: state.inCurve,
         outCurve: state.outCurve,
         weights: weights,
@@ -109,7 +111,7 @@ class AnimaTextAnimations {
     double end,
   ) {
     if (state.animationTypes.contains(TextAnimationType.scale)) {
-      return Tween<double>(begin: inMode ? 3 : 1, end: inMode ? 1 : 3).chain(
+      return Tween<double>(begin: inMode ? 6 : 1, end: inMode ? 1 : 6).chain(
         CurveTween(
           curve: Interval(
             begin,
@@ -126,43 +128,47 @@ class AnimaTextAnimations {
   void _buildAnimations({
     required int count,
     required AnimationController controller,
+    required Animation<double> parent,
   }) {
-    final parent = AnimationSpec.parentAnimation(
-      controller: controller,
-      begin: state.timingInfo.begin,
-      end: state.timingInfo.end,
-    );
-
-    // convert to 0..1
     final timing = AnimaTiming(
-      info: state.timingInfo,
+      numItems: state.timingInfo.numItems,
     );
 
     for (int i = 0; i < count; i++) {
       final begin = timing.beginForIndex(i);
       final end = timing.endForIndex(i);
 
-      _inAnimations.add(
-        LetterAnimations(
-          master: controller,
-          parent: parent,
-          scale: _scaleTween(true, begin, end),
-          alignment:
-              _alignmentTween(true, begin, end, const SequenceWeights.equal()),
-          opacity: _opacityTween(true, begin, end),
-        ),
-      );
-
-      _outAnimations.add(
-        LetterAnimations(
-          master: controller,
-          parent: parent,
-          scale: _scaleTween(false, begin, end),
-          alignment:
-              _alignmentTween(false, begin, end, const SequenceWeights.equal()),
-          opacity: _opacityTween(false, begin, end),
-        ),
-      );
+      if (state.timingInfo.outMode) {
+        _outAnimations.add(
+          LetterAnimations(
+            master: controller,
+            parent: parent,
+            scale: ConstantTween<double>(1),
+            alignment: _alignmentTween(
+              false,
+              begin,
+              end,
+              const SequenceWeights.equal(),
+            ),
+            opacity: _opacityTween(false, begin, end),
+          ),
+        );
+      } else {
+        _inAnimations.add(
+          LetterAnimations(
+            master: controller,
+            parent: parent,
+            scale: _scaleTween(true, begin, end),
+            alignment: _alignmentTween(
+              true,
+              begin,
+              end,
+              const SequenceWeights.equal(),
+            ),
+            opacity: _opacityTween(true, begin, end),
+          ),
+        );
+      }
     }
   }
 

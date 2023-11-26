@@ -245,11 +245,13 @@ class AnimaTimingInfo {
     required this.begin,
     required this.end,
     required this.numItems,
+    this.outMode = false,
   });
 
   final double begin;
   final double end;
   final int numItems;
+  final bool outMode;
 
   double get duration {
     return end - begin;
@@ -262,17 +264,17 @@ class AnimaTimingInfo {
 // but then fade out together at the end of the animation
 class AnimaTiming {
   AnimaTiming({
-    required this.info,
+    required this.numItems,
   });
 
-  final AnimaTimingInfo info;
+  final int numItems;
 
   double get animationTime {
     return 1;
   }
 
   double get itemTime {
-    return animationTime / info.numItems;
+    return animationTime / numItems;
   }
 
   double beginForIndex(int index) {

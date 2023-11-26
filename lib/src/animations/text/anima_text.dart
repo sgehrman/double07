@@ -25,11 +25,6 @@ class AnimaText extends RunableAnimation {
     );
   }
 
-  @override
-  set outMode(bool mode) {
-    _animations.outMode = mode;
-  }
-
   // ================================================
   // static helper methods
 
@@ -40,6 +35,7 @@ class AnimaText extends RunableAnimation {
     required Alignment alignment,
     double newLine = 0.08,
     double animateFrom = -2, // set to zero for no fly in
+    bool outMode = false,
   }) {
     final List<AnimaText> result = [];
 
@@ -54,6 +50,16 @@ class AnimaText extends RunableAnimation {
 
     int index = 0;
     for (final line in lines) {
+      final alignments = animateFrom != 0
+          ? [
+              Alignment(alignment.x, animateFrom),
+              Alignment(alignment.x, alignment.y + (index * newLine)),
+            ]
+          : [
+              Alignment(alignment.x, alignment.y + (index * newLine)),
+              Alignment(alignment.x, alignment.y + (index * newLine)),
+            ];
+
       // ignore blank lines
       if (!line.isBlank) {
         final lineBegin = lineEnd;
@@ -61,15 +67,11 @@ class AnimaText extends RunableAnimation {
 
         final state = AnimaTextState(
           line: line,
-          alignments: [
-            if (animateFrom != 0) Alignment(alignment.x, animateFrom),
-            if (animateFrom == 0)
-              Alignment(alignment.x, alignment.y + (index * newLine)),
-            Alignment(alignment.x, alignment.y + (index * newLine)),
-          ],
+          alignments: alignments,
           timingInfo: AnimaTimingInfo(
             begin: lineBegin,
             end: lineEnd,
+            outMode: outMode,
             numItems: line.textLengh,
           ),
         );

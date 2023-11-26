@@ -21,12 +21,11 @@ class AnimaParagraph extends RunableAnimation {
   final double newLine;
   final double animateFrom;
 
-  late final _AnimaParagraph _paragraph;
   late final AnimaController _controller;
 
   @override
   Future<void> initialize(AnimationController controller) async {
-    _paragraph = _AnimaParagraph(
+    final _AnimaParagraph paragraph = _AnimaParagraph(
       lines: lines,
       alignment: alignment,
       animateFrom: animateFrom,
@@ -38,7 +37,7 @@ class AnimaParagraph extends RunableAnimation {
     _controller = AnimaController(
       begin: timeStart,
       end: timeEnd,
-      runnable: _paragraph,
+      runnable: paragraph,
     );
 
     await _controller.initialize(controller);
@@ -72,20 +71,42 @@ class _AnimaParagraph extends RunableAnimation {
   final double newLine;
   final double animateFrom;
 
-  late final List<AnimaText> _animations;
+  late final List<AnimaText> _outAnimations;
+  late final List<AnimaText> _inAnimations;
 
   @override
   Future<void> initialize(AnimationController controller) async {
-    _animations = AnimaText.paragraph(
+    final double half = (timeEnd - timeStart) / 2;
+    double begin = timeStart;
+    double end = begin + half;
+
+    _inAnimations = AnimaText.paragraph(
       lines: lines,
       alignment: alignment,
-      begin: timeStart,
-      end: timeEnd,
+      begin: begin,
+      end: end,
       animateFrom: animateFrom,
       newLine: newLine,
     );
 
-    for (final l in _animations) {
+    begin = end;
+    end = begin + half;
+
+    _outAnimations = AnimaText.paragraph(
+      lines: lines,
+      alignment: alignment,
+      begin: begin,
+      end: end,
+      animateFrom: animateFrom,
+      newLine: newLine,
+      outMode: true,
+    );
+
+    for (final l in _inAnimations) {
+      await l.initialize(controller);
+    }
+
+    for (final l in _outAnimations) {
       await l.initialize(controller);
     }
   }
@@ -95,15 +116,14 @@ class _AnimaParagraph extends RunableAnimation {
     Canvas canvas,
     Size size,
   ) {
-    for (final animation in _animations) {
-      animation.paint(canvas, size);
-    }
-  }
-
-  @override
-  set outMode(bool mode) {
-    for (final animation in _animations) {
-      animation.outMode = mode;
+    if (outMode) {
+      for (final animation in _outAnimations) {
+        animation.paint(canvas, size);
+      }
+    } else {
+      for (final animation in _inAnimations) {
+        animation.paint(canvas, size);
+      }
     }
   }
 }

@@ -27,7 +27,6 @@ class AnimaElements {
       timeEnd: 1,
       // timeStart: Timeline.dominoTextStart,
       // timeEnd: Timeline.dominoTextEnd,
-
       animateFrom: 0,
       lines: [
         AnimaTextLine(
