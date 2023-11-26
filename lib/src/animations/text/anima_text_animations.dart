@@ -74,7 +74,6 @@ class AnimaTextAnimations {
         begin: begin,
         end: end,
         alignments: state.alignments,
-        // inMode ? state.alignments : state.alignments.reversed.toList(),
         inCurve: state.inCurve,
         outCurve: state.outCurve,
         weights: weights,
@@ -137,23 +136,16 @@ class AnimaTextAnimations {
 
     for (int i = 0; i < count; i++) {
       if (state.timingInfo.outMode) {
-        // all characters draw the same time in outMode
-        final begin = timing.beginForIndex(0);
-        final end = timing.endForIndex(0, stretchFactor: 2);
-
         _outAnimations.add(
           LetterAnimations(
             master: controller,
             parent: parent,
             keepAlive: true,
             scale: ConstantTween<double>(1),
-            alignment: _alignmentTween(
-              false,
-              begin,
-              end,
-              const SequenceWeights.equal(),
+            alignment: ConstantTween<Alignment>(
+              state.alignments.first,
             ),
-            opacity: _opacityTween(false, begin, end),
+            opacity: _opacityTween(false, 0.5, 1),
           ),
         );
       } else {
