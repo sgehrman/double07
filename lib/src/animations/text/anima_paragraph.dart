@@ -135,11 +135,14 @@ class _AnimaParagraph extends RunableAnimation {
     Canvas canvas,
     Size size,
   ) {
-    for (final animation in _outAnimations) {
-      animation.paint(canvas, size);
-    }
-    for (final animation in _inAnimations) {
-      animation.paint(canvas, size);
+    if (outMode) {
+      for (final animation in _outAnimations) {
+        animation.paint(canvas, size);
+      }
+    } else {
+      for (final animation in _inAnimations) {
+        animation.paint(canvas, size);
+      }
     }
   }
 }

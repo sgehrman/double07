@@ -144,6 +144,7 @@ class AnimaTextAnimations {
           LetterAnimations(
             master: controller,
             parent: parent,
+            keepAlive: true,
             scale: ConstantTween<double>(1),
             alignment: _alignmentTween(
               false,
@@ -159,6 +160,7 @@ class AnimaTextAnimations {
           LetterAnimations(
             master: controller,
             parent: parent,
+            keepAlive: true,
             scale: _scaleTween(true, begin, end),
             alignment: _alignmentTween(
               true,
