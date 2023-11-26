@@ -3,7 +3,7 @@ import 'package:double07/src/animations/anima_image/anima_image_animations.dart'
 import 'package:double07/src/animations/anima_image/anima_image_state.dart';
 import 'package:flutter/material.dart';
 
-class AnimaImage implements RunableAnimation {
+class AnimaImage extends RunableAnimation {
   AnimaImage(this.state);
 
   final AnimaImageState state;

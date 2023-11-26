@@ -218,6 +218,24 @@ class CommonAnimations {
       ),
     );
   }
+
+  static Animatable<double> simpleTween({
+    required double begin,
+    required double end,
+    required double beginValue,
+    required double endValue,
+    required Curve curve,
+  }) {
+    return Tween<double>(begin: beginValue, end: endValue).chain(
+      CurveTween(
+        curve: Interval(
+          begin,
+          end,
+          curve: curve,
+        ),
+      ),
+    );
+  }
 }
 
 // ===============================================================
@@ -226,47 +244,15 @@ class AnimaTimingInfo {
   AnimaTimingInfo({
     required this.begin,
     required this.end,
-    required this.parentBegin,
-    required this.parentEnd,
     required this.numItems,
-    required this.endDelay,
-    this.inRatio = defRatio,
-    this.outRatio = defRatio,
   });
 
-  AnimaTimingInfo.simple({
-    required this.begin,
-    required this.end,
-    required this.numItems,
-    required this.endDelay,
-    this.inRatio = defRatio,
-    this.outRatio = defRatio,
-  })  : parentBegin = begin,
-        parentEnd = end;
-
-  static const double defRatio = 1 / 3;
   final double begin;
   final double end;
-  final double parentBegin;
-  final double parentEnd;
   final int numItems;
-  final double endDelay; // 0-1
-
-  final double inRatio;
-  final double outRatio;
-
-  double get parentDuration {
-    return parentEnd - parentBegin;
-  }
 
   double get duration {
     return end - begin;
-  }
-
-  // parents begine and end could be .2-.5 or something
-  // this gets it to 0..1? may not work
-  double get durationRatio {
-    return duration / parentDuration;
   }
 }
 
@@ -281,23 +267,8 @@ class AnimaTiming {
 
   final AnimaTimingInfo info;
 
-  SequenceWeights weightsForIndex(int index) {
-    final double startWeight = itemTime * info.inRatio;
-    final double endWeight = itemTime * info.outRatio;
-    final double holdWeight = itemTime - (startWeight + endWeight);
-
-    final endOfItem = endForIndex(index);
-    final extra = 1 - endOfItem;
-
-    return SequenceWeights.custom(
-      startWeight,
-      holdWeight + extra,
-      endWeight,
-    );
-  }
-
   double get animationTime {
-    return (1 * info.durationRatio) * (1 - info.endDelay);
+    return 1;
   }
 
   double get itemTime {

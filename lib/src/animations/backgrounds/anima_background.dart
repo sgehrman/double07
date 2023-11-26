@@ -3,7 +3,7 @@ import 'package:double07/src/animations/backgrounds/anima_background_animations.
 import 'package:double07/src/animations/backgrounds/anima_background_state.dart';
 import 'package:flutter/material.dart';
 
-class AnimaBackground implements RunableAnimation {
+class AnimaBackground extends RunableAnimation {
   AnimaBackground(this.state);
 
   final AnimaBackgroundState state;

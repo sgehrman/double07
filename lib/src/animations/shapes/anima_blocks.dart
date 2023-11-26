@@ -3,7 +3,7 @@ import 'package:double07/src/animations/shapes/anima_blocks_animations.dart';
 import 'package:double07/src/animations/shapes/anima_blocks_state.dart';
 import 'package:flutter/material.dart';
 
-class AnimaBlocks implements RunableAnimation {
+class AnimaBlocks extends RunableAnimation {
   AnimaBlocks(this.state);
 
   final AnimaBlocksState state;

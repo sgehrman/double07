@@ -23,8 +23,11 @@ class AnimaElements {
   static RunableAnimation dominoQuote() {
     return AnimaParagraph(
       alignment: const Alignment(-0.12, 0.6),
-      timeStart: Timeline.dominoTextStart,
-      timeEnd: Timeline.dominoTextEnd,
+      timeStart: 0,
+      timeEnd: 1,
+      // timeStart: Timeline.dominoTextStart,
+      // timeEnd: Timeline.dominoTextEnd,
+
       animateFrom: 0,
       lines: [
         AnimaTextLine(
@@ -154,7 +157,6 @@ class AnimaElements {
       alignment: const Alignment(0, -0.6),
       timeStart: Timeline.mainTitlesStart,
       timeEnd: Timeline.mainTitlesEnd,
-      type: ParagraphAnimaType.titleSequence,
       lines: [
         AnimaTextLine(
           text: 'DECKR Easter Egg!',
@@ -258,11 +260,10 @@ class AnimaElements {
           const Alignment(-0.8, -2),
           const Alignment(-0.8, -0.8),
         ],
-        timingInfo: AnimaTimingInfo.simple(
+        timingInfo: AnimaTimingInfo(
           begin: Timeline.textStart,
           end: Timeline.textEnd,
           numItems: str.length,
-          endDelay: 0,
         ),
       ),
     );

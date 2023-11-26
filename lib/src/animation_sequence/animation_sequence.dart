@@ -2,6 +2,8 @@ import 'package:double07/src/animation_sequence/anima_elements.dart';
 import 'package:flutter/material.dart';
 
 abstract class RunableAnimation {
+  bool outMode = false;
+
   void paint(Canvas canvas, Size size);
   Future<void> initialize(AnimationController controller);
 }
@@ -11,32 +13,35 @@ abstract class RunableAnimation {
 class AnimationSequence {
   AnimationSequence();
 
-  bool isInitialized = false;
+  bool _isInitialized = false;
 
   final List<RunableAnimation> _runables = [
-    ...AnimaElements.backgrounds(),
-    ...AnimaElements.easterEggs(),
-    // AnimaElements.deckrLogo(),
-    AnimaElements.hendersonQuote(),
-    AnimaElements.largoQuote(),
+    //  ...AnimaElements.backgrounds(),
+    //   ...AnimaElements.easterEggs(),
+    //   AnimaElements.deckrLogo(),
+    //   AnimaElements.hendersonQuote(),
+    //   AnimaElements.largoQuote(),
     AnimaElements.dominoQuote(),
 
     // AnimaElements.randomQuote(),
-    AnimaElements.reviewsTitle(),
-    AnimaElements.introTitles(),
-    AnimaElements.double07Ball(),
-    ...AnimaElements.blocks(),
+
+    // AnimaElements.reviewsTitle(),
+    // AnimaElements.introTitles(),
+    // AnimaElements.double07Ball(),
+    // ...AnimaElements.blocks(),
   ];
 
   // =================================================
 
+  bool get isInitialized => _isInitialized;
+
   Future<void> initialize(AnimationController controller) async {
-    if (!isInitialized) {
+    if (!_isInitialized) {
       for (final item in _runables) {
         await item.initialize(controller);
       }
 
-      isInitialized = true;
+      _isInitialized = true;
     }
   }
 

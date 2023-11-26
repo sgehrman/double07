@@ -10,7 +10,9 @@ class AnimaTextAnimations {
   AnimaTextAnimations(this.state);
 
   late final List<AnimatedLetter> _textLetters;
-  late final List<LetterAnimations> _letterAnimations;
+  final List<LetterAnimations> _inAnimations = [];
+  final List<LetterAnimations> _outAnimations = [];
+  bool _outMode = false;
 
   final AnimaTextState state;
 
@@ -23,7 +25,7 @@ class AnimaTextAnimations {
       state.letterSpacing,
     );
 
-    _letterAnimations = _buildAnimations(
+    _buildAnimations(
       count: _textLetters.length,
       controller: controller,
     );
@@ -33,12 +35,25 @@ class AnimaTextAnimations {
     required Canvas canvas,
     required Size size,
   }) {
-    AnimatedLetter.paintLetters(
-      canvas: canvas,
-      size: size,
-      letters: _textLetters,
-      letterAnimations: _letterAnimations,
-    );
+    if (_outMode) {
+      AnimatedLetter.paintLetters(
+        canvas: canvas,
+        size: size,
+        letters: _textLetters,
+        letterAnimations: _outAnimations,
+      );
+    } else {
+      AnimatedLetter.paintLetters(
+        canvas: canvas,
+        size: size,
+        letters: _textLetters,
+        letterAnimations: _inAnimations,
+      );
+    }
+  }
+
+  set outMode(bool mode) {
+    _outMode = mode;
   }
 
   // ============================================================
@@ -46,6 +61,7 @@ class AnimaTextAnimations {
   // ============================================================
 
   Animatable<Alignment> _alignmentTween(
+    bool inMode,
     double begin,
     double end,
     SequenceWeights weights,
@@ -54,7 +70,8 @@ class AnimaTextAnimations {
       return CommonAnimations.alignmentTween(
         begin: begin,
         end: end,
-        alignments: state.alignments,
+        alignments:
+            inMode ? state.alignments : state.alignments.reversed.toList(),
         inCurve: state.inCurve,
         outCurve: state.outCurve,
         weights: weights,
@@ -67,21 +84,19 @@ class AnimaTextAnimations {
   }
 
   Animatable<double> _opacityTween(
+    bool inMode,
     double begin,
     double end,
-    SequenceWeights weights,
   ) {
     if (state.animationTypes.any(
       [TextAnimationType.opacity, TextAnimationType.fadeInOut].contains,
     )) {
-      return CommonAnimations.inOutTween(
+      return CommonAnimations.simpleTween(
         begin: begin,
         end: end,
-        beginValue: 0,
-        endValue: state.opacity,
-        inCurve: state.opacityCurve,
-        outCurve: state.opacityCurve,
-        weights: weights,
+        beginValue: inMode ? 0 : state.opacity,
+        endValue: inMode ? state.opacity : 0,
+        curve: state.opacityCurve,
       );
     }
 
@@ -89,11 +104,12 @@ class AnimaTextAnimations {
   }
 
   Animatable<double> _scaleTween(
+    bool inMode,
     double begin,
     double end,
   ) {
     if (state.animationTypes.contains(TextAnimationType.scale)) {
-      return Tween<double>(begin: 3, end: 1).chain(
+      return Tween<double>(begin: inMode ? 3 : 1, end: inMode ? 1 : 3).chain(
         CurveTween(
           curve: Interval(
             begin,
@@ -107,16 +123,14 @@ class AnimaTextAnimations {
     return ConstantTween<double>(1);
   }
 
-  List<LetterAnimations> _buildAnimations({
+  void _buildAnimations({
     required int count,
     required AnimationController controller,
   }) {
-    final List<LetterAnimations> result = [];
-
     final parent = AnimationSpec.parentAnimation(
       controller: controller,
       begin: state.timingInfo.begin,
-      end: state.timingInfo.parentEnd,
+      end: state.timingInfo.end,
     );
 
     // convert to 0..1
@@ -127,26 +141,29 @@ class AnimaTextAnimations {
     for (int i = 0; i < count; i++) {
       final begin = timing.beginForIndex(i);
       final end = timing.endForIndex(i);
-      final weights = timing.weightsForIndex(i);
 
-      // const weights = SequenceWeights.equal();
-      print('index: $i');
-      print('begin: $begin');
-      print('end: $end');
-      print(weights);
-
-      result.add(
+      _inAnimations.add(
         LetterAnimations(
           master: controller,
           parent: parent,
-          scale: _scaleTween(begin, end),
-          alignment: _alignmentTween(begin, 1, weights),
-          opacity: _opacityTween(begin, 1, weights),
+          scale: _scaleTween(true, begin, end),
+          alignment:
+              _alignmentTween(true, begin, end, const SequenceWeights.equal()),
+          opacity: _opacityTween(true, begin, end),
+        ),
+      );
+
+      _outAnimations.add(
+        LetterAnimations(
+          master: controller,
+          parent: parent,
+          scale: _scaleTween(false, begin, end),
+          alignment:
+              _alignmentTween(false, begin, end, const SequenceWeights.equal()),
+          opacity: _opacityTween(false, begin, end),
         ),
       );
     }
-
-    return result;
   }
 
   TextStyle _textStyle() {
