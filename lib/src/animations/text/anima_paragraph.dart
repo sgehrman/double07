@@ -97,7 +97,7 @@ class _AnimaParagraph extends RunableAnimation {
     );
 
     final inParent = AnimationSpec.parentAnimation(
-      controller: controller,
+      parent: controller,
       begin: begin,
       end: end,
     );
@@ -120,7 +120,7 @@ class _AnimaParagraph extends RunableAnimation {
     );
 
     final outParent = AnimationSpec.parentAnimation(
-      controller: controller,
+      parent: controller,
       begin: begin,
       end: end,
     );

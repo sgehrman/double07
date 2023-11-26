@@ -22,7 +22,7 @@ class AnimaController extends RunableAnimation {
     Animation<double>? owner,
   ) async {
     _outModeInterval = AnimationSpec.parentAnimation(
-      controller: controller,
+      parent: controller,
       begin: begin,
       end: end,
     );

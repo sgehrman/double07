@@ -27,12 +27,12 @@ abstract class AnimationSpec {
   }
 
   static Animation<double> parentAnimation({
-    required AnimationController controller,
+    required Animation<double> parent,
     required double begin,
     required double end,
   }) {
     return CurvedAnimation(
-      parent: controller,
+      parent: parent,
       curve: Interval(
         begin,
         end,

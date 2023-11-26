@@ -26,7 +26,7 @@ class AnimaTextAnimations {
     );
 
     final parent = AnimationSpec.parentAnimation(
-      controller: controller,
+      parent: controller,
       begin: state.timingInfo.begin,
       end: state.timingInfo.end,
     );

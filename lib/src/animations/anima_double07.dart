@@ -36,7 +36,7 @@ class AnimaDouble07 extends RunableAnimation {
     );
 
     final parent = AnimationSpec.parentAnimation(
-      controller: controller,
+      parent: controller,
       begin: Timeline.ballStart,
       end: Timeline.ballEnd,
     );

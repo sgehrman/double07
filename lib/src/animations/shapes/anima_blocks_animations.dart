@@ -16,7 +16,7 @@ class AnimaBlocksAnimations {
 
   Future<void> initialize(AnimationController controller) {
     final parent = AnimationSpec.parentAnimation(
-      controller: controller,
+      parent: controller,
       begin: state.timeStart,
       end: state.timeEnd,
     );
