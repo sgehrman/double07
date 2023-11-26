@@ -269,19 +269,21 @@ class AnimaTiming {
 
   final int numItems;
 
-  double get animationTime {
-    return 1;
-  }
-
-  double get itemTime {
-    return animationTime / numItems;
+  double get _itemTime {
+    return 1 / numItems;
   }
 
   double beginForIndex(int index) {
-    return index * itemTime;
+    return index * _itemTime;
   }
 
-  double endForIndex(int index) {
-    return beginForIndex(index) + itemTime;
+  double endForIndex(int index, {double stretchFactor = 1}) {
+    final result = beginForIndex(index) + (_itemTime * stretchFactor);
+
+    if (result > 1) {
+      return 1;
+    }
+
+    return result;
   }
 }
