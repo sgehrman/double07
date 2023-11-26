@@ -68,7 +68,11 @@ class AnimaText extends RunableAnimation {
 
       // ignore blank lines
       if (!line.isBlank) {
-        final lineBegin = lineEnd;
+        double lineBegin = lineEnd;
+        // all lines should draw at the same time in outMode
+        if (outMode) {
+          lineBegin = begin;
+        }
         lineEnd = lineBegin + (line.textLengh * timePerChar);
 
         final state = AnimaTextState(
