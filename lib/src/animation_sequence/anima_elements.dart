@@ -289,8 +289,8 @@ class AnimaElements {
         opacity: opacity,
         timeEnd: end,
         alignments: AnimaAlignments(
-          Alignment.topCenter,
-          from: const Alignment(0, 0.7),
+          const Alignment(0, 0.7),
+          from: Alignment.topCenter,
           to: Alignment.topCenter,
         ),
       ),
