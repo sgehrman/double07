@@ -1,5 +1,5 @@
+import 'dart:math' as math;
 import 'dart:ui' as ui;
-import 'dart:ui';
 
 import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:double07/src/animations/anima_utils.dart';
@@ -56,6 +56,8 @@ class AnimaBackgroundAnimations {
     );
   }
 
+  double degToRad(num deg) => deg * (math.pi / 180.0);
+
   void paint(Canvas canvas, Size size) {
     if (_animations.isRunning) {
       final rect = Offset.zero & size;
@@ -108,6 +110,35 @@ class AnimaBackgroundAnimations {
 
         canvas.drawRect(rect, Paint()..color = Colors.black87);
       } else if (state.mode == AnimaBackgroundMode.binoculars) {
+        final Path path = Path();
+        final ovalSize = Size(size.height / 2, size.height / 2);
+
+        // Adds a quarter arc
+        path.addArc(
+          Rect.fromLTWH(0, 0, ovalSize.width, ovalSize.height),
+          degToRad(35),
+          degToRad(290),
+        );
+
+        final Path path2 = Path();
+
+        path2.addArc(
+          Rect.fromLTWH(
+            ovalSize.width * 0.8,
+            0,
+            ovalSize.width,
+            ovalSize.height,
+          ),
+          degToRad(235),
+          degToRad(280),
+        );
+
+        path.extendWithPath(path2, Offset.zero);
+
+        path.close();
+
+        canvas.clipPath(path);
+
         final imageRect = Rect.fromLTWH(
           0,
           0,
