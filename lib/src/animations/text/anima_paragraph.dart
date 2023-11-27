@@ -98,7 +98,7 @@ class _AnimaParagraph extends RunableAnimation {
       lines: lines,
       alignment: alignment,
       begin: 0,
-      end: 1,
+      end: 0.7, // delay before fade out
       animateFrom: animateFrom,
       outMode: false,
     );
