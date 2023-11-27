@@ -15,10 +15,6 @@ import 'package:double07/src/timeline.dart';
 import 'package:flutter/material.dart';
 
 class AnimaElements {
-  static const double kTitleFontSize = 50;
-  static const double kSmallFontSize = 30;
-  static const double kLargeFontSize = 42;
-
   static RunableAnimation dominoQuote() {
     return AnimaParagraph(
       alignment: const Alignment(-0.12, 0.6),
@@ -28,20 +24,20 @@ class AnimaElements {
       lines: [
         AnimaTextLine(
           text: 'My darlings,',
-          fontSize: kSmallFontSize,
+          fontSize: AnimaTextLine.kSmallFontSize,
         ),
         AnimaTextLine(
           text: 'I adore using Deckr after',
-          fontSize: kSmallFontSize,
+          fontSize: AnimaTextLine.kSmallFontSize,
         ),
         AnimaTextLine(
           text: 'diving in the Bahamas.',
-          fontSize: kSmallFontSize,
+          fontSize: AnimaTextLine.kSmallFontSize,
         ),
         AnimaTextLine.blank(),
         AnimaTextLine(
           text: '- Domino',
-          fontSize: kLargeFontSize,
+          fontSize: AnimaTextLine.kLargeFontSize,
           color: Colors.cyan,
         ),
       ],
@@ -57,16 +53,16 @@ class AnimaElements {
       lines: [
         AnimaTextLine(
           text: 'All members of SPECTER',
-          fontSize: kSmallFontSize,
+          fontSize: AnimaTextLine.kSmallFontSize,
         ),
         AnimaTextLine(
           text: 'are required to use Deckr.',
-          fontSize: kSmallFontSize,
+          fontSize: AnimaTextLine.kSmallFontSize,
         ),
         AnimaTextLine.blank(),
         AnimaTextLine(
           text: '- Emilio Largo',
-          fontSize: kLargeFontSize,
+          fontSize: AnimaTextLine.kLargeFontSize,
           color: Colors.cyan,
         ),
       ],
@@ -82,16 +78,16 @@ class AnimaElements {
       lines: [
         AnimaTextLine(
           text: 'A friend of mine at the Russian Embassy',
-          fontSize: kSmallFontSize,
+          fontSize: AnimaTextLine.kSmallFontSize,
         ),
         AnimaTextLine(
           text: 'Recommended I use Deckr among other things.',
-          fontSize: kSmallFontSize,
+          fontSize: AnimaTextLine.kSmallFontSize,
         ),
         AnimaTextLine.blank(),
         AnimaTextLine(
           text: '- Mr. Henderson',
-          fontSize: kLargeFontSize,
+          fontSize: AnimaTextLine.kLargeFontSize,
           color: Colors.cyan,
         ),
       ],
@@ -107,15 +103,15 @@ class AnimaElements {
       lines: [
         AnimaTextLine(
           text: 'Deckr Reviews',
-          fontSize: kSmallFontSize,
+          fontSize: AnimaTextLine.kSmallFontSize,
         ),
         AnimaTextLine(
           text: 'Here\'s some words',
-          fontSize: kSmallFontSize,
+          fontSize: AnimaTextLine.kSmallFontSize,
         ),
         AnimaTextLine(
           text: 'From our customers',
-          fontSize: kLargeFontSize,
+          fontSize: AnimaTextLine.kLargeFontSize,
         ),
       ],
     );
@@ -130,19 +126,19 @@ class AnimaElements {
       lines: [
         AnimaTextLine(
           text: 'This dream is for you',
-          fontSize: kSmallFontSize,
+          fontSize: AnimaTextLine.kSmallFontSize,
         ),
         AnimaTextLine(
           text: 'So pay the price',
-          fontSize: kSmallFontSize,
+          fontSize: AnimaTextLine.kSmallFontSize,
         ),
         AnimaTextLine(
           text: 'Make one dream come true',
-          fontSize: kLargeFontSize,
+          fontSize: AnimaTextLine.kLargeFontSize,
         ),
         AnimaTextLine(
           text: 'You only live twice',
-          fontSize: kLargeFontSize,
+          fontSize: AnimaTextLine.kLargeFontSize,
         ),
       ],
     );
@@ -156,19 +152,19 @@ class AnimaElements {
       lines: [
         AnimaTextLine(
           text: 'DECKR Easter Egg!',
-          fontSize: kTitleFontSize,
+          fontSize: AnimaTextLine.kTitleFontSize,
         ),
         AnimaTextLine(
           text: 'Experimenting with Flutter animations',
-          fontSize: kTitleFontSize,
+          fontSize: AnimaTextLine.kTitleFontSize,
         ),
         AnimaTextLine(
           text: 'To be used in future Deckr features',
-          fontSize: kTitleFontSize,
+          fontSize: AnimaTextLine.kTitleFontSize,
         ),
         AnimaTextLine(
           text: 'Enjoy!',
-          fontSize: kTitleFontSize,
+          fontSize: AnimaTextLine.kTitleFontSize,
         ),
       ],
     );

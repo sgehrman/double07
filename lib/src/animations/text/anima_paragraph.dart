@@ -11,7 +11,6 @@ class AnimaParagraph extends RunableAnimation {
     required this.alignment,
     required this.timeStart,
     required this.timeEnd,
-    this.newLine = 0.08,
     this.animateFrom = -1,
   });
 
@@ -19,7 +18,6 @@ class AnimaParagraph extends RunableAnimation {
   final Alignment alignment;
   final double timeStart;
   final double timeEnd;
-  final double newLine;
   final double animateFrom;
 
   late final _AnimaParagraph _paragraph;
@@ -32,7 +30,6 @@ class AnimaParagraph extends RunableAnimation {
       lines: lines,
       alignment: alignment,
       animateFrom: animateFrom,
-      newLine: newLine,
       timeEnd: timeEnd,
       timeStart: timeStart,
     );
@@ -57,7 +54,6 @@ class _AnimaParagraph extends RunableAnimation {
     required this.alignment,
     required this.timeStart,
     required this.timeEnd,
-    required this.newLine,
     required this.animateFrom, // set to zero for no fly in
   });
 
@@ -65,7 +61,6 @@ class _AnimaParagraph extends RunableAnimation {
   final Alignment alignment;
   final double timeStart;
   final double timeEnd;
-  final double newLine;
   final double animateFrom;
 
   late final List<AnimaTextSegment> _outAnimations;
@@ -105,7 +100,6 @@ class _AnimaParagraph extends RunableAnimation {
       begin: 0,
       end: 1,
       animateFrom: animateFrom,
-      newLine: newLine,
       outMode: false,
     );
 
@@ -115,7 +109,6 @@ class _AnimaParagraph extends RunableAnimation {
       begin: 0,
       end: 1,
       animateFrom: animateFrom,
-      newLine: newLine,
       outMode: true,
     );
 

@@ -14,7 +14,6 @@ class AnimaParagraphLayout {
     required double begin,
     required double end,
     required Alignment alignment,
-    required double newLine,
     required double animateFrom,
     required bool outMode,
   }) {
@@ -29,7 +28,8 @@ class AnimaParagraphLayout {
     final timePerChar = totalTime / charCount;
     double lineEnd = begin;
 
-    int index = 0;
+    double lineHeight = 0;
+
     for (final line in lines) {
       // ignore blank lines
       if (!line.isBlank) {
@@ -39,7 +39,7 @@ class AnimaParagraphLayout {
         final state = AnimaTextState(
           line: line,
           alignments: AnimaAlignments(
-            Alignment(alignment.x, alignment.y + (index * newLine)),
+            Alignment(alignment.x, alignment.y + lineHeight),
             from: animateFrom != 0 ? Alignment(alignment.x, animateFrom) : null,
           ),
           timingInfo: AnimaTimingInfo(
@@ -55,7 +55,7 @@ class AnimaParagraphLayout {
         );
       }
 
-      index++;
+      lineHeight += line.lineHeight;
     }
 
     return result;
