@@ -14,7 +14,7 @@ class AnimaParagraphLayout {
     required double begin,
     required double end,
     required Alignment alignment,
-    required double animateFrom,
+    required bool animateDown,
     required bool outMode,
   }) {
     final List<AnimaTextSegment> result = [];
@@ -40,7 +40,9 @@ class AnimaParagraphLayout {
           line: line,
           alignments: AnimaAlignments(
             Alignment(alignment.x, alignment.y + lineHeight),
-            from: animateFrom != 0 ? Alignment(alignment.x, animateFrom) : null,
+            from: animateDown
+                ? Alignment(alignment.x, alignment.y - line.lineHeight)
+                : null,
           ),
           timingInfo: AnimaTimingInfo(
             begin: lineBegin,

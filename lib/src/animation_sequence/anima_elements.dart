@@ -20,7 +20,7 @@ class AnimaElements {
       alignment: const Alignment(-0.12, 0.6),
       timeStart: Timeline.dominoTextStart,
       timeEnd: Timeline.dominoTextEnd,
-      animateFrom: 0,
+      animateDown: false,
       lines: [
         AnimaTextLine(
           text: 'My darlings,',
@@ -49,7 +49,7 @@ class AnimaElements {
       alignment: const Alignment(0.7, 0.75),
       timeStart: Timeline.largoTextStart,
       timeEnd: Timeline.largoTextEnd,
-      animateFrom: 0,
+      animateDown: false,
       lines: [
         AnimaTextLine(
           text: 'All members of SPECTER',
@@ -74,7 +74,7 @@ class AnimaElements {
       alignment: const Alignment(-0.35, 0.6),
       timeStart: Timeline.hendersonTextStart,
       timeEnd: Timeline.hendersonTextEnd,
-      animateFrom: 0,
+      animateDown: false,
       lines: [
         AnimaTextLine(
           text: 'A friend of mine at the Russian Embassy',
@@ -99,7 +99,7 @@ class AnimaElements {
       alignment: Alignment.center,
       timeStart: Timeline.reviewsStart,
       timeEnd: Timeline.reviewsEnd,
-      animateFrom: 0,
+      animateDown: false,
       lines: [
         AnimaTextLine(
           text: 'Deckr Reviews',
@@ -122,7 +122,7 @@ class AnimaElements {
       alignment: const Alignment(0.8, -0.8),
       timeStart: Timeline.quoteStart,
       timeEnd: Timeline.quoteEnd,
-      animateFrom: 0,
+      animateDown: false,
       lines: [
         AnimaTextLine(
           text: 'This dream is for you',
