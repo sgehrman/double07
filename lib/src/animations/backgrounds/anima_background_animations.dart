@@ -20,7 +20,7 @@ class AnimaBackgroundAnimations {
 
   // =================================================
 
-  Future<void> initialize(AnimationController controller) async {
+  Future<void> initialize(Animation<double> controller) async {
     final ByteData byteData = await rootBundle.load(state.imageAsset);
 
     _image = await ImageProcessor.bytesToImage(byteData.buffer.asUint8List());
@@ -32,8 +32,7 @@ class AnimaBackgroundAnimations {
     );
 
     _animations = BackgroundAnimations(
-      master: controller,
-      parent: parent,
+      controllers: [controller],
       opacity: CommonAnimations.inOutAnima(
         parent: parent,
         beginValue: 0,

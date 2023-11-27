@@ -27,8 +27,7 @@ class AnimaParagraph extends RunableAnimation {
 
   @override
   Future<void> initialize(
-    AnimationController controller,
-    Animation<double>? owner,
+    Animation<double> controller,
   ) async {
     final _AnimaParagraph paragraph = _AnimaParagraph(
       lines: lines,
@@ -45,7 +44,7 @@ class AnimaParagraph extends RunableAnimation {
       runnable: paragraph,
     );
 
-    await _controller.initialize(controller, owner);
+    await _controller.initialize(controller);
   }
 
   @override
@@ -81,11 +80,10 @@ class _AnimaParagraph extends RunableAnimation {
 
   @override
   Future<void> initialize(
-    AnimationController controller,
-    Animation<double>? owner,
+    Animation<double> controller,
   ) async {
     final double half = (timeEnd - timeStart) / 2;
-    double begin = timeStart;
+    double begin = 0;
     double end = begin + half;
 
     _inAnimations = AnimaParagraphLayout.paragraph(
@@ -97,14 +95,14 @@ class _AnimaParagraph extends RunableAnimation {
       newLine: newLine,
     );
 
-    final inParent = AnimationSpec.parentAnimation(
+    final inSubController = AnimationSpec.parentAnimation(
       parent: controller,
       begin: begin,
       end: end,
     );
 
     for (final l in _inAnimations) {
-      await l.initialize(controller, inParent);
+      await l.initialize(inSubController);
     }
 
     begin = end;
@@ -120,14 +118,14 @@ class _AnimaParagraph extends RunableAnimation {
       outMode: true,
     );
 
-    final outParent = AnimationSpec.parentAnimation(
+    final outSubController = AnimationSpec.parentAnimation(
       parent: controller,
       begin: begin,
       end: end,
     );
 
     for (final l in _outAnimations) {
-      await l.initialize(controller, outParent);
+      await l.initialize(outSubController);
     }
   }
 
@@ -136,14 +134,12 @@ class _AnimaParagraph extends RunableAnimation {
     Canvas canvas,
     Size size,
   ) {
-    if (outMode) {
-      for (final animation in _outAnimations) {
-        animation.paint(canvas, size);
-      }
-    } else {
-      for (final animation in _inAnimations) {
-        animation.paint(canvas, size);
-      }
+    for (final animation in _outAnimations) {
+      animation.paint(canvas, size);
+    }
+
+    for (final animation in _inAnimations) {
+      animation.paint(canvas, size);
     }
   }
 }

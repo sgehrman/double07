@@ -15,10 +15,9 @@ class AnimaTextAnimations {
 
   final AnimaTextState state;
 
-  Future<void> initialize({
-    required AnimationController controller,
-    required Animation<double>? owner,
-  }) async {
+  Future<void> initialize(
+    Animation<double> controller,
+  ) async {
     _textLetters = await AnimatedLetter.createTextImages(
       state.text,
       _textStyle(),
@@ -127,7 +126,7 @@ class AnimaTextAnimations {
 
   void _buildAnimations({
     required int count,
-    required AnimationController controller,
+    required Animation<double> controller,
     required Animation<double> parent,
   }) {
     final timing = AnimaTiming(
@@ -138,9 +137,8 @@ class AnimaTextAnimations {
       if (state.timingInfo.outMode) {
         _outAnimations.add(
           LetterAnimations(
-            master: controller,
-            parent: parent,
-            keepAlive: true,
+            controllers: [controller],
+            driver: parent,
             scale: ConstantTween<double>(1),
             alignment: ConstantTween<Alignment>(
               state.alignments.first,
@@ -154,9 +152,8 @@ class AnimaTextAnimations {
 
         _inAnimations.add(
           LetterAnimations(
-            master: controller,
-            parent: parent,
-            keepAlive: true,
+            controllers: [controller],
+            driver: parent,
             scale: _scaleTween(true, begin, end),
             alignment: _alignmentTween(
               true,

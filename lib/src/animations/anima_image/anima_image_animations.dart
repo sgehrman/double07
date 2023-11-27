@@ -22,8 +22,7 @@ class AnimaImageAnimations {
   // =================================================
 
   Future<void> initialize(
-    AnimationController controller,
-    Animation<double>? owner,
+    Animation<double> controller,
   ) async {
     final ByteData byteData = await rootBundle.load(state.imageAsset);
 
@@ -36,8 +35,7 @@ class AnimaImageAnimations {
     );
 
     _animations = ImageAnimations(
-      master: controller,
-      parent: parent,
+      controllers: [controller],
       opacity: CommonAnimations.inOutAnima(
         start: 0,
         end: 1,

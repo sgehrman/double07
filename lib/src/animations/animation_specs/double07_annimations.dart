@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 
 class DoubleO7Animations extends AnimationSpec {
   DoubleO7Animations({
-    required Animation<double> master,
-    required Animation<double> parent,
+    required List<Animation<double>> controllers,
     required this.animation,
-  }) : super(master: master, parent: parent);
+  }) : super(controllers: controllers);
 
   Animation<double> animation;
 }

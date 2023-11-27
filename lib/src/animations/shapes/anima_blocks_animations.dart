@@ -14,7 +14,7 @@ class AnimaBlocksAnimations {
 
   // =================================================
 
-  Future<void> initialize(AnimationController controller) {
+  Future<void> initialize(Animation<double> controller) {
     final parent = AnimationSpec.parentAnimation(
       parent: controller,
       begin: state.timeStart,
@@ -63,9 +63,9 @@ class AnimaBlocksAnimations {
       ),
     );
 
+    // TODO(SNG): here
     _animations = BlockAnimations(
-      master: parent,
-      parent: parent,
+      controllers: [parent],
       opacity: opacity,
       blocks: blocks,
       flip: flip,

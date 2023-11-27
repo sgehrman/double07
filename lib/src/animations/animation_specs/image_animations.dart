@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 
 class ImageAnimations extends AnimationSpec {
   ImageAnimations({
-    required Animation<double> master,
-    required Animation<double> parent,
+    required List<Animation<double>> controllers,
     required this.opacity,
     required this.alignment,
     required this.scale,
-  }) : super(master: master, parent: parent);
+  }) : super(controllers: controllers);
 
   Animation<Alignment> alignment;
   Animation<double> opacity;

@@ -19,8 +19,7 @@ class AnimaDouble07 extends RunableAnimation {
 
   @override
   Future<void> initialize(
-    AnimationController controller,
-    Animation<double>? owner,
+    Animation<double> controller,
   ) {
     final sequence = TweenSequence<double>(
       <TweenSequenceItem<double>>[
@@ -42,8 +41,7 @@ class AnimaDouble07 extends RunableAnimation {
     );
 
     _animations = DoubleO7Animations(
-      master: controller,
-      parent: parent,
+      controllers: [controller],
       animation: sequence.animate(
         parent,
       ),

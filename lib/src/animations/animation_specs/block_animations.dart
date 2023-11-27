@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 
 class BlockAnimations extends AnimationSpec {
   BlockAnimations({
-    required Animation<double> master,
-    required Animation<double> parent,
+    required List<Animation<double>> controllers,
     required this.opacity,
     required this.blocks,
     required this.flip,
     required this.color,
-  }) : super(master: master, parent: parent);
+  }) : super(controllers: controllers);
 
   Animation<double> opacity;
   Animation<double> blocks;

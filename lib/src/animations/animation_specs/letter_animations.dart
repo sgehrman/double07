@@ -3,19 +3,17 @@ import 'package:flutter/material.dart';
 
 class LetterAnimations extends AnimationSpec {
   LetterAnimations({
-    required Animation<double> master,
-    required Animation<double> parent,
+    required List<Animation<double>> controllers,
+    required this.driver,
     required this.scale,
     required this.alignment,
     required this.opacity,
-    bool keepAlive = false,
   }) : super(
-          master: master,
-          parent: parent,
-          keepAlive: keepAlive,
+          controllers: controllers,
         );
 
   Animatable<Alignment> alignment;
   Animatable<double> opacity;
   Animatable<double> scale;
+  Animation<double> driver;
 }
