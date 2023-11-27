@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 enum AnimaBackgroundMode {
   spotlight,
   zoomIn,
+  binoculars,
 }
 
 class AnimaBackgroundState {

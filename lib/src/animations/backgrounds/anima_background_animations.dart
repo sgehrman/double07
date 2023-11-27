@@ -1,4 +1,5 @@
 import 'dart:ui' as ui;
+import 'dart:ui';
 
 import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:double07/src/animations/anima_utils.dart';
@@ -106,6 +107,27 @@ class AnimaBackgroundAnimations {
         canvas.restore();
 
         canvas.drawRect(rect, Paint()..color = Colors.black87);
+      } else if (state.mode == AnimaBackgroundMode.binoculars) {
+        final imageRect = Rect.fromLTWH(
+          0,
+          0,
+          _image.width.toDouble(),
+          _image.height.toDouble(),
+        );
+
+        final FittedSizes fittedSizes =
+            applyBoxFit(BoxFit.cover, imageRect.size, rect.size);
+
+        final Rect destRect = Offset.zero & fittedSizes.destination;
+
+        final sig = _animations.opacity.value * 25;
+
+        canvas.drawImageRect(
+          _image,
+          imageRect,
+          destRect,
+          Paint()..imageFilter = ui.ImageFilter.blur(sigmaX: sig, sigmaY: sig),
+        );
       }
     }
   }

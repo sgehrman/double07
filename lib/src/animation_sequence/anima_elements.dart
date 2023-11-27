@@ -253,6 +253,18 @@ class AnimaElements {
     );
   }
 
+  static RunableAnimation binoculars() {
+    return AnimaBackground(
+      AnimaBackgroundState(
+        imageAsset: '$kAssets/images/henderson.png',
+        gradientAlignment: Alignment.center,
+        timeStart: 0,
+        timeEnd: 1,
+        mode: AnimaBackgroundMode.binoculars,
+      ),
+    );
+  }
+
   static List<RunableAnimation> easterEggs() {
     const int millis = 80;
     final result = [

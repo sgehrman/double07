@@ -18,19 +18,21 @@ class AnimationSequence {
   bool _isInitialized = false;
 
   final List<RunableAnimation> _runables = [
-    ...AnimaElements.backgrounds(),
-    ...AnimaElements.easterEggs(),
-    AnimaElements.deckrLogo(),
-    AnimaElements.hendersonQuote(),
-    AnimaElements.largoQuote(),
-    AnimaElements.dominoQuote(),
+    AnimaElements.binoculars(),
 
-    // AnimaElements.randomQuote(),
+    // ...AnimaElements.backgrounds(),
+    // ...AnimaElements.easterEggs(),
+    // AnimaElements.deckrLogo(),
+    // AnimaElements.hendersonQuote(),
+    // AnimaElements.largoQuote(),
+    // AnimaElements.dominoQuote(),
 
-    AnimaElements.reviewsTitle(),
-    AnimaElements.introTitles(),
-    AnimaElements.double07Ball(),
-    ...AnimaElements.blocks(),
+    // // AnimaElements.randomQuote(),
+
+    // AnimaElements.reviewsTitle(),
+    // AnimaElements.introTitles(),
+    // AnimaElements.double07Ball(),
+    // ...AnimaElements.blocks(),
   ];
 
   // =================================================
