@@ -4,12 +4,10 @@ import 'package:double07/src/animations/anima_image/anima_image.dart';
 import 'package:double07/src/animations/anima_image/anima_image_state.dart';
 import 'package:double07/src/animations/backgrounds/anima_background.dart';
 import 'package:double07/src/animations/backgrounds/anima_background_state.dart';
-import 'package:double07/src/animations/common_animations.dart';
 import 'package:double07/src/animations/shapes/anima_blocks.dart';
 import 'package:double07/src/animations/shapes/anima_blocks_state.dart';
 import 'package:double07/src/animations/shapes/anima_blocks_utils.dart';
 import 'package:double07/src/animations/text/anima_paragraph.dart';
-import 'package:double07/src/animations/text/anima_text.dart';
 import 'package:double07/src/animations/text/anima_text_state.dart';
 import 'package:double07/src/constants.dart';
 import 'package:double07/src/timeline.dart';
@@ -244,25 +242,17 @@ class AnimaElements {
   }
 
   static RunableAnimation deckrLogo() {
-    final str = 'Deckr'.toUpperCase();
-
-    return AnimaText(
-      AnimaTextState(
-        line: AnimaTextLine(
-          text: str,
-          fontSize: 64,
+    return AnimaParagraph(
+      alignment: const Alignment(-0.8, -0.8),
+      timeStart: Timeline.textStart,
+      timeEnd: Timeline.textEnd,
+      lines: [
+        AnimaTextLine(
+          text: 'Deckr'.toUpperCase(),
           bold: true,
+          fontSize: 64,
         ),
-        alignments: [
-          const Alignment(-0.8, -2),
-          const Alignment(-0.8, -0.8),
-        ],
-        timingInfo: AnimaTimingInfo(
-          begin: Timeline.textStart,
-          end: Timeline.textEnd,
-          numItems: str.length,
-        ),
-      ),
+      ],
     );
   }
 

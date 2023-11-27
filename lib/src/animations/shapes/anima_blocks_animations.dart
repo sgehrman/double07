@@ -15,7 +15,7 @@ class AnimaBlocksAnimations {
   // =================================================
 
   Future<void> initialize(Animation<double> controller) {
-    final parent = AnimationSpec.parentAnimation(
+    final subController = AnimationSpec.parentAnimation(
       parent: controller,
       begin: state.timeStart,
       end: state.timeEnd,
@@ -23,7 +23,7 @@ class AnimaBlocksAnimations {
 
     final blocks = state.blocksSequence.animate(
       CurvedAnimation(
-        parent: parent,
+        parent: subController,
         curve: const Interval(
           0,
           1,
@@ -34,7 +34,7 @@ class AnimaBlocksAnimations {
 
     final flip = state.flipSequence.animate(
       CurvedAnimation(
-        parent: parent,
+        parent: subController,
         curve: const Interval(
           0,
           1,
@@ -45,7 +45,7 @@ class AnimaBlocksAnimations {
 
     final opacity = state.opacitySequence.animate(
       CurvedAnimation(
-        parent: parent,
+        parent: subController,
         curve: const Interval(
           0,
           1,
@@ -55,7 +55,7 @@ class AnimaBlocksAnimations {
 
     final color = state.colorSequence.animate(
       CurvedAnimation(
-        parent: parent,
+        parent: subController,
         curve: const Interval(
           0,
           1,
@@ -63,9 +63,8 @@ class AnimaBlocksAnimations {
       ),
     );
 
-    // TODO(SNG): here
     _animations = BlockAnimations(
-      controllers: [parent],
+      controllers: [subController],
       opacity: opacity,
       blocks: blocks,
       flip: flip,
