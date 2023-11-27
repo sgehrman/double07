@@ -16,7 +16,7 @@ class AnimaTextState {
   });
 
   final AnimaTextLine line;
-  final List<Alignment> alignments;
+  final AnimaAlignments alignments;
   final AnimaTimingInfo timingInfo;
 
   // foreward to line

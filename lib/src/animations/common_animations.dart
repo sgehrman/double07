@@ -5,17 +5,17 @@ class CommonAnimations {
   static Animatable<Alignment> alignmentTween({
     required double begin,
     required double end,
-    required List<Alignment> alignments,
+    required AnimaAlignments alignments,
     required Curve inCurve,
     required Curve outCurve,
     SequenceWeights weights = const SequenceWeights(),
   }) {
-    if (alignments.length == 3) {
+    if (alignments.has3) {
       final items = [
         TweenSequenceItem<Alignment>(
           tween: AlignmentTween(
             begin: alignments.first,
-            end: alignments[1],
+            end: alignments.second,
           ).chain(
             CurveTween(
               curve: inCurve,
@@ -24,13 +24,13 @@ class CommonAnimations {
           weight: weights.start,
         ),
         TweenSequenceItem<Alignment>(
-          tween: ConstantTween<Alignment>(alignments[1]),
+          tween: ConstantTween<Alignment>(alignments.second),
           weight: weights.hold,
         ),
         TweenSequenceItem<Alignment>(
           tween: AlignmentTween(
-            begin: alignments[1],
-            end: alignments[2],
+            begin: alignments.second,
+            end: alignments.third,
           ).chain(
             CurveTween(
               curve: outCurve,
@@ -53,7 +53,7 @@ class CommonAnimations {
     } else {
       return AlignmentTween(
         begin: alignments.first,
-        end: alignments[1],
+        end: alignments.second,
       ).chain(
         CurveTween(
           curve: Interval(
@@ -69,19 +69,19 @@ class CommonAnimations {
   static Animation<Alignment> alignmentAnima({
     required double start,
     required double end,
-    required List<Alignment> alignments,
+    required AnimaAlignments alignments,
     required Animation<double> parent,
     required Curve inCurve,
     required Curve outCurve,
     SequenceWeights weights = const SequenceWeights(),
   }) {
-    if (alignments.length > 2) {
+    if (alignments.has3) {
       // hard coding for 3 now, fix later
       final items = [
         TweenSequenceItem<Alignment>(
           tween: AlignmentTween(
             begin: alignments.first,
-            end: alignments[1],
+            end: alignments.second,
           ).chain(
             CurveTween(
               curve: inCurve,
@@ -90,13 +90,13 @@ class CommonAnimations {
           weight: weights.start,
         ),
         TweenSequenceItem<Alignment>(
-          tween: ConstantTween<Alignment>(alignments[1]),
+          tween: ConstantTween<Alignment>(alignments.second),
           weight: weights.hold,
         ),
         TweenSequenceItem<Alignment>(
           tween: AlignmentTween(
-            begin: alignments[1],
-            end: alignments[2],
+            begin: alignments.second,
+            end: alignments.third,
           ).chain(
             CurveTween(
               curve: outCurve,
@@ -118,7 +118,7 @@ class CommonAnimations {
     } else {
       return AlignmentTween(
         begin: alignments.first,
-        end: alignments[1],
+        end: alignments.second,
       )
           .chain(
             CurveTween(
@@ -285,5 +285,43 @@ class AnimaTiming {
     }
 
     return result;
+  }
+}
+
+// =========================================================
+
+class AnimaAlignments {
+  AnimaAlignments(
+    this.alignment, {
+    this.from,
+    this.to,
+  });
+
+  final Alignment alignment;
+  final Alignment? from;
+  final Alignment? to;
+
+  Alignment get first {
+    if (from != null) {
+      return from!;
+    }
+
+    return second;
+  }
+
+  Alignment get second {
+    return alignment;
+  }
+
+  Alignment get third {
+    if (to != null) {
+      return to!;
+    }
+
+    return second;
+  }
+
+  bool get has3 {
+    return from != null && to != null;
   }
 }

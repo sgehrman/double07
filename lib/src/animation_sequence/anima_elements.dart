@@ -4,6 +4,7 @@ import 'package:double07/src/animations/anima_image/anima_image.dart';
 import 'package:double07/src/animations/anima_image/anima_image_state.dart';
 import 'package:double07/src/animations/backgrounds/anima_background.dart';
 import 'package:double07/src/animations/backgrounds/anima_background_state.dart';
+import 'package:double07/src/animations/common_animations.dart';
 import 'package:double07/src/animations/shapes/anima_blocks.dart';
 import 'package:double07/src/animations/shapes/anima_blocks_state.dart';
 import 'package:double07/src/animations/shapes/anima_blocks_utils.dart';
@@ -287,11 +288,11 @@ class AnimaElements {
         timeStart: start,
         opacity: opacity,
         timeEnd: end,
-        alignments: [
+        alignments: AnimaAlignments(
           Alignment.topCenter,
-          const Alignment(0, 0.7),
-          Alignment.topCenter,
-        ],
+          from: const Alignment(0, 0.7),
+          to: Alignment.topCenter,
+        ),
       ),
     );
   }

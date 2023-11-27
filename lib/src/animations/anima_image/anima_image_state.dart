@@ -1,3 +1,4 @@
+import 'package:double07/src/animations/common_animations.dart';
 import 'package:flutter/material.dart';
 
 class AnimaImageState {
@@ -14,7 +15,7 @@ class AnimaImageState {
   });
 
   final String imageAsset;
-  final List<Alignment> alignments;
+  final AnimaAlignments alignments;
   final double opacity;
   final Size size;
   final Curve inCurve;

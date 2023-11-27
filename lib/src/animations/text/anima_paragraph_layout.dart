@@ -33,15 +33,10 @@ class AnimaParagraphLayout {
     for (final line in lines) {
       // ignore blank lines
       if (!line.isBlank) {
-        final alignments = animateFrom != 0
-            ? [
-                Alignment(alignment.x, animateFrom),
-                Alignment(alignment.x, alignment.y + (index * newLine)),
-              ]
-            : [
-                Alignment(alignment.x, alignment.y + (index * newLine)),
-                Alignment(alignment.x, alignment.y + (index * newLine)),
-              ];
+        final alignments = AnimaAlignments(
+          Alignment(alignment.x, alignment.y + (index * newLine)),
+          from: animateFrom != 0 ? Alignment(alignment.x, animateFrom) : null,
+        );
 
         final double lineBegin = lineEnd;
 
