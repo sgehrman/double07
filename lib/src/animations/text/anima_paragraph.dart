@@ -1,5 +1,4 @@
 import 'package:double07/src/animation_sequence/animation_sequence.dart';
-import 'package:double07/src/animations/anima_controlller.dart';
 import 'package:double07/src/animations/animation_specs/animation_spec.dart';
 import 'package:double07/src/animations/text/anima_paragraph_layout.dart';
 import 'package:double07/src/animations/text/anima_text.dart';
@@ -23,13 +22,13 @@ class AnimaParagraph extends RunableAnimation {
   final double newLine;
   final double animateFrom;
 
-  late final AnimaController _controller;
+  late final _AnimaParagraph _paragraph;
 
   @override
   Future<void> initialize(
     Animation<double> controller,
   ) async {
-    final _AnimaParagraph paragraph = _AnimaParagraph(
+    _paragraph = _AnimaParagraph(
       lines: lines,
       alignment: alignment,
       animateFrom: animateFrom,
@@ -38,13 +37,7 @@ class AnimaParagraph extends RunableAnimation {
       timeStart: timeStart,
     );
 
-    _controller = AnimaController(
-      begin: timeStart,
-      end: timeEnd,
-      runnable: paragraph,
-    );
-
-    await _controller.initialize(controller);
+    await _paragraph.initialize(controller);
   }
 
   @override
@@ -52,7 +45,7 @@ class AnimaParagraph extends RunableAnimation {
     Canvas canvas,
     Size size,
   ) {
-    _controller.paint(canvas, size);
+    _paragraph.paint(canvas, size);
   }
 }
 
@@ -83,17 +76,8 @@ class _AnimaParagraph extends RunableAnimation {
     Animation<double> controller,
   ) async {
     final double half = (timeEnd - timeStart) / 2;
-    double begin = 0;
+    double begin = timeStart;
     double end = begin + half;
-
-    _inAnimations = AnimaParagraphLayout.paragraph(
-      lines: lines,
-      alignment: alignment,
-      begin: begin,
-      end: end,
-      animateFrom: animateFrom,
-      newLine: newLine,
-    );
 
     final inSubController = AnimationSpec.parentAnimation(
       parent: controller,
@@ -101,28 +85,37 @@ class _AnimaParagraph extends RunableAnimation {
       end: end,
     );
 
-    for (final l in _inAnimations) {
-      await l.initialize(inSubController);
-    }
-
     begin = end;
     end = begin + half;
-
-    _outAnimations = AnimaParagraphLayout.paragraph(
-      lines: lines,
-      alignment: alignment,
-      begin: begin,
-      end: end,
-      animateFrom: animateFrom,
-      newLine: newLine,
-      outMode: true,
-    );
 
     final outSubController = AnimationSpec.parentAnimation(
       parent: controller,
       begin: begin,
       end: end,
     );
+
+    _inAnimations = AnimaParagraphLayout.paragraph(
+      lines: lines,
+      alignment: alignment,
+      begin: 0,
+      end: 1,
+      animateFrom: animateFrom,
+      newLine: newLine,
+    );
+
+    _outAnimations = AnimaParagraphLayout.paragraph(
+      lines: lines,
+      alignment: alignment,
+      begin: 0,
+      end: 1,
+      animateFrom: animateFrom,
+      newLine: newLine,
+      outMode: true,
+    );
+
+    for (final l in _inAnimations) {
+      await l.initialize(inSubController);
+    }
 
     for (final l in _outAnimations) {
       await l.initialize(outSubController);

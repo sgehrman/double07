@@ -43,11 +43,8 @@ class AnimaParagraphLayout {
                 Alignment(alignment.x, alignment.y + (index * newLine)),
               ];
 
-        double lineBegin = lineEnd;
-        // all lines should draw at the same time in outMode
-        if (outMode) {
-          lineBegin = begin;
-        }
+        final double lineBegin = lineEnd;
+
         lineEnd = lineBegin + (line.textLengh * timePerChar);
 
         final state = AnimaTextState(
