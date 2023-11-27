@@ -277,14 +277,8 @@ class AnimaTiming {
     return index * _itemTime;
   }
 
-  double endForIndex(int index, {double stretchFactor = 1}) {
-    final result = beginForIndex(index) + (_itemTime * stretchFactor);
-
-    if (result > 1) {
-      return 1;
-    }
-
-    return result;
+  double endForIndex(int index) {
+    return beginForIndex(index) + _itemTime;
   }
 }
 
