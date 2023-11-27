@@ -143,7 +143,7 @@ class AnimaTextAnimations {
             alignment: ConstantTween<Alignment>(
               state.alignments.first,
             ),
-            opacity: _opacityTween(false, 0.5, 1),
+            opacity: _opacityTween(false, 0, 1),
           ),
         );
       } else {
