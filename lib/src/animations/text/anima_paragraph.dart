@@ -75,9 +75,14 @@ class _AnimaParagraph extends RunableAnimation {
   Future<void> initialize(
     Animation<double> controller,
   ) async {
-    final double half = (timeEnd - timeStart) / 2;
+    // calc times for in/out animations
+    const outRatio = 0.1;
+    final len = timeEnd - timeStart;
+    final outDuration = outRatio * len;
+    final inDuration = len - outDuration;
+
     double begin = timeStart;
-    double end = begin + half;
+    double end = begin + inDuration;
 
     final inSubController = AnimationSpec.parentAnimation(
       parent: controller,
@@ -86,7 +91,7 @@ class _AnimaParagraph extends RunableAnimation {
     );
 
     begin = end;
-    end = begin + half;
+    end = begin + outDuration;
 
     final outSubController = AnimationSpec.parentAnimation(
       parent: controller,
