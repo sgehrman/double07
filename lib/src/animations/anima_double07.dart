@@ -34,16 +34,16 @@ class AnimaDouble07 extends RunableAnimation {
       ],
     );
 
-    final parent = AnimationSpec.parentAnimation(
+    final subController = AnimationSpec.parentAnimation(
       parent: controller,
       begin: Timeline.ballStart,
       end: Timeline.ballEnd,
     );
 
     _animations = DoubleO7Animations(
-      controllers: [controller],
+      controllers: [subController],
       animation: sequence.animate(
-        parent,
+        subController,
       ),
     );
 

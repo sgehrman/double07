@@ -148,7 +148,7 @@ class AnimaTextAnimations {
         );
       } else {
         final begin = timing.beginForIndex(i);
-        final end = timing.endForIndex(i, stretchFactor: 2);
+        final end = timing.endForIndex(i);
 
         _inAnimations.add(
           LetterAnimations(
