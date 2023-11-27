@@ -24,7 +24,7 @@ class AnimaTextAnimations {
       state.letterSpacing,
     );
 
-    final parent = AnimationSpec.parentAnimation(
+    final driver = AnimationSpec.parentAnimation(
       parent: controller,
       begin: state.timingInfo.begin,
       end: state.timingInfo.end,
@@ -33,7 +33,7 @@ class AnimaTextAnimations {
     _buildAnimations(
       count: _textLetters.length,
       controller: controller,
-      parent: parent,
+      driver: driver,
     );
   }
 
@@ -127,7 +127,7 @@ class AnimaTextAnimations {
   void _buildAnimations({
     required int count,
     required Animation<double> controller,
-    required Animation<double> parent,
+    required Animation<double> driver,
   }) {
     final timing = AnimaTiming(
       numItems: state.timingInfo.numItems,
@@ -138,7 +138,7 @@ class AnimaTextAnimations {
         _outAnimations.add(
           LetterAnimations(
             controllers: [controller],
-            driver: parent,
+            driver: driver,
             scale: ConstantTween<double>(1),
             alignment: _alignmentTween(
               inMode: false,
@@ -160,7 +160,7 @@ class AnimaTextAnimations {
         _inAnimations.add(
           LetterAnimations(
             controllers: [controller],
-            driver: parent,
+            driver: driver,
             scale: _scaleTween(true, begin, end),
             alignment: _alignmentTween(
               inMode: true,
