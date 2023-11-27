@@ -14,9 +14,9 @@ class AnimaParagraphLayout {
     required double begin,
     required double end,
     required Alignment alignment,
-    double newLine = 0.08,
-    double animateFrom = -2, // set to zero for no fly in
-    bool outMode = false,
+    required double newLine,
+    required double animateFrom,
+    required bool outMode,
   }) {
     final List<AnimaTextSegment> result = [];
 
@@ -33,18 +33,15 @@ class AnimaParagraphLayout {
     for (final line in lines) {
       // ignore blank lines
       if (!line.isBlank) {
-        final alignments = AnimaAlignments(
-          Alignment(alignment.x, alignment.y + (index * newLine)),
-          from: animateFrom != 0 ? Alignment(alignment.x, animateFrom) : null,
-        );
-
         final double lineBegin = lineEnd;
-
         lineEnd = lineBegin + (line.textLengh * timePerChar);
 
         final state = AnimaTextState(
           line: line,
-          alignments: alignments,
+          alignments: AnimaAlignments(
+            Alignment(alignment.x, alignment.y + (index * newLine)),
+            from: animateFrom != 0 ? Alignment(alignment.x, animateFrom) : null,
+          ),
           timingInfo: AnimaTimingInfo(
             begin: lineBegin,
             end: lineEnd,

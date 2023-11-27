@@ -301,6 +301,13 @@ class AnimaAlignments {
   final Alignment? from;
   final Alignment? to;
 
+  AnimaAlignments reverse() {
+    return AnimaAlignments(
+      first,
+      from: third,
+    );
+  }
+
   Alignment get first {
     if (from != null) {
       return from!;

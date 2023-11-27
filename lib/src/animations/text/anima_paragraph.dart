@@ -12,7 +12,7 @@ class AnimaParagraph extends RunableAnimation {
     required this.timeStart,
     required this.timeEnd,
     this.newLine = 0.08,
-    this.animateFrom = -2, // set to zero for no fly in
+    this.animateFrom = -1,
   });
 
   final List<AnimaTextLine> lines;
@@ -101,6 +101,7 @@ class _AnimaParagraph extends RunableAnimation {
       end: 1,
       animateFrom: animateFrom,
       newLine: newLine,
+      outMode: false,
     );
 
     _outAnimations = AnimaParagraphLayout.paragraph(

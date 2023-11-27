@@ -64,7 +64,7 @@ class Timeline {
   // xxx
 
   static double textStart = ballEnd;
-  static double textEnd = textStart + durSecs(2);
+  static double textEnd = textStart + durSecs(3);
 
   static double quoteStart = 0.1;
   static double quoteEnd = durSecs(4);

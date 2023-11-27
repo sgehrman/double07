@@ -62,17 +62,17 @@ class AnimaTextAnimations {
   // private methods
   // ============================================================
 
-  Animatable<Alignment> _alignmentTween(
-    bool inMode,
-    double begin,
-    double end,
-    SequenceWeights weights,
-  ) {
+  Animatable<Alignment> _alignmentTween({
+    required bool inMode,
+    required double begin,
+    required double end,
+    required SequenceWeights weights,
+  }) {
     if (state.animationTypes.contains(TextAnimationType.alignment)) {
       return CommonAnimations.alignmentTween(
         begin: begin,
         end: end,
-        alignments: state.alignments,
+        alignments: inMode ? state.alignments : state.alignments.reverse(),
         inCurve: state.inCurve,
         outCurve: state.outCurve,
         weights: weights,
@@ -84,11 +84,11 @@ class AnimaTextAnimations {
     );
   }
 
-  Animatable<double> _opacityTween(
-    bool inMode,
-    double begin,
-    double end,
-  ) {
+  Animatable<double> _opacityTween({
+    required bool inMode,
+    required double begin,
+    required double end,
+  }) {
     if (state.animationTypes.any(
       [TextAnimationType.opacity, TextAnimationType.fadeInOut].contains,
     )) {
@@ -140,10 +140,17 @@ class AnimaTextAnimations {
             controllers: [controller],
             driver: parent,
             scale: ConstantTween<double>(1),
-            alignment: ConstantTween<Alignment>(
-              state.alignments.first,
+            alignment: _alignmentTween(
+              inMode: false,
+              begin: 0,
+              end: 1,
+              weights: const SequenceWeights.equal(),
             ),
-            opacity: _opacityTween(false, 0, 1),
+            opacity: _opacityTween(
+              inMode: false,
+              begin: 0,
+              end: 1,
+            ),
           ),
         );
       } else {
@@ -156,12 +163,16 @@ class AnimaTextAnimations {
             driver: parent,
             scale: _scaleTween(true, begin, end),
             alignment: _alignmentTween(
-              true,
-              begin,
-              end,
-              const SequenceWeights.equal(),
+              inMode: true,
+              begin: begin,
+              end: end,
+              weights: const SequenceWeights.equal(),
             ),
-            opacity: _opacityTween(true, begin, end),
+            opacity: _opacityTween(
+              inMode: true,
+              begin: begin,
+              end: end,
+            ),
           ),
         );
       }
