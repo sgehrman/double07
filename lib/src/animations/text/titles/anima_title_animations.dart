@@ -11,6 +11,7 @@ class AnimaTitleAnimations {
 
   late final List<AnimatedLetter> _textLetters;
   final List<LetterAnimations> _inAnimations = [];
+  final List<LetterAnimations> _outAnimations = [];
 
   final AnimaTextState state;
 
@@ -38,6 +39,13 @@ class AnimaTitleAnimations {
       size: size,
       letters: _textLetters,
       letterAnimations: _inAnimations,
+    );
+
+    AnimatedLetter.paintLetters(
+      canvas: canvas,
+      size: size,
+      letters: _textLetters,
+      letterAnimations: _outAnimations,
     );
   }
 
@@ -152,10 +160,7 @@ class AnimaTitleAnimations {
     );
 
     for (int i = 0; i < count; i++) {
-      final begin = timing.beginForIndex(i);
-      final end = timing.endForIndex(i);
-
-      _inAnimations.add(
+      _outAnimations.add(
         LetterAnimations(
           controllers: [driver2],
           driver: driver2,
@@ -165,8 +170,8 @@ class AnimaTitleAnimations {
           ),
           opacity: _opacityTween(
             inMode: false,
-            begin: begin,
-            end: end,
+            begin: 0,
+            end: 1,
           ),
         ),
       );
