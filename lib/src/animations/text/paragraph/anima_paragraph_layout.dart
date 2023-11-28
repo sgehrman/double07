@@ -1,6 +1,6 @@
 import 'package:double07/src/animations/common_animations.dart';
 import 'package:double07/src/animations/text/anima_text_state.dart';
-import 'package:double07/src/animations/text/paragraph/anima_text.dart';
+import 'package:double07/src/animations/text/paragraph/anima_paragraph_text.dart';
 import 'package:flutter/material.dart';
 
 enum ParagraphLayoutStyle {
@@ -9,7 +9,7 @@ enum ParagraphLayoutStyle {
 }
 
 class AnimaParagraphLayout {
-  static List<AnimaText> paragraph({
+  static List<AnimaParagraphText> paragraph({
     required List<AnimaTextLine> lines,
     required double begin,
     required double end,
@@ -17,7 +17,7 @@ class AnimaParagraphLayout {
     required bool animateDown,
     required bool outMode,
   }) {
-    final List<AnimaText> result = [];
+    final List<AnimaParagraphText> result = [];
 
     int charCount = 0;
     for (final line in lines) {
@@ -53,7 +53,7 @@ class AnimaParagraphLayout {
         );
 
         result.add(
-          AnimaText(state),
+          AnimaParagraphText(state),
         );
       }
 

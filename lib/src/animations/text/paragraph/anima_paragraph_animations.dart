@@ -6,8 +6,8 @@ import 'package:double07/src/animations/text/animated_letter.dart';
 import 'package:double07/src/constants.dart';
 import 'package:flutter/material.dart';
 
-class AnimaTextAnimations {
-  AnimaTextAnimations(this.state);
+class AnimaParagraphAnimations {
+  AnimaParagraphAnimations(this.state);
 
   late final List<AnimatedLetter> _textLetters;
   final List<LetterAnimations> _inAnimations = [];

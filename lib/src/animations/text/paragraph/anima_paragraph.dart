@@ -2,7 +2,7 @@ import 'package:double07/src/animation_sequence/animation_sequence.dart';
 import 'package:double07/src/animations/animation_specs/animation_spec.dart';
 import 'package:double07/src/animations/text/anima_text_state.dart';
 import 'package:double07/src/animations/text/paragraph/anima_paragraph_layout.dart';
-import 'package:double07/src/animations/text/paragraph/anima_text.dart';
+import 'package:double07/src/animations/text/paragraph/anima_paragraph_text.dart';
 import 'package:flutter/material.dart';
 
 class AnimaParagraph extends RunableAnimation {
@@ -63,8 +63,8 @@ class _AnimaParagraph extends RunableAnimation {
   final double timeEnd;
   final bool animateDown;
 
-  late final List<AnimaText> _outAnimations;
-  late final List<AnimaText> _inAnimations;
+  late final List<AnimaParagraphText> _outAnimations;
+  late final List<AnimaParagraphText> _inAnimations;
 
   @override
   Future<void> initialize(
