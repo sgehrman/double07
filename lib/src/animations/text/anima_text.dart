@@ -3,8 +3,8 @@ import 'package:double07/src/animations/text/anima_text_animations.dart';
 import 'package:double07/src/animations/text/anima_text_state.dart';
 import 'package:flutter/material.dart';
 
-class AnimaTextSegment extends RunableAnimation {
-  AnimaTextSegment(this.state);
+class AnimaText extends RunableAnimation {
+  AnimaText(this.state);
 
   final AnimaTextState state;
   late final AnimaTextAnimations _animations;

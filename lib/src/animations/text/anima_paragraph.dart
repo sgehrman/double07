@@ -63,8 +63,8 @@ class _AnimaParagraph extends RunableAnimation {
   final double timeEnd;
   final bool animateDown;
 
-  late final List<AnimaTextSegment> _outAnimations;
-  late final List<AnimaTextSegment> _inAnimations;
+  late final List<AnimaText> _outAnimations;
+  late final List<AnimaText> _inAnimations;
 
   @override
   Future<void> initialize(

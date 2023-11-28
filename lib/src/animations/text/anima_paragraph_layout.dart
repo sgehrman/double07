@@ -9,7 +9,7 @@ enum ParagraphLayoutStyle {
 }
 
 class AnimaParagraphLayout {
-  static List<AnimaTextSegment> paragraph({
+  static List<AnimaText> paragraph({
     required List<AnimaTextLine> lines,
     required double begin,
     required double end,
@@ -17,7 +17,7 @@ class AnimaParagraphLayout {
     required bool animateDown,
     required bool outMode,
   }) {
-    final List<AnimaTextSegment> result = [];
+    final List<AnimaText> result = [];
 
     int charCount = 0;
     for (final line in lines) {
@@ -53,7 +53,7 @@ class AnimaParagraphLayout {
         );
 
         result.add(
-          AnimaTextSegment(state),
+          AnimaText(state),
         );
       }
 
