@@ -63,7 +63,7 @@ class AnimaTitleAnimations {
     }
 
     return ConstantTween<Alignment>(
-      state.alignments.first,
+      state.alignments.alignment,
     );
   }
 
@@ -115,19 +115,19 @@ class AnimaTitleAnimations {
       numItems: state.timingInfo.numItems,
     );
 
+    final driver = AnimationSpec.parentAnimation(
+      parent: controller,
+      begin: 0,
+      end: 0.5,
+    );
+
     for (int i = 0; i < count; i++) {
       final begin = timing.beginForIndex(i);
       final end = timing.endForIndex(i);
 
-      final driver = AnimationSpec.parentAnimation(
-        parent: controller,
-        begin: state.timingInfo.begin,
-        end: state.timingInfo.end,
-      );
-
       _inAnimations.add(
         LetterAnimations(
-          controllers: [controller],
+          controllers: [driver],
           driver: driver,
           scale: _scaleTween(true, begin, end),
           alignment: _alignmentTween(
@@ -138,6 +138,33 @@ class AnimaTitleAnimations {
           ),
           opacity: _opacityTween(
             inMode: true,
+            begin: begin,
+            end: end,
+          ),
+        ),
+      );
+    }
+
+    final driver2 = AnimationSpec.parentAnimation(
+      parent: controller,
+      begin: 0.5,
+      end: 1,
+    );
+
+    for (int i = 0; i < count; i++) {
+      final begin = timing.beginForIndex(i);
+      final end = timing.endForIndex(i);
+
+      _inAnimations.add(
+        LetterAnimations(
+          controllers: [driver2],
+          driver: driver2,
+          scale: ConstantTween<double>(1),
+          alignment: ConstantTween<Alignment>(
+            state.alignments.alignment,
+          ),
+          opacity: _opacityTween(
+            inMode: false,
             begin: begin,
             end: end,
           ),
