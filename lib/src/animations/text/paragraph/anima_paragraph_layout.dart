@@ -1,6 +1,6 @@
 import 'package:double07/src/animations/common_animations.dart';
-import 'package:double07/src/animations/text/anima_text.dart';
 import 'package:double07/src/animations/text/anima_text_state.dart';
+import 'package:double07/src/animations/text/paragraph/anima_text.dart';
 import 'package:flutter/material.dart';
 
 enum ParagraphLayoutStyle {
