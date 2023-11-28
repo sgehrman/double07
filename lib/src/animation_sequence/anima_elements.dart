@@ -10,6 +10,7 @@ import 'package:double07/src/animations/shapes/anima_blocks_state.dart';
 import 'package:double07/src/animations/shapes/anima_blocks_utils.dart';
 import 'package:double07/src/animations/text/anima_text_state.dart';
 import 'package:double07/src/animations/text/paragraph/anima_paragraph.dart';
+import 'package:double07/src/animations/text/titles/anima_titles.dart';
 import 'package:double07/src/constants.dart';
 import 'package:double07/src/timeline.dart';
 import 'package:flutter/material.dart';
@@ -145,10 +146,12 @@ class AnimaElements {
   }
 
   static RunableAnimation introTitles() {
-    return AnimaParagraph(
+    return AnimaTitles(
       alignment: const Alignment(0, -0.6),
-      timeStart: Timeline.mainTitlesStart,
-      timeEnd: Timeline.mainTitlesEnd,
+      timeStart: 0,
+      timeEnd: 1,
+      // timeStart: Timeline.mainTitlesStart,
+      // timeEnd: Timeline.mainTitlesEnd,
       lines: [
         AnimaTextLine(
           text: 'DECKR Easter Egg!',

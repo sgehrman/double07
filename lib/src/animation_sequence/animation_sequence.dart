@@ -18,7 +18,7 @@ class AnimationSequence {
   bool _isInitialized = false;
 
   final List<RunableAnimation> _runables = [
-    AnimaElements.binoculars(),
+    // AnimaElements.binoculars(),
 
     // ...AnimaElements.backgrounds(),
     // ...AnimaElements.easterEggs(),
@@ -30,7 +30,7 @@ class AnimationSequence {
     // // AnimaElements.randomQuote(),
 
     // AnimaElements.reviewsTitle(),
-    // AnimaElements.introTitles(),
+    AnimaElements.introTitles(),
     // AnimaElements.double07Ball(),
     // ...AnimaElements.blocks(),
   ];
