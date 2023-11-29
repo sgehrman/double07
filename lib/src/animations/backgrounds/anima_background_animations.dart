@@ -53,10 +53,83 @@ class AnimaBackgroundAnimations {
         end: 1,
         weights: const SequenceWeights.noHold(),
       ),
+      blur: CommonAnimations.inOutAnima(
+        parent: parent,
+        beginValue: 1,
+        endValue: 0,
+        inCurve: Curves.elasticInOut,
+        outCurve: Curves.elasticInOut,
+        begin: 0,
+        end: 1,
+        weights: const SequenceWeights.noHold(),
+      ),
     );
   }
 
   double degToRad(num deg) => deg * (math.pi / 180.0);
+
+  Path _binocularPath(Canvas canvas, Size size) {
+    final rect = Offset.zero & size;
+
+    final ovalSize = Size(size.height / 1.5, size.height / 1.5);
+
+    final ovalRect = Rect.fromCenter(
+      center: rect.center,
+      width: ovalSize.width * 2,
+      height: ovalSize.height,
+    );
+
+    const spaceBetween = 45;
+
+    final leftEye = Rect.fromLTWH(
+      ovalRect.left + spaceBetween,
+      ovalRect.top,
+      ovalSize.width,
+      ovalSize.height,
+    );
+
+    final rightEye = Rect.fromLTWH(
+      ovalRect.left + ovalSize.width - spaceBetween,
+      ovalRect.top,
+      ovalSize.width,
+      ovalSize.height,
+    );
+
+    final Path path = Path();
+    path.addArc(
+      leftEye,
+      degToRad(30),
+      degToRad(300),
+    );
+
+    final Path path2 = Path();
+
+    path2.addArc(
+      rightEye,
+      degToRad(210),
+      degToRad(300),
+    );
+
+    // canvas.drawPath(
+    //   path,
+    //   Paint()
+    //     ..color = Colors.red
+    //     ..style = PaintingStyle.stroke,
+    // );
+
+    // canvas.drawPath(
+    //   path2,
+    //   Paint()
+    //     ..color = Colors.red
+    //     ..style = PaintingStyle.stroke,
+    // );
+
+    path.extendWithPath(path2, Offset.zero);
+
+    path.close();
+
+    return path;
+  }
 
   void paint(Canvas canvas, Size size) {
     if (_animations.isRunning) {
@@ -110,34 +183,7 @@ class AnimaBackgroundAnimations {
 
         canvas.drawRect(rect, Paint()..color = Colors.black87);
       } else if (state.mode == AnimaBackgroundMode.binoculars) {
-        final Path path = Path();
-        final ovalSize = Size(size.height / 2, size.height / 2);
-
-        // Adds a quarter arc
-        path.addArc(
-          Rect.fromLTWH(0, 0, ovalSize.width, ovalSize.height),
-          degToRad(35),
-          degToRad(290),
-        );
-
-        final Path path2 = Path();
-
-        path2.addArc(
-          Rect.fromLTWH(
-            ovalSize.width * 0.8,
-            0,
-            ovalSize.width,
-            ovalSize.height,
-          ),
-          degToRad(235),
-          degToRad(280),
-        );
-
-        path.extendWithPath(path2, Offset.zero);
-
-        path.close();
-
-        canvas.clipPath(path);
+        canvas.clipPath(_binocularPath(canvas, size));
 
         final imageRect = Rect.fromLTWH(
           0,
@@ -151,7 +197,7 @@ class AnimaBackgroundAnimations {
 
         final Rect destRect = Offset.zero & fittedSizes.destination;
 
-        final sig = _animations.opacity.value * 25;
+        final sig = _animations.blur.value.abs() * 40;
 
         canvas.drawImageRect(
           _image,
@@ -159,6 +205,8 @@ class AnimaBackgroundAnimations {
           destRect,
           Paint()..imageFilter = ui.ImageFilter.blur(sigmaX: sig, sigmaY: sig),
         );
+
+        // _binocularPath(canvas, size);
       }
     }
   }

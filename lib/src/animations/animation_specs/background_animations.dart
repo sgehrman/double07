@@ -6,8 +6,10 @@ class BackgroundAnimations extends AnimationSpec {
     required List<Animation<double>> controllers,
     required this.opacity,
     required this.scale,
+    required this.blur,
   }) : super(controllers: controllers);
 
   Animation<double> opacity;
   Animation<double> scale;
+  Animation<double> blur;
 }
