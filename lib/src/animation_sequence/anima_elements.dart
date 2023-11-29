@@ -153,10 +153,8 @@ class AnimaElements {
 
     return AnimaTitles(
       alignment: const Alignment(0, -0.6),
-      timeStart: 0,
-      timeEnd: 1,
-      // timeStart: Timeline.mainTitlesStart,
-      // timeEnd: Timeline.mainTitlesEnd,
+      timeStart: Timeline.mainTitlesStart,
+      timeEnd: Timeline.mainTitlesEnd,
       lines: [
         AnimaTextLine(
           text: 'DECKR Easter Egg!',
