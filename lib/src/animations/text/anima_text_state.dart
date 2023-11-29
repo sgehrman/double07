@@ -82,12 +82,17 @@ class AnimaTextLine {
     return text.replaceAll(' ', '').length;
   }
 
+  static const double kHeaderFontSize = 64;
   static const double kTitleFontSize = 50;
   static const double kSmallFontSize = 30;
   static const double kLargeFontSize = 42;
 
   // don't use text.length, we don't want spaces in calculations
   double get lineHeight {
+    if (fontSize == kHeaderFontSize) {
+      return 0.15;
+    }
+
     if (fontSize == kTitleFontSize) {
       return 0.14;
     }

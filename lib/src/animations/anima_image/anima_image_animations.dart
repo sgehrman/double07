@@ -35,7 +35,7 @@ class AnimaImageAnimations {
     );
 
     _animations = ImageAnimations(
-      controllers: [controller],
+      controllers: [parent],
       opacity: CommonAnimations.inOutAnima(
         begin: 0,
         end: 1,

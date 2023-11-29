@@ -268,8 +268,8 @@ class AnimaElements {
       AnimaBackgroundState(
         imageAsset: '$kAssets/images/henderson.png',
         gradientAlignment: Alignment.center,
-        timeStart: 0,
-        timeEnd: 1,
+        timeStart: Timeline.binocularsStart,
+        timeEnd: Timeline.binocularsEnd,
         mode: AnimaBackgroundMode.binoculars,
       ),
     );

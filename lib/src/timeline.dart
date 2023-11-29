@@ -26,11 +26,17 @@ class Timeline {
   static double easterEggEnd = mainTitlesEnd - durSecs(1);
 
   // ------------------------------------
+  // binoculars
+
+  static double binocularsStart = mainTitlesEnd;
+  static double binocularsEnd = binocularsStart + durSecs(4);
+
+  // ------------------------------------
   // reviews
 
   static const int _reviewSecs = 10;
 
-  static double reviewsStart = mainTitlesEnd;
+  static double reviewsStart = binocularsEnd;
   static double reviewsEnd = reviewsStart + durSecs(3);
 
   static double hendersonStart = reviewsEnd;

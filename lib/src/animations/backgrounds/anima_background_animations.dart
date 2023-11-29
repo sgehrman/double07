@@ -33,7 +33,7 @@ class AnimaBackgroundAnimations {
     );
 
     _animations = BackgroundAnimations(
-      controllers: [controller],
+      controllers: [parent],
       opacity: CommonAnimations.inOutAnima(
         parent: parent,
         beginValue: 0,
