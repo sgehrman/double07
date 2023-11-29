@@ -71,21 +71,37 @@ class AnimaTitleAnimations {
 
   Animation<double> _opacityTween({
     required Animation<double> parent,
-    required bool inMode,
     required double begin,
     required double end,
   }) {
     if (state.animationTypes.any(
       [TextAnimationType.opacity, TextAnimationType.fadeInOut].contains,
     )) {
-      return CommonAnimations.opacityAnima(
-        parent: parent,
-        begin: begin,
-        end: end,
-        beginValue: inMode ? 0 : state.opacity,
-        endValue: inMode ? state.opacity : 0,
-        curve: state.opacityCurve,
+      final opacity = TweenSequence<double>(
+        <TweenSequenceItem<double>>[
+          TweenSequenceItem(
+            tween: Tween<double>(begin: 0, end: 1).chain(
+              CurveTween(
+                curve: Interval(
+                  begin,
+                  end,
+                ),
+              ),
+            ),
+            weight: 1,
+          ),
+          TweenSequenceItem(
+            tween: ConstantTween<double>(1),
+            weight: 2,
+          ),
+          TweenSequenceItem(
+            tween: Tween<double>(begin: 1, end: 0),
+            weight: 1,
+          ),
+        ],
       );
+
+      return opacity.animate(parent);
     }
 
     return ConstantTween<double>(state.opacity).animate(parent);
@@ -127,37 +143,42 @@ class AnimaTitleAnimations {
       numItems: state.timingInfo.numItems,
     );
 
-    final driver = AnimationSpec.parentAnimation(
+    final master = AnimationSpec.parentAnimation(
       parent: controller,
-      begin: 0,
-      end: 0.5,
+      begin: state.timingInfo.begin,
+      end: state.timingInfo.end,
     );
 
     for (int i = 0; i < count; i++) {
       final begin = timing.beginForIndex(i);
-      final end = timing.endForIndex(i);
+      // final end = timing.endForIndex(i);
+
+      final parent = AnimationSpec.parentAnimation(
+        parent: master,
+        begin: begin,
+        end: 1,
+      );
 
       _inAnimations.add(
         LetterAnimations(
-          controllers: [driver],
+          controllers: [controller],
           scale: _scaleTween(
-            parent: driver,
+            parent: parent,
             inMode: true,
-            begin: begin,
-            end: end,
+            begin: 0,
+            end: 1,
           ),
           alignment: _alignmentTween(
-            parent: driver,
             inMode: true,
-            begin: begin,
-            end: end,
+            parent: parent,
+            begin: 0,
+            end: 1,
             weights: const SequenceWeights.equal(),
           ),
           opacity: _opacityTween(
-            parent: driver,
-            inMode: true,
+            parent: controller,
             begin: begin,
-            end: end,
+            end: 1,
           ),
         ),
       );

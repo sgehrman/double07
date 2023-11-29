@@ -146,6 +146,11 @@ class AnimaElements {
   }
 
   static RunableAnimation introTitles() {
+    final animationTypes = {
+      TextAnimationType.alignment,
+      TextAnimationType.opacity,
+    };
+
     return AnimaTitles(
       alignment: const Alignment(0, -0.6),
       timeStart: 0,
@@ -156,18 +161,22 @@ class AnimaElements {
         AnimaTextLine(
           text: 'DECKR Easter Egg!',
           fontSize: AnimaTextLine.kTitleFontSize,
+          animationTypes: animationTypes,
         ),
         AnimaTextLine(
           text: 'Experimenting with Flutter animations',
           fontSize: AnimaTextLine.kTitleFontSize,
+          animationTypes: animationTypes,
         ),
         AnimaTextLine(
           text: 'To be used in future Deckr features',
           fontSize: AnimaTextLine.kTitleFontSize,
+          animationTypes: animationTypes,
         ),
         AnimaTextLine(
           text: 'Enjoy!',
           fontSize: AnimaTextLine.kTitleFontSize,
+          animationTypes: animationTypes,
         ),
       ],
     );
