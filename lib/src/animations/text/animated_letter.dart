@@ -50,11 +50,7 @@ class AnimatedLetter {
       return;
     }
 
-    final alignment = letterAnimations.driver
-        .drive(
-          letterAnimations.alignment,
-        )
-        .value;
+    final alignment = letterAnimations.alignment.value;
 
     final rect = Offset.zero & size;
 
@@ -85,7 +81,7 @@ class AnimatedLetter {
 
     final matrix = AnimaUtils.scaledRect(
       destRect,
-      letterAnimations.driver.drive(letterAnimations.scale).value,
+      letterAnimations.scale.value,
     );
 
     canvas.transform(matrix.storage);
@@ -95,7 +91,7 @@ class AnimatedLetter {
       rect: destRect,
       image: image,
       fit: BoxFit.fill,
-      opacity: letterAnimations.driver.drive(letterAnimations.opacity).value,
+      opacity: letterAnimations.opacity.value,
       isAntiAlias: true,
       filterQuality: FilterQuality.high,
     );

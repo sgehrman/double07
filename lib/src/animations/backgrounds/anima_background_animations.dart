@@ -40,7 +40,7 @@ class AnimaBackgroundAnimations {
         endValue: state.mode == AnimaBackgroundMode.zoomIn ? 0.8 : 0.35,
         inCurve: Curves.easeOut,
         outCurve: Curves.easeIn,
-        start: 0,
+        begin: 0,
         end: 1,
       ),
       scale: CommonAnimations.inOutAnima(
@@ -49,7 +49,7 @@ class AnimaBackgroundAnimations {
         endValue: state.mode == AnimaBackgroundMode.zoomIn ? 1.2 : 1,
         inCurve: Curves.easeOut,
         outCurve: Curves.easeIn,
-        start: 0,
+        begin: 0,
         end: 1,
         weights: const SequenceWeights.noHold(),
       ),

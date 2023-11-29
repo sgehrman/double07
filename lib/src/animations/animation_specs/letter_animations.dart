@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 class LetterAnimations extends AnimationSpec {
   LetterAnimations({
     required List<Animation<double>> controllers,
-    required this.driver,
     required this.scale,
     required this.alignment,
     required this.opacity,
@@ -12,8 +11,7 @@ class LetterAnimations extends AnimationSpec {
           controllers: controllers,
         );
 
-  Animatable<Alignment> alignment;
-  Animatable<double> opacity;
-  Animatable<double> scale;
-  Animation<double> driver;
+  Animation<Alignment> alignment;
+  Animation<double> opacity;
+  Animation<double> scale;
 }

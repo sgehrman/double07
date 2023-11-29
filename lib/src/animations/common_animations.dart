@@ -67,7 +67,7 @@ class CommonAnimations {
   }
 
   static Animation<Alignment> alignmentAnima({
-    required double start,
+    required double begin,
     required double end,
     required AnimaAlignments alignments,
     required Animation<double> parent,
@@ -110,7 +110,7 @@ class CommonAnimations {
         CurvedAnimation(
           parent: parent,
           curve: Interval(
-            start,
+            begin,
             end,
           ),
         ),
@@ -129,7 +129,7 @@ class CommonAnimations {
             CurvedAnimation(
               parent: parent,
               curve: Interval(
-                start,
+                begin,
                 end,
               ),
             ),
@@ -178,7 +178,7 @@ class CommonAnimations {
   }
 
   static Animation<double> inOutAnima({
-    required double start,
+    required double begin,
     required double end,
     required double beginValue,
     required double endValue,
@@ -212,7 +212,7 @@ class CommonAnimations {
       CurvedAnimation(
         parent: parent,
         curve: Interval(
-          start,
+          begin,
           end,
         ),
       ),
@@ -232,6 +232,31 @@ class CommonAnimations {
           begin,
           end,
           curve: curve,
+        ),
+      ),
+    );
+  }
+
+  static Animation<double> opacityAnima({
+    required Animation<double> parent,
+    required double begin,
+    required double end,
+    required double beginValue,
+    required double endValue,
+    required Curve curve,
+  }) {
+    final tween = Tween<double>(begin: beginValue, end: endValue).chain(
+      CurveTween(
+        curve: curve,
+      ),
+    );
+
+    return tween.animate(
+      CurvedAnimation(
+        parent: parent,
+        curve: Interval(
+          begin,
+          end,
         ),
       ),
     );

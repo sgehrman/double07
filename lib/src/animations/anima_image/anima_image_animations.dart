@@ -37,7 +37,7 @@ class AnimaImageAnimations {
     _animations = ImageAnimations(
       controllers: [controller],
       opacity: CommonAnimations.inOutAnima(
-        start: 0,
+        begin: 0,
         end: 1,
         beginValue: 0,
         endValue: state.opacity,
@@ -47,7 +47,7 @@ class AnimaImageAnimations {
         weights: const SequenceWeights.frontEnd(),
       ),
       scale: CommonAnimations.inOutAnima(
-        start: 0,
+        begin: 0,
         end: 1,
         beginValue: 1,
         endValue: 1.4,
@@ -57,7 +57,7 @@ class AnimaImageAnimations {
         weights: const SequenceWeights.frontEnd(),
       ),
       alignment: CommonAnimations.alignmentAnima(
-        start: 0,
+        begin: 0,
         end: 1,
         alignments: state.alignments,
         parent: parent,

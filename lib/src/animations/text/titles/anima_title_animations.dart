@@ -11,7 +11,6 @@ class AnimaTitleAnimations {
 
   late final List<AnimatedLetter> _textLetters;
   final List<LetterAnimations> _inAnimations = [];
-  final List<LetterAnimations> _outAnimations = [];
 
   final AnimaTextState state;
 
@@ -40,27 +39,22 @@ class AnimaTitleAnimations {
       letters: _textLetters,
       letterAnimations: _inAnimations,
     );
-
-    AnimatedLetter.paintLetters(
-      canvas: canvas,
-      size: size,
-      letters: _textLetters,
-      letterAnimations: _outAnimations,
-    );
   }
 
   // ============================================================
   // private methods
   // ============================================================
 
-  Animatable<Alignment> _alignmentTween({
+  Animation<Alignment> _alignmentTween({
     required bool inMode,
+    required Animation<double> parent,
     required double begin,
     required double end,
     required SequenceWeights weights,
   }) {
     if (state.animationTypes.contains(TextAnimationType.alignment)) {
-      return CommonAnimations.alignmentTween(
+      return CommonAnimations.alignmentAnima(
+        parent: parent,
         begin: begin,
         end: end,
         alignments: inMode ? state.alignments : state.alignments.reverse(),
@@ -72,10 +66,11 @@ class AnimaTitleAnimations {
 
     return ConstantTween<Alignment>(
       state.alignments.alignment,
-    );
+    ).animate(parent);
   }
 
-  Animatable<double> _opacityTween({
+  Animation<double> _opacityTween({
+    required Animation<double> parent,
     required bool inMode,
     required double begin,
     required double end,
@@ -83,7 +78,8 @@ class AnimaTitleAnimations {
     if (state.animationTypes.any(
       [TextAnimationType.opacity, TextAnimationType.fadeInOut].contains,
     )) {
-      return CommonAnimations.simpleTween(
+      return CommonAnimations.opacityAnima(
+        parent: parent,
         begin: begin,
         end: end,
         beginValue: inMode ? 0 : state.opacity,
@@ -92,27 +88,35 @@ class AnimaTitleAnimations {
       );
     }
 
-    return ConstantTween<double>(state.opacity);
+    return ConstantTween<double>(state.opacity).animate(parent);
   }
 
-  Animatable<double> _scaleTween(
-    bool inMode,
-    double begin,
-    double end,
-  ) {
+  Animation<double> _scaleTween({
+    required Animation<double> parent,
+    required bool inMode,
+    required double begin,
+    required double end,
+  }) {
     if (state.animationTypes.contains(TextAnimationType.scale)) {
-      return Tween<double>(begin: inMode ? 6 : 1, end: inMode ? 1 : 6).chain(
+      final tween =
+          Tween<double>(begin: inMode ? 6 : 1, end: inMode ? 1 : 6).chain(
         CurveTween(
+          curve: state.inCurve,
+        ),
+      );
+
+      return tween.animate(
+        CurvedAnimation(
+          parent: parent,
           curve: Interval(
             begin,
             end,
-            curve: state.inCurve,
           ),
         ),
       );
     }
 
-    return ConstantTween<double>(1);
+    return ConstantTween<double>(1).animate(parent);
   }
 
   void _buildAnimations({
@@ -136,42 +140,24 @@ class AnimaTitleAnimations {
       _inAnimations.add(
         LetterAnimations(
           controllers: [driver],
-          driver: driver,
-          scale: _scaleTween(true, begin, end),
+          scale: _scaleTween(
+            parent: driver,
+            inMode: true,
+            begin: begin,
+            end: end,
+          ),
           alignment: _alignmentTween(
+            parent: driver,
             inMode: true,
             begin: begin,
             end: end,
             weights: const SequenceWeights.equal(),
           ),
           opacity: _opacityTween(
+            parent: driver,
             inMode: true,
             begin: begin,
             end: end,
-          ),
-        ),
-      );
-    }
-
-    final driver2 = AnimationSpec.parentAnimation(
-      parent: controller,
-      begin: 0.5,
-      end: 1,
-    );
-
-    for (int i = 0; i < count; i++) {
-      _outAnimations.add(
-        LetterAnimations(
-          controllers: [driver2],
-          driver: driver2,
-          scale: ConstantTween<double>(1),
-          alignment: ConstantTween<Alignment>(
-            state.alignments.alignment,
-          ),
-          opacity: _opacityTween(
-            inMode: false,
-            begin: 0,
-            end: 1,
           ),
         ),
       );
