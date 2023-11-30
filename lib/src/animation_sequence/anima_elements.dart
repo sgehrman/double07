@@ -157,22 +157,22 @@ class AnimaElements {
       timeEnd: Timeline.mainTitlesEnd,
       lines: [
         AnimaTextLine(
-          text: 'DECKR Easter Egg!',
+          text: 'Welcome to DECKR',
           fontSize: AnimaTextLine.kTitleFontSize,
           animationTypes: animationTypes,
         ),
         AnimaTextLine(
-          text: 'Experimenting with Flutter animations',
+          text: 'Secret Experimental Zone',
           fontSize: AnimaTextLine.kTitleFontSize,
           animationTypes: animationTypes,
         ),
         AnimaTextLine(
-          text: 'To be used in future Deckr features',
+          text: 'Modern UI designs are in progress',
           fontSize: AnimaTextLine.kTitleFontSize,
           animationTypes: animationTypes,
         ),
         AnimaTextLine(
-          text: 'Enjoy!',
+          text: 'This is a fun zone to test different techniques',
           fontSize: AnimaTextLine.kTitleFontSize,
           animationTypes: animationTypes,
         ),
@@ -282,15 +282,35 @@ class AnimaElements {
         0.9,
         Timeline.easterEggStart,
         Timeline.easterEggEnd,
+        Alignment.topCenter,
       ),
     ];
 
+    final alignments = [
+      Alignment.topLeft,
+      Alignment.topRight,
+      Alignment.topCenter,
+      Alignment.bottomLeft,
+      Alignment.bottomRight,
+      Alignment.bottomCenter,
+    ];
+
+    int aIndex = 0;
+
     for (int i = 0; i < 10; i++) {
+      final from = alignments[aIndex];
+
+      aIndex++;
+      if (aIndex >= alignments.length) {
+        aIndex = 0;
+      }
+
       result.add(
         AnimaElements.easterEgg(
           0.5,
           Timeline.easterEggStart + Timeline.durMillis(millis * i),
           Timeline.easterEggEnd,
+          from,
         ),
       );
     }
@@ -298,17 +318,22 @@ class AnimaElements {
     return result;
   }
 
-  static RunableAnimation easterEgg(double opacity, double start, double end) {
+  static RunableAnimation easterEgg(
+    double opacity,
+    double start,
+    double end,
+    Alignment from,
+  ) {
     return AnimaImage(
       AnimaImageState(
         imageAsset: '$kAssets/images/egg.png',
-        size: const Size(300, 300),
+        size: const Size(200, 200),
         timeStart: start,
         opacity: opacity,
         timeEnd: end,
         alignments: AnimaAlignments(
           const Alignment(0, 0.7),
-          from: Alignment.topCenter,
+          from: from,
           to: Alignment.topCenter,
         ),
       ),
