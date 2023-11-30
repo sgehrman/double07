@@ -44,7 +44,7 @@ class AnimaTextLine {
     this.opacityCurve = Curves.linear,
     this.bold = false,
     this.letterSpacing = 1,
-    this.opacity = 0.8,
+    this.opacity = 0.6,
     this.animationTypes = const {
       TextAnimationType.alignment,
       TextAnimationType.opacity,
@@ -82,8 +82,8 @@ class AnimaTextLine {
     return text.replaceAll(' ', '').length;
   }
 
-  static const double kHeaderFontSize = 64;
-  static const double kTitleFontSize = 50;
+  static const double kHeaderFontSize = 84;
+  static const double kTitleFontSize = 64;
   static const double kSmallFontSize = 30;
   static const double kLargeFontSize = 42;
 

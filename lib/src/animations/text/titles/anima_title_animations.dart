@@ -80,7 +80,7 @@ class AnimaTitleAnimations {
       final opacity = TweenSequence<double>(
         <TweenSequenceItem<double>>[
           TweenSequenceItem(
-            tween: Tween<double>(begin: 0, end: 1).chain(
+            tween: Tween<double>(begin: 0, end: state.opacity).chain(
               CurveTween(
                 curve: Interval(
                   begin,
@@ -91,11 +91,11 @@ class AnimaTitleAnimations {
             weight: 1,
           ),
           TweenSequenceItem(
-            tween: ConstantTween<double>(1),
+            tween: ConstantTween<double>(state.opacity),
             weight: 2,
           ),
           TweenSequenceItem(
-            tween: Tween<double>(begin: 1, end: 0),
+            tween: Tween<double>(begin: state.opacity, end: 0),
             weight: 1,
           ),
         ],

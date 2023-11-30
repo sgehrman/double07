@@ -29,6 +29,7 @@ class AnimationSequence {
 
     // // AnimaElements.randomQuote(),
 
+    AnimaElements.theEnd(),
     AnimaElements.reviewsTitle(),
     AnimaElements.introTitles(),
     AnimaElements.double07Ball(),

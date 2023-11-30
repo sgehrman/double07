@@ -1,5 +1,5 @@
 class Timeline {
-  static int seconds = 70;
+  static int seconds = 80;
   static Duration runDuration = Duration(seconds: seconds);
 
   static double durSecs(int secs) {
@@ -23,7 +23,7 @@ class Timeline {
   static double mainTitlesEnd = mainTitlesStart + durSecs(12);
 
   static double easterEggStart = durSecs(4);
-  static double easterEggEnd = mainTitlesEnd - durSecs(1);
+  static double easterEggEnd = easterEggStart + durSecs(4);
 
   // ------------------------------------
   // binoculars
@@ -67,10 +67,16 @@ class Timeline {
   static double blocks2End = blocks2Start + durSecs(5);
 
   // ------------------------------------
+  // credits
+
+  static double creditsStart = blocks2End;
+  static double creditsEnd = creditsStart + durSecs(6);
+
+  // ------------------------------------
   // xxx
 
-  static double textStart = ballEnd;
-  static double textEnd = textStart + durSecs(3);
+  static double deckrLogoStart = ballEnd;
+  static double deckrLogoEnd = deckrLogoStart + durSecs(3);
 
   static double quoteStart = 0.1;
   static double quoteEnd = durSecs(4);

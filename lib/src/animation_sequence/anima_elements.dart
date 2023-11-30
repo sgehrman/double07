@@ -104,11 +104,11 @@ class AnimaElements {
       lines: [
         AnimaTextLine(
           text: 'Deckr Reviews',
-          fontSize: AnimaTextLine.kSmallFontSize,
+          fontSize: AnimaTextLine.kLargeFontSize,
         ),
         AnimaTextLine(
           text: 'Here\'s some words',
-          fontSize: AnimaTextLine.kSmallFontSize,
+          fontSize: AnimaTextLine.kLargeFontSize,
         ),
         AnimaTextLine(
           text: 'From our customers',
@@ -167,7 +167,7 @@ class AnimaElements {
           animationTypes: animationTypes,
         ),
         AnimaTextLine(
-          text: 'Modern UI designs are in progress',
+          text: 'We\'re working on new Modern UI designs',
           fontSize: AnimaTextLine.kTitleFontSize,
           animationTypes: animationTypes,
         ),
@@ -250,14 +250,30 @@ class AnimaElements {
 
   static RunableAnimation deckrLogo() {
     return AnimaParagraph(
-      alignment: const Alignment(-0.8, -0.8),
-      timeStart: Timeline.textStart,
-      timeEnd: Timeline.textEnd,
+      alignment: const Alignment(0.95, 0.95),
+      timeStart: Timeline.deckrLogoStart,
+      timeEnd: Timeline.deckrLogoEnd,
       lines: [
         AnimaTextLine(
           text: 'Deckr'.toUpperCase(),
           bold: true,
-          fontSize: 64,
+          fontSize: AnimaTextLine.kTitleFontSize,
+          opacity: 0.4,
+        ),
+      ],
+    );
+  }
+
+  static RunableAnimation theEnd() {
+    return AnimaParagraph(
+      alignment: Alignment.center,
+      timeStart: Timeline.creditsStart,
+      timeEnd: Timeline.creditsEnd,
+      lines: [
+        AnimaTextLine(
+          text: 'The End',
+          bold: true,
+          fontSize: AnimaTextLine.kHeaderFontSize,
         ),
       ],
     );
