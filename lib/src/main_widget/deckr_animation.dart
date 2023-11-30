@@ -109,7 +109,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
                     );
                   }
 
-                  return const SizedBox();
+                  return const SizedBox(width: 2048, height: 1024);
                 },
               ),
             ),
