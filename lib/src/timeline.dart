@@ -14,12 +14,12 @@ class Timeline {
   // double07 ball
 
   static double ballStart = 0;
-  static double ballEnd = durSecs(10);
+  static double ballEnd = durSecs(15);
 
   // ------------------------------------
   // main titles
 
-  static double mainTitlesStart = durSecs(2);
+  static double mainTitlesStart = durSecs(5);
   static double mainTitlesEnd = mainTitlesStart + durSecs(12);
 
   static double easterEggStart = durSecs(4);

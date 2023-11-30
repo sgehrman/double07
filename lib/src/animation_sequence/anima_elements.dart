@@ -133,11 +133,13 @@ class AnimaElements {
           animationTypes: {
             TextAnimationType.opacity,
           },
+          opacity: 0.4,
         ),
         AnimaTextLine(
           text: 'You only live twice',
           fontSize: AnimaTextLine.kSmallFontSize,
           color: Colors.cyan,
+          opacity: 0.4,
         ),
       ],
     );

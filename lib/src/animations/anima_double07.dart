@@ -31,6 +31,10 @@ class AnimaDouble07 extends RunableAnimation {
           tween: Tween<double>(begin: 0, end: 1),
           weight: 50,
         ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 0, end: 1),
+          weight: 50,
+        ),
       ],
     );
 
