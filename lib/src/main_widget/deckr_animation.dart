@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:double07/src/animation_sequence/animation_sequence.dart';
 import 'package:double07/src/animations/anima_utils.dart';
 import 'package:double07/src/audio_player/background_audio_player.dart';
@@ -20,6 +22,8 @@ class _DeckrAnimationState extends State<DeckrAnimation>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   final AnimationSequence _animationState = AnimationSequence();
+  bool _showControls = false;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -62,61 +66,79 @@ class _DeckrAnimationState extends State<DeckrAnimation>
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: Colors.black,
-      child: Stack(
-        children: [
-          GestureDetector(
-            onTap: () {
-              if (!_controller.isAnimating) {
-                _controller.forward();
-              } else {
-                _controller.stop();
-              }
+    return MouseRegion(
+      onHover: (x) {
+        _showControls = true;
+        setState(() {});
 
-              setState(() {});
-            },
-            child: AnimatedBuilder(
-              animation: _controller,
-              builder: (context, child) {
-                if (_animationState.isInitialized) {
-                  return Center(
-                    child: FittedBox(
-                      child: CustomPaint(
-                        size: const Size(2048, 1024),
-                        painter: DeckrAnimationPainter(_animationState),
-                      ),
-                    ),
-                  );
+        _timer?.cancel();
+        _timer = Timer(const Duration(seconds: 1), () {
+          _showControls = false;
+          setState(() {});
+        });
+      },
+      child: ColoredBox(
+        color: Colors.black,
+        child: Stack(
+          children: [
+            GestureDetector(
+              onTap: () {
+                if (!_controller.isAnimating) {
+                  _controller.forward();
+                } else {
+                  _controller.stop();
                 }
 
-                return const SizedBox();
+                setState(() {});
               },
+              child: AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) {
+                  if (_animationState.isInitialized) {
+                    return Center(
+                      child: FittedBox(
+                        child: CustomPaint(
+                          size: const Size(2048, 1024),
+                          painter: DeckrAnimationPainter(_animationState),
+                        ),
+                      ),
+                    );
+                  }
+
+                  return const SizedBox();
+                },
+              ),
             ),
-          ),
-          BackgroundAudioPlayer(autoplay: widget.autoplay),
-          Positioned.fill(
-            child: IgnorePointer(
-              child: Visibility(
-                visible: AnimaUtils.isControllerPaused(_controller),
-                child: Container(
-                  color: Colors.black54,
-                  child: const Icon(
-                    Icons.play_arrow,
-                    color: Colors.cyan,
-                    size: 200,
+            BackgroundAudioPlayer(autoplay: widget.autoplay),
+            Positioned.fill(
+              child: IgnorePointer(
+                child: Visibility(
+                  visible: AnimaUtils.isControllerPaused(_controller),
+                  child: Container(
+                    color: Colors.black54,
+                    child: const Icon(
+                      Icons.play_arrow,
+                      color: Colors.cyan,
+                      size: 200,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: _AnimationSlider(_controller),
-          ),
-        ],
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: AnimatedOpacity(
+                opacity: _showControls ? 1 : 0,
+                duration: const Duration(
+                  milliseconds: 500,
+                ),
+                child: _AnimationSlider(_controller),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
