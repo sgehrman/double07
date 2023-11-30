@@ -105,6 +105,8 @@ class AnimaElements {
         AnimaTextLine(
           text: 'Deckr Reviews',
           fontSize: AnimaTextLine.kLargeFontSize,
+          color: Colors.cyan,
+          bold: true,
         ),
         AnimaTextLine(
           text: 'Here\'s some words',
@@ -120,26 +122,22 @@ class AnimaElements {
 
   static RunableAnimation randomQuote() {
     return AnimaParagraph(
-      alignment: const Alignment(0.8, -0.8),
+      alignment: const Alignment(-0.9, 0.9),
       timeStart: Timeline.quoteStart,
       timeEnd: Timeline.quoteEnd,
       animateDown: false,
       lines: [
         AnimaTextLine(
-          text: 'This dream is for you',
-          fontSize: AnimaTextLine.kSmallFontSize,
-        ),
-        AnimaTextLine(
-          text: 'So pay the price',
-          fontSize: AnimaTextLine.kSmallFontSize,
-        ),
-        AnimaTextLine(
           text: 'Make one dream come true',
-          fontSize: AnimaTextLine.kLargeFontSize,
+          fontSize: AnimaTextLine.kSmallFontSize,
+          animationTypes: {
+            TextAnimationType.opacity,
+          },
         ),
         AnimaTextLine(
           text: 'You only live twice',
-          fontSize: AnimaTextLine.kLargeFontSize,
+          fontSize: AnimaTextLine.kSmallFontSize,
+          color: Colors.cyan,
         ),
       ],
     );
@@ -151,6 +149,8 @@ class AnimaElements {
       TextAnimationType.opacity,
     };
 
+    const opacity = 0.4;
+
     return AnimaTitles(
       alignment: const Alignment(0, -0.6),
       timeStart: Timeline.mainTitlesStart,
@@ -160,21 +160,25 @@ class AnimaElements {
           text: 'Welcome to DECKR',
           fontSize: AnimaTextLine.kTitleFontSize,
           animationTypes: animationTypes,
+          color: Colors.cyan,
         ),
         AnimaTextLine(
           text: 'Secret Experimental Zone',
           fontSize: AnimaTextLine.kTitleFontSize,
           animationTypes: animationTypes,
+          opacity: opacity,
         ),
         AnimaTextLine(
           text: 'We\'re working on new Modern UI designs',
           fontSize: AnimaTextLine.kTitleFontSize,
           animationTypes: animationTypes,
+          opacity: opacity,
         ),
         AnimaTextLine(
           text: 'This is a fun zone to test different techniques',
           fontSize: AnimaTextLine.kTitleFontSize,
           animationTypes: animationTypes,
+          opacity: opacity,
         ),
       ],
     );
@@ -201,7 +205,7 @@ class AnimaElements {
           timeEnd: Timeline.blocks2End,
           reverse: true,
           downward: true,
-          numColumns: 3,
+          numColumns: 5,
           margin: 22,
           blocksSequence: AnimaBlocksUtils.blocksSequence,
           flipSequence: AnimaBlocksUtils.flipSequence,

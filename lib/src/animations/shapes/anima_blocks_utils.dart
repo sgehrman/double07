@@ -42,19 +42,19 @@ class AnimaBlocksUtils {
   static final blocksSequence = TweenSequence<double>(
     <TweenSequenceItem<double>>[
       TweenSequenceItem<double>(
-        tween: Tween<double>(begin: 0, end: 0.35),
+        tween: Tween<double>(begin: 0, end: 0.5),
         weight: 10,
       ),
       TweenSequenceItem<double>(
-        tween: Tween<double>(begin: 0.35, end: 0.1),
+        tween: Tween<double>(begin: 0.5, end: 0.1),
         weight: 10,
       ),
       TweenSequenceItem<double>(
-        tween: Tween<double>(begin: 0.1, end: 0.8),
+        tween: Tween<double>(begin: 0.1, end: 0.9),
         weight: 4,
       ),
       TweenSequenceItem<double>(
-        tween: Tween<double>(begin: 0.8, end: 0),
+        tween: Tween<double>(begin: 0.9, end: 0),
         weight: 10,
       ),
       TweenSequenceItem<double>(

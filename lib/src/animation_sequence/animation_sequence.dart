@@ -19,16 +19,13 @@ class AnimationSequence {
 
   final List<RunableAnimation> _runables = [
     AnimaElements.binoculars(),
-
     ...AnimaElements.backgrounds(),
     ...AnimaElements.easterEggs(),
     AnimaElements.deckrLogo(),
     AnimaElements.hendersonQuote(),
     AnimaElements.largoQuote(),
     AnimaElements.dominoQuote(),
-
-    // // AnimaElements.randomQuote(),
-
+    AnimaElements.randomQuote(),
     AnimaElements.theEnd(),
     AnimaElements.reviewsTitle(),
     AnimaElements.introTitles(),

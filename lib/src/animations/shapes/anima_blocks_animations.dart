@@ -107,71 +107,65 @@ class AnimaBlocksAnimations {
   // =====================================================
 
   void paint(Canvas canvas, Size size) {
-    if (!_animations.isRunning) {
-      // print('NOT RUNNING block');
+    if (_animations.isRunning) {
+      // final rect = Offset.zero & size;
 
-      return;
-    } else {
-      // print('RUNNING block');
-    }
+      final animaColor = _animations.color.value;
 
-    // final rect = Offset.zero & size;
-
-    final animaColor = _animations.color.value;
-
-    Color color = Colors.cyan;
-    if (animaColor != null) {
-      if (animaColor.opacity != 0) {
-        color = animaColor;
-      }
-    }
-
-    final blockPaint = Paint()
-      ..color = color.withOpacity(
-        _animations.opacity.value,
-      );
-
-    final width = size.height / state.numColumns; // shortest side is height
-
-    final cols = size.width ~/ width;
-    final rows = size.height ~/ width;
-
-    final numBlocks = cols * rows;
-
-    final n = (_animations.blocks.value * numBlocks).ceil();
-
-    for (int i = 0; i < n; i++) {
-      final index = state.reverse ? (numBlocks - 1) - i : i;
-
-      final destRect = rectForIndex(
-        index: index,
-        width: width,
-        size: size,
-      );
-
-      canvas.save();
-      final t = AnimaUtils.rotateRect(
-        srcRect: destRect,
-        degreesY: (_animations.flip.value * 360).round(),
-        degreesX: 0,
-      );
-
-      canvas.transform(t.storage);
-
-      if (state.circles) {
-        canvas.drawCircle(
-          destRect.center,
-          destRect.width / 2,
-          blockPaint,
-        );
-      } else {
-        canvas.drawRect(
-          destRect,
-          blockPaint,
-        );
+      Color color = Colors.cyan;
+      if (animaColor != null) {
+        if (animaColor.opacity != 0) {
+          color = animaColor;
+        }
       }
 
-      canvas.restore();
+      final blockPaint = Paint()
+        ..color = color.withOpacity(
+          _animations.opacity.value,
+        );
+
+      final width = size.height / state.numColumns; // shortest side is height
+
+      final cols = size.width ~/ width;
+      final rows = size.height ~/ width;
+
+      final numBlocks = cols * rows;
+
+      final n = (_animations.blocks.value * numBlocks).ceil();
+
+      for (int i = 0; i < n; i++) {
+        final index = state.reverse ? (numBlocks - 1) - i : i;
+
+        final destRect = rectForIndex(
+          index: index,
+          width: width,
+          size: size,
+        );
+
+        canvas.save();
+        final t = AnimaUtils.rotateRect(
+          srcRect: destRect,
+          degreesY: (_animations.flip.value * 360).round(),
+          degreesX: 0,
+        );
+
+        canvas.transform(t.storage);
+
+        if (state.circles) {
+          canvas.drawCircle(
+            destRect.center,
+            destRect.width / 2,
+            blockPaint,
+          );
+        } else {
+          canvas.drawRect(
+            destRect,
+            blockPaint,
+          );
+        }
+
+        canvas.restore();
+      }
     }
   }
 }
