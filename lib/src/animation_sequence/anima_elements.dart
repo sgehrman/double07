@@ -82,7 +82,7 @@ class AnimaElements {
           fontSize: AnimaTextLine.kSmallFontSize,
         ),
         AnimaTextLine(
-          text: 'Recommended I use Deckr among other things.',
+          text: 'recommended I use Deckr, among other things.',
           fontSize: AnimaTextLine.kSmallFontSize,
         ),
         AnimaTextLine.blank(),
@@ -214,7 +214,7 @@ class AnimaElements {
     return [
       AnimaBackground(
         AnimaBackgroundState(
-          imageAsset: '$kAssets/images/henderson.png',
+          imageAsset: '$kAssets/images/cat.jpg',
           gradientAlignment: Alignment.center,
           timeStart: Timeline.scaledImageStart,
           timeEnd: Timeline.scaledImageEnd,

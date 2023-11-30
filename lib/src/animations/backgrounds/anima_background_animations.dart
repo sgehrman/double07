@@ -37,7 +37,7 @@ class AnimaBackgroundAnimations {
       opacity: CommonAnimations.inOutAnima(
         parent: parent,
         beginValue: 0,
-        endValue: state.mode == AnimaBackgroundMode.zoomIn ? 0.8 : 0.35,
+        endValue: state.mode == AnimaBackgroundMode.zoomIn ? 0.1 : 0.5,
         inCurve: Curves.easeOut,
         outCurve: Curves.easeIn,
         begin: 0,
@@ -180,8 +180,6 @@ class AnimaBackgroundAnimations {
         );
 
         canvas.restore();
-
-        canvas.drawRect(rect, Paint()..color = Colors.black87);
       } else if (state.mode == AnimaBackgroundMode.binoculars) {
         canvas.clipPath(_binocularPath(canvas, size));
 

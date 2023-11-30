@@ -34,7 +34,7 @@ class Timeline {
   // ------------------------------------
   // reviews
 
-  static const int _reviewSecs = 10;
+  static const int _reviewSecs = 8;
 
   static double reviewsStart = binocularsEnd;
   static double reviewsEnd = reviewsStart + durSecs(3);
@@ -70,7 +70,7 @@ class Timeline {
   // credits
 
   static double creditsStart = blocks2End;
-  static double creditsEnd = creditsStart + durSecs(6);
+  static double creditsEnd = creditsStart + durSecs(4);
 
   // ------------------------------------
   // xxx
