@@ -214,7 +214,7 @@ class AnimaElements {
     return [
       AnimaBackground(
         AnimaBackgroundState(
-          imageAsset: '$kAssets/images/cat.jpg',
+          imageAsset: '$kAssets/images/oddjob.jpg',
           gradientAlignment: Alignment.center,
           timeStart: Timeline.scaledImageStart,
           timeEnd: Timeline.scaledImageEnd,
