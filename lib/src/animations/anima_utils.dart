@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:flutter/material.dart';
 import 'package:matrix4_transform/matrix4_transform.dart';
@@ -141,4 +143,6 @@ class AnimaUtils {
       ..rotateX(degreesX.inRadians)
       ..translate(-origin.dx, -origin.dy);
   }
+
+  static double degToRad(num deg) => deg * (math.pi / 180.0);
 }

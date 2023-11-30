@@ -95,7 +95,7 @@ class AnimaParagraphAnimations {
     if (state.animationTypes.any(
       [TextAnimationType.opacity, TextAnimationType.fadeInOut].contains,
     )) {
-      return CommonAnimations.opacityAnima(
+      return CommonAnimations.basicAnima(
         parent: parent,
         begin: begin,
         end: end,

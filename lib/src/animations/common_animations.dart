@@ -2,70 +2,6 @@ import 'package:double07/src/constants.dart';
 import 'package:flutter/material.dart';
 
 class CommonAnimations {
-  static Animatable<Alignment> alignmentTween({
-    required double begin,
-    required double end,
-    required AnimaAlignments alignments,
-    required Curve inCurve,
-    required Curve outCurve,
-    SequenceWeights weights = const SequenceWeights(),
-  }) {
-    if (alignments.has3) {
-      final items = [
-        TweenSequenceItem<Alignment>(
-          tween: AlignmentTween(
-            begin: alignments.first,
-            end: alignments.second,
-          ).chain(
-            CurveTween(
-              curve: inCurve,
-            ),
-          ),
-          weight: weights.start,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: ConstantTween<Alignment>(alignments.second),
-          weight: weights.hold,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: AlignmentTween(
-            begin: alignments.second,
-            end: alignments.third,
-          ).chain(
-            CurveTween(
-              curve: outCurve,
-            ),
-          ),
-          weight: weights.end,
-        ),
-      ];
-
-      return TweenSequence<Alignment>(
-        items,
-      ).chain(
-        CurveTween(
-          curve: Interval(
-            begin,
-            end,
-          ),
-        ),
-      );
-    } else {
-      return AlignmentTween(
-        begin: alignments.first,
-        end: alignments.second,
-      ).chain(
-        CurveTween(
-          curve: Interval(
-            begin,
-            end,
-            curve: inCurve,
-          ),
-        ),
-      );
-    }
-  }
-
   static Animation<Alignment> alignmentAnima({
     required double begin,
     required double end,
@@ -137,46 +73,6 @@ class CommonAnimations {
     }
   }
 
-  static Animatable<double> inOutTween({
-    required double begin,
-    required double end,
-    required double beginValue,
-    required double endValue,
-    required Curve inCurve,
-    required Curve outCurve,
-    SequenceWeights weights = const SequenceWeights(),
-  }) {
-    final sequence = TweenSequence<double>(
-      <TweenSequenceItem<double>>[
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: beginValue, end: endValue).chain(
-            CurveTween(curve: inCurve),
-          ),
-          weight: weights.start,
-        ),
-        TweenSequenceItem<double>(
-          tween: ConstantTween<double>(endValue),
-          weight: weights.hold,
-        ),
-        TweenSequenceItem<double>(
-          tween: Tween<double>(begin: endValue, end: beginValue).chain(
-            CurveTween(curve: outCurve),
-          ),
-          weight: weights.end,
-        ),
-      ],
-    );
-
-    return sequence.chain(
-      CurveTween(
-        curve: Interval(
-          begin,
-          end,
-        ),
-      ),
-    );
-  }
-
   static Animation<double> inOutAnima({
     required double begin,
     required double end,
@@ -219,25 +115,7 @@ class CommonAnimations {
     );
   }
 
-  static Animatable<double> simpleTween({
-    required double begin,
-    required double end,
-    required double beginValue,
-    required double endValue,
-    required Curve curve,
-  }) {
-    return Tween<double>(begin: beginValue, end: endValue).chain(
-      CurveTween(
-        curve: Interval(
-          begin,
-          end,
-          curve: curve,
-        ),
-      ),
-    );
-  }
-
-  static Animation<double> opacityAnima({
+  static Animation<double> basicAnima({
     required Animation<double> parent,
     required double begin,
     required double end,
