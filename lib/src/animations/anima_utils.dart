@@ -124,6 +124,18 @@ class AnimaUtils {
         .matrix4;
   }
 
+  static Matrix4 translate({
+    required double x,
+    required double y,
+  }) {
+    return Matrix4Transform()
+        .translate(
+          x: x,
+          y: y,
+        )
+        .matrix4;
+  }
+
   // ====================================================
 
   static Matrix4 rotateRect({

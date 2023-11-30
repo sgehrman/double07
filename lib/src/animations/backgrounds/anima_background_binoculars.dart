@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:dfc_flutter/dfc_flutter_web.dart';
@@ -14,12 +15,16 @@ class BinocularAnimations extends AnimationSpec {
     required List<Animation<double>> controllers,
     required this.opacity,
     required this.scale,
+    required this.translate,
     required this.blur,
+    required this.blood,
   }) : super(controllers: controllers);
 
   Animation<double> opacity;
   Animation<double> scale;
   Animation<double> blur;
+  Animation<double> translate;
+  Animation<double> blood;
 }
 
 // =====================================================
@@ -63,15 +68,75 @@ class AnimaBackgroundBinoculars {
         endValue: 1.8,
         curve: Curves.easeOut,
         begin: 0,
+        end: 0.7,
+      ),
+      translate: CommonAnimations.basicAnima(
+        parent: parent,
+        beginValue: 0,
+        endValue: 1,
+        curve: Curves.easeIn,
+        begin: 0.5,
+        end: 0.7,
+      ),
+      blood: CommonAnimations.basicAnima(
+        parent: parent,
+        beginValue: 0,
+        endValue: 1,
+        curve: Curves.easeIn,
+        begin: 0.8,
         end: 1,
       ),
-      blur: CommonAnimations.basicAnima(
+      blur: blurAnima(
         parent: parent,
-        beginValue: 1,
-        endValue: 0,
-        curve: Curves.easeOut,
-        begin: 0.5,
+        inCurve: Curves.easeOut,
+        outCurve: Curves.easeIn,
+        begin: 0.3,
         end: 1,
+      ),
+    );
+  }
+
+  Animation<double> blurAnima({
+    required double begin,
+    required double end,
+    required Animation<double> parent,
+    required Curve inCurve,
+    required Curve outCurve,
+  }) {
+    final sequence = TweenSequence<double>(
+      <TweenSequenceItem<double>>[
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 0, end: 1).chain(
+            CurveTween(curve: inCurve),
+          ),
+          weight: 2,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 1, end: 0.8).chain(
+            CurveTween(curve: outCurve),
+          ),
+          weight: 1,
+        ),
+        TweenSequenceItem<double>(
+          tween: Tween<double>(begin: 0.8, end: 1).chain(
+            CurveTween(curve: outCurve),
+          ),
+          weight: 1,
+        ),
+        TweenSequenceItem<double>(
+          tween: ConstantTween<double>(1),
+          weight: 4,
+        ),
+      ],
+    );
+
+    return sequence.animate(
+      CurvedAnimation(
+        parent: parent,
+        curve: Interval(
+          begin,
+          end,
+        ),
       ),
     );
   }
@@ -155,11 +220,11 @@ class AnimaBackgroundBinoculars {
 
       final Rect destRect = Offset.zero & fittedSizes.destination;
 
-      final sig = _animations.blur.value.abs() * 40;
+      final sig = ((1 - _animations.blur.value) * 40).abs();
 
       final imagePaint = Paint();
       imagePaint.color = Color.fromRGBO(
-        220,
+        0,
         0,
         0,
         ui.clampDouble(_animations.opacity.value, 0, 1),
@@ -167,10 +232,17 @@ class AnimaBackgroundBinoculars {
       imagePaint.imageFilter = ui.ImageFilter.blur(sigmaX: sig, sigmaY: sig);
       imagePaint.blendMode = ui.BlendMode.srcOver;
 
-      final matrix = AnimaUtils.scaledRect(
+      final scale = AnimaUtils.scaledRect(
         rect,
         _animations.scale.value,
       );
+
+      final translate = AnimaUtils.translate(
+        x: 600 * _animations.translate.value,
+        y: 200 * _animations.translate.value,
+      );
+
+      final matrix = translate + scale;
 
       canvas.save();
 
@@ -184,6 +256,19 @@ class AnimaBackgroundBinoculars {
         destRect,
         imagePaint,
       );
+
+      final bloodPaint = Paint();
+      bloodPaint.color = Color.fromRGBO(
+        255,
+        0,
+        0,
+        math.min(
+          _animations.opacity.value,
+          ui.clampDouble(_animations.blood.value, 0, 1),
+        ),
+      );
+
+      canvas.drawRect(rect, bloodPaint);
 
       canvas.restore();
     }
