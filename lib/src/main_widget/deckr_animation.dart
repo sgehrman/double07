@@ -40,6 +40,7 @@ class _DeckrAnimationState extends State<DeckrAnimation>
   @override
   void dispose() {
     _controller.dispose();
+    _timer?.cancel();
 
     super.dispose();
   }
@@ -74,7 +75,10 @@ class _DeckrAnimationState extends State<DeckrAnimation>
         _timer?.cancel();
         _timer = Timer(const Duration(seconds: 1), () {
           _showControls = false;
-          setState(() {});
+
+          if (mounted) {
+            setState(() {});
+          }
         });
       },
       child: ColoredBox(
@@ -105,7 +109,11 @@ class _DeckrAnimationState extends State<DeckrAnimation>
                     );
                   }
 
-                  return const SizedBox();
+                  return const Center(
+                    child: FittedBox(
+                      child: SizedBox(width: 2048, height: 1024),
+                    ),
+                  );
                 },
               ),
             ),
