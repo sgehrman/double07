@@ -44,59 +44,55 @@ class AnimatedLetter {
     required LetterAnimations letterAnimations,
     Color? backgroundColor,
   }) {
-    if (!letterAnimations.isRunning) {
-      // print('not running letter');
+    if (letterAnimations.isRunning) {
+      final alignment = letterAnimations.alignment.value;
 
-      return;
+      final rect = Offset.zero & size;
+
+      Rect destRect = alignment.inscribe(
+        Size(
+          wordSize.width,
+          wordSize.height,
+        ),
+        rect,
+      );
+
+      // not working? white is on top
+      // canvas.drawRect(destRect, Paint()..color = Colors.white);
+
+      destRect = letterAlignment.inscribe(
+        Size(
+          letterSize.width,
+          letterSize.height,
+        ),
+        destRect,
+      );
+
+      if (backgroundColor != null) {
+        canvas.drawRect(destRect, Paint()..color = backgroundColor);
+      }
+
+      canvas.save();
+
+      final matrix = AnimaUtils.scaledRect(
+        destRect,
+        letterAnimations.scale.value,
+      );
+
+      canvas.transform(matrix.storage);
+
+      paintImage(
+        canvas: canvas,
+        rect: destRect,
+        image: image,
+        fit: BoxFit.fill,
+        opacity: letterAnimations.opacity.value,
+        isAntiAlias: true,
+        filterQuality: FilterQuality.high,
+      );
+
+      canvas.restore();
     }
-
-    final alignment = letterAnimations.alignment.value;
-
-    final rect = Offset.zero & size;
-
-    Rect destRect = alignment.inscribe(
-      Size(
-        wordSize.width,
-        wordSize.height,
-      ),
-      rect,
-    );
-
-    // not working? white is on top
-    // canvas.drawRect(destRect, Paint()..color = Colors.white);
-
-    destRect = letterAlignment.inscribe(
-      Size(
-        letterSize.width,
-        letterSize.height,
-      ),
-      destRect,
-    );
-
-    if (backgroundColor != null) {
-      canvas.drawRect(destRect, Paint()..color = backgroundColor);
-    }
-
-    canvas.save();
-
-    final matrix = AnimaUtils.scaledRect(
-      destRect,
-      letterAnimations.scale.value,
-    );
-
-    canvas.transform(matrix.storage);
-
-    paintImage(
-      canvas: canvas,
-      rect: destRect,
-      image: image,
-      fit: BoxFit.fill,
-      opacity: letterAnimations.opacity.value,
-      isAntiAlias: true,
-      filterQuality: FilterQuality.high,
-    );
-
-    canvas.restore();
   }
 
   static Future<List<AnimatedLetter>> createTextImages(
