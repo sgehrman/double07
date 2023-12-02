@@ -1,51 +1,43 @@
-import 'dart:async';
 import 'dart:ui' as ui;
 
-import 'package:double07/src/animations/text/animated_letter.dart';
 import 'package:double07/src/animations/text/letter_painter.dart';
+import 'package:double07/src/news_crawl/news_crawl_controller.dart';
 import 'package:flutter/material.dart';
 
-class NewsCrawl extends StatefulWidget {
-  const NewsCrawl();
+class NewsCrawl extends StatelessWidget {
+  const NewsCrawl({super.key});
 
   @override
-  State<NewsCrawl> createState() => _NewsCrawlState();
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.black,
+      width: double.infinity,
+      height: 80,
+      child: const _NewsCrawl(),
+    );
+  }
 }
 
-class _NewsCrawlState extends State<NewsCrawl>
+class _NewsCrawl extends StatefulWidget {
+  const _NewsCrawl();
+
+  @override
+  State<_NewsCrawl> createState() => _NewsCrawlState();
+}
+
+class _NewsCrawlState extends State<_NewsCrawl>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-  late final Animation<double> _animation;
-  ui.Image? _image;
+  late final NewsCrawlController _controller;
 
   @override
   void initState() {
     super.initState();
 
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 10),
-    );
-
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _controller.reverse();
-      } else if (status == AnimationStatus.dismissed) {
-        _controller.forward();
-      }
-    });
-
-    _controller.addListener(() {
+    _controller = NewsCrawlController(() {
       if (mounted) {
         setState(() {});
       }
     });
-
-    _animation = ReverseAnimation(
-      _controller,
-    );
-
-    _setup();
   }
 
   @override
@@ -58,45 +50,25 @@ class _NewsCrawlState extends State<NewsCrawl>
     super.dispose();
   }
 
-  Future<void> _setup() async {
-    _image = await AnimatedLetter.textImage(
-      text: 'Test text image',
-      style: const TextStyle(
-        fontSize: 30,
-      ),
-      letterSpacing: 1,
-    );
-
-    if (mounted) {
-      setState(() {});
-    }
-
-    await _controller.forward();
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (_image != null) {
+    if (_controller.isInitialized) {
       return MouseRegion(
         onEnter: (x) {
-          _controller.stop();
+          _controller.pause();
         },
         onExit: (x) {
-          _controller.forward();
+          _controller.pause();
         },
         child: SizedBox(
           width: double.infinity,
           height: 80,
           child: LayoutBuilder(
             builder: (context, constraints) {
-              final imageWidth = _image!.width;
-              final width = constraints.maxWidth + imageWidth;
-              final x = _animation.value * width;
-
               return CustomPaint(
                 painter: _NewsCrawlSentence(
-                  image: _image!,
-                  translateX: x - imageWidth,
+                  image: _controller.image!,
+                  translateX: _controller.getTranslateX(constraints.maxWidth),
                 ),
               );
             },
@@ -122,10 +94,6 @@ class _NewsCrawlSentence extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final rect = Offset.zero & size;
-
-    canvas.drawRect(rect, Paint()..color = Colors.black);
-
     final destRect = Rect.fromLTWH(
       translateX,
       0,
