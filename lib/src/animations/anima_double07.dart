@@ -1,6 +1,5 @@
 import 'package:double07/src/animation_sequence/animation_sequence.dart';
 import 'package:double07/src/animations/animation_specs/animation_spec.dart';
-import 'package:double07/src/animations/animation_specs/double07_annimations.dart';
 import 'package:double07/src/timeline.dart';
 import 'package:flutter/material.dart';
 
@@ -140,4 +139,15 @@ class AnimaDouble07 extends RunableAnimation {
       }
     }
   }
+}
+
+// ===========================================================
+
+class DoubleO7Animations extends AnimationSpec {
+  DoubleO7Animations({
+    required List<Animation<double>> controllers,
+    required this.animation,
+  }) : super(controllers: controllers);
+
+  Animation<double> animation;
 }

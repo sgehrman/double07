@@ -4,7 +4,6 @@ import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:double07/src/animations/anima_image/anima_image_state.dart';
 import 'package:double07/src/animations/anima_utils.dart';
 import 'package:double07/src/animations/animation_specs/animation_spec.dart';
-import 'package:double07/src/animations/animation_specs/image_animations.dart';
 import 'package:double07/src/animations/common_animations.dart';
 import 'package:double07/src/constants.dart';
 import 'package:flutter/material.dart';
@@ -96,4 +95,19 @@ class AnimaImageAnimations {
       canvas.restore();
     }
   }
+}
+
+// ==================================================================
+
+class ImageAnimations extends AnimationSpec {
+  ImageAnimations({
+    required List<Animation<double>> controllers,
+    required this.opacity,
+    required this.alignment,
+    required this.scale,
+  }) : super(controllers: controllers);
+
+  Animation<Alignment> alignment;
+  Animation<double> opacity;
+  Animation<double> scale;
 }

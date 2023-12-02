@@ -1,6 +1,5 @@
 import 'package:double07/src/animations/anima_utils.dart';
 import 'package:double07/src/animations/animation_specs/animation_spec.dart';
-import 'package:double07/src/animations/animation_specs/block_animations.dart';
 import 'package:double07/src/animations/shapes/anima_blocks_state.dart';
 import 'package:flutter/material.dart';
 
@@ -168,4 +167,21 @@ class AnimaBlocksAnimations {
       }
     }
   }
+}
+
+// ==============================================================
+
+class BlockAnimations extends AnimationSpec {
+  BlockAnimations({
+    required List<Animation<double>> controllers,
+    required this.opacity,
+    required this.blocks,
+    required this.flip,
+    required this.color,
+  }) : super(controllers: controllers);
+
+  Animation<double> opacity;
+  Animation<double> blocks;
+  Animation<double> flip;
+  Animation<Color?> color;
 }

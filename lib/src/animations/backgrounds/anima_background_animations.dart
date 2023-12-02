@@ -4,7 +4,6 @@ import 'dart:ui' as ui;
 import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:double07/src/animations/anima_utils.dart';
 import 'package:double07/src/animations/animation_specs/animation_spec.dart';
-import 'package:double07/src/animations/animation_specs/background_animations.dart';
 import 'package:double07/src/animations/backgrounds/anima_background_state.dart';
 import 'package:double07/src/animations/common_animations.dart';
 import 'package:double07/src/constants.dart';
@@ -208,4 +207,19 @@ class AnimaBackgroundAnimations {
       }
     }
   }
+}
+
+// =================================================
+
+class BackgroundAnimations extends AnimationSpec {
+  BackgroundAnimations({
+    required List<Animation<double>> controllers,
+    required this.opacity,
+    required this.scale,
+    required this.blur,
+  }) : super(controllers: controllers);
+
+  Animation<double> opacity;
+  Animation<double> scale;
+  Animation<double> blur;
 }
