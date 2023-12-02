@@ -152,7 +152,7 @@ class NewsCrawlWidgetController implements TickerProvider {
       final result = widgetWidth - (_controller.value * width);
 
       if (!_triggeredNext) {
-        if (result + imageWidth < widgetWidth) {
+        if (result + imageWidth < (widgetWidth - 30)) {
           _triggeredNext = true;
 
           mainController.next();
