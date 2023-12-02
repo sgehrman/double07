@@ -197,7 +197,11 @@ class _NewsCrawlSentence extends CustomPainter {
   // =================================================
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
+  bool shouldRepaint(covariant _NewsCrawlSentence oldDelegate) {
+    if (oldDelegate.translateX != translateX || oldDelegate.image != image) {
+      return true;
+    }
+
+    return false;
   }
 }
