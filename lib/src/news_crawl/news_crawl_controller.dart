@@ -78,7 +78,7 @@ class NewsCrawlWidgetController implements TickerProvider {
   }) {
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 10),
+      duration: const Duration(seconds: 20),
     );
 
     _controller.addStatusListener(_statusListener);
@@ -152,7 +152,7 @@ class NewsCrawlWidgetController implements TickerProvider {
   ) {
     if (isInitialized) {
       final imageWidth = _image!.width;
-      const width = 1096;
+      const width = 1024 * 6;
 
       final result = widgetWidth - (_controller.value * width);
 

@@ -121,18 +121,27 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
   void initState() {
     super.initState();
 
-    widget.controller.callback = () {
-      if (mounted) {
-        setState(() {});
-      }
-    };
+    widget.controller.callback = _callback;
   }
 
   @override
   void dispose() {
-    widget.controller.callback = null;
+    // widget.controller.callback = null;
 
     super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant _NewsCrawlWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    widget.controller.callback = _callback;
+  }
+
+  void _callback() {
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
