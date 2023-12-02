@@ -80,8 +80,20 @@ class _NewsCrawlState extends State<_NewsCrawl>
       children.add(_NewsCrawlWidget(c));
     }
 
-    return Stack(
-      children: children,
+    return MouseRegion(
+      onEnter: (x) {
+        for (final c in _controller.widgetControllers) {
+          c.pause();
+        }
+      },
+      onExit: (x) {
+        for (final c in _controller.widgetControllers) {
+          c.pause();
+        }
+      },
+      child: Stack(
+        children: children,
+      ),
     );
   }
 }
@@ -118,27 +130,20 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
   @override
   Widget build(BuildContext context) {
     if (widget.controller.isInitialized) {
-      return MouseRegion(
-        onEnter: (x) {
-          widget.controller.pause();
-        },
-        onExit: (x) {
-          widget.controller.pause();
-        },
-        child: SizedBox(
-          width: double.infinity,
-          height: 80,
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return CustomPaint(
-                painter: _NewsCrawlSentence(
-                  image: widget.controller.image!,
-                  translateX:
-                      widget.controller.getTranslateX(constraints.maxWidth),
-                ),
-              );
-            },
-          ),
+      return SizedBox(
+        key: ValueKey(widget.controller.id),
+        width: double.infinity,
+        height: 80,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return CustomPaint(
+              painter: _NewsCrawlSentence(
+                image: widget.controller.image!,
+                translateX:
+                    widget.controller.getTranslateX(constraints.maxWidth),
+              ),
+            );
+          },
         ),
       );
     }

@@ -35,10 +35,14 @@ class NewsCrawlController {
   // --------------------------------------------------------
   // called from widget controller
 
-  void done(NewsCrawlWidgetController controller) {
-    _widgetControllers.remove(controller.id);
+  void done(NewsCrawlWidgetController widgetController) {
+    final result = _widgetControllers.remove(widgetController.id);
 
-    controller.dispose();
+    if (result != null) {
+      result.dispose();
+    } else {
+      print('not found?');
+    }
 
     callback();
   }
@@ -81,7 +85,6 @@ class NewsCrawlWidgetController implements TickerProvider {
 
   ui.Image? _image;
   late final AnimationController _controller;
-  late final Animation<double> _animation;
   bool isInitialized = false;
   bool _triggeredNext = false;
 
@@ -124,10 +127,6 @@ class NewsCrawlWidgetController implements TickerProvider {
       _callback?.call();
     });
 
-    _animation = ReverseAnimation(
-      _controller,
-    );
-
     isInitialized = true;
     unawaited(_controller.forward());
   }
@@ -145,11 +144,11 @@ class NewsCrawlWidgetController implements TickerProvider {
   double getTranslateX(
     double widgetWidth,
   ) {
-    if (_image != null) {
+    if (isInitialized) {
       final imageWidth = _image!.width;
-      final width = widgetWidth + imageWidth;
+      const width = 2096;
 
-      final result = (_animation.value * width) - imageWidth;
+      final result = widgetWidth - (_controller.value * width);
 
       if (!_triggeredNext) {
         if (result + imageWidth < widgetWidth) {
