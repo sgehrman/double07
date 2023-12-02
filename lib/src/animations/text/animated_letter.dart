@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:double07/src/animations/anima_utils.dart';
 import 'package:double07/src/animations/animation_specs/letter_animations.dart';
+import 'package:double07/src/animations/text/letter_painter.dart';
 import 'package:flutter/material.dart';
 
 class AnimatedLetter {
@@ -151,98 +152,16 @@ class AnimatedLetter {
   // ====================================================
   // private methods
 
-  static _LetterPainter _createTextPainter(String char, TextStyle style) {
-    return _LetterPainter(
-      letter: char,
-      style: style,
-    );
-  }
-
-  static List<_LetterPainter> _createTextPainters(
+  static List<LetterPainter> _createTextPainters(
     String text,
     TextStyle style,
   ) {
-    final List<_LetterPainter> result = [];
+    final List<LetterPainter> result = [];
 
     for (final s in text.characters) {
-      result.add(_createTextPainter(s, style));
+      result.add(LetterPainterCache().get(s, style));
     }
 
     return result;
-  }
-}
-
-// =======================================================
-
-class _LetterPainter {
-  _LetterPainter({
-    required this.letter,
-    required this.style,
-  }) {
-    if (letter != ' ') {
-      _textPainter = TextPainter(
-        text: TextSpan(
-          style: style,
-          text: letter,
-        ),
-        textDirection: TextDirection.ltr,
-      );
-
-      _textPainter!.layout();
-    }
-  }
-
-  final String letter;
-  final TextStyle style;
-  TextPainter? _textPainter;
-  ui.Image? _image;
-
-  bool get isSpace => _textPainter == null;
-
-  Size get size {
-    if (!isSpace) {
-      return _textPainter!.size;
-    }
-
-    final fontSize = style.fontSize ?? 20;
-
-    // space based on fontSize
-    return Size(fontSize / 3, fontSize / 3);
-  }
-
-  Future<ui.Image> image() async {
-    if (_image == null) {
-      final destRect = Rect.fromLTWH(
-        0,
-        0,
-        size.width * 3, // larger to avoid pixelation
-        size.height * 3,
-      );
-
-      final matrix = AnimaUtils.sizeToRect(size, destRect);
-
-      final recorder = ui.PictureRecorder();
-      final ui.Canvas canvas = ui.Canvas(recorder);
-
-      canvas.transform(matrix.storage);
-
-      if (!isSpace) {
-        _textPainter?.paint(
-          canvas,
-          Offset.zero,
-        );
-      } else {
-        print('shouldnt get here, this is a space character');
-      }
-
-      final ui.Picture pict = recorder.endRecording();
-
-      _image =
-          await pict.toImage(destRect.width.round(), destRect.height.round());
-
-      pict.dispose();
-    }
-
-    return _image!;
   }
 }

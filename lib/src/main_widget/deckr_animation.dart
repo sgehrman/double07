@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:double07/src/animation_sequence/animation_sequence.dart';
 import 'package:double07/src/animations/anima_utils.dart';
+import 'package:double07/src/animations/text/letter_painter.dart';
 import 'package:double07/src/audio_player/background_audio_player.dart';
 import 'package:double07/src/main_widget/deckr_animation_painter.dart';
 import 'package:double07/src/timeline.dart';
@@ -41,6 +42,9 @@ class _DeckrAnimationState extends State<DeckrAnimation>
   void dispose() {
     _controller.dispose();
     _timer?.cancel();
+
+    // free up cached images
+    LetterPainterCache().clear();
 
     super.dispose();
   }
