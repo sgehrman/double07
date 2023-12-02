@@ -18,10 +18,15 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.cyan),
       ),
       home: const Scaffold(
-        body: SizedBox.expand(
-          child: DeckrAnimation(
-            autoplay: false,
-          ),
+        body: Column(
+          children: [
+            Expanded(
+              child: DeckrAnimation(
+                autoplay: false,
+              ),
+            ),
+            NewsCrawl(),
+          ],
         ),
       ),
     );

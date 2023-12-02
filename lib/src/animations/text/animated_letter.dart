@@ -30,7 +30,7 @@ class AnimatedLetter {
     // final nextColor = NextColor();
 
     for (int i = 0; i < letters.length; i++) {
-      letters[i].paint(
+      letters[i].animatedPaint(
         canvas: canvas,
         size: size,
         letterAnimations: letterAnimations[i],
@@ -39,59 +39,75 @@ class AnimatedLetter {
     }
   }
 
-  void paint({
+  void animatedPaint({
     required Canvas canvas,
     required Size size,
     required LetterAnimations letterAnimations,
     Color? backgroundColor,
   }) {
     if (letterAnimations.isRunning) {
-      final alignment = letterAnimations.alignment.value;
-
-      final rect = Offset.zero & size;
-
-      Rect destRect = alignment.inscribe(
-        Size(
-          wordSize.width,
-          wordSize.height,
-        ),
-        rect,
+      paint(
+        canvas: canvas,
+        size: size,
+        alignment: letterAnimations.alignment.value,
+        opacity: letterAnimations.opacity.value,
+        scale: letterAnimations.scale.value,
       );
+    }
+  }
 
-      // not working? white is on top
-      // canvas.drawRect(destRect, Paint()..color = Colors.white);
+  void paint({
+    required Canvas canvas,
+    required Size size,
+    required Alignment alignment,
+    required double opacity,
+    required double scale,
+    Color? backgroundColor,
+  }) {
+    final rect = Offset.zero & size;
 
-      destRect = letterAlignment.inscribe(
-        Size(
-          letterSize.width,
-          letterSize.height,
-        ),
-        destRect,
-      );
+    Rect destRect = alignment.inscribe(
+      Size(
+        wordSize.width,
+        wordSize.height,
+      ),
+      rect,
+    );
 
-      if (backgroundColor != null) {
-        canvas.drawRect(destRect, Paint()..color = backgroundColor);
-      }
+    destRect = letterAlignment.inscribe(
+      Size(
+        letterSize.width,
+        letterSize.height,
+      ),
+      destRect,
+    );
 
+    if (backgroundColor != null) {
+      canvas.drawRect(destRect, Paint()..color = backgroundColor);
+    }
+
+    if (scale != 1) {
       canvas.save();
 
       final matrix = AnimaUtils.scaledRect(
         destRect,
-        letterAnimations.scale.value,
+        scale,
       );
 
       canvas.transform(matrix.storage);
+    }
 
-      paintImage(
-        canvas: canvas,
-        rect: destRect,
-        image: image,
-        fit: BoxFit.fill,
-        opacity: letterAnimations.opacity.value,
-        isAntiAlias: true,
-        filterQuality: FilterQuality.high,
-      );
+    paintImage(
+      canvas: canvas,
+      rect: destRect,
+      image: image,
+      fit: BoxFit.fill,
+      opacity: opacity,
+      isAntiAlias: true,
+      filterQuality: FilterQuality.high,
+    );
 
+    if (scale != 1) {
       canvas.restore();
     }
   }
@@ -147,6 +163,43 @@ class AnimatedLetter {
     }
 
     return result;
+  }
+
+  static Future<ui.Image> textImage({
+    required String text,
+    required TextStyle style,
+    required double letterSpacing,
+  }) async {
+    final letters = await createLetters(text, style, letterSpacing);
+
+    final destRect = Rect.fromLTWH(
+      0,
+      0,
+      letters.first.wordSize.width,
+      letters.first.wordSize.height,
+    );
+
+    final recorder = ui.PictureRecorder();
+    final ui.Canvas canvas = ui.Canvas(recorder);
+
+    for (final letter in letters) {
+      letter.paint(
+        canvas: canvas,
+        scale: 1,
+        opacity: 1,
+        alignment: Alignment.centerLeft,
+        size: letter.wordSize,
+      );
+    }
+
+    final ui.Picture pict = recorder.endRecording();
+
+    final image =
+        await pict.toImage(destRect.width.round(), destRect.height.round());
+
+    pict.dispose();
+
+    return image;
   }
 
   // ====================================================
