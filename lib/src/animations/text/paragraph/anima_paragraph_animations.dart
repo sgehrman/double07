@@ -18,7 +18,7 @@ class AnimaParagraphAnimations {
   Future<void> initialize(
     Animation<double> controller,
   ) async {
-    _textLetters = await AnimatedLetter.createTextImages(
+    _textLetters = await AnimatedLetter.createLetters(
       state.text,
       _textStyle(),
       state.letterSpacing,

@@ -96,7 +96,7 @@ class AnimatedLetter {
     }
   }
 
-  static Future<List<AnimatedLetter>> createTextImages(
+  static Future<List<AnimatedLetter>> createLetters(
     String text,
     TextStyle style,
     double letterSpacing,
