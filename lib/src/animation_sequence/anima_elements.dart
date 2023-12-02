@@ -1,4 +1,4 @@
-import 'package:double07/src/animation_sequence/animation_sequence.dart';
+import 'package:double07/src/animation_sequence/runnable_animation.dart';
 import 'package:double07/src/animations/anima_double07.dart';
 import 'package:double07/src/animations/anima_image/anima_image.dart';
 import 'package:double07/src/animations/anima_image/anima_image_state.dart';
