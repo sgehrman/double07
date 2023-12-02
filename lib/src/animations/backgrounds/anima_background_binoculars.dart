@@ -74,7 +74,7 @@ class AnimaBackgroundBinoculars {
         parent: parent,
         beginValue: 0,
         endValue: 1,
-        curve: Curves.easeIn,
+        curve: Curves.bounceOut,
         begin: 0.5,
         end: 0.7,
       ),
