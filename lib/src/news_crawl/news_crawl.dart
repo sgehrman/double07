@@ -18,6 +18,8 @@ class NewsCrawl extends StatelessWidget {
   }
 }
 
+// =======================================================
+
 class _NewsCrawl extends StatefulWidget {
   const _NewsCrawl();
 
@@ -51,13 +53,60 @@ class _NewsCrawlState extends State<_NewsCrawl> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> children = [];
+
+    for (final c in _controller.widgetControllers) {
+      children.add(_NewsCrawlWidget(c));
+    }
+
     if (_controller.isInitialized) {
+      return Stack(
+        children: children,
+      );
+    }
+
+    return const SizedBox();
+  }
+}
+
+// =======================================================
+
+class _NewsCrawlWidget extends StatefulWidget {
+  const _NewsCrawlWidget(this.controller);
+  final NewsCrawlWidgetController controller;
+
+  @override
+  State<_NewsCrawlWidget> createState() => _NewsCrawlWidgetState();
+}
+
+class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
+  @override
+  void initState() {
+    super.initState();
+
+    widget.controller.callback = () {
+      if (mounted) {
+        setState(() {});
+      }
+    };
+  }
+
+  @override
+  void dispose() {
+    widget.controller.callback = null;
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.controller.isInitialized) {
       return MouseRegion(
         onEnter: (x) {
-          _controller.pause();
+          widget.controller.pause();
         },
         onExit: (x) {
-          _controller.pause();
+          widget.controller.pause();
         },
         child: SizedBox(
           width: double.infinity,
@@ -66,8 +115,9 @@ class _NewsCrawlState extends State<_NewsCrawl> {
             builder: (context, constraints) {
               return CustomPaint(
                 painter: _NewsCrawlSentence(
-                  image: _controller.image!,
-                  translateX: _controller.getTranslateX(constraints.maxWidth),
+                  image: widget.controller.image!,
+                  translateX:
+                      widget.controller.getTranslateX(constraints.maxWidth),
                 ),
               );
             },
