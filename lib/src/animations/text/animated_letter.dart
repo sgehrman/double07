@@ -136,7 +136,7 @@ class AnimatedLetter {
         result.add(
           AnimatedLetter(
             letter: letterPainter.letter,
-            image: await _createTextImage(letterPainter),
+            image: await letterPainter.image(),
             letterSize: letterPainter.size,
             wordSize: Size(wordWidth, wordHeight),
             letterAlignment: alignment,
@@ -152,25 +152,9 @@ class AnimatedLetter {
   // private methods
 
   static _LetterPainter _createTextPainter(String char, TextStyle style) {
-    if (char == ' ') {
-      return _LetterPainter.space(
-        fontSize: style.fontSize ?? 20,
-      );
-    }
-
-    final textPainter = TextPainter(
-      text: TextSpan(
-        style: style,
-        text: char,
-      ),
-      textDirection: TextDirection.ltr,
-    );
-
-    textPainter.layout();
-
     return _LetterPainter(
-      textPainter: textPainter,
       letter: char,
+      style: style,
     );
   }
 
@@ -186,42 +170,6 @@ class AnimatedLetter {
 
     return result;
   }
-
-  static Future<ui.Image> _createTextImage(_LetterPainter letterPainter) {
-    final imageSize = letterPainter.size;
-
-    final destRect = Rect.fromLTWH(
-      0,
-      0,
-      imageSize.width * 3, // larger to avoid pixelation
-      imageSize.height * 3,
-    );
-
-    final matrix = AnimaUtils.sizeToRect(imageSize, destRect);
-
-    final recorder = ui.PictureRecorder();
-    final ui.Canvas canvas = ui.Canvas(recorder);
-
-    canvas.transform(matrix.storage);
-
-    if (!letterPainter.isSpace) {
-      letterPainter.textPainter?.paint(
-        canvas,
-        Offset.zero,
-      );
-    } else {
-      print('shouldnt get here, this is a space character');
-    }
-
-    final ui.Picture pict = recorder.endRecording();
-
-    final result =
-        pict.toImage(destRect.width.round(), destRect.height.round());
-
-    pict.dispose();
-
-    return result;
-  }
 }
 
 // =======================================================
@@ -229,25 +177,72 @@ class AnimatedLetter {
 class _LetterPainter {
   _LetterPainter({
     required this.letter,
-    required this.textPainter,
-  });
+    required this.style,
+  }) {
+    if (letter != ' ') {
+      _textPainter = TextPainter(
+        text: TextSpan(
+          style: style,
+          text: letter,
+        ),
+        textDirection: TextDirection.ltr,
+      );
 
-  _LetterPainter.space({
-    required this.fontSize,
-  }) : letter = '';
+      _textPainter!.layout();
+    }
+  }
 
   final String letter;
-  TextPainter? textPainter;
-  double fontSize = 0;
+  final TextStyle style;
+  TextPainter? _textPainter;
+  ui.Image? _image;
 
-  bool get isSpace => textPainter == null;
+  bool get isSpace => _textPainter == null;
 
   Size get size {
     if (!isSpace) {
-      return textPainter!.size;
+      return _textPainter!.size;
     }
+
+    final fontSize = style.fontSize ?? 20;
 
     // space based on fontSize
     return Size(fontSize / 3, fontSize / 3);
+  }
+
+  Future<ui.Image> image() async {
+    if (_image == null) {
+      final destRect = Rect.fromLTWH(
+        0,
+        0,
+        size.width * 3, // larger to avoid pixelation
+        size.height * 3,
+      );
+
+      final matrix = AnimaUtils.sizeToRect(size, destRect);
+
+      final recorder = ui.PictureRecorder();
+      final ui.Canvas canvas = ui.Canvas(recorder);
+
+      canvas.transform(matrix.storage);
+
+      if (!isSpace) {
+        _textPainter?.paint(
+          canvas,
+          Offset.zero,
+        );
+      } else {
+        print('shouldnt get here, this is a space character');
+      }
+
+      final ui.Picture pict = recorder.endRecording();
+
+      _image =
+          await pict.toImage(destRect.width.round(), destRect.height.round());
+
+      pict.dispose();
+    }
+
+    return _image!;
   }
 }
