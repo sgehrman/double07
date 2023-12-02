@@ -81,7 +81,7 @@ class NewsCrawlWidgetController implements TickerProvider {
   final String id;
   final NewsCrawlController mainController;
   final NewsCrawlLink link;
-  late final Ticker _ticker;
+  Ticker? _ticker;
 
   ui.Image? _image;
   late final AnimationController _controller;
@@ -90,13 +90,14 @@ class NewsCrawlWidgetController implements TickerProvider {
 
   void dispose() {
     _controller.dispose();
+    _image?.dispose();
 
-    _ticker.dispose();
+    _ticker?.dispose();
   }
 
   @override
   Ticker createTicker(TickerCallback onTick) {
-    return _ticker = Ticker(onTick);
+    return _ticker ??= Ticker(onTick);
   }
 
   set callback(void Function()? c) => _callback = c;

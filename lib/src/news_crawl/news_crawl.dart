@@ -53,6 +53,14 @@ class _NewsCrawlState extends State<_NewsCrawl>
           title: 'Sadat is king of Syria.',
           url: 'http://www.douche.com',
         ),
+        NewsCrawlLink(
+          title: 'Austrailia is super lame and gay.',
+          url: 'http://www.douche.com',
+        ),
+        NewsCrawlLink(
+          title: 'Kat Kennedy is a bozo.',
+          url: 'http://www.douche.com',
+        ),
       ],
       callback: () {
         if (mounted) {
@@ -165,6 +173,8 @@ class _NewsCrawlSentence extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    final rect = Offset.zero & size;
+
     final destRect = Rect.fromLTWH(
       translateX,
       0,
@@ -172,14 +182,16 @@ class _NewsCrawlSentence extends CustomPainter {
       image.height.toDouble(),
     );
 
-    paintImage(
-      canvas: canvas,
-      rect: destRect,
-      image: image,
-      fit: BoxFit.scaleDown,
-      isAntiAlias: true,
-      filterQuality: FilterQuality.high,
-    );
+    if (destRect.overlaps(rect)) {
+      paintImage(
+        canvas: canvas,
+        rect: destRect,
+        image: image,
+        fit: BoxFit.scaleDown,
+        isAntiAlias: true,
+        filterQuality: FilterQuality.high,
+      );
+    }
   }
 
   // =================================================
