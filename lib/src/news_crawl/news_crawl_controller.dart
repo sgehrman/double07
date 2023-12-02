@@ -75,7 +75,15 @@ class NewsCrawlWidgetController implements TickerProvider {
     required this.mainController,
     required this.link,
     required this.id,
-  });
+  }) {
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 10),
+    );
+
+    _controller.addStatusListener(_statusListener);
+    _controller.addListener(_listener);
+  }
 
   void Function()? _callback;
   final String id;
@@ -89,7 +97,11 @@ class NewsCrawlWidgetController implements TickerProvider {
   bool _triggeredNext = false;
 
   void dispose() {
+    _controller.stop();
+    _controller.removeListener(_listener);
+    _controller.removeStatusListener(_statusListener);
     _controller.dispose();
+
     _image?.dispose();
 
     _ticker?.dispose();
@@ -111,25 +123,18 @@ class NewsCrawlWidgetController implements TickerProvider {
       letterSpacing: 1,
     );
 
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 10),
-    );
-
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        mainController.done(this);
-      } else if (status == AnimationStatus.dismissed) {
-        _controller.forward();
-      }
-    });
-
-    _controller.addListener(() {
-      _callback?.call();
-    });
-
     isInitialized = true;
     unawaited(_controller.forward());
+  }
+
+  void _listener() {
+    _callback?.call();
+  }
+
+  void _statusListener(status) {
+    if (status == AnimationStatus.completed) {
+      mainController.done(this);
+    }
   }
 
   void pause() {
@@ -147,7 +152,7 @@ class NewsCrawlWidgetController implements TickerProvider {
   ) {
     if (isInitialized) {
       final imageWidth = _image!.width;
-      const width = 2096;
+      const width = 1096;
 
       final result = widgetWidth - (_controller.value * width);
 
