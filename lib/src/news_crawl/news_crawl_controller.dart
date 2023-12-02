@@ -6,45 +6,59 @@ import 'package:double07/src/animations/text/animated_letter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-class NewsCrawlController implements TickerProvider {
-  NewsCrawlController(this.callback) {
+class NewsCrawlController {
+  NewsCrawlController({
+    required this.callback,
+    required this.links,
+  }) {
     _setup();
   }
 
   final void Function() callback;
-  late final Ticker _ticker;
-  bool isInitialized = false;
   final Map<String, NewsCrawlWidgetController> _widgetControllers = {};
+  final List<NewsCrawlLink> links;
+  int _nextIndex = 0;
 
   List<NewsCrawlWidgetController> get widgetControllers =>
       _widgetControllers.values.toList();
-
-  @override
-  Ticker createTicker(TickerCallback onTick) {
-    return _ticker = Ticker(onTick);
-  }
 
   void dispose() {
     for (final c in _widgetControllers.values) {
       c.dispose();
     }
-
-    _ticker.dispose();
   }
 
   Future<void> _setup() async {
+    await next();
+  }
+
+  // --------------------------------------------------------
+  // called from widget controller
+
+  void done(NewsCrawlWidgetController controller) {
+    _widgetControllers.remove(controller.id);
+
+    controller.dispose();
+
+    callback();
+  }
+
+  Future<void> next() async {
+    if (_nextIndex >= links.length) {
+      _nextIndex = 0;
+    }
+
     final id = Utils.uniqueFirestoreId();
 
     final c = NewsCrawlWidgetController(
       id: id,
-      tickerProvider: this,
+      mainController: this,
+      link: links[_nextIndex++],
     );
 
     await c.initialize();
 
     _widgetControllers[id] = c;
-
-    isInitialized = true;
 
     callback();
   }
@@ -52,30 +66,41 @@ class NewsCrawlController implements TickerProvider {
 
 // ============================================================
 
-class NewsCrawlWidgetController {
+class NewsCrawlWidgetController implements TickerProvider {
   NewsCrawlWidgetController({
-    required this.tickerProvider,
+    required this.mainController,
+    required this.link,
     required this.id,
   });
 
   void Function()? _callback;
-  final TickerProvider tickerProvider;
   final String id;
+  final NewsCrawlController mainController;
+  final NewsCrawlLink link;
+  late final Ticker _ticker;
 
   ui.Image? _image;
   late final AnimationController _controller;
   late final Animation<double> _animation;
   bool isInitialized = false;
+  bool _triggeredNext = false;
 
   void dispose() {
     _controller.dispose();
+
+    _ticker.dispose();
+  }
+
+  @override
+  Ticker createTicker(TickerCallback onTick) {
+    return _ticker = Ticker(onTick);
   }
 
   set callback(void Function()? c) => _callback = c;
 
   Future<void> initialize() async {
     _image = await AnimatedLetter.textImage(
-      text: 'Test text image',
+      text: link.title,
       style: const TextStyle(
         fontSize: 30,
       ),
@@ -83,13 +108,13 @@ class NewsCrawlWidgetController {
     );
 
     _controller = AnimationController(
-      vsync: tickerProvider,
+      vsync: this,
       duration: const Duration(seconds: 10),
     );
 
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        _controller.reverse();
+        mainController.done(this);
       } else if (status == AnimationStatus.dismissed) {
         _controller.forward();
       }
@@ -124,9 +149,31 @@ class NewsCrawlWidgetController {
       final imageWidth = _image!.width;
       final width = widgetWidth + imageWidth;
 
-      return (_animation.value * width) - imageWidth;
+      final result = (_animation.value * width) - imageWidth;
+
+      if (!_triggeredNext) {
+        if (result + imageWidth < widgetWidth) {
+          _triggeredNext = true;
+
+          mainController.next();
+        }
+      }
+
+      return result;
     }
 
     return 0;
   }
+}
+
+// ===========================================================
+
+class NewsCrawlLink {
+  NewsCrawlLink({
+    required this.title,
+    required this.url,
+  });
+
+  String title;
+  String url;
 }

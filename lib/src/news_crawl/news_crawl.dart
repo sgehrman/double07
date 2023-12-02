@@ -27,18 +27,39 @@ class _NewsCrawl extends StatefulWidget {
   State<_NewsCrawl> createState() => _NewsCrawlState();
 }
 
-class _NewsCrawlState extends State<_NewsCrawl> {
+class _NewsCrawlState extends State<_NewsCrawl>
+    with SingleTickerProviderStateMixin {
   late final NewsCrawlController _controller;
 
   @override
   void initState() {
     super.initState();
 
-    _controller = NewsCrawlController(() {
-      if (mounted) {
-        setState(() {});
-      }
-    });
+    _controller = NewsCrawlController(
+      links: [
+        NewsCrawlLink(
+          title: 'BBC news: Dog dies of herpes.',
+          url: 'http://www.douche.com',
+        ),
+        NewsCrawlLink(
+          title: 'Tom Jones is dead.',
+          url: 'http://www.douche.com',
+        ),
+        NewsCrawlLink(
+          title: 'Hairy armpits are sexy',
+          url: 'http://www.douche.com',
+        ),
+        NewsCrawlLink(
+          title: 'Sadat is king of Syria.',
+          url: 'http://www.douche.com',
+        ),
+      ],
+      callback: () {
+        if (mounted) {
+          setState(() {});
+        }
+      },
+    );
   }
 
   @override
@@ -59,13 +80,9 @@ class _NewsCrawlState extends State<_NewsCrawl> {
       children.add(_NewsCrawlWidget(c));
     }
 
-    if (_controller.isInitialized) {
-      return Stack(
-        children: children,
-      );
-    }
-
-    return const SizedBox();
+    return Stack(
+      children: children,
+    );
   }
 }
 
