@@ -23,6 +23,7 @@ class NewsCrawlController implements TickerProvider {
   }
 
   void dispose() {
+    _controller.dispose();
     _ticker.dispose();
   }
 

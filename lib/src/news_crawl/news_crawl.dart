@@ -25,8 +25,7 @@ class _NewsCrawl extends StatefulWidget {
   State<_NewsCrawl> createState() => _NewsCrawlState();
 }
 
-class _NewsCrawlState extends State<_NewsCrawl>
-    with SingleTickerProviderStateMixin {
+class _NewsCrawlState extends State<_NewsCrawl> {
   late final NewsCrawlController _controller;
 
   @override
