@@ -74,11 +74,27 @@ class _NewsCrawl extends StatefulWidget {
 
 class _NewsCrawlState extends State<_NewsCrawl>
     with SingleTickerProviderStateMixin {
-  late final NewsCrawlController _controller;
+  late NewsCrawlController _controller;
 
   @override
   void initState() {
     super.initState();
+
+    _updateController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+
+    // free up cached images
+    LetterPainterCache().clear();
+
+    super.dispose();
+  }
+
+  void _updateController() {
+    _controller.dispose();
 
     _controller = NewsCrawlController(
       links: widget.links,
@@ -93,13 +109,10 @@ class _NewsCrawlState extends State<_NewsCrawl>
   }
 
   @override
-  void dispose() {
-    _controller.dispose();
+  void didUpdateWidget(covariant _NewsCrawl oldWidget) {
+    super.didUpdateWidget(oldWidget);
 
-    // free up cached images
-    LetterPainterCache().clear();
-
-    super.dispose();
+    _updateController();
   }
 
   @override
