@@ -12,7 +12,7 @@ class NewsCrawl extends StatelessWidget {
     return Container(
       color: Colors.black,
       width: double.infinity,
-      height: 80,
+      height: 60,
       child: const _NewsCrawl(),
     );
   }
@@ -148,14 +148,12 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
   @override
   Widget build(BuildContext context) {
     if (widget.controller.isInitialized) {
-      return SizedBox(
+      return SizedBox.expand(
         key: ValueKey(widget.controller.id),
-        width: double.infinity,
-        height: 80,
         child: LayoutBuilder(
           builder: (context, constraints) {
             return CustomPaint(
-              painter: _NewsCrawlSentence(
+              painter: _NewsCrawlTextPainter(
                 image: widget.controller.image!,
                 translateX:
                     widget.controller.getTranslateX(constraints.maxWidth),
@@ -172,8 +170,8 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
 
 // =======================================================
 
-class _NewsCrawlSentence extends CustomPainter {
-  const _NewsCrawlSentence({
+class _NewsCrawlTextPainter extends CustomPainter {
+  const _NewsCrawlTextPainter({
     required this.translateX,
     required this.image,
   });
@@ -207,7 +205,7 @@ class _NewsCrawlSentence extends CustomPainter {
   // =================================================
 
   @override
-  bool shouldRepaint(covariant _NewsCrawlSentence oldDelegate) {
+  bool shouldRepaint(covariant _NewsCrawlTextPainter oldDelegate) {
     if (oldDelegate.translateX != translateX || oldDelegate.image != image) {
       return true;
     }
