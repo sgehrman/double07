@@ -66,27 +66,27 @@ class _NewsCrawlState extends State<_NewsCrawl>
       links: [
         NewsCrawlLink(
           title: 'BBC news: Dog dies of herpes.',
-          url: 'http://www.douche.com',
+          url: 'http://www.bbc.com',
         ),
         NewsCrawlLink(
           title: 'Tom Jones is dead.',
-          url: 'http://www.douche.com',
+          url: 'http://www.jones.com',
         ),
         NewsCrawlLink(
           title: 'Hairy armpits are sexy',
-          url: 'http://www.douche.com',
+          url: 'http://www.armpits.com',
         ),
         NewsCrawlLink(
           title: 'Sadat is king of Syria.',
-          url: 'http://www.douche.com',
+          url: 'http://www.syria.com',
         ),
         NewsCrawlLink(
           title: 'Austrailia is super lame and gay.',
-          url: 'http://www.douche.com',
+          url: 'http://www.Austrailia.com',
         ),
         NewsCrawlLink(
           title: 'Kat Kennedy is a bozo.',
-          url: 'http://www.douche.com',
+          url: 'http://www.Kennedy.com',
         ),
       ],
       callback: () {
@@ -191,17 +191,22 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
     if (widget.controller.isInitialized) {
       return SizedBox.expand(
         key: ValueKey(widget.controller.id),
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return CustomPaint(
-              painter: _NewsCrawlTextPainter(
-                image: widget.controller.image!,
-                translateX:
-                    widget.controller.getTranslateX(constraints.maxWidth),
-                textColor: widget.textColor,
-              ),
-            );
+        child: InkWell(
+          onTap: () {
+            print('tapped: ${widget.controller.link.url}');
           },
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return CustomPaint(
+                painter: _NewsCrawlTextPainter(
+                  image: widget.controller.image!,
+                  translateX:
+                      widget.controller.getTranslateX(constraints.maxWidth),
+                  textColor: widget.textColor,
+                ),
+              );
+            },
+          ),
         ),
       );
     }
@@ -272,14 +277,16 @@ class _GradientWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.expand(
+    return IgnorePointer(
       key: const ValueKey('gradient'),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return CustomPaint(
-            painter: _GradientPainter(color),
-          );
-        },
+      child: SizedBox.expand(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return CustomPaint(
+              painter: _GradientPainter(color),
+            );
+          },
+        ),
       ),
     );
   }
