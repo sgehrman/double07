@@ -191,22 +191,34 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
     if (widget.controller.isInitialized) {
       return SizedBox.expand(
         key: ValueKey(widget.controller.id),
-        child: InkWell(
-          onTap: () {
-            print('tapped: ${widget.controller.link.url}');
-          },
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return CustomPaint(
-                painter: _NewsCrawlTextPainter(
-                  image: widget.controller.image!,
-                  translateX:
-                      widget.controller.getTranslateX(constraints.maxWidth),
-                  textColor: widget.textColor,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Transform.translate(
+              offset: Offset(
+                widget.controller.getTranslateX(constraints.maxWidth),
+                0,
+              ),
+              child: SizedBox(
+                width: widget.controller.image!.width.toDouble(),
+                height: widget.controller.image!.height.toDouble(),
+                child: InkWell(
+                  onTap: () {
+                    print('tapped: ${widget.controller.link.url}');
+                  },
+                  child: CustomPaint(
+                    size: Size(
+                      widget.controller.image!.width.toDouble(),
+                      widget.controller.image!.height.toDouble(),
+                    ),
+                    painter: _NewsCrawlTextPainter(
+                      image: widget.controller.image!,
+                      textColor: widget.textColor,
+                    ),
+                  ),
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       );
     }
@@ -219,12 +231,10 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
 
 class _NewsCrawlTextPainter extends CustomPainter {
   const _NewsCrawlTextPainter({
-    required this.translateX,
     required this.image,
     required this.textColor,
   });
 
-  final double translateX;
   final ui.Image image;
   final Color textColor;
 
@@ -233,7 +243,7 @@ class _NewsCrawlTextPainter extends CustomPainter {
     final rect = Offset.zero & size;
 
     final destRect = Rect.fromLTWH(
-      translateX,
+      0,
       0,
       image.width.toDouble(),
       image.height.toDouble(),
@@ -260,7 +270,7 @@ class _NewsCrawlTextPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _NewsCrawlTextPainter oldDelegate) {
-    if (oldDelegate.translateX != translateX || oldDelegate.image != image) {
+    if (oldDelegate.image != image) {
       return true;
     }
 
