@@ -5,15 +5,29 @@ import 'package:double07/src/news_crawl/news_crawl_controller.dart';
 import 'package:flutter/material.dart';
 
 class NewsCrawl extends StatelessWidget {
-  const NewsCrawl({super.key});
+  const NewsCrawl({
+    required this.backColor,
+    required this.textColor,
+    required this.height,
+    required this.fontSize,
+  });
+
+  final Color backColor;
+  final Color textColor;
+  final double height;
+  final double fontSize;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black,
+      color: backColor,
       width: double.infinity,
-      height: 60,
-      child: const _NewsCrawl(),
+      height: height,
+      child: _NewsCrawl(
+        backColor: backColor,
+        textColor: textColor,
+        fontSize: fontSize,
+      ),
     );
   }
 }
@@ -21,7 +35,15 @@ class NewsCrawl extends StatelessWidget {
 // =======================================================
 
 class _NewsCrawl extends StatefulWidget {
-  const _NewsCrawl();
+  const _NewsCrawl({
+    required this.backColor,
+    required this.textColor,
+    required this.fontSize,
+  });
+
+  final Color backColor;
+  final Color textColor;
+  final double fontSize;
 
   @override
   State<_NewsCrawl> createState() => _NewsCrawlState();
@@ -67,6 +89,7 @@ class _NewsCrawlState extends State<_NewsCrawl>
           setState(() {});
         }
       },
+      fontSize: widget.fontSize,
     );
   }
 
@@ -87,6 +110,8 @@ class _NewsCrawlState extends State<_NewsCrawl>
     for (final c in _controller.widgetControllers) {
       children.add(_NewsCrawlWidget(c));
     }
+
+    children.add(_GradientWidget(widget.backColor));
 
     return MouseRegion(
       onEnter: (x) {
@@ -210,6 +235,77 @@ class _NewsCrawlTextPainter extends CustomPainter {
       return true;
     }
 
+    return false;
+  }
+}
+
+// ===========================================================
+
+class _GradientWidget extends StatelessWidget {
+  const _GradientWidget(this.color);
+
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox.expand(
+      key: const ValueKey('gradient'),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return CustomPaint(
+            painter: _GradientPainter(color),
+          );
+        },
+      ),
+    );
+  }
+}
+
+// =======================================================
+
+class _GradientPainter extends CustomPainter {
+  const _GradientPainter(this.color);
+
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final rect = Offset.zero & size;
+    const double gradientWidth = 100;
+
+    final leftRect = Rect.fromLTWH(
+      rect.left,
+      rect.top,
+      gradientWidth,
+      rect.height,
+    );
+
+    final leftGradient = Paint();
+    leftGradient.shader = LinearGradient(
+      colors: [color, color.withOpacity(0)],
+    ).createShader(leftRect);
+
+    canvas.drawRect(leftRect, leftGradient);
+
+    final rightRect = Rect.fromLTWH(
+      rect.right - gradientWidth,
+      rect.top,
+      gradientWidth,
+      rect.height,
+    );
+
+    final rightGradient = Paint();
+    rightGradient.shader = LinearGradient(
+      colors: [color.withOpacity(0), color],
+    ).createShader(rightRect);
+
+    canvas.drawRect(rightRect, rightGradient);
+  }
+
+  // =================================================
+
+  @override
+  bool shouldRepaint(covariant _GradientPainter oldDelegate) {
     return false;
   }
 }

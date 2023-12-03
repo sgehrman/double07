@@ -25,7 +25,12 @@ class MyApp extends StatelessWidget {
                 autoplay: false,
               ),
             ),
-            NewsCrawl(),
+            NewsCrawl(
+              backColor: Colors.red,
+              fontSize: 30,
+              height: 60,
+              textColor: Colors.white,
+            ),
           ],
         ),
       ),

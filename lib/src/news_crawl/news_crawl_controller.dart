@@ -10,6 +10,7 @@ class NewsCrawlController {
   NewsCrawlController({
     required this.callback,
     required this.links,
+    required this.fontSize,
   }) {
     _setup();
   }
@@ -17,6 +18,7 @@ class NewsCrawlController {
   final void Function() callback;
   final Map<String, NewsCrawlWidgetController> _widgetControllers = {};
   final List<NewsCrawlLink> links;
+  final double fontSize;
   int _nextIndex = 0;
 
   List<NewsCrawlWidgetController> get widgetControllers =>
@@ -58,6 +60,7 @@ class NewsCrawlController {
       id: id,
       mainController: this,
       link: links[_nextIndex++],
+      fontSize: fontSize,
     );
 
     await c.initialize();
@@ -76,6 +79,7 @@ class NewsCrawlWidgetController extends ChangeNotifier
     required this.mainController,
     required this.link,
     required this.id,
+    required this.fontSize,
   }) {
     _controller = AnimationController(
       vsync: this,
@@ -89,6 +93,7 @@ class NewsCrawlWidgetController extends ChangeNotifier
   final String id;
   final NewsCrawlController mainController;
   final NewsCrawlLink link;
+  final double fontSize;
   Ticker? _ticker;
 
   ui.Image? _image;
@@ -118,8 +123,8 @@ class NewsCrawlWidgetController extends ChangeNotifier
   Future<void> initialize() async {
     _image = await AnimatedLetter.textImage(
       text: link.title,
-      style: const TextStyle(
-        fontSize: 30,
+      style: TextStyle(
+        fontSize: fontSize,
       ),
       letterSpacing: 1,
     );
