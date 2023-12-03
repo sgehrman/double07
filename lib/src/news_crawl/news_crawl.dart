@@ -121,12 +121,12 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
   void initState() {
     super.initState();
 
-    widget.controller.callback = _callback;
+    widget.controller.addListener(_callback);
   }
 
   @override
   void dispose() {
-    // widget.controller.callback = null;
+    widget.controller.removeListener(_callback);
 
     super.dispose();
   }
@@ -135,7 +135,8 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
   void didUpdateWidget(covariant _NewsCrawlWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    widget.controller.callback = _callback;
+    oldWidget.controller.removeListener(_callback);
+    widget.controller.addListener(_callback);
   }
 
   void _callback() {

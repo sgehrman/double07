@@ -70,7 +70,8 @@ class NewsCrawlController {
 
 // ============================================================
 
-class NewsCrawlWidgetController implements TickerProvider {
+class NewsCrawlWidgetController extends ChangeNotifier
+    implements TickerProvider {
   NewsCrawlWidgetController({
     required this.mainController,
     required this.link,
@@ -85,7 +86,6 @@ class NewsCrawlWidgetController implements TickerProvider {
     _controller.addListener(_listener);
   }
 
-  void Function()? _callback;
   final String id;
   final NewsCrawlController mainController;
   final NewsCrawlLink link;
@@ -96,6 +96,7 @@ class NewsCrawlWidgetController implements TickerProvider {
   bool isInitialized = false;
   bool _triggeredNext = false;
 
+  @override
   void dispose() {
     _controller.stop();
     _controller.removeListener(_listener);
@@ -105,14 +106,14 @@ class NewsCrawlWidgetController implements TickerProvider {
     _image?.dispose();
 
     _ticker?.dispose();
+
+    super.dispose();
   }
 
   @override
   Ticker createTicker(TickerCallback onTick) {
     return _ticker ??= Ticker(onTick);
   }
-
-  set callback(void Function()? c) => _callback = c;
 
   Future<void> initialize() async {
     _image = await AnimatedLetter.textImage(
@@ -128,7 +129,7 @@ class NewsCrawlWidgetController implements TickerProvider {
   }
 
   void _listener() {
-    _callback?.call();
+    notifyListeners();
   }
 
   void _statusListener(status) {
