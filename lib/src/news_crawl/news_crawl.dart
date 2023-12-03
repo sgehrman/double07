@@ -27,21 +27,23 @@ class NewsCrawl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(
-        color: backColor,
-      ),
-      width: double.infinity,
-      height: height,
-      child: _NewsCrawl(
-        backColor: backColor,
-        textColor: textColor,
-        fontSize: fontSize,
-        duration: duration,
-        onTap: onTap,
-        selectedTextColor: selectedTextColor,
-        links: links,
+    return RepaintBoundary(
+      child: Container(
+        clipBehavior: Clip.hardEdge,
+        decoration: BoxDecoration(
+          color: backColor,
+        ),
+        width: double.infinity,
+        height: height,
+        child: _NewsCrawl(
+          backColor: backColor,
+          textColor: textColor,
+          fontSize: fontSize,
+          duration: duration,
+          onTap: onTap,
+          selectedTextColor: selectedTextColor,
+          links: links,
+        ),
       ),
     );
   }
