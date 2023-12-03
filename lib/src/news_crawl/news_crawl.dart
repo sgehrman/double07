@@ -74,7 +74,7 @@ class _NewsCrawl extends StatefulWidget {
 
 class _NewsCrawlState extends State<_NewsCrawl>
     with SingleTickerProviderStateMixin {
-  late NewsCrawlController _controller;
+  NewsCrawlController? _controller;
 
   @override
   void initState() {
@@ -85,7 +85,7 @@ class _NewsCrawlState extends State<_NewsCrawl>
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller?.dispose();
 
     // free up cached images
     LetterPainterCache().clear();
@@ -94,7 +94,7 @@ class _NewsCrawlState extends State<_NewsCrawl>
   }
 
   void _updateController() {
-    _controller.dispose();
+    _controller?.dispose();
 
     _controller = NewsCrawlController(
       links: widget.links,
@@ -115,11 +115,15 @@ class _NewsCrawlState extends State<_NewsCrawl>
     _updateController();
   }
 
+  List<NewsCrawlWidgetController> get widgetControllers {
+    return _controller?.widgetControllers ?? [];
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<Widget> children = [];
 
-    for (final c in _controller.widgetControllers) {
+    for (final c in widgetControllers) {
       children.add(
         _NewsCrawlWidget(
           controller: c,
@@ -134,12 +138,12 @@ class _NewsCrawlState extends State<_NewsCrawl>
 
     return MouseRegion(
       onEnter: (x) {
-        for (final c in _controller.widgetControllers) {
+        for (final c in widgetControllers) {
           c.pause();
         }
       },
       onExit: (x) {
-        for (final c in _controller.widgetControllers) {
+        for (final c in widgetControllers) {
           c.pause();
         }
       },
