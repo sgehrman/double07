@@ -53,25 +53,27 @@ class NewsCrawlController {
   }
 
   Future<void> next() async {
-    if (_nextIndex >= links.length) {
-      _nextIndex = 0;
+    if (links.isNotEmpty) {
+      if (_nextIndex >= links.length) {
+        _nextIndex = 0;
+      }
+
+      final id = Utils.uniqueFirestoreId();
+
+      final c = NewsCrawlWidgetController(
+        id: id,
+        mainController: this,
+        link: links[_nextIndex++],
+        fontSize: fontSize,
+        duration: duration,
+      );
+
+      await c.initialize();
+
+      _widgetControllers[id] = c;
+
+      callback();
     }
-
-    final id = Utils.uniqueFirestoreId();
-
-    final c = NewsCrawlWidgetController(
-      id: id,
-      mainController: this,
-      link: links[_nextIndex++],
-      fontSize: fontSize,
-      duration: duration,
-    );
-
-    await c.initialize();
-
-    _widgetControllers[id] = c;
-
-    callback();
   }
 }
 
