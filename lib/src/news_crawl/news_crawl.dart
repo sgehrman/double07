@@ -10,6 +10,7 @@ class NewsCrawl extends StatelessWidget {
     required this.textColor,
     required this.height,
     required this.fontSize,
+    required this.onTap,
     this.duration = const Duration(seconds: 20),
   });
 
@@ -18,6 +19,7 @@ class NewsCrawl extends StatelessWidget {
   final double height;
   final double fontSize;
   final Duration duration;
+  final void Function(NewsCrawlLink link) onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class NewsCrawl extends StatelessWidget {
         textColor: textColor,
         fontSize: fontSize,
         duration: duration,
+        onTap: onTap,
       ),
     );
   }
@@ -43,12 +46,14 @@ class _NewsCrawl extends StatefulWidget {
     required this.textColor,
     required this.fontSize,
     required this.duration,
+    required this.onTap,
   });
 
   final Color backColor;
   final Color textColor;
   final double fontSize;
   final Duration duration;
+  final void Function(NewsCrawlLink link) onTap;
 
   @override
   State<_NewsCrawl> createState() => _NewsCrawlState();
@@ -116,8 +121,9 @@ class _NewsCrawlState extends State<_NewsCrawl>
     for (final c in _controller.widgetControllers) {
       children.add(
         _NewsCrawlWidget(
-          c,
-          widget.textColor,
+          controller: c,
+          textColor: widget.textColor,
+          onTap: widget.onTap,
         ),
       );
     }
@@ -145,13 +151,15 @@ class _NewsCrawlState extends State<_NewsCrawl>
 // =======================================================
 
 class _NewsCrawlWidget extends StatefulWidget {
-  const _NewsCrawlWidget(
-    this.controller,
-    this.textColor,
-  );
+  const _NewsCrawlWidget({
+    required this.controller,
+    required this.textColor,
+    required this.onTap,
+  });
 
   final NewsCrawlWidgetController controller;
   final Color textColor;
+  final void Function(NewsCrawlLink link) onTap;
 
   @override
   State<_NewsCrawlWidget> createState() => _NewsCrawlWidgetState();
@@ -203,7 +211,7 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
                 height: widget.controller.image!.height.toDouble(),
                 child: InkWell(
                   onTap: () {
-                    print('tapped: ${widget.controller.link.url}');
+                    widget.onTap(widget.controller.link);
                   },
                   child: CustomPaint(
                     size: Size(
