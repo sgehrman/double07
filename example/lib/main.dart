@@ -26,10 +26,11 @@ class MyApp extends StatelessWidget {
               ),
             ),
             NewsCrawl(
-              backColor: Colors.red,
+              backColor: Colors.black,
               fontSize: 30,
               height: 60,
-              textColor: Colors.white,
+              textColor: Colors.cyan,
+              duration: Duration(seconds: 10),
             ),
           ],
         ),

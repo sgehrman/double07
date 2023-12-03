@@ -10,12 +10,14 @@ class NewsCrawl extends StatelessWidget {
     required this.textColor,
     required this.height,
     required this.fontSize,
+    this.duration = const Duration(seconds: 20),
   });
 
   final Color backColor;
   final Color textColor;
   final double height;
   final double fontSize;
+  final Duration duration;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class NewsCrawl extends StatelessWidget {
         backColor: backColor,
         textColor: textColor,
         fontSize: fontSize,
+        duration: duration,
       ),
     );
   }
@@ -39,11 +42,13 @@ class _NewsCrawl extends StatefulWidget {
     required this.backColor,
     required this.textColor,
     required this.fontSize,
+    required this.duration,
   });
 
   final Color backColor;
   final Color textColor;
   final double fontSize;
+  final Duration duration;
 
   @override
   State<_NewsCrawl> createState() => _NewsCrawlState();
@@ -90,6 +95,7 @@ class _NewsCrawlState extends State<_NewsCrawl>
         }
       },
       fontSize: widget.fontSize,
+      duration: widget.duration,
     );
   }
 
@@ -108,7 +114,12 @@ class _NewsCrawlState extends State<_NewsCrawl>
     final List<Widget> children = [];
 
     for (final c in _controller.widgetControllers) {
-      children.add(_NewsCrawlWidget(c));
+      children.add(
+        _NewsCrawlWidget(
+          c,
+          widget.textColor,
+        ),
+      );
     }
 
     children.add(_GradientWidget(widget.backColor));
@@ -134,8 +145,13 @@ class _NewsCrawlState extends State<_NewsCrawl>
 // =======================================================
 
 class _NewsCrawlWidget extends StatefulWidget {
-  const _NewsCrawlWidget(this.controller);
+  const _NewsCrawlWidget(
+    this.controller,
+    this.textColor,
+  );
+
   final NewsCrawlWidgetController controller;
+  final Color textColor;
 
   @override
   State<_NewsCrawlWidget> createState() => _NewsCrawlWidgetState();
@@ -182,6 +198,7 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
                 image: widget.controller.image!,
                 translateX:
                     widget.controller.getTranslateX(constraints.maxWidth),
+                textColor: widget.textColor,
               ),
             );
           },
@@ -199,10 +216,12 @@ class _NewsCrawlTextPainter extends CustomPainter {
   const _NewsCrawlTextPainter({
     required this.translateX,
     required this.image,
+    required this.textColor,
   });
 
   final double translateX;
   final ui.Image image;
+  final Color textColor;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -215,11 +234,16 @@ class _NewsCrawlTextPainter extends CustomPainter {
       image.height.toDouble(),
     );
 
+    final ColorFilter? colorFilter = textColor != Colors.white
+        ? ColorFilter.mode(textColor, BlendMode.srcATop)
+        : null;
+
     if (destRect.overlaps(rect)) {
       paintImage(
         canvas: canvas,
         rect: destRect,
         image: image,
+        colorFilter: colorFilter,
         fit: BoxFit.scaleDown,
         isAntiAlias: true,
         filterQuality: FilterQuality.high,
