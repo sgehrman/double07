@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:double07/src/animations/text/animated_letter.dart';
+import 'package:double07/src/news_crawl/news_crawl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -180,16 +181,4 @@ class NewsCrawlWidgetController extends ChangeNotifier
 
     return 0;
   }
-}
-
-// ===========================================================
-
-class NewsCrawlLink {
-  NewsCrawlLink({
-    required this.title,
-    required this.url,
-  });
-
-  String title;
-  String url;
 }

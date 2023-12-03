@@ -35,6 +35,32 @@ class MyApp extends StatelessWidget {
               onTap: (link) {
                 print('tapped: ${link.url}');
               },
+              links: [
+                NewsCrawlLink(
+                  title: 'BBC news: Dog dies of herpes.',
+                  url: 'http://www.bbc.com',
+                ),
+                NewsCrawlLink(
+                  title: 'Tom Jones is dead.',
+                  url: 'http://www.jones.com',
+                ),
+                NewsCrawlLink(
+                  title: 'Hairy armpits are sexy',
+                  url: 'http://www.armpits.com',
+                ),
+                NewsCrawlLink(
+                  title: 'Sadat is king of Syria.',
+                  url: 'http://www.syria.com',
+                ),
+                NewsCrawlLink(
+                  title: 'Austrailia is super lame and gay.',
+                  url: 'http://www.Austrailia.com',
+                ),
+                NewsCrawlLink(
+                  title: 'Kat Kennedy is a bozo.',
+                  url: 'http://www.Kennedy.com',
+                ),
+              ],
             ),
           ],
         ),

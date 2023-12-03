@@ -12,6 +12,7 @@ class NewsCrawl extends StatelessWidget {
     required this.height,
     required this.fontSize,
     required this.onTap,
+    required this.links,
     this.duration = const Duration(seconds: 20),
   });
 
@@ -21,12 +22,16 @@ class NewsCrawl extends StatelessWidget {
   final double height;
   final double fontSize;
   final Duration duration;
+  final List<NewsCrawlLink> links;
   final void Function(NewsCrawlLink link) onTap;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: backColor,
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+        color: backColor,
+      ),
       width: double.infinity,
       height: height,
       child: _NewsCrawl(
@@ -36,6 +41,7 @@ class NewsCrawl extends StatelessWidget {
         duration: duration,
         onTap: onTap,
         selectedTextColor: selectedTextColor,
+        links: links,
       ),
     );
   }
@@ -51,6 +57,7 @@ class _NewsCrawl extends StatefulWidget {
     required this.fontSize,
     required this.duration,
     required this.onTap,
+    required this.links,
   });
 
   final Color backColor;
@@ -59,6 +66,7 @@ class _NewsCrawl extends StatefulWidget {
   final double fontSize;
   final Duration duration;
   final void Function(NewsCrawlLink link) onTap;
+  final List<NewsCrawlLink> links;
 
   @override
   State<_NewsCrawl> createState() => _NewsCrawlState();
@@ -73,32 +81,7 @@ class _NewsCrawlState extends State<_NewsCrawl>
     super.initState();
 
     _controller = NewsCrawlController(
-      links: [
-        NewsCrawlLink(
-          title: 'BBC news: Dog dies of herpes.',
-          url: 'http://www.bbc.com',
-        ),
-        NewsCrawlLink(
-          title: 'Tom Jones is dead.',
-          url: 'http://www.jones.com',
-        ),
-        NewsCrawlLink(
-          title: 'Hairy armpits are sexy',
-          url: 'http://www.armpits.com',
-        ),
-        NewsCrawlLink(
-          title: 'Sadat is king of Syria.',
-          url: 'http://www.syria.com',
-        ),
-        NewsCrawlLink(
-          title: 'Austrailia is super lame and gay.',
-          url: 'http://www.Austrailia.com',
-        ),
-        NewsCrawlLink(
-          title: 'Kat Kennedy is a bozo.',
-          url: 'http://www.Kennedy.com',
-        ),
-      ],
+      links: widget.links,
       callback: () {
         if (mounted) {
           setState(() {});
@@ -381,4 +364,16 @@ class _GradientPainter extends CustomPainter {
   bool shouldRepaint(covariant _GradientPainter oldDelegate) {
     return false;
   }
+}
+
+// ===========================================================
+
+class NewsCrawlLink {
+  NewsCrawlLink({
+    required this.title,
+    required this.url,
+  });
+
+  String title;
+  String url;
 }
