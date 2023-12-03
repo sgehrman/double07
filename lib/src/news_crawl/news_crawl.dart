@@ -8,6 +8,7 @@ class NewsCrawl extends StatelessWidget {
   const NewsCrawl({
     required this.backColor,
     required this.textColor,
+    required this.selectedTextColor,
     required this.height,
     required this.fontSize,
     required this.onTap,
@@ -16,6 +17,7 @@ class NewsCrawl extends StatelessWidget {
 
   final Color backColor;
   final Color textColor;
+  final Color selectedTextColor;
   final double height;
   final double fontSize;
   final Duration duration;
@@ -33,6 +35,7 @@ class NewsCrawl extends StatelessWidget {
         fontSize: fontSize,
         duration: duration,
         onTap: onTap,
+        selectedTextColor: selectedTextColor,
       ),
     );
   }
@@ -44,6 +47,7 @@ class _NewsCrawl extends StatefulWidget {
   const _NewsCrawl({
     required this.backColor,
     required this.textColor,
+    required this.selectedTextColor,
     required this.fontSize,
     required this.duration,
     required this.onTap,
@@ -51,6 +55,7 @@ class _NewsCrawl extends StatefulWidget {
 
   final Color backColor;
   final Color textColor;
+  final Color selectedTextColor;
   final double fontSize;
   final Duration duration;
   final void Function(NewsCrawlLink link) onTap;
@@ -124,6 +129,7 @@ class _NewsCrawlState extends State<_NewsCrawl>
           controller: c,
           textColor: widget.textColor,
           onTap: widget.onTap,
+          selectedTextColor: widget.selectedTextColor,
         ),
       );
     }
@@ -154,11 +160,13 @@ class _NewsCrawlWidget extends StatefulWidget {
   const _NewsCrawlWidget({
     required this.controller,
     required this.textColor,
+    required this.selectedTextColor,
     required this.onTap,
   });
 
   final NewsCrawlWidgetController controller;
   final Color textColor;
+  final Color selectedTextColor;
   final void Function(NewsCrawlLink link) onTap;
 
   @override
@@ -166,6 +174,8 @@ class _NewsCrawlWidget extends StatefulWidget {
 }
 
 class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
+  bool _mouseOver = false;
+
   @override
   void initState() {
     super.initState();
@@ -209,18 +219,32 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
               child: SizedBox(
                 width: widget.controller.image!.width.toDouble(),
                 height: widget.controller.image!.height.toDouble(),
-                child: InkWell(
-                  onTap: () {
-                    widget.onTap(widget.controller.link);
+                child: MouseRegion(
+                  onEnter: (x) {
+                    _mouseOver = true;
+
+                    setState(() {});
                   },
-                  child: CustomPaint(
-                    size: Size(
-                      widget.controller.image!.width.toDouble(),
-                      widget.controller.image!.height.toDouble(),
-                    ),
-                    painter: _NewsCrawlTextPainter(
-                      image: widget.controller.image!,
-                      textColor: widget.textColor,
+                  onExit: (x) {
+                    _mouseOver = false;
+
+                    setState(() {});
+                  },
+                  child: InkWell(
+                    onTap: () {
+                      widget.onTap(widget.controller.link);
+                    },
+                    child: CustomPaint(
+                      size: Size(
+                        widget.controller.image!.width.toDouble(),
+                        widget.controller.image!.height.toDouble(),
+                      ),
+                      painter: _NewsCrawlTextPainter(
+                        image: widget.controller.image!,
+                        textColor: _mouseOver
+                            ? widget.selectedTextColor
+                            : widget.textColor,
+                      ),
                     ),
                   ),
                 ),

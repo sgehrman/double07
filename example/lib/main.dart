@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
               fontSize: 30,
               height: 60,
               textColor: Colors.cyan,
+              selectedTextColor: Colors.pink,
               duration: const Duration(seconds: 10),
               onTap: (link) {
                 print('tapped: ${link.url}');
