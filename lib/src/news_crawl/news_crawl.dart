@@ -12,6 +12,7 @@ class NewsCrawl extends StatelessWidget {
     required this.height,
     required this.fontSize,
     required this.onTap,
+    required this.maxLength,
     required this.links,
     this.duration = const Duration(seconds: 20),
   });
@@ -21,6 +22,7 @@ class NewsCrawl extends StatelessWidget {
   final Color selectedTextColor;
   final double height;
   final double fontSize;
+  final int maxLength;
   final Duration duration;
   final List<NewsCrawlLink> links;
   final void Function(NewsCrawlLink link) onTap;
@@ -43,6 +45,7 @@ class NewsCrawl extends StatelessWidget {
           onTap: onTap,
           selectedTextColor: selectedTextColor,
           links: links,
+          maxLength: maxLength,
         ),
       ),
     );
@@ -60,12 +63,14 @@ class _NewsCrawl extends StatefulWidget {
     required this.duration,
     required this.onTap,
     required this.links,
+    required this.maxLength,
   });
 
   final Color backColor;
   final Color textColor;
   final Color selectedTextColor;
   final double fontSize;
+  final int maxLength;
   final Duration duration;
   final void Function(NewsCrawlLink link) onTap;
   final List<NewsCrawlLink> links;
@@ -107,6 +112,7 @@ class _NewsCrawlState extends State<_NewsCrawl>
       },
       fontSize: widget.fontSize,
       duration: widget.duration,
+      maxLength: widget.maxLength,
     );
   }
 

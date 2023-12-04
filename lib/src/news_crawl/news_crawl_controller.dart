@@ -13,6 +13,7 @@ class NewsCrawlController {
     required this.links,
     required this.fontSize,
     required this.duration,
+    required this.maxLength,
   }) {
     _setup();
   }
@@ -22,6 +23,7 @@ class NewsCrawlController {
   final List<NewsCrawlLink> links;
   final double fontSize;
   final Duration duration;
+  final int maxLength;
   int _nextIndex = 0;
 
   List<NewsCrawlWidgetController> get widgetControllers =>
@@ -66,6 +68,7 @@ class NewsCrawlController {
         link: links[_nextIndex++],
         fontSize: fontSize,
         duration: duration,
+        maxLength: maxLength,
       );
 
       await c.initialize();
@@ -87,6 +90,7 @@ class NewsCrawlWidgetController extends ChangeNotifier
     required this.id,
     required this.fontSize,
     required this.duration,
+    required this.maxLength,
   }) {
     _controller = AnimationController(
       vsync: this,
@@ -102,6 +106,7 @@ class NewsCrawlWidgetController extends ChangeNotifier
   final NewsCrawlLink link;
   final double fontSize;
   final Duration duration;
+  final int maxLength;
   Ticker? _ticker;
 
   ui.Image? _image;
@@ -128,9 +133,40 @@ class NewsCrawlWidgetController extends ChangeNotifier
     return _ticker ??= Ticker(onTick);
   }
 
+  String prepareTitle(String title) {
+    if (title.isNotEmpty) {
+      final String str = link.title.toUpperCase().trim();
+
+      final words = str.split(' ');
+
+      final List<String> resultWords = [];
+      int len = 0;
+      for (final word in words) {
+        resultWords.add(word);
+
+        len += word.length;
+        if (len > maxLength) {
+          break;
+        }
+      }
+
+      // append ...
+      final sentence = resultWords.join(' ');
+
+      // is last character a '.'?
+      if (sentence.characters.last == '.') {
+        return '$sentence..';
+      }
+
+      return '$sentence...';
+    }
+
+    return '';
+  }
+
   Future<void> initialize() async {
     _image = await AnimatedLetter.textImage(
-      text: link.title,
+      text: prepareTitle(link.title),
       style: TextStyle(
         fontSize: fontSize,
       ),
