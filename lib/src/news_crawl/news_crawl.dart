@@ -1,5 +1,6 @@
 import 'dart:ui' as ui;
 
+import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:double07/src/animations/text/letter_painter.dart';
 import 'package:double07/src/news_crawl/news_crawl_controller.dart';
 import 'package:flutter/material.dart';
@@ -134,7 +135,7 @@ class _NewsCrawlState extends State<_NewsCrawl>
     for (final c in widgetControllers) {
       children.add(
         _NewsCrawlWidget(
-          controller: c,
+          widgetController: c,
           textColor: widget.textColor,
           onTap: widget.onTap,
           selectedTextColor: widget.selectedTextColor,
@@ -166,13 +167,13 @@ class _NewsCrawlState extends State<_NewsCrawl>
 
 class _NewsCrawlWidget extends StatefulWidget {
   const _NewsCrawlWidget({
-    required this.controller,
+    required this.widgetController,
     required this.textColor,
     required this.selectedTextColor,
     required this.onTap,
   });
 
-  final NewsCrawlWidgetController controller;
+  final NewsCrawlWidgetController widgetController;
   final Color textColor;
   final Color selectedTextColor;
   final void Function(NewsCrawlLink link) onTap;
@@ -188,12 +189,12 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
   void initState() {
     super.initState();
 
-    widget.controller.addListener(_callback);
+    widget.widgetController.addListener(_callback);
   }
 
   @override
   void dispose() {
-    widget.controller.removeListener(_callback);
+    widget.widgetController.removeListener(_callback);
 
     super.dispose();
   }
@@ -202,8 +203,8 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
   void didUpdateWidget(covariant _NewsCrawlWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    oldWidget.controller.removeListener(_callback);
-    widget.controller.addListener(_callback);
+    oldWidget.widgetController.removeListener(_callback);
+    widget.widgetController.addListener(_callback);
   }
 
   void _callback() {
@@ -214,44 +215,47 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.controller.isInitialized) {
+    if (widget.widgetController.isInitialized) {
       return SizedBox.expand(
-        key: ValueKey(widget.controller.id),
+        key: ValueKey(widget.widgetController.id),
         child: LayoutBuilder(
           builder: (context, constraints) {
             return Transform.translate(
               offset: Offset(
-                widget.controller.getTranslateX(constraints.maxWidth),
+                widget.widgetController.getTranslateX(constraints.maxWidth),
                 0,
               ),
               child: SizedBox(
-                width: widget.controller.image!.width.toDouble(),
-                height: widget.controller.image!.height.toDouble(),
-                child: MouseRegion(
-                  onEnter: (x) {
-                    _mouseOver = true;
+                width: widget.widgetController.image!.width.toDouble(),
+                height: widget.widgetController.image!.height.toDouble(),
+                child: ToolTip(
+                  message: widget.widgetController.link.title,
+                  child: MouseRegion(
+                    onEnter: (x) {
+                      _mouseOver = true;
 
-                    setState(() {});
-                  },
-                  onExit: (x) {
-                    _mouseOver = false;
-
-                    setState(() {});
-                  },
-                  child: InkWell(
-                    onTap: () {
-                      widget.onTap(widget.controller.link);
+                      setState(() {});
                     },
-                    child: CustomPaint(
-                      size: Size(
-                        widget.controller.image!.width.toDouble(),
-                        widget.controller.image!.height.toDouble(),
-                      ),
-                      painter: _NewsCrawlTextPainter(
-                        image: widget.controller.image!,
-                        textColor: _mouseOver
-                            ? widget.selectedTextColor
-                            : widget.textColor,
+                    onExit: (x) {
+                      _mouseOver = false;
+
+                      setState(() {});
+                    },
+                    child: InkWell(
+                      onTap: () {
+                        widget.onTap(widget.widgetController.link);
+                      },
+                      child: CustomPaint(
+                        size: Size(
+                          widget.widgetController.image!.width.toDouble(),
+                          widget.widgetController.image!.height.toDouble(),
+                        ),
+                        painter: _NewsCrawlTextPainter(
+                          image: widget.widgetController.image!,
+                          textColor: _mouseOver
+                              ? widget.selectedTextColor
+                              : widget.textColor,
+                        ),
                       ),
                     ),
                   ),
