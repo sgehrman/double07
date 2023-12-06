@@ -10,20 +10,14 @@ import 'package:flutter/scheduler.dart';
 class NewsCrawlController {
   NewsCrawlController({
     required this.callback,
-    required this.links,
-    required this.style,
-    required this.duration,
-    required this.maxLength,
+    required this.params,
   }) {
     _setup();
   }
 
   final void Function() callback;
   final Map<String, NewsCrawlWidgetController> _widgetControllers = {};
-  final List<NewsCrawlLink> links;
-  final TextStyle style;
-  final Duration duration;
-  final int maxLength;
+  final NewsCrawlParams params;
   int _nextIndex = 0;
 
   List<NewsCrawlWidgetController> get widgetControllers =>
@@ -55,8 +49,8 @@ class NewsCrawlController {
   }
 
   Future<void> next() async {
-    if (links.isNotEmpty) {
-      if (_nextIndex >= links.length) {
+    if (params.links.isNotEmpty) {
+      if (_nextIndex >= params.links.length) {
         _nextIndex = 0;
       }
 
@@ -65,10 +59,8 @@ class NewsCrawlController {
       final c = NewsCrawlWidgetController(
         id: id,
         mainController: this,
-        link: links[_nextIndex++],
-        style: style,
-        duration: duration,
-        maxLength: maxLength,
+        link: params.links[_nextIndex++],
+        params: params,
       );
 
       await c.initialize();
@@ -88,13 +80,11 @@ class NewsCrawlWidgetController extends ChangeNotifier
     required this.mainController,
     required this.link,
     required this.id,
-    required this.style,
-    required this.duration,
-    required this.maxLength,
+    required this.params,
   }) {
     _controller = AnimationController(
       vsync: this,
-      duration: duration,
+      duration: params.duration,
     );
 
     _controller.addStatusListener(_statusListener);
@@ -104,9 +94,7 @@ class NewsCrawlWidgetController extends ChangeNotifier
   final String id;
   final NewsCrawlController mainController;
   final NewsCrawlLink link;
-  final TextStyle style;
-  final Duration duration;
-  final int maxLength;
+  final NewsCrawlParams params;
   Ticker? _ticker;
 
   ui.Image? _image;
@@ -143,7 +131,7 @@ class NewsCrawlWidgetController extends ChangeNotifier
       }
 
       // return if under maximum
-      if (str.length <= maxLength) {
+      if (str.length <= params.maxLength) {
         return str;
       }
 
@@ -155,7 +143,7 @@ class NewsCrawlWidgetController extends ChangeNotifier
         resultWords.add(word);
 
         len += word.length;
-        if (len > maxLength) {
+        if (len > params.maxLength) {
           break;
         }
       }
@@ -177,7 +165,7 @@ class NewsCrawlWidgetController extends ChangeNotifier
   Future<void> initialize() async {
     _image = await AnimatedLetter.textImage(
       text: prepareTitle(link.title),
-      style: style,
+      style: params.style,
       letterSpacing: 1,
     );
 

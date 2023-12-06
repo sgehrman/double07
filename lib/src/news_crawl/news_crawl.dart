@@ -5,8 +5,8 @@ import 'package:double07/src/animations/text/letter_painter.dart';
 import 'package:double07/src/news_crawl/news_crawl_controller.dart';
 import 'package:flutter/material.dart';
 
-class NewsCrawl extends StatelessWidget {
-  const NewsCrawl({
+class NewsCrawlParams {
+  const NewsCrawlParams({
     required this.backColor,
     required this.textColor,
     required this.selectedTextColor,
@@ -27,6 +27,14 @@ class NewsCrawl extends StatelessWidget {
   final Duration duration;
   final List<NewsCrawlLink> links;
   final void Function(NewsCrawlLink link) onTap;
+}
+
+// =============================================================
+
+class NewsCrawl extends StatelessWidget {
+  const NewsCrawl(this.params);
+
+  final NewsCrawlParams params;
 
   @override
   Widget build(BuildContext context) {
@@ -34,20 +42,11 @@ class NewsCrawl extends StatelessWidget {
       child: Container(
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
-          color: backColor,
+          color: params.backColor,
         ),
         width: double.infinity,
-        height: height,
-        child: _NewsCrawl(
-          backColor: backColor,
-          textColor: textColor,
-          style: style,
-          duration: duration,
-          onTap: onTap,
-          selectedTextColor: selectedTextColor,
-          links: links,
-          maxLength: maxLength,
-        ),
+        height: params.height,
+        child: _NewsCrawl(params),
       ),
     );
   }
@@ -56,25 +55,9 @@ class NewsCrawl extends StatelessWidget {
 // =======================================================
 
 class _NewsCrawl extends StatefulWidget {
-  const _NewsCrawl({
-    required this.backColor,
-    required this.textColor,
-    required this.selectedTextColor,
-    required this.style,
-    required this.duration,
-    required this.onTap,
-    required this.links,
-    required this.maxLength,
-  });
+  const _NewsCrawl(this.params);
 
-  final Color backColor;
-  final Color textColor;
-  final Color selectedTextColor;
-  final TextStyle style;
-  final int maxLength;
-  final Duration duration;
-  final void Function(NewsCrawlLink link) onTap;
-  final List<NewsCrawlLink> links;
+  final NewsCrawlParams params;
 
   @override
   State<_NewsCrawl> createState() => _NewsCrawlState();
@@ -105,15 +88,12 @@ class _NewsCrawlState extends State<_NewsCrawl>
     _controller?.dispose();
 
     _controller = NewsCrawlController(
-      links: widget.links,
+      params: widget.params,
       callback: () {
         if (mounted) {
           setState(() {});
         }
       },
-      style: widget.style,
-      duration: widget.duration,
-      maxLength: widget.maxLength,
     );
   }
 
@@ -136,14 +116,14 @@ class _NewsCrawlState extends State<_NewsCrawl>
       children.add(
         _NewsCrawlWidget(
           widgetController: c,
-          textColor: widget.textColor,
-          onTap: widget.onTap,
-          selectedTextColor: widget.selectedTextColor,
+          textColor: widget.params.textColor,
+          onTap: widget.params.onTap,
+          selectedTextColor: widget.params.selectedTextColor,
         ),
       );
     }
 
-    children.add(_GradientWidget(widget.backColor));
+    children.add(_GradientWidget(widget.params.backColor));
 
     return MouseRegion(
       onEnter: (x) {

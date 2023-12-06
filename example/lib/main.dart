@@ -26,48 +26,50 @@ class MyApp extends StatelessWidget {
               ),
             ),
             NewsCrawl(
-              backColor: Colors.black,
-              style: const TextStyle(fontSize: 30),
-              height: 60,
-              textColor: Colors.cyan,
-              selectedTextColor: Colors.pink,
-              duration: const Duration(seconds: 10),
-              maxLength: 30,
-              onTap: (link) {
-                print('tapped: ${link.url}');
-              },
-              links: [
-                NewsCrawlLink(
-                  title:
-                      'BBC news: Dog dies of herpes Dog dies of herpes Dog dies of herpes.',
-                  url: 'http://www.bbc.com',
-                ),
-                NewsCrawlLink(
-                  title:
-                      'Tom Jones is dead Tom Jones is dead Tom Jones is dead.',
-                  url: 'http://www.jones.com',
-                ),
-                NewsCrawlLink(
-                  title:
-                      'Hairy armpits are sexy Hairy armpits are sexy Hairy armpits are sexy',
-                  url: 'http://www.armpits.com',
-                ),
-                NewsCrawlLink(
-                  title:
-                      'Sadat is king of SyriaS adat is king of Syria Sadat is king of Syria.',
-                  url: 'http://www.syria.com',
-                ),
-                NewsCrawlLink(
-                  title:
-                      'Austrailia is super lame and gay Austrailia is super lame and gay.',
-                  url: 'http://www.Austrailia.com',
-                ),
-                NewsCrawlLink(
-                  title:
-                      'Kat Kennedy is a bozo Kat Kennedy is a bozo Kat Kennedy is a bozo.',
-                  url: 'http://www.Kennedy.com',
-                ),
-              ],
+              NewsCrawlParams(
+                backColor: Colors.black,
+                style: const TextStyle(fontSize: 30),
+                height: 60,
+                textColor: Colors.cyan,
+                selectedTextColor: Colors.pink,
+                duration: const Duration(seconds: 10),
+                maxLength: 30,
+                onTap: (link) {
+                  print('tapped: ${link.url}');
+                },
+                links: [
+                  NewsCrawlLink(
+                    title:
+                        'BBC news: Dog dies of herpes Dog dies of herpes Dog dies of herpes.',
+                    url: 'http://www.bbc.com',
+                  ),
+                  NewsCrawlLink(
+                    title:
+                        'Tom Jones is dead Tom Jones is dead Tom Jones is dead.',
+                    url: 'http://www.jones.com',
+                  ),
+                  NewsCrawlLink(
+                    title:
+                        'Hairy armpits are sexy Hairy armpits are sexy Hairy armpits are sexy',
+                    url: 'http://www.armpits.com',
+                  ),
+                  NewsCrawlLink(
+                    title:
+                        'Sadat is king of SyriaS adat is king of Syria Sadat is king of Syria.',
+                    url: 'http://www.syria.com',
+                  ),
+                  NewsCrawlLink(
+                    title:
+                        'Austrailia is super lame and gay Austrailia is super lame and gay.',
+                    url: 'http://www.Austrailia.com',
+                  ),
+                  NewsCrawlLink(
+                    title:
+                        'Kat Kennedy is a bozo Kat Kennedy is a bozo Kat Kennedy is a bozo.',
+                    url: 'http://www.Kennedy.com',
+                  ),
+                ],
+              ),
             ),
           ],
         ),
