@@ -205,7 +205,8 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
                 widget.widgetController.getTranslateX(constraints.maxWidth),
                 0,
               ),
-              child: Center(
+              child: Align(
+                alignment: Alignment.centerLeft,
                 child: SizedBox(
                   width: widget.widgetController.image!.width.toDouble(),
                   height: widget.widgetController.image!.height.toDouble(),
