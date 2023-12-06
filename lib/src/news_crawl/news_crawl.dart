@@ -219,20 +219,23 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
                       _mouseOver = false;
                       setState(() {});
                     },
-                    child: InkWell(
-                      onTap: () {
-                        widget.onTap(widget.widgetController.link);
-                      },
-                      child: CustomPaint(
-                        size: Size(
-                          widget.widgetController.image!.width.toDouble(),
-                          widget.widgetController.image!.height.toDouble(),
-                        ),
-                        painter: _NewsCrawlTextPainter(
-                          image: widget.widgetController.image!,
-                          textColor: _mouseOver
-                              ? widget.selectedTextColor
-                              : widget.textColor,
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: InkWell(
+                        onTap: () {
+                          widget.onTap(widget.widgetController.link);
+                        },
+                        child: CustomPaint(
+                          size: Size(
+                            widget.widgetController.image!.width.toDouble(),
+                            widget.widgetController.image!.height.toDouble(),
+                          ),
+                          painter: _NewsCrawlTextPainter(
+                            image: widget.widgetController.image!,
+                            textColor: _mouseOver
+                                ? widget.selectedTextColor
+                                : widget.textColor,
+                          ),
                         ),
                       ),
                     ),

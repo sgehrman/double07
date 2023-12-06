@@ -1,7 +1,10 @@
+import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:double07/double07.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
+  await HiveUtils.init();
+
   runApp(const MyApp());
 }
 
