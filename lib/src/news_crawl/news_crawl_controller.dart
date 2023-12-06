@@ -135,7 +135,17 @@ class NewsCrawlWidgetController extends ChangeNotifier
 
   String prepareTitle(String title) {
     if (title.isNotEmpty) {
-      final String str = link.title.toUpperCase().trim();
+      String str = link.title.toUpperCase().trim();
+
+      // is last character a '.'?
+      if (str.characters.last == '.') {
+        str = str.substring(0, str.length - 1).trim();
+      }
+
+      // return if under maximum
+      if (str.length <= maxLength) {
+        return str;
+      }
 
       final words = str.split(' ');
 
@@ -153,7 +163,7 @@ class NewsCrawlWidgetController extends ChangeNotifier
       // append ...
       final sentence = resultWords.join(' ');
 
-      // is last character a '.'?
+      // is last character a '.'
       if (sentence.characters.last == '.') {
         return '$sentence..';
       }
