@@ -213,12 +213,10 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
                   child: MouseRegion(
                     onEnter: (x) {
                       _mouseOver = true;
-
                       setState(() {});
                     },
                     onExit: (x) {
                       _mouseOver = false;
-
                       setState(() {});
                     },
                     child: InkWell(
