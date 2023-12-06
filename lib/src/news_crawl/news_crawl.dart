@@ -356,7 +356,7 @@ class _GradientPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
-    const double gradientWidth = 100;
+    const double gradientWidth = 60;
 
     final leftRect = Rect.fromLTWH(
       rect.left,
