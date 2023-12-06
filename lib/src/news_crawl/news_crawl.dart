@@ -205,36 +205,38 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
                 widget.widgetController.getTranslateX(constraints.maxWidth),
                 0,
               ),
-              child: SizedBox(
-                width: widget.widgetController.image!.width.toDouble(),
-                height: widget.widgetController.image!.height.toDouble(),
-                child: ToolTip(
-                  message: widget.widgetController.link.title,
-                  child: MouseRegion(
-                    onEnter: (x) {
-                      _mouseOver = true;
-                      setState(() {});
-                    },
-                    onExit: (x) {
-                      _mouseOver = false;
-                      setState(() {});
-                    },
-                    child: Material(
-                      type: MaterialType.transparency,
-                      child: InkWell(
-                        onTap: () {
-                          widget.onTap(widget.widgetController.link);
-                        },
-                        child: CustomPaint(
-                          size: Size(
-                            widget.widgetController.image!.width.toDouble(),
-                            widget.widgetController.image!.height.toDouble(),
-                          ),
-                          painter: _NewsCrawlTextPainter(
-                            image: widget.widgetController.image!,
-                            textColor: _mouseOver
-                                ? widget.selectedTextColor
-                                : widget.textColor,
+              child: Center(
+                child: Container(
+                  width: widget.widgetController.image!.width.toDouble(),
+                  height: widget.widgetController.image!.height.toDouble(),
+                  child: ToolTip(
+                    message: widget.widgetController.link.title,
+                    child: MouseRegion(
+                      onEnter: (x) {
+                        _mouseOver = true;
+                        setState(() {});
+                      },
+                      onExit: (x) {
+                        _mouseOver = false;
+                        setState(() {});
+                      },
+                      child: Material(
+                        type: MaterialType.transparency,
+                        child: InkWell(
+                          onTap: () {
+                            widget.onTap(widget.widgetController.link);
+                          },
+                          child: CustomPaint(
+                            size: Size(
+                              widget.widgetController.image!.width.toDouble(),
+                              widget.widgetController.image!.height.toDouble(),
+                            ),
+                            painter: _NewsCrawlTextPainter(
+                              image: widget.widgetController.image!,
+                              textColor: _mouseOver
+                                  ? widget.selectedTextColor
+                                  : widget.textColor,
+                            ),
                           ),
                         ),
                       ),
