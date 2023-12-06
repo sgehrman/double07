@@ -198,12 +198,12 @@ class NewsCrawlWidgetController extends ChangeNotifier
   ) {
     if (isInitialized) {
       final imageWidth = _image!.width;
-      const width = 1024 * 6;
+      const scrollWidth = 1024 * 6;
 
-      final result = widgetWidth - (_controller.value * width);
+      final result = widgetWidth - (_controller.value * scrollWidth);
 
       if (!_triggeredNext) {
-        if (result + imageWidth < (widgetWidth - 30)) {
+        if ((result + imageWidth) < (widgetWidth - 30)) {
           _triggeredNext = true;
 
           mainController.next();

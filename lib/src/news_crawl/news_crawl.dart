@@ -206,7 +206,7 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
                 0,
               ),
               child: Center(
-                child: Container(
+                child: SizedBox(
                   width: widget.widgetController.image!.width.toDouble(),
                   height: widget.widgetController.image!.height.toDouble(),
                   child: ToolTip(
