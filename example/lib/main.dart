@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
             ),
             NewsCrawl(
               backColor: Colors.black,
-              fontSize: 30,
+              style: const TextStyle(fontSize: 30),
               height: 60,
               textColor: Colors.cyan,
               selectedTextColor: Colors.pink,

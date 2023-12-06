@@ -11,7 +11,7 @@ class NewsCrawl extends StatelessWidget {
     required this.textColor,
     required this.selectedTextColor,
     required this.height,
-    required this.fontSize,
+    required this.style,
     required this.onTap,
     required this.maxLength,
     required this.links,
@@ -22,7 +22,7 @@ class NewsCrawl extends StatelessWidget {
   final Color textColor;
   final Color selectedTextColor;
   final double height;
-  final double fontSize;
+  final TextStyle style;
   final int maxLength;
   final Duration duration;
   final List<NewsCrawlLink> links;
@@ -41,7 +41,7 @@ class NewsCrawl extends StatelessWidget {
         child: _NewsCrawl(
           backColor: backColor,
           textColor: textColor,
-          fontSize: fontSize,
+          style: style,
           duration: duration,
           onTap: onTap,
           selectedTextColor: selectedTextColor,
@@ -60,7 +60,7 @@ class _NewsCrawl extends StatefulWidget {
     required this.backColor,
     required this.textColor,
     required this.selectedTextColor,
-    required this.fontSize,
+    required this.style,
     required this.duration,
     required this.onTap,
     required this.links,
@@ -70,7 +70,7 @@ class _NewsCrawl extends StatefulWidget {
   final Color backColor;
   final Color textColor;
   final Color selectedTextColor;
-  final double fontSize;
+  final TextStyle style;
   final int maxLength;
   final Duration duration;
   final void Function(NewsCrawlLink link) onTap;
@@ -111,7 +111,7 @@ class _NewsCrawlState extends State<_NewsCrawl>
           setState(() {});
         }
       },
-      fontSize: widget.fontSize,
+      style: widget.style,
       duration: widget.duration,
       maxLength: widget.maxLength,
     );
