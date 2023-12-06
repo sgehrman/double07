@@ -135,6 +135,8 @@ class NewsCrawlWidgetController extends ChangeNotifier
         return str;
       }
 
+      print('str.length: ${str.length}, max: ${params.maxLength}, str: "$str"');
+
       final words = str.split(' ');
 
       final List<String> resultWords = [];
@@ -150,6 +152,8 @@ class NewsCrawlWidgetController extends ChangeNotifier
 
       // append ...
       final sentence = resultWords.join(' ');
+
+      print('sentence.length: ${sentence.length}, sentence: "$sentence"');
 
       // is last character a '.'
       if (sentence.characters.last == '.') {
