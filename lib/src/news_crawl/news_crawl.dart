@@ -277,16 +277,12 @@ class _NewsCrawlTextPainter extends CustomPainter {
       image.height.toDouble(),
     );
 
-    final ColorFilter? colorFilter = textColor != Colors.white
-        ? ColorFilter.mode(textColor, BlendMode.srcATop)
-        : null;
-
     if (destRect.overlaps(rect)) {
       paintImage(
         canvas: canvas,
         rect: destRect,
         image: image,
-        colorFilter: colorFilter,
+        colorFilter: ColorFilter.mode(textColor, BlendMode.srcATop),
         fit: BoxFit.scaleDown,
         isAntiAlias: true,
         filterQuality: FilterQuality.high,
