@@ -46,6 +46,14 @@ class NewsCrawlController {
       print('not found?');
     }
 
+    // hack: tab is inactive, so views don't draw and
+    // getTranslateX is not called and last animation ends before calling next()
+    // this restarts the animation
+    if (widgetControllers.isEmpty) {
+      print('restart');
+      next();
+    }
+
     callback();
   }
 
