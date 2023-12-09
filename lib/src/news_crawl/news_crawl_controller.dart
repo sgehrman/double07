@@ -5,12 +5,12 @@ import 'package:dfc_flutter/dfc_flutter_web.dart';
 import 'package:double07/src/animations/text/animated_letter.dart';
 import 'package:double07/src/news_crawl/news_crawl.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 
 class NewsCrawlController {
   NewsCrawlController({
     required this.callback,
     required this.params,
+    required this.tickerProvider,
   }) {
     _setup();
   }
@@ -18,6 +18,7 @@ class NewsCrawlController {
   final void Function() callback;
   final Map<String, NewsCrawlWidgetController> _widgetControllers = {};
   final NewsCrawlParams params;
+  final TickerProvider tickerProvider;
   int _nextIndex = 0;
 
   List<NewsCrawlWidgetController> get widgetControllers =>
@@ -74,8 +75,7 @@ class NewsCrawlController {
 
 // ============================================================
 
-class NewsCrawlWidgetController extends ChangeNotifier
-    implements TickerProvider {
+class NewsCrawlWidgetController extends ChangeNotifier {
   NewsCrawlWidgetController({
     required this.mainController,
     required this.link,
@@ -83,7 +83,7 @@ class NewsCrawlWidgetController extends ChangeNotifier
     required this.params,
   }) {
     _controller = AnimationController(
-      vsync: this,
+      vsync: mainController.tickerProvider,
       duration: params.duration,
     );
 
@@ -95,7 +95,6 @@ class NewsCrawlWidgetController extends ChangeNotifier
   final NewsCrawlController mainController;
   final NewsCrawlLink link;
   final NewsCrawlParams params;
-  Ticker? _ticker;
 
   ui.Image? _image;
   late final AnimationController _controller;
@@ -111,14 +110,7 @@ class NewsCrawlWidgetController extends ChangeNotifier
 
     _image?.dispose();
 
-    _ticker?.dispose();
-
     super.dispose();
-  }
-
-  @override
-  Ticker createTicker(TickerCallback onTick) {
-    return _ticker ??= Ticker(onTick);
   }
 
   String prepareTitle(String title) {

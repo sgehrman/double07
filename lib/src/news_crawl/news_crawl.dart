@@ -63,8 +63,7 @@ class _NewsCrawl extends StatefulWidget {
   State<_NewsCrawl> createState() => _NewsCrawlState();
 }
 
-class _NewsCrawlState extends State<_NewsCrawl>
-    with SingleTickerProviderStateMixin {
+class _NewsCrawlState extends State<_NewsCrawl> with TickerProviderStateMixin {
   NewsCrawlController? _controller;
 
   @override
@@ -89,6 +88,7 @@ class _NewsCrawlState extends State<_NewsCrawl>
 
     _controller = NewsCrawlController(
       params: widget.params,
+      tickerProvider: this,
       callback: () {
         if (mounted) {
           setState(() {});
