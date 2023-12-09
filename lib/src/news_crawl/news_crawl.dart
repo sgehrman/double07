@@ -200,6 +200,20 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
   }
 
   @override
+  void activate() {
+    super.activate();
+
+    print('x activate');
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+
+    print('x deactivate');
+  }
+
+  @override
   void didUpdateWidget(covariant _NewsCrawlWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
 
