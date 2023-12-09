@@ -208,6 +208,8 @@ class NewsCrawlWidgetController extends ChangeNotifier {
 
       final result = widgetWidth - (_controller.value * scrollWidth);
 
+      print('getTranslateX');
+
       if (!_triggeredNext) {
         if ((result + imageWidth) < (widgetWidth - gapWidth)) {
           _triggeredNext = true;
