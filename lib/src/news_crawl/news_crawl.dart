@@ -108,24 +108,6 @@ class _NewsCrawlState extends State<_NewsCrawl> with TickerProviderStateMixin {
     return _controller?.widgetControllers ?? [];
   }
 
-  @override
-  void activate() {
-    super.activate();
-
-    print('activate');
-
-    _pauseAnimations(pause: false);
-  }
-
-  @override
-  void deactivate() {
-    super.deactivate();
-
-    print('deactivate');
-
-    _pauseAnimations(pause: true);
-  }
-
   void _pauseAnimations({required bool pause}) {
     for (final c in widgetControllers) {
       c.pause(pause: pause);
@@ -197,20 +179,6 @@ class _NewsCrawlWidgetState extends State<_NewsCrawlWidget> {
     widget.widgetController.removeListener(_callback);
 
     super.dispose();
-  }
-
-  @override
-  void activate() {
-    super.activate();
-
-    print('x activate');
-  }
-
-  @override
-  void deactivate() {
-    super.deactivate();
-
-    print('x deactivate');
   }
 
   @override
