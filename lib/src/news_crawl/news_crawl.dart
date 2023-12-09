@@ -109,6 +109,26 @@ class _NewsCrawlState extends State<_NewsCrawl> with TickerProviderStateMixin {
   }
 
   @override
+  void activate() {
+    super.activate();
+
+    _pauseAnimations(pause: false);
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+
+    _pauseAnimations(pause: true);
+  }
+
+  void _pauseAnimations({required bool pause}) {
+    for (final c in widgetControllers) {
+      c.pause(pause: pause);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final List<Widget> children = [];
 
@@ -127,14 +147,10 @@ class _NewsCrawlState extends State<_NewsCrawl> with TickerProviderStateMixin {
 
     return MouseRegion(
       onEnter: (x) {
-        for (final c in widgetControllers) {
-          c.pause();
-        }
+        _pauseAnimations(pause: true);
       },
       onExit: (x) {
-        for (final c in widgetControllers) {
-          c.pause();
-        }
+        _pauseAnimations(pause: false);
       },
       child: Stack(
         children: children,

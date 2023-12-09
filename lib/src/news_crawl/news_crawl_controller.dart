@@ -181,11 +181,19 @@ class NewsCrawlWidgetController extends ChangeNotifier {
     }
   }
 
-  void pause() {
-    if (_controller.isAnimating) {
-      _controller.stop();
+  void pause({required bool pause}) {
+    if (pause) {
+      if (_controller.isAnimating) {
+        _controller.stop();
+      } else {
+        print('already paused');
+      }
     } else {
-      _controller.forward();
+      if (!_controller.isAnimating) {
+        _controller.forward();
+      } else {
+        print('already running');
+      }
     }
   }
 
