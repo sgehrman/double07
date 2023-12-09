@@ -95,6 +95,7 @@ class NewsCrawlWidgetController extends ChangeNotifier {
   final NewsCrawlController mainController;
   final NewsCrawlLink link;
   final NewsCrawlParams params;
+  final gapWidth = 30;
 
   ui.Image? _image;
   late final AnimationController _controller;
@@ -200,7 +201,7 @@ class NewsCrawlWidgetController extends ChangeNotifier {
       final result = widgetWidth - (_controller.value * scrollWidth);
 
       if (!_triggeredNext) {
-        if ((result + imageWidth) < (widgetWidth - 30)) {
+        if ((result + imageWidth) < (widgetWidth - gapWidth)) {
           _triggeredNext = true;
 
           mainController.next();
