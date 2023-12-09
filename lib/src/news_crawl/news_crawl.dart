@@ -112,12 +112,16 @@ class _NewsCrawlState extends State<_NewsCrawl> with TickerProviderStateMixin {
   void activate() {
     super.activate();
 
+    print('activate');
+
     _pauseAnimations(pause: false);
   }
 
   @override
   void deactivate() {
     super.deactivate();
+
+    print('deactivate');
 
     _pauseAnimations(pause: true);
   }
