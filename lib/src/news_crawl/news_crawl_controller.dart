@@ -50,7 +50,6 @@ class NewsCrawlController {
     // getTranslateX is not called and last animation ends before calling next()
     // this restarts the animation
     if (widgetControllers.isEmpty) {
-      print('restart');
       next();
     }
 
