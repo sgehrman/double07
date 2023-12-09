@@ -63,12 +63,14 @@ class _NewsCrawl extends StatefulWidget {
   State<_NewsCrawl> createState() => _NewsCrawlState();
 }
 
-class _NewsCrawlState extends State<_NewsCrawl> with TickerProviderStateMixin {
+class _NewsCrawlState extends State<_NewsCrawl>
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   NewsCrawlController? _controller;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
 
     _updateController();
   }
@@ -76,11 +78,33 @@ class _NewsCrawlState extends State<_NewsCrawl> with TickerProviderStateMixin {
   @override
   void dispose() {
     _controller?.dispose();
+    WidgetsBinding.instance.removeObserver(this);
 
     // free up cached images
     LetterPainterCache().clear();
 
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.paused:
+        print('paused');
+        break;
+      case AppLifecycleState.resumed:
+        print('resumed');
+        break;
+      case AppLifecycleState.inactive:
+        print('inactive');
+        break;
+      case AppLifecycleState.detached:
+        print('detached');
+        break;
+      case ui.AppLifecycleState.hidden:
+        print('hidden');
+    }
   }
 
   void _updateController() {
