@@ -172,12 +172,16 @@ class AnimatedLetter {
   }) async {
     final letters = await createLetters(text, style, letterSpacing);
 
-    final destRect = Rect.fromLTWH(
-      0,
-      0,
-      letters.first.wordSize.width,
-      letters.first.wordSize.height,
-    );
+    // crashed while testing once.  text was ''?
+    Rect destRect = const Rect.fromLTWH(0, 0, 10, 10);
+    if (letters.isNotEmpty) {
+      destRect = Rect.fromLTWH(
+        0,
+        0,
+        letters.first.wordSize.width,
+        letters.first.wordSize.height,
+      );
+    }
 
     final recorder = ui.PictureRecorder();
     final ui.Canvas canvas = ui.Canvas(recorder);
