@@ -102,7 +102,7 @@ class NewsCrawlWidgetController extends ChangeNotifier {
   final NewsCrawlController mainController;
   final NewsCrawlLink link;
   final NewsCrawlParams params;
-  final gapWidth = 30;
+  final gapWidth = 40;
 
   ui.Image? _image;
   late final AnimationController _controller;
