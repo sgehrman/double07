@@ -29,14 +29,26 @@ class LetterPainter {
   bool get isSpace => _textPainter == null;
 
   Size get size {
+    Size result;
+
     if (!isSpace) {
-      return _textPainter!.size;
+      result = _textPainter!.size;
+    } else {
+      final fontSize = style.fontSize ?? 20;
+
+      // space based on fontSize
+      result = Size(fontSize / 3, fontSize / 3);
     }
 
-    final fontSize = style.fontSize ?? 20;
+    // got a crash with "CanvasKitError: Cannot create surfaces of empty size"
+    // not sure the cause yet, but avoid that
+    if (result.width <= 0 || result.height <= 0) {
+      print('BUG: letter_painter zero size - $letter, $isSpace, $style');
 
-    // space based on fontSize
-    return Size(fontSize / 3, fontSize / 3);
+      result = const Size(10, 10);
+    }
+
+    return result;
   }
 
   Future<ui.Image> image() async {
