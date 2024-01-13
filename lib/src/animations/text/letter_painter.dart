@@ -43,7 +43,9 @@ class LetterPainter {
     // got a crash with "CanvasKitError: Cannot create surfaces of empty size"
     // not sure the cause yet, but avoid that
     if (result.width <= 0 || result.height <= 0) {
-      print('BUG: letter_painter zero size - $letter, $isSpace, $style');
+      print(
+        'LetterPainter zero size - "$letter", isSpace: $isSpace, $style',
+      );
 
       result = const Size(10, 10);
     }

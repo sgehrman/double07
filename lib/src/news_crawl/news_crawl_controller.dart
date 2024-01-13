@@ -168,8 +168,16 @@ class NewsCrawlWidgetController extends ChangeNotifier {
   }
 
   Future<void> initialize() async {
+    final title = prepareTitle(link.title);
+
+    if (title.isEmpty) {
+      print(
+        'NewsCrawlWidgetController title empty: "${link.title}", url: ${link.url}',
+      );
+    }
+
     _image = await AnimatedLetter.textImage(
-      text: prepareTitle(link.title),
+      text: title,
       style: params.style,
       letterSpacing: 1,
     );
