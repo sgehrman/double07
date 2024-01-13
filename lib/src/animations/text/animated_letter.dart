@@ -209,13 +209,32 @@ class AnimatedLetter {
   // ====================================================
   // private methods
 
+  // Strings can have zero width spaces, remove those
+  // Unicode Character 'ZERO WIDTH SPACE' (U+200B)
+  // https://www.fileformat.info/info/unicode/char/200b/index.htm
+  // codeUnits: [8203]
+  static String cleanString(String input) {
+    final codes = input.codeUnits;
+    if (codes.contains(8203)) {
+      final newCodes = codes.where((code) => code != 8203).toList();
+
+      final cleaned = String.fromCharCodes(newCodes);
+
+      print('Removed zero width spaces: $cleaned');
+
+      return cleaned;
+    }
+
+    return input;
+  }
+
   static List<LetterPainter> _createTextPainters(
     String text,
     TextStyle style,
   ) {
     final List<LetterPainter> result = [];
 
-    for (final s in text.characters) {
+    for (final s in cleanString(text).characters) {
       result.add(LetterPainterCache().get(s, style));
     }
 
