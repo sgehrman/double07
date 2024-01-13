@@ -44,7 +44,7 @@ class LetterPainter {
     // not sure the cause yet, but avoid that
     if (result.width <= 0 || result.height <= 0) {
       print(
-        'LetterPainter zero size - "$letter", isSpace: $isSpace, $style',
+        'LetterPainter zero size - "$letter", codeUnits: ${letter.codeUnits}, isSpace: $isSpace, $style',
       );
 
       result = const Size(10, 10);
