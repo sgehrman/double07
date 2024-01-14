@@ -116,10 +116,15 @@ class AnimatedLetter {
     required String text,
     required TextStyle style,
     required double letterSpacing,
+    required int imageScale,
   }) async {
     final List<AnimatedLetter> result = [];
 
-    final letterPainters = _createTextPainters(text, style);
+    final letterPainters = _createTextPainters(
+      text: text,
+      style: style,
+      imageScale: imageScale,
+    );
 
     double wordWidth = 0;
     double wordHeight = 0;
@@ -169,11 +174,13 @@ class AnimatedLetter {
     required String text,
     required TextStyle style,
     required double letterSpacing,
+    required int imageScale,
   }) async {
     final letters = await createLetters(
       text: text,
       style: style,
       letterSpacing: letterSpacing,
+      imageScale: imageScale,
     );
 
     // crashed with ZERO WIDTH SPACE. fixed below?
@@ -232,14 +239,21 @@ class AnimatedLetter {
     return input;
   }
 
-  static List<LetterPainter> _createTextPainters(
-    String text,
-    TextStyle style,
-  ) {
+  static List<LetterPainter> _createTextPainters({
+    required String text,
+    required TextStyle style,
+    required int imageScale,
+  }) {
     final List<LetterPainter> result = [];
 
     for (final s in cleanString(text).characters) {
-      result.add(LetterPainterCache().get(s, style));
+      result.add(
+        LetterPainterCache().get(
+          letter: s,
+          style: style,
+          imageScale: imageScale,
+        ),
+      );
     }
 
     return result;

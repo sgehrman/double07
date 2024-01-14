@@ -21,6 +21,7 @@ class AnimaTitleAnimations {
       text: state.text,
       style: _textStyle(),
       letterSpacing: state.letterSpacing,
+      imageScale: 3,
     );
 
     _buildAnimations(

@@ -7,6 +7,7 @@ class LetterPainter {
   LetterPainter({
     required this.letter,
     required this.style,
+    required this.imageScale,
   }) {
     if (letter != ' ') {
       _textPainter = TextPainter(
@@ -23,6 +24,7 @@ class LetterPainter {
 
   final String letter;
   final TextStyle style;
+  final int imageScale;
   TextPainter? _textPainter;
   ui.Image? _image;
 
@@ -58,8 +60,8 @@ class LetterPainter {
       final destRect = Rect.fromLTWH(
         0,
         0,
-        size.width * 3, // larger to avoid pixelation
-        size.height * 3,
+        size.width * imageScale, // larger to avoid pixelation
+        size.height * imageScale,
       );
 
       final matrix = AnimaUtils.sizeToRect(size, destRect);
@@ -102,15 +104,20 @@ class LetterPainterCache {
 
   final Map<String, LetterPainter> _cache = {};
 
-  LetterPainter get(
-    String letter,
-    TextStyle style,
-  ) {
-    final String key = '$letter:$style';
+  LetterPainter get({
+    required String letter,
+    required TextStyle style,
+    required int imageScale,
+  }) {
+    final String key = '$letter:$style:$imageScale';
 
     final found = _cache[key];
     if (found == null) {
-      _cache[key] = LetterPainter(letter: letter, style: style);
+      _cache[key] = LetterPainter(
+        letter: letter,
+        style: style,
+        imageScale: imageScale,
+      );
     }
 
     return _cache[key]!;

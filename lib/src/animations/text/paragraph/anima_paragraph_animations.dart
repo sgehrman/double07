@@ -22,6 +22,7 @@ class AnimaParagraphAnimations {
       text: state.text,
       style: _textStyle(),
       letterSpacing: state.letterSpacing,
+      imageScale: 3,
     );
 
     final driver = AnimationSpec.parentAnimation(

@@ -180,6 +180,7 @@ class NewsCrawlWidgetController extends ChangeNotifier {
       text: title,
       style: params.style,
       letterSpacing: 1,
+      imageScale: 1,
     );
 
     isInitialized = true;
