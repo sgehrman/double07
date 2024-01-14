@@ -19,9 +19,9 @@ class AnimaParagraphAnimations {
     Animation<double> controller,
   ) async {
     _textLetters = await AnimatedLetter.createLetters(
-      state.text,
-      _textStyle(),
-      state.letterSpacing,
+      text: state.text,
+      style: _textStyle(),
+      letterSpacing: state.letterSpacing,
     );
 
     final driver = AnimationSpec.parentAnimation(

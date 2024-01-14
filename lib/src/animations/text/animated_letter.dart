@@ -112,11 +112,11 @@ class AnimatedLetter {
     }
   }
 
-  static Future<List<AnimatedLetter>> createLetters(
-    String text,
-    TextStyle style,
-    double letterSpacing,
-  ) async {
+  static Future<List<AnimatedLetter>> createLetters({
+    required String text,
+    required TextStyle style,
+    required double letterSpacing,
+  }) async {
     final List<AnimatedLetter> result = [];
 
     final letterPainters = _createTextPainters(text, style);
@@ -170,9 +170,13 @@ class AnimatedLetter {
     required TextStyle style,
     required double letterSpacing,
   }) async {
-    final letters = await createLetters(text, style, letterSpacing);
+    final letters = await createLetters(
+      text: text,
+      style: style,
+      letterSpacing: letterSpacing,
+    );
 
-    // crashed while testing once.  text was ''?
+    // crashed with ZERO WIDTH SPACE. fixed below?
     Rect destRect = const Rect.fromLTWH(0, 0, 10, 10);
     if (letters.isNotEmpty) {
       destRect = Rect.fromLTWH(
