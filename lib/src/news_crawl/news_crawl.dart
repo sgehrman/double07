@@ -316,12 +316,8 @@ class _GradientWidget extends StatelessWidget {
     return IgnorePointer(
       key: const ValueKey('gradient'),
       child: SizedBox.expand(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return CustomPaint(
-              painter: _GradientPainter(color),
-            );
-          },
+        child: CustomPaint(
+          painter: _GradientPainter(color),
         ),
       ),
     );
@@ -338,35 +334,11 @@ class _GradientPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
-    const double gradientWidth = 60;
 
-    final leftRect = Rect.fromLTWH(
-      rect.left,
-      rect.top,
-      gradientWidth,
-      rect.height,
-    );
+    final paints = _GradientCache().paints(rect, color);
 
-    final leftGradient = Paint();
-    leftGradient.shader = LinearGradient(
-      colors: [color, color.withOpacity(0)],
-    ).createShader(leftRect);
-
-    canvas.drawRect(leftRect, leftGradient);
-
-    final rightRect = Rect.fromLTWH(
-      rect.right - gradientWidth,
-      rect.top,
-      gradientWidth,
-      rect.height,
-    );
-
-    final rightGradient = Paint();
-    rightGradient.shader = LinearGradient(
-      colors: [color.withOpacity(0), color],
-    ).createShader(rightRect);
-
-    canvas.drawRect(rightRect, rightGradient);
+    canvas.drawRect(paints.leftRect, paints.left);
+    canvas.drawRect(paints.rightRect, paints.right);
   }
 
   // =================================================
@@ -387,4 +359,96 @@ class NewsCrawlLink {
 
   String title;
   String url;
+}
+
+// ===========================================================
+
+class _GradientCache {
+  factory _GradientCache() {
+    return _instance ??= _GradientCache._();
+  }
+  _GradientCache._();
+
+  static _GradientCache? _instance;
+
+  _GradientPaints _paints = _GradientPaints(
+    color: Colors.black,
+    left: Paint(),
+    right: Paint(),
+    rect: Rect.zero,
+    leftRect: Rect.zero,
+    rightRect: Rect.zero,
+  );
+
+  _GradientPaints paints(
+    Rect rect,
+    Color color,
+  ) {
+    if (_paints.hasChanged(rect, color)) {
+      const double gradientWidth = 60;
+
+      final leftRect = Rect.fromLTWH(
+        rect.left,
+        rect.top,
+        gradientWidth,
+        rect.height,
+      );
+
+      final leftPaint = Paint();
+      leftPaint.shader = LinearGradient(
+        colors: [color, color.withOpacity(0)],
+      ).createShader(leftRect);
+
+      final rightRect = Rect.fromLTWH(
+        rect.right - gradientWidth,
+        rect.top,
+        gradientWidth,
+        rect.height,
+      );
+
+      final rightGradient = Paint();
+      rightGradient.shader = LinearGradient(
+        colors: [color.withOpacity(0), color],
+      ).createShader(rightRect);
+
+      _paints = _GradientPaints(
+        color: color,
+        left: leftPaint,
+        right: rightGradient,
+        leftRect: leftRect,
+        rightRect: rightRect,
+        rect: rect,
+      );
+    }
+
+    return _paints;
+  }
+}
+
+// ===========================================================
+
+class _GradientPaints {
+  _GradientPaints({
+    required this.color,
+    required this.rect,
+    required this.left,
+    required this.right,
+    required this.leftRect,
+    required this.rightRect,
+  });
+
+  Color color;
+  Paint left;
+  Paint right;
+
+  Rect rect;
+  Rect leftRect;
+  Rect rightRect;
+
+  bool hasChanged(
+    Rect rect,
+    Color color,
+  ) {
+    return color != this.color || rect != this.rect;
+  }
 }
