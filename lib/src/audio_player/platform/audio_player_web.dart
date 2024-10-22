@@ -1,12 +1,13 @@
 // ignore_for_file: avoid_web_libraries_in_flutter, unsafe_html
 
 import 'dart:async';
-import 'dart:html' as html;
+
+import 'package:web/web.dart' as web;
 
 mixin AudioPlayerMixin {
   StreamSubscription<dynamic>? _onEndListener;
   StreamSubscription<dynamic>? _onCanPlayListener;
-  html.AudioElement? _audioElement;
+  web.HTMLAudioElement? _audioElement;
 
   void platformDispose() {
     platformPause();
@@ -32,7 +33,8 @@ mixin AudioPlayerMixin {
   void platformOpen({
     required String path,
   }) {
-    _audioElement = html.AudioElement(path);
+    _audioElement = web.HTMLAudioElement();
+    _audioElement?.src = path;
     _audioElement?.loop = true;
 
     _onEndListener = _audioElement?.onEnded.listen((event) {
